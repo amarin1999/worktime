@@ -1,0 +1,32 @@
+<mat-grid-list cols="12" rowHeight="100px">
+
+      <nav class="navbar navbar-default animation-page" role="navigation">
+            <div class="navbar-header">
+                  <img src="../../../assets/images/banner.png" class="img-logo">
+            </div>
+            <div class="main_list">
+                  <ul class="navlinks">
+                        <li><a routerLink = "/sss">About</a></li>
+                        <li><a >Portfolio</a></li>
+                  </ul>
+            </div>
+            <span class="navTrigger" (click)="showToggle = true">
+                  <i></i>
+                  <i></i>
+                  <i></i>
+            </span>
+
+      </nav>
+
+
+      <p-sidebar [(visible)]="showToggle" position="top">
+            <div class="menu-responsive">
+                  fsdfsaf
+            </div>
+            <hr />
+            <div class="menu-responsive">
+                  <span class="text-menu">ออกจากระบบ</span>
+            </div>
+      </p-sidebar>
+
+</mat-grid-list>
