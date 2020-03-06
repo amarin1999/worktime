@@ -11,10 +11,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 
 // fontawesome
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -32,7 +36,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatMenuModule
   ]
 })
 export class SharedModule {
@@ -40,7 +46,8 @@ export class SharedModule {
     library.addIcons(
       faTwitter,
       faYoutube,
-      faFacebook
+      faFacebook,
+
     );
   }
 }

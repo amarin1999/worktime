@@ -6,8 +6,22 @@
             </div>
             <div class="main_list">
                   <ul class="navlinks">
-                        <li><a routerLink = "/sss">About</a></li>
-                        <li><a >Portfolio</a></li>
+                        <mat-card routerLink="/sss" class="card-nav">
+                              <mat-card-header>
+                                    <div mat-card-avatar class="user-nav-image"></div>
+                                    <mat-card-title>Shiba Inu</mat-card-title>
+                                    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+                              </mat-card-header>
+
+                        </mat-card>
+
+                        <mat-card routerLink="/sss" class="card-nav">
+
+                              <i [matMenuTriggerFor]="menu" class="pi pi-caret-down"
+                                    style="font-size: 3em;cursor: pointer;"></i>
+
+                        </mat-card>
+
                   </ul>
             </div>
             <span class="navTrigger" (click)="showToggle = true">
@@ -18,6 +32,14 @@
 
       </nav>
 
+      <mat-menu #menu="matMenu">
+            <button mat-menu-item class="menu-dropdown">
+                  <i class="pi pi-sign-out" style="vertical-align: middle;"></i>
+                  &nbsp;
+                  <div style="display: inline;">ออกจากระบบ</div>
+            </button>
+            <button mat-menu-item class="menu-dropdown">Item 2</button>
+      </mat-menu>
 
       <p-sidebar [(visible)]="showToggle" position="top">
             <div class="menu-responsive">

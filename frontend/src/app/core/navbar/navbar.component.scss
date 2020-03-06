@@ -24,7 +24,7 @@
   text-decoration: none;
   color: #fff;
   line-height: 65px;
-  font-size: 2.4rem;
+  font-size: 1.5rem;
 }
 
 .navbar {
@@ -32,9 +32,6 @@
   position: fixed;
   width: 100%;
 }
-
-/* Animation */
-/* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
 
 .navTrigger {
   display: none;
@@ -106,42 +103,57 @@
   width: 50%;
 }
 
+.user-nav-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+.logout-nav-image {
+  background-image: url("https://image.freepik.com/free-vector/illustration-exit-door_53876-5844.jpg");
+  background-size: cover;
+}
+
+.card-nav {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+.menu-dropdown {
+  width: 500px;
+  font-size: 1.3em;
+  vertical-align: middle;
+}
+
 @-webkit-keyframes inM {
   50% {
-      -webkit-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
   }
   100% {
-      -webkit-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
   }
 }
 @-webkit-keyframes outT {
   0% {
-      -webkit-transform: translateY(0px) rotate(0deg);
+    -webkit-transform: translateY(0px) rotate(0deg);
   }
   50% {
-      -webkit-transform: translateY(9px) rotate(0deg);
+    -webkit-transform: translateY(9px) rotate(0deg);
   }
   100% {
-      -webkit-transform: translateY(9px) rotate(135deg);
+    -webkit-transform: translateY(9px) rotate(135deg);
   }
 }
 
 @-webkit-keyframes outBtm {
   0% {
-      -webkit-transform: translateY(0px) rotate(0deg);
+    -webkit-transform: translateY(0px) rotate(0deg);
   }
   50% {
-      -webkit-transform: translateY(-9px) rotate(0deg);
+    -webkit-transform: translateY(-9px) rotate(0deg);
   }
   100% {
-      -webkit-transform: translateY(-9px) rotate(135deg);
+    -webkit-transform: translateY(-9px) rotate(135deg);
   }
 }
-
-
-
-
-
 
 /*mediaScreen*******************************************************************************************************************/
 

@@ -3,18 +3,23 @@
 html,
 body {
   margin: 0;
-  height: 100%;
-  font-family: "Kanit";
+  height: 100%; 
   background-size: cover;
   background-attachment: fixed;
+  
   background-image: url("https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
 }
 * {
   font-family: "Kanit";
 }
-
+h4{
+  font-family: "Kanit";
+}
+.p-grid {
+  margin: 0;
+}
 .animation-page {
-  animation: fadeFromTop 0.4s;
+  animation: fadeFromTop 0.5s;
 }
 
 @keyframes fadeFromTop {

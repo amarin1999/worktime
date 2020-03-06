@@ -1,25 +1,14 @@
-.footer {
-  position: fixed;
-  height: 14%;
-  background-color: #4f4f4f;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  padding-top: 20px;
-  color: whitesmoke;
-  opacity: 0.9;
+.footer {  
+  color: #333377; 
+  font-weight: bold;
 }
 .icon-footer {
   font-size: 30px;
   padding: 10px;
   cursor: pointer;
+  color: #333377 ;
 }
-.icon-footer:hover {
-  transform: rotate(45deg);
-  opacity: 0.5;
-  
+.icon-footer:hover { 
+  opacity: 0.5;  
   transition: 0.3s;
-}
-a {
-  color: whitesmoke !important;
 }
