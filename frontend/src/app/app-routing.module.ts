@@ -1,24 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContentComponent } from './content/content.component';
+import { SigninComponent } from './content/signin/signin.component';
 
 const routes: Routes = [
   {
-    path: "",
-    component: ContentComponent,
-    pathMatch:'full'
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
 
-  // {
-  //   path: "**",
-  //   redirectTo: ""
-  // }
+  {
+    path: "signin",
+    component: SigninComponent
+  },
+  {
+    path: "**",
+    redirectTo: 'home',
+    pathMatch: 'full'
+  }
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     scrollPositionRestoration: 'enabled',
   })],
-  exports: [RouterModule]
+  exports: [RouterModule],
+
 })
 export class AppRoutingModule { }

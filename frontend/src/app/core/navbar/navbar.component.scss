@@ -24,10 +24,10 @@ mat-card {
   margin-top: -5px;
 }
 
-.logout-btn {
+.signout-btn {
   font-size: 3em;
   cursor: pointer;
-  color: indigo;
+  color: #333377;
 }
 
 .navTrigger {
@@ -115,6 +115,7 @@ mat-card {
   background: none;
   border: none;
   box-shadow: none;
+  
 }
 
 @-webkit-keyframes inM {
