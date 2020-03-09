@@ -33,13 +33,11 @@ public class EmployeeController {
 		ResponseDto<EmployeeDto> res = new ResponseDto<>();
 		List<EmployeeDto> dto = new ArrayList<EmployeeDto>();
 
-		
-
 		try {
 			dto = employeeService.getEmployeeByNo(employeeNo);
-			if (dto.size() == 0 ) {
+			if (dto.size() == 0) {
 				throw new Exception("NotFound");
-				
+
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);

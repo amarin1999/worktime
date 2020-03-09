@@ -15,29 +15,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "employee")
+@Table(name="work_project")
 @Embeddable
 @Getter
 @Setter
 @ToString
-public class EmployeeEntity implements Serializable {
-	/**
-	* 
-	*/
-	private static final long serialVersionUID = 1003970960014801827L;
-
+public class WorkProjectEntity implements Serializable {/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5716995905425245603L;
+	
 	@Id
-	@Column(name = "id_employee")
+	@Column(name = "id_work_project")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long employeeId;
-
-	@Column(name = "employee_no", unique = true)
-	private String employeeno;
-
-	@Column(name = "firstname", unique = true)
-	private String firstname;
-
-	@Column(name = "lastname", unique = true)
-	private String lastname;
+	private Long projectId;
+	
+	@Column(name="project_no")
+	private String projectNo;
 
 }
