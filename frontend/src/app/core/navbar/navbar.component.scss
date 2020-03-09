@@ -20,9 +20,14 @@
   padding-right: 2vw;
 }
 
-
 mat-card {
-  margin-top: -5px ;
+  margin-top: -5px;
+}
+
+.logout-btn {
+  font-size: 3em;
+  cursor: pointer;
+  color: indigo;
 }
 
 .navTrigger {
@@ -112,7 +117,6 @@ mat-card {
   box-shadow: none;
 }
 
-
 @-webkit-keyframes inM {
   50% {
     -webkit-transform: rotate(0deg);
@@ -145,12 +149,10 @@ mat-card {
   }
 }
 
-
 /*mediaScreen*******************************************************************************************************************/
 
 /* จอกลาง */
 @media screen and (max-width: 1024px) {
- 
 }
 
 @media screen and (max-width: 768px) {
@@ -160,11 +162,10 @@ mat-card {
   .main_list {
     width: 100%;
     height: 0;
-    overflow: hidden;   
-  }  
+    overflow: hidden;
+  }
 }
 
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
-
 }

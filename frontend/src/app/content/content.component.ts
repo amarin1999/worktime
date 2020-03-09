@@ -12,4 +12,8 @@ export class ContentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onSubmitEmployeeId(employeeId: any): void {
+    console.log(employeeId);
+
+  }
 }
