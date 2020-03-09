@@ -9,20 +9,21 @@
                         เริ่มต้นใช้งาน
                   </mat-card-title>
                   <mat-card-content class="card-content">
+                        <form [formGroup]="form" (submit)="onSubmit($event)">
+                              <mat-form-field appearance="outline" class="input-id-employee">
 
-                        <mat-form-field appearance="outline" class="input-id-employee">
-
-                              <mat-label>รหัสพนักงาน</mat-label>
-                              <input matInput class="input-id-employee">
+                                    <mat-label>รหัสพนักงาน</mat-label>
+                                    <input matInput class="input-id-employee" formControlName="employeeId" >
 
 
-                        </mat-form-field>
+                              </mat-form-field>
 
-                        <button mat-flat-button class="btn-signin">
-                              <i class="pi pi-chevron-right icon-btn"></i>
-                              <div class="confirm-text">ยืนยัน<i class="pi pi-chevron-right"
-                                          style="vertical-align: middle;"></i></div>
-                        </button>
+                              <button mat-raised-button class="btn-signin">
+                                    <i class="pi pi-chevron-right icon-btn"></i>
+                                    <div class="confirm-text">ยืนยัน<i class="pi pi-chevron-right"
+                                                style="vertical-align: middle;"></i></div>
+                              </button>
+                        </form>
 
                   </mat-card-content>
             </mat-card>

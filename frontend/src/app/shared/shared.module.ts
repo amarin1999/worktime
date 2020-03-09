@@ -2,6 +2,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // primeng
 import { SidebarModule } from 'primeng/sidebar';
@@ -18,9 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { faClock, faHistory } from '@fortawesome/free-solid-svg-icons'
-
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployeeService } from './service/employee.service';
 
 
 @NgModule({
@@ -28,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
 
   ],
+
   exports: [
     CommonModule,
     RouterModule,
@@ -39,8 +40,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatMenuModule
-  ]
+    MatMenuModule,
+    ReactiveFormsModule,
+  
+  ],
+  providers: [EmployeeService]
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {
