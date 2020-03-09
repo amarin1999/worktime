@@ -1,5 +1,6 @@
 package com.cdgs.worktime.controller;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class EmployeeController {
 
 		try {
 			dto = employeeService.getEmployeeByNo(employeeNo);
-			if (dto == null) {
+			if (dto.size() == 0 ) {
 				throw new Exception("NotFound");
 				
 			}
