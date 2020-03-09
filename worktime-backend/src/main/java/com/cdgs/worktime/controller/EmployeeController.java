@@ -37,7 +37,8 @@ public class EmployeeController {
 		try {
 			dto = employeeService.getEmployeeByNo(employeeNo);
 			if (dto != null) {
-				throw new Exception("isEmpty");
+				throw new Exception("NotFound");
+				
 			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
@@ -47,7 +48,7 @@ public class EmployeeController {
 			log.error(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
-			res.setCode(400);
+			res.setCode(404);
 			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
