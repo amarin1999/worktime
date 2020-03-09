@@ -38,7 +38,7 @@ public class EmployeeHasSideworkHistoryEntity implements Serializable {/**
 	private SideworkHistoryEntity sideworkHistoryId;
 	
 	@Column(name="work_type")
-	private String work_type;
+	private String workType;
 	
 	@ManyToOne
 	@JoinColumn(name="work_project_id",insertable = false, updatable = false)

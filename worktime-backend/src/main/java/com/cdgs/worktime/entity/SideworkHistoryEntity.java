@@ -39,7 +39,7 @@ public class SideworkHistoryEntity implements Serializable {
 	private Date endTime;
 
 	@Column(name = "work_comment")
-	private String workComment1;
+	private String workComment;
 
 	@Column(name = "last_update_time")
 	private String lastUpdate;

@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString
 public class EmployeeHasSideworkHistoryDto {
 
-	private Long employee_id;
-	private Long sidework_history_id;
-	private String work_type;
-	private Long work_project_id;
+	private Long employeeId;
+	private Long sideworkHistoryId;
+	private String workType;
+	private Long workProjectId;
 }
