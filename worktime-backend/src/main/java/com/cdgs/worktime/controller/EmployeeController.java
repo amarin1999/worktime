@@ -31,8 +31,14 @@ public class EmployeeController {
 	public ResponseEntity<ResponseDto<EmployeeDto>> getUsers(@PathVariable(value = "no") String employeeNo) {
 		ResponseDto<EmployeeDto> res = new ResponseDto<>();
 		List<EmployeeDto> dto = new ArrayList<EmployeeDto>();
+
+		
+
 		try {
 			dto = employeeService.getEmployeeByNo(employeeNo);
+			if (dto != null) {
+				throw new Exception("isEmpty");
+			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
@@ -51,7 +57,7 @@ public class EmployeeController {
 		try {
 			return "22222222222222222";
 		} catch (Exception e) {
-			log.error("error >> ",e);
+			log.error("error >> ", e);
 			return "error";
 		}
 	}
