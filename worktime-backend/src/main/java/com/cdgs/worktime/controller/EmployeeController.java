@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/t")
+@RequestMapping("/getEmployee")
 @Slf4j
 public class EmployeeController {
 
