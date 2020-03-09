@@ -1,6 +1,7 @@
 package com.cdgs.worktime.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -15,29 +16,31 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "sidework_history")
 @Embeddable
 @Getter
 @Setter
 @ToString
-public class EmployeeEntity implements Serializable {
+public class SideworkHistoryEntity implements Serializable {
 	/**
 	* 
 	*/
-	private static final long serialVersionUID = 1003970960014801827L;
+	private static final long serialVersionUID = -3425483119931380227L;
 
 	@Id
-	@Column(name = "id_employee")
+	@Column(name = "id_sidework_history")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long employeeId;
+	private Long sideworkId;
 
-	@Column(name = "employee_no", unique = true)
-	private String employeeno;
+	@Column(name = "start_time")
+	private Date startTime;
 
-	@Column(name = "firstname", unique = true)
-	private String firstname;
+	@Column(name = "end_time")
+	private Date endTime;
 
-	@Column(name = "lastname", unique = true)
-	private String lastname;
+	@Column(name = "work_comment")
+	private String workComment;
 
+	@Column(name = "last_update_time")
+	private String lastUpdate;
 }
