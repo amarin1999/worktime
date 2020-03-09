@@ -36,7 +36,7 @@ public class EmployeeController {
 
 		try {
 			dto = employeeService.getEmployeeByNo(employeeNo);
-			if (dto != null) {
+			if (dto == null) {
 				throw new Exception("NotFound");
 				
 			}
