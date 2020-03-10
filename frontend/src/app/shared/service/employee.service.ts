@@ -21,7 +21,7 @@ export class EmployeeService {
         return {
           status: response['result'],
           code: response['code'],
-          data: response['data'] as Employee
+          data: response['data'][0] as Employee
         }
       }));
     } catch (error) {

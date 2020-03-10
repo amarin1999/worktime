@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Employee } from 'src/app/shared/interfaces/employee';
+
 import { EmployeeService } from 'src/app/shared/service/employee.service';
+
 
 
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  styleUrls: ['./signin.component.scss'],
+ 
 })
+
 export class SigninComponent implements OnInit {
 
   form: FormGroup;
@@ -16,7 +22,9 @@ export class SigninComponent implements OnInit {
 
   constructor(
     private builder: FormBuilder,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private route: Router,
+    
   ) { }
 
   ngOnInit(): void {
@@ -32,10 +40,14 @@ export class SigninComponent implements OnInit {
   onSubmit(event: Event): void {
     event.preventDefault();
     this.employeeService.getEmployee(this.form.get('employeeId').value).subscribe(response => {
-      if (response.data) {
-        console.log({ response });
+      const employee: Employee = response.data;
+      if (employee) {
+        console.table(response);
+        localStorage.setItem('employeeId', employee.no);
+        this.route.navigate(['']);
+      }else{
+        // this.messageService.add({key: 'tl', severity:'success', summary: 'Summary Text', detail: 'Detail Text'});
       }
-
     })
 
   }

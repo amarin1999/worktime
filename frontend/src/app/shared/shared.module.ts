@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 // primeng
 import { SidebarModule } from 'primeng/sidebar';
 
+
 // material
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,11 +20,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+
+
 // fontawesome
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFacebook, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { faClock, faHistory } from '@fortawesome/free-solid-svg-icons'
 import { EmployeeService } from './service/employee.service';
+import { AuthService } from './service/auth.service';
 
 
 @NgModule({
@@ -46,9 +50,9 @@ import { EmployeeService } from './service/employee.service';
     MatMenuModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [EmployeeService]
+  providers: [EmployeeService, AuthService]
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {
