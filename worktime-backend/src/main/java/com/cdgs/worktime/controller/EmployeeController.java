@@ -35,13 +35,13 @@ public class EmployeeController {
 
 		try {
 			dto = employeeService.getEmployeeByNo(employeeNo);
-			if (dto.size() == 0) {
-				throw new Exception("NotFound");
-
-			}
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
+			if (dto.size() == 0) {
+				return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.NOT_FOUND);
+
+			}
 			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error(e.getMessage());
