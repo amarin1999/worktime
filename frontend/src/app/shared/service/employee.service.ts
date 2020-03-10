@@ -25,7 +25,8 @@ export class EmployeeService {
         }
       }));
     } catch (error) {
-      console.table(error);
+      console.log('fdafasd')
+      console.table(error.message);
     }
   }
 }

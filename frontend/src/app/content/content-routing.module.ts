@@ -2,17 +2,20 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SigninComponent } from './signin/signin.component';
 import { ContentComponent } from './content.component';
+import { AuthGuard } from '../shared/guard/auth.guard';
 
 
 const routes: Routes = [
       {
-            path: '',
+            path: 'home',
             component: ContentComponent,
+            canActivate: [AuthGuard],
             children: [
                   {
-                        path: 'home',
+                        path: '',
                         component: SigninComponent,
                   },
+                
             ]
       }
 ]

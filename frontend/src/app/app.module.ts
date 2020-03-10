@@ -9,8 +9,6 @@ import { environment } from '../environments/environment';
 // sub module
 import { CoreModule } from './core/core.module';
 import { ContentModule } from './content/content.module';
-import { HttpClientModule } from '@angular/common/http';
-
 
 @NgModule({
   declarations: [
@@ -21,8 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     CoreModule,
-    HttpClientModule,
-    ContentModule,    
+    ContentModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
