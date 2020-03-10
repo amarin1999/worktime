@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 })
 export class NavbarComponent implements OnInit {
   showToggle: boolean = false;
-  employee: Observable<Employee>;
+  employee: Employee;
 
   constructor(
     public authService: AuthService,
@@ -22,7 +22,8 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.employee = this.employeeService.getEmployee(localStorage.getItem('employeeId')).pipe(map(res => res.data));
+   this.employeeService.getEmployee(localStorage.getItem('employeeId')).subscribe(res => this.employee = res.data);
+   console.log(this.employee);
   }
 
   onSignOut(): void {

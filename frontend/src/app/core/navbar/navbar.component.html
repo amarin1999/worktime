@@ -11,10 +11,11 @@
                                     <mat-card-header>
                                           <div mat-card-avatar class="user-nav-image"></div>
                                           <mat-card-title style="color: #333377;">
-                                                {{(employee | async)?.firstname }}
-                                                {{(employee | async)?.lastname }}
+                                                {{employee.firstname }}
+                                                {{employee.lastname }}
                                           </mat-card-title>
-                                          <mat-card-subtitle style="color: #333377;"> รหัสพนักงาน {{(employee | async)?.no }}
+                                          <mat-card-subtitle style="color: #333377;"> รหัสพนักงาน
+                                                {{employee.no}}
                                           </mat-card-subtitle>
                                     </mat-card-header>
 
