@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { ContentModule } from './content/content.module';
 // sub module
 import { CoreModule } from './core/core.module';
-
 import { SharedModule } from './shared/shared.module';
 
 

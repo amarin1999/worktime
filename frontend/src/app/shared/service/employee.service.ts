@@ -17,15 +17,13 @@ export class EmployeeService {
   getEmployee(id: string): Observable<{ status: string, data: Employee, code: number }> {
     try {
       return this.http.get(`${ApiConstants.baseURl}/getEmployee/${id}`).pipe(map(response => {
-        
         return {
           status: response['result'],
           code: response['code'],
           data: response['data'][0] as Employee
         }
       }));
-    } catch (error) {
-      console.log('fdafasd')
+    } catch (error) {     
       console.table(error.message);
     }
   }

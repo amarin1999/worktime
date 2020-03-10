@@ -1,3 +1,4 @@
+
 <div class="p-grid animation-page ">
       <div class="p-col-12" style="text-align: center;">
             <img src="../../../assets/images/banner.png" style="height:20vh ;width: auto;" /><br /><br />
@@ -14,21 +15,24 @@
 
                                     <mat-label>รหัสพนักงาน</mat-label>
                                     <input matInput class="input-id-employee" formControlName="employeeId">
-
+                                    <mat-error *ngIf="form.controls.employeeId.hasError('required')">
+                                          กรุณากรอกรหัสพนักงาน !
+                                    </mat-error>
 
                               </mat-form-field>
 
                               <button mat-raised-button class="btn-signin">
-                                    <i class="pi pi-chevron-right icon-btn"></i>
+                                    <em class="pi pi-chevron-right icon-btn"></em>
                                     <div class="confirm-text">ยืนยัน<i class="pi pi-chevron-right"
                                                 style="vertical-align: middle;"></i></div>
                               </button>
                         </form>
 
                   </mat-card-content>
-                 
+
             </mat-card>
       </div>
 </div>
-<!-- 
-<p-toast [style]="{marginTop: '80px'}" position="top-left" key="tl"></p-toast> -->
+
+
+<p-toast key="errorMessage" position="bottom-center"></p-toast>

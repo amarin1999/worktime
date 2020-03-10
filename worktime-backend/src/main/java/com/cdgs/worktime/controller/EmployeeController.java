@@ -40,6 +40,7 @@ public class EmployeeController {
 			res.setCode(200);
 			if (dto.size() == 0) {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				res.setErrorMessage("ไม่พบข้อมูลผู้ใช้");
 				res.setData(dto);
 				res.setCode(404);
 				return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.NOT_FOUND);

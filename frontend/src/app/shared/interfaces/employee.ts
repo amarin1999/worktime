@@ -1,7 +1,7 @@
 export interface Employee {
       id: string,
-      firstName: string,
+      firstname: string,
       no: string,
-      lastName: string,
+      lastname: string,
       image?: string
 }

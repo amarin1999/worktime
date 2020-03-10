@@ -13,14 +13,13 @@ const routes: Routes = [
   {
     path: "signin",
     component: SigninComponent
+   
   },
   {
     path: "**",
     redirectTo: 'home',
     pathMatch: 'full'
   }
-
-
 ];
 
 @NgModule({

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { faHistory, faUserClock, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/shared/service/auth.service';
+import { EmployeeService } from 'src/app/shared/service/employee.service';
+import { Observable } from 'rxjs';
+import { Employee } from 'src/app/shared/interfaces/employee';
+import { map } from 'rxjs/operators';
+
 
 
 @Component({
@@ -9,15 +14,18 @@ import { faHistory, faUserClock, faCalendarPlus } from '@fortawesome/free-solid-
 })
 export class NavbarComponent implements OnInit {
   showToggle: boolean = false;
-  navItem = [
-    { icon: faCalendarPlus, name: 'ลงเวลาทำไซด์งาน' },
-    { icon: faUserClock, name: 'การทำงานล่วงเวลา' },
-    { icon: faHistory, name: 'ประวัติการลงเวลา' }
-  ];
+  employee: Observable<Employee>;
 
-  constructor() { }
+  constructor(
+    public authService: AuthService,
+    private employeeService: EmployeeService
+  ) { }
 
   ngOnInit(): void {
+    this.employee = this.employeeService.getEmployee(localStorage.getItem('employeeId')).pipe(map(res => res.data));
   }
 
+  onSignOut(): void {
+    this.authService.logout();
+  }
 }

@@ -9,7 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 // primeng
 import { SidebarModule } from 'primeng/sidebar';
-
+import {ToastModule} from 'primeng/toast';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 // material
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -29,6 +31,8 @@ import { faClock, faHistory } from '@fortawesome/free-solid-svg-icons'
 import { EmployeeService } from './service/employee.service';
 import { AuthService } from './service/auth.service';
 
+//spinner;
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [],
@@ -51,6 +55,11 @@ import { AuthService } from './service/auth.service';
     ReactiveFormsModule,
     MatTooltipModule,
     HttpClientModule,
+    ToastModule,
+    MessagesModule,
+    MessagesModule,
+    NgxSpinnerModule
+    
   ],
   providers: [EmployeeService, AuthService]
 })

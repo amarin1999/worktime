@@ -103,13 +103,10 @@ mat-card {
 
 //card
 .user-nav-image {
-  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-image: url("../../../assets/images/user.png");
   background-size: cover;
 }
-.logout-nav-image {
-  background-image: url("https://image.freepik.com/free-vector/illustration-exit-door_53876-5844.jpg");
-  background-size: cover;
-}
+
 
 .card-nav {
   background: none;
