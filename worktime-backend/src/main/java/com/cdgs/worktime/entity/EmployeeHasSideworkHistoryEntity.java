@@ -29,19 +29,19 @@ public class EmployeeHasSideworkHistoryEntity implements Serializable {/**
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "employee_id", insertable = false, updatable = false)
+	@JoinColumn(name = "id_employee")
 	private EmployeeEntity employeeId;
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name="sidework_history_id",insertable = false, updatable = false)
+	@JoinColumn(name="id_sidework_history")
 	private SideworkHistoryEntity sideworkHistoryId;
 	
 	@Column(name="work_type")
 	private String workType;
 	
 	@ManyToOne
-	@JoinColumn(name="work_project_id",insertable = false, updatable = false)
+	@JoinColumn(name="id_work_project")
 	private WorkProjectEntity projectId;
 	
 

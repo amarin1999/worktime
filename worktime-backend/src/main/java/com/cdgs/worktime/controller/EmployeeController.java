@@ -55,13 +55,4 @@ public class EmployeeController {
 		}
 	}
 
-	@GetMapping(path = "")
-	public String getUsers() {
-		try {
-			return "22222222222222222";
-		} catch (Exception e) {
-			log.error("error >> ", e);
-			return "error";
-		}
-	}
 }

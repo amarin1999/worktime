@@ -7,5 +7,6 @@ import com.cdgs.worktime.dto.EmployeeDto;
 public interface EmployeeService {
 
 	List<EmployeeDto> getEmployeeByNo(String no);
+	EmployeeDto updateEmployeeName(Long id, EmployeeDto body);
 
 }

@@ -2,6 +2,7 @@ package com.cdgs.worktime.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return dto;
 		
+	}
+
+	@Override
+	public EmployeeDto updateEmployeeName(Long id,EmployeeDto body) {
+		EmployeeEntity employeeData = convDtotoEntity(body);
+		EmployeeEntity entity = new EmployeeEntity();
+		Optional<EmployeeEntity> employeeEntity = employeeRespository.findById(String.valueOf(id));
+		if (!employeeEntity.isPresent()) {
+			return mapEntityToDto(employeeEntity.get());
+		}
+		employeeData.setEmployeeId(id);
+		entity = employeeRespository.save(employeeData);
+		return mapEntityToDto(entity);
+	}
+
+	private EmployeeEntity convDtotoEntity(EmployeeDto body) {
+		EmployeeEntity entity = new EmployeeEntity();
+		entity.setFirstname(body.getFirstname());
+		entity.setLastname(body.getLastname());
+		return entity;
 	}
 
 }
