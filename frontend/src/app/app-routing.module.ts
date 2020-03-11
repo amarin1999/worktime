@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SigninComponent } from './content/signin/signin.component';
+import { SigninGuard } from './shared/guard/signin.guard';
 
 const routes: Routes = [
   {
@@ -12,14 +13,13 @@ const routes: Routes = [
   {
     path: "signin",
     component: SigninComponent
+   
   },
   {
     path: "**",
     redirectTo: 'home',
     pathMatch: 'full'
   }
-
-
 ];
 
 @NgModule({

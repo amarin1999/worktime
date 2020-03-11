@@ -4,32 +4,40 @@
             <div class="navbar-header">
                   <img src="../../../assets/images/banner.png" class="img-logo">
             </div>
-            <div class="main_list">
-                  <ul class="navlinks">
-                        <mat-card routerLink="/sss" class="card-nav">
-                              <mat-card-header>
-                                    <div mat-card-avatar class="user-nav-image"></div>
-                                    <mat-card-title style="color: #333377;">Shiba Inu</mat-card-title>
-                                    <mat-card-subtitle style="color: #333377;">Dog Breed</mat-card-subtitle>
-                              </mat-card-header>
+            <div *ngIf="authService.isLoggedIn() | async">
+                  <div class="main_list">
+                        <ul class="navlinks">
+                              <mat-card routerLink="/sss" class="card-nav">
+                                    <mat-card-header>
+                                          <div mat-card-avatar class="user-nav-image"></div>
+                                          <mat-card-title style="color: #333377;">
+                                                {{employee.firstname}}
+                                                {{employee.lastname }}
+                                          </mat-card-title>
+                                          <mat-card-subtitle style="color: #333377;"> รหัสพนักงาน
+                                                {{employee.no}}
+                                          </mat-card-subtitle>
+                                    </mat-card-header>
 
-                        </mat-card>
+                              </mat-card>
 
-                        <mat-card routerLink="/sss" class="card-nav">
+                              <mat-card routerLink="/sss" class="card-nav">
 
-                              <i class="pi pi-sign-out signout-btn" matTooltip="ออกจากระบบ"
-                                    matTooltipClass="tooltip-signout">
-                              </i>
+                                    <em class="pi pi-sign-out signout-btn" (click)="onSignOut()" matTooltip="ออกจากระบบ"
+                                          matTooltipClass="tooltip-signout">
+                                    </em>
 
-                        </mat-card>
+                              </mat-card>
 
-                  </ul>
+                        </ul>
+                  </div>
+                  <span class="navTrigger" (click)="showToggle = true">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                  </span>
+
             </div>
-            <span class="navTrigger" (click)="showToggle = true">
-                  <i></i>
-                  <i></i>
-                  <i></i>
-            </span>
 
       </nav>
 
@@ -42,5 +50,6 @@
                   <span class="text-menu">ออกจากระบบ</span>
             </div>
       </p-sidebar>
+
 
 </mat-grid-list>

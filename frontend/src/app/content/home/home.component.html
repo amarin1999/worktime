@@ -1,0 +1,40 @@
+<div class="p-grid animation-page ">
+      <div class="p-col-12" style="text-align: center;">
+            <img src="../../../assets/images/banner.png" style="height:20vh ;width: auto;" /><br /><br />
+            <h1 class="header-text"> ลงเวลาการทำงานล่วงเวลา และการทำงานไซต์</h1>
+      </div>
+
+</div>
+<div class="p-grid animation-page ">
+      <div class="p-col-10 p-offset-1" style="text-align: center;">
+            <div class="p-grid">
+                  <div class="p-col" *ngFor="let item of menu">
+                        <mat-card>
+                              <mat-card-header class="align-center-card">
+                                    <mat-card-title>{{item.title}}</mat-card-title>
+                              </mat-card-header>
+                              <img mat-card-image src="../../../assets/images/{{item.img}}" style="width:40%"
+                                    alt="logo">
+                              <mat-card-content>
+                                    <p style="font-size: 1em;overflow: hidden;">
+                                          {{item.detail}}
+                                    </p>
+                              </mat-card-content>
+                              <mat-card-actions>
+
+                                    <button mat-raised-button class="btn-menu">
+                                        
+                                          <div class="confirm-text">ยืนยัน<i class="pi pi-chevron-right"
+                                                      style="vertical-align: middle;"></i></div>
+                                    </button>
+                              </mat-card-actions>
+                        </mat-card>
+                  </div>
+
+            </div>
+
+      </div>
+
+</div>
+
+<p-toast key="errorMessage" position="bottom-center"></p-toast>

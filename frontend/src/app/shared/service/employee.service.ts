@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConstants } from '../constants/ApiConstants';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Employee } from '../interfaces/employee';
 
@@ -9,7 +9,7 @@ import { Employee } from '../interfaces/employee';
   providedIn: 'root'
 })
 export class EmployeeService {
-
+  private employee = new Subject<Employee>();
   constructor(
     private http: HttpClient
   ) { }
@@ -17,16 +17,21 @@ export class EmployeeService {
   getEmployee(id: string): Observable<{ status: string, data: Employee, code: number }> {
     try {
       return this.http.get(`${ApiConstants.baseURl}/getEmployee/${id}`).pipe(map(response => {
-        
+        this.employee.next(response['data'][0]);
         return {
           status: response['result'],
           code: response['code'],
-          data: response['data'] as Employee
+          data: response['data'][0] as Employee
         }
       }));
     } catch (error) {
-      console.log('fdafasd')
       console.table(error.message);
     }
   }
+
+  getEmployeeOnline(): Subject<Employee> {
+    return this.employee;
+  }
+
+
 }
