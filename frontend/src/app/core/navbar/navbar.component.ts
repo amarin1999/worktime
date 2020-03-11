@@ -21,9 +21,8 @@ export class NavbarComponent implements OnInit {
     private employeeService: EmployeeService
   ) { }
 
-  ngOnInit(): void {
-   this.employeeService.getEmployee(localStorage.getItem('employeeId')).subscribe(res => this.employee = res.data);
-   console.log(this.employee);
+  ngOnInit(): void {    
+    this.employeeService.getEmployeeOnline().subscribe(res => this.employee = res);
   }
 
   onSignOut(): void {
