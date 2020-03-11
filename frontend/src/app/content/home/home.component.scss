@@ -4,23 +4,65 @@
 }
 mat-card-title {
   font-size: 1.5em !important;
+  color: #333377;
 }
 mat-card {
-  padding: 3vw 2vw;
+  padding: 50px 2vw;
+  border-radius: 20px;
+  font-size: 1.3em;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+mat-catd-header {
+  font-size: 50px;
+}
+mat-card-content {
+  display: flex;
+  flex: 1;
+}
+
+mat-card-footer {
+  margin-top: auto;
 }
 .btn-menu {
   background-color: #333377;
   color: whitesmoke;
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 5px;
-  margin-left: 10px;
   border-radius: 30px/30px;
   transition: 0.3s;
   width: 70%;
 }
 .btn-menu:hover {
   transform: scale(1.05, 1.05);
-  background-color: whitesmoke;
-  color: indigo;
+  background-color: #336699;
 }
+
+.layout-wrapper {
+  display: block;
+
+  height: auto !important;
+}
+
+// เผื่อใช้ แนวนอน scrollbar https://codeburst.io/how-to-create-horizontal-scrolling-containers-d8069651e9c6
+// .scrolling-wrapper {
+//   overflow-x: scroll;
+//   overflow-y: hidden;
+//   white-space: nowrap;
+//   -webkit-overflow-scrolling: touch;
+//   .card {
+//     display: inline-block;
+//   }
+// }
+
+// .scrolling-wrapper-flexbox {
+//   display: flex;
+//   flex-wrap: nowrap;
+//   overflow-x: auto;
+
+//   .card {
+//     flex: 0 0 auto;
+//   }
+// }

@@ -38,11 +38,12 @@ body {
   height: 100%;
   background-size: cover;
   background-attachment: fixed;
-  background-image: url("https://images.pexels.com/photos/1029615/pexels-photo-1029615.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-image: url("https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
 }
 * {
   font-family: "Kanit";
 }
+
 h4 {
   font-family: "Kanit";
 }
@@ -50,6 +51,10 @@ h4 {
 .mat-form-field-flex {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+mat-dialog-title {
+  font-family: "Kanit";
+}
+
 .tooltip-signout {
   background-color: indigo;
   padding: 10px;
@@ -57,7 +62,10 @@ h4 {
   font-family: "Kanit";
   border-radius: 5px !important;
 }
-
+.img-form {
+  width: 50px;
+  height: auto;
+}
 .header-text {
   font-size: 2.5em !important;
   font-weight: bold !important;

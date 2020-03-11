@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
 import { Employee } from 'src/app/shared/interfaces/employee';
 import { EmployeeService } from 'src/app/shared/service/employee.service';
-
+import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { EmployeeService } from 'src/app/shared/service/employee.service';
 })
 
 export class SigninComponent implements OnInit {
-  @Output() statusLoading = new EventEmitter<boolean>();
+  cdgImagePath: string = LayoutConstants.cdgImagePath;
   form: FormGroup;
 
 
@@ -26,9 +26,10 @@ export class SigninComponent implements OnInit {
     private employeeService: EmployeeService,
     private route: Router,
     private messageService: MessageService,
-    private spinner: NgxSpinnerService
-
+    private spinner: NgxSpinnerService,
   ) { }
+
+
 
   ngOnInit(): void {
     this.buildForm();
