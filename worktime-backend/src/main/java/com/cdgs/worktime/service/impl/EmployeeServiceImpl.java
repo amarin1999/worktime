@@ -61,24 +61,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 
-	@Override
-	public EmployeeDto updateEmployeeName(Long id,EmployeeDto body) {
-		EmployeeEntity employeeData = convDtotoEntity(body);
-		EmployeeEntity entity = new EmployeeEntity();
-		Optional<EmployeeEntity> employeeEntity = employeeRespository.findById(String.valueOf(id));
-		if (!employeeEntity.isPresent()) {
-			return mapEntityToDto(employeeEntity.get());
-		}
-		employeeData.setEmployeeId(id);
-		entity = employeeRespository.save(employeeData);
-		return mapEntityToDto(entity);
-	}
+//	@Override
+//	public EmployeeDto updateEmployeeName(Long id,EmployeeDto body) {
+//		EmployeeEntity employeeData = convDtotoEntity(body);
+//		EmployeeEntity entity = new EmployeeEntity();
+//		Optional<EmployeeEntity> employeeEntity = employeeRespository.findById(String.valueOf(id));
+//		if (!employeeEntity.isPresent()) {
+//			return mapEntityToDto(employeeEntity.get());
+//		}
+//		employeeData.setEmployeeId(id);
+//		entity = employeeRespository.save(employeeData);
+//		return mapEntityToDto(entity);
+//	}
 
 	private EmployeeEntity convDtotoEntity(EmployeeDto body) {
 		EmployeeEntity entity = new EmployeeEntity();
 		entity.setFirstname(body.getFirstname());
 		entity.setLastname(body.getLastname());
 		return entity;
+	}
+
+	@Override
+	public EmployeeDto updateEmployeeName(Long id, EmployeeDto body) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

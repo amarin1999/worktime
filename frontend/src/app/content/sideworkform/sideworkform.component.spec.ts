@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidworkformComponent } from './sidworkform.component';
+import { SideworkformComponent } from './sideworkform.component';
 
-describe('SidworkformComponent', () => {
-  let component: SidworkformComponent;
-  let fixture: ComponentFixture<SidworkformComponent>;
+describe('SideworkformComponent', () => {
+  let component: SideworkformComponent;
+  let fixture: ComponentFixture<SideworkformComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidworkformComponent ]
+      declarations: [ SideworkformComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SidworkformComponent);
+    fixture = TestBed.createComponent(SideworkformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

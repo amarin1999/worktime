@@ -5,7 +5,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 //component
 import { OvertimeworkformComponent } from "../overtimeworkform/overtimeworkform.component";
-import { SidworkformComponent } from "../sidworkform/sidworkform.component";
+import { SideworkformComponent } from "../sideworkform/sideworkform.component";
 
 @Component({
   selector: "app-home",
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
     {
       title: "ทำงานนอกสถานที่",
       img: LayoutConstants.sideWorkImagePath,
-      overlay: SidworkformComponent
+      overlay: SideworkformComponent
     },
     {
       title: "ทำงานล่วงเวลา",
@@ -37,8 +37,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   openDialog(overlay: ComponentType<unknown>): void {
-    const configDialog: MatDialogConfig<any> = {
-      // width: '100vw',
+    const configDialog: MatDialogConfig<any> = {      
       disableClose: true,
       autoFocus: false
     };

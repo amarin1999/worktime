@@ -1,0 +1,17 @@
+<div class="wrap-form">
+  <mat-dialog-content>
+    <div>{{ confirmData.textConfirm }}</div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="sendDialogStatus(false)">
+      ยกเลิก
+    </button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      (click)="sendDialogStatus(true)"
+    >
+      ตกลง
+    </button>
+  </mat-dialog-actions>
+</div>

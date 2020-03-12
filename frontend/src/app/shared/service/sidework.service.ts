@@ -14,14 +14,16 @@ export class SideworkService {
 
   addSidework(body: SideWork): any {
     try {
-      return this.http.post(`${ApiConstants.baseURl}/sideWork`, body).pipe(
-        map(response => {
-          return {
-            status: response["result"],
-            code: response["code"]
-          };
-        })
-      );
+      return this.http
+        .post(`${ApiConstants.baseURl}/sidework/posttime`, body)
+        .pipe(
+          map(response => {
+            return {
+              status: response["result"],
+              code: response["code"]
+            };
+          })
+        );
     } catch (error) {
       console.table(error);
     }
