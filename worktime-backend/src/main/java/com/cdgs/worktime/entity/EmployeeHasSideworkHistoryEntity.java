@@ -22,27 +22,25 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class EmployeeHasSideworkHistoryEntity implements Serializable {/**
-	 * 
-	 */
+public class EmployeeHasSideworkHistoryEntity implements Serializable {
+	/**
+	* 
+	*/
 	private static final long serialVersionUID = -3425483119931380227L;
 
 	@Id
+	@Column(name ="employee_has_sidework_history_id")
+	private Long employeeHasSideworkHistoryId;
+
 	@ManyToOne
-	@JoinColumn(name = "id_employee")
+	@JoinColumn(name = "id_employee", insertable = false, updatable = false)
 	private EmployeeEntity employeeId;
-	
-	@Id
-	@ManyToOne
-	@JoinColumn(name="id_sidework_history")
-	private SideworkHistoryEntity sideworkHistoryId;
-	
-	@Column(name="work_type")
+
+	@Column(name = "work_type")
 	private String workType;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_work_project")
+	@JoinColumn(name = "id_work_project", insertable = false, updatable = false)
 	private WorkProjectEntity projectId;
-	
 
 }

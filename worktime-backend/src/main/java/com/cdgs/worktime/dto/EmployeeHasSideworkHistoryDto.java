@@ -12,7 +12,7 @@ import lombok.ToString;
 public class EmployeeHasSideworkHistoryDto {
 
 	private Long employeeId;
-	private Long sideworkHistoryId;
+	private Long employeehasId;
 	private String workType;
 	private Long workProjectId;
 	

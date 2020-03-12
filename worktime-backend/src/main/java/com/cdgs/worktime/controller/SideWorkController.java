@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
+import com.cdgs.worktime.dto.SideWorkPostTimeDto;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
+import com.cdgs.worktime.service.EmployeeHasSideworkHistoryService;
 import com.cdgs.worktime.service.EmployeeService;
 import com.cdgs.worktime.service.SideWorkService;
 import com.cdgs.worktime.util.ResponseDto;
@@ -35,6 +37,7 @@ public class SideWorkController {
 	@Autowired()
 	SideWorkService sideworkservice;
 	EmployeeService employeeservice;
+	EmployeeHasSideworkHistoryService employeeHasSideworkHistoryService;
 
 	@GetMapping(path = "/getsideworkbyid/{id}")
 	public ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkById(@PathVariable("id") Long id) {
@@ -63,7 +66,8 @@ public class SideWorkController {
 	}
 
 	@PostMapping(path = "/postname/{id}")
-	public ResponseEntity<ResponseDto<EmployeeDto>> postTitleName(@Valid @RequestBody EmployeeDto body ,@PathVariable("id") Long id) {
+	public ResponseEntity<ResponseDto<EmployeeDto>> postTitleName(@Valid @RequestBody EmployeeDto body,
+			@PathVariable("id") Long id) {
 		ResponseDto<EmployeeDto> res = new ResponseDto<EmployeeDto>();
 		List<EmployeeDto> locations = new ArrayList<EmployeeDto>();
 		EmployeeDto location = new EmployeeDto();
@@ -83,20 +87,26 @@ public class SideWorkController {
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
 
 	@PostMapping(path = "/posttime")
 	public ResponseEntity<ResponseDto<SideworkHistoryDto>> postSideWorkTime(
-			@Valid @RequestBody SideworkHistoryDto body) {
+			@Valid @RequestBody SideWorkPostTimeDto body) {
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
+		SideworkHistoryDto data = new SideworkHistoryDto();
+		
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
-		SideworkHistoryDto sideTime = new SideworkHistoryDto();
+		
+		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
+		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();
+		employeeData = employeeservice.getEmployeeByNo(body.getEmployeeNo());
+		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService
+				.getEmployeeHasHistory(employeeData.get(0).getId());
 		try {
-			sideTime = sideworkservice.postSideWorkTime(body);
-			if (sideTime != null) {
-				dto.add(sideTime);
-			}
+			data = sideworkservice.postSideWorkTime(body, employeeHasSideWorkHistoryId);
+			dto.add(data);
+			
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);

@@ -9,13 +9,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SideworkHistoryDto {
+public class SideWorkPostTimeDto {
 
-	private Long id;
-	private Long employeehasId;
 	private Date startTime;
 	private Date endTime;
-	private String workComment;
-	private Date lastUpdate;
-	private Boolean workAnyWhere;
+	private Boolean workAnyTime;
+	private String remark;
+	private String employeeNo;
 }

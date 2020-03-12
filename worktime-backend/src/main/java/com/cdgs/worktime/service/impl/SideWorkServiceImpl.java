@@ -1,15 +1,20 @@
 package com.cdgs.worktime.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.ls.LSInput;
 
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
+import com.cdgs.worktime.dto.SideWorkPostTimeDto;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.entity.EmployeeEntity;
 import com.cdgs.worktime.entity.EmployeeHasSideworkHistoryEntity;
@@ -37,7 +42,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 
 		}
 		return mapListEntityToDto(entity);
-		
+
 	}
 
 	private List<SideworkHistoryDto> mapListEntityToDto(List<SideworkHistoryEntity> entities) {
@@ -75,8 +80,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 		}
 		return convEntityToDto(entity);
 	}
-	
-	
+
 	private EmployeeDto convEntityToDto(EmployeeEntity entity) {
 		EmployeeDto dto = new EmployeeDto();
 		if (entity != null) {
@@ -91,21 +95,6 @@ public class SideWorkServiceImpl implements SideWorkService {
 		entity.setFirstname(employeeName.getFirstname());
 		entity.setLastname(employeeName.getLastname());
 		return entity;
-	}
-
-	
-	@Override
-	public SideworkHistoryDto postSideWorkTime(SideworkHistoryDto sideTime) {
-		SideworkHistoryEntity sideTimeData = convDtoToEntityTime(sideTime);
-		SideworkHistoryEntity entity = new SideworkHistoryEntity();
-		try {
-			if (sideTime != null) {
-				entity = sideworkrepository.save(sideTimeData);
-			}
-		} catch (Exception e) {
-			log.error("getTime Error=>" + e.getMessage());
-		}
-		return convEntityToDtoTime(entity);
 	}
 
 	private SideworkHistoryDto convEntityToDtoTime(SideworkHistoryEntity entity) {
@@ -125,5 +114,56 @@ public class SideWorkServiceImpl implements SideWorkService {
 		}
 		return dto;
 	}
+
+	@Override
+	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,
+			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData) {
+
+		SideworkHistoryEntity entity = new SideworkHistoryEntity();
+		SideworkHistoryEntity dataPostWorkToEntity = convDtoToPostTime(sideTime);
+
+		try {
+			Optional<SideworkHistoryEntity> dateSideWork = dateSideWork = sideworkrepository
+					.findDateTime(sideTime.getStartTime(), employeeHasSideWorkHistoryData.getEmployeehasId());
+			if (!dateSideWork.isPresent()) {
+				throw new Exception("Not Found");
+			}
+			dataPostWorkToEntity.setEndTime(dateSideWork.get().getEndTime());
+			dataPostWorkToEntity.setStartTime(dateSideWork.get().getStartTime());
+			dataPostWorkToEntity.setWorkAnyWhere(dateSideWork.get().getWorkAnyWhere());
+			dataPostWorkToEntity.setWorkComment(dateSideWork.get().getWorkComment());
+
+			entity = sideworkrepository.save(dataPostWorkToEntity);
+		} catch (Exception e) {
+			log.error("getName Error=>" + e.getMessage());
+		}
+		return convEntityToDtoPostTime(entity);
+
+	}
+
+	private SideworkHistoryEntity convDtoToPostTime(SideWorkPostTimeDto dto) {
+		SideworkHistoryEntity entity = new SideworkHistoryEntity();
+		if (dto != null) {
+			entity.setEndTime(dto.getEndTime());
+			entity.setLastUpdate(Calendar.getInstance().getTime());
+			entity.setStartTime(dto.getStartTime());
+			entity.setWorkComment(dto.getRemark());
+			entity.setWorkAnyWhere(dto.getWorkAnyTime());
+		}
+		return entity;
+	}
+	private SideworkHistoryDto convEntityToDtoPostTime(SideworkHistoryEntity dto) {
+		SideworkHistoryDto entity = new SideworkHistoryDto();
+		if (dto != null) {
+			entity.setEndTime(dto.getEndTime());
+			entity.setLastUpdate(Calendar.getInstance().getTime());
+			entity.setStartTime(dto.getStartTime());
+			entity.setWorkComment(dto.getWorkComment());
+			entity.setWorkAnyWhere(dto.getWorkAnyWhere());
+		}
+		return entity;
+	}
+
+
 
 }

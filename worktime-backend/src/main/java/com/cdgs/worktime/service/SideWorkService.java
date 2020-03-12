@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
+import com.cdgs.worktime.dto.SideWorkPostTimeDto;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 
 public interface SideWorkService {
@@ -12,5 +13,7 @@ public interface SideWorkService {
 
 	EmployeeDto postEmployeeName(EmployeeDto employeeName);
 	
-	SideworkHistoryDto postSideWorkTime(SideworkHistoryDto sideTime);
+
+	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData);
+
 }

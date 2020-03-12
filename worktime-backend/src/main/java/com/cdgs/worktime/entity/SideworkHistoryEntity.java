@@ -9,7 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,16 +35,26 @@ public class SideworkHistoryEntity implements Serializable {
 	@Column(name = "id_sidework_history")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long sideworkId;
+	
+	@ManyToOne
+	@JoinColumn(name ="employee_has_sidework_history_id", insertable = false, updatable = false)
+	private EmployeeHasSideworkHistoryEntity employeeHasSideworkHistoryId;
 
 	@Column(name = "start_time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
 
 	@Column(name = "end_time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
 
 	@Column(name = "work_comment")
 	private String workComment;
+	
+	@Column(name = "work_anywhere")
+	private Boolean workAnyWhere;
 
 	@Column(name = "last_update_time")
-	private String lastUpdate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUpdate;
 }
