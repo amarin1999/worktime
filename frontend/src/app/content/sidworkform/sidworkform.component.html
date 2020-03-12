@@ -4,52 +4,72 @@ dfdsafdsafdssdf
       </div>
 </div> -->
 <div class="wrap-form">
-      <h2 mat-dialog-title><img src="https://image.flaticon.com/icons/svg/2666/2666492.svg" class="img-form">
-            ลงเวลาทำงานนอกสถานที่
-      </h2>
+  <h2 mat-dialog-title>
+    <img src="{{ imgLogo }}" class="img-form" alt="" />
+    ลงเวลาทำงานนอกสถานที่
+  </h2>
 
+  <form [formGroup]="formGroupSideWork" (submit)="onSubmit()">
+    <mat-dialog-content>
+      <div class="p-grid">
+        <div class="{{ formGrid }}">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>เวลาเข้างาน</mat-label>
+            <input
+              matInput
+              [ngxMatDatetimePicker]="pickerStartTime"
+              formControlName="startTime"
+              (focus)="pickerStartTime.open()"
+              placeholder="วว/ดด/ปปปป, 00:00"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerStartTime"
+            ></mat-datepicker-toggle>
 
-      <mat-dialog-content>
-
-            <div class="p-grid">
-                  <div class="{{formGrid}}">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                              <mat-label>เวลาเข้างาน</mat-label>
-                              <input matInput [ngxMatDatetimePicker]="pickerStartTime" (focus)="pickerStartTime.open()"
-                                    placeholder="วว/ดด/ปปปป, 00:00">
-                              <mat-datepicker-toggle matSuffix [for]="pickerStartTime"></mat-datepicker-toggle>
-
-                              <ngx-mat-datetime-picker #pickerStartTime></ngx-mat-datetime-picker>
-                        </mat-form-field>
-                  </div>
-                  <div class="{{formGrid}}">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                              <mat-label>เวลาออกงาน</mat-label>
-                              <input matInput [ngxMatDatetimePicker]="pickerEndTime"                              
-                              (focus)="pickerEndTime.open()"                            
-                                    placeholder="วว/ดด/ปปปป, 00:00">
-                              <mat-datepicker-toggle matSuffix [for]="pickerEndTime"></mat-datepicker-toggle>
-                              <ngx-mat-datetime-picker  #pickerEndTime></ngx-mat-datetime-picker>
-                        </mat-form-field>
-                  </div>
-                  <div class="p-col-12">
-                        <div class="{{formGrid}}">
-                              <mat-checkbox [color]="'primary'"class="example-margin">Work Everywhere</mat-checkbox>
-                        </div>
-                  </div>
-                  <div class="p-col-6">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                              <mat-label>หมายเหตุ</mat-label>
-                              <textarea matInput></textarea>
-                        </mat-form-field>
-                  </div>
-
-
-            </div>
-
-      </mat-dialog-content>
-      <mat-dialog-actions align="end">
-            <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
-      </mat-dialog-actions>
+            <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+        </div>
+        <div class="{{ formGrid }}">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>เวลาออกงาน</mat-label>
+            <input
+              matInput
+              [ngxMatDatetimePicker]="pickerEndTime"
+              formControlName="endTime"
+              (focus)="pickerEndTime.open()"
+              placeholder="วว/ดด/ปปปป, 00:00"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerEndTime"
+            ></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker [disableSecond]="true" #pickerEndTime>
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+        </div>
+        <div class="p-col-12">
+          <div class="{{ formGrid }}">
+            <mat-checkbox
+              formControlName="workAnytime"
+              [color]="'primary'"
+              class="example-margin"
+              >Work Anywhere
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="p-col-6">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>หมายเหตุ</mat-label>
+            <textarea formControlName="remark" matInput></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>ยกเลิก</button>
+      <button mat-button [mat-dialog-close]="true" type="submit">ตกลง</button>
+    </mat-dialog-actions>
+  </form>
 </div>

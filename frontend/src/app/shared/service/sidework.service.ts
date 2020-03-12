@@ -4,34 +4,26 @@ import { ApiConstants } from "../constants/ApiConstants";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Employee } from "../interfaces/employee";
+import { SideWork } from "../interfaces/sidework";
 
 @Injectable({
   providedIn: "root"
 })
-export class EmployeeService {
-  private employee = new Subject<Employee>();
+export class SideworkService {
   constructor(private http: HttpClient) {}
 
-  getEmployee(
-    id: string
-  ): Observable<{ status: string; data: Employee; code: number }> {
+  addSidework(body: SideWork): any {
     try {
-      return this.http.get(`${ApiConstants.baseURl}/getEmployee/${id}`).pipe(
+      return this.http.post(`${ApiConstants.baseURl}/sideWork`, body).pipe(
         map(response => {
-          this.employee.next(response["data"][0]);
           return {
             status: response["result"],
-            code: response["code"],
-            data: response["data"][0] as Employee
+            code: response["code"]
           };
         })
       );
     } catch (error) {
-      console.table(error.message);
+      console.table(error);
     }
-  }
-
-  getEmployeeOnline(): Subject<Employee> {
-    return this.employee;
   }
 }

@@ -1,37 +1,44 @@
 <div class="p-grid animation-page ">
-      <div class="p-col-12" style="text-align: center;">
-            <img src="{{cdgImagePath}}" style="height:20vh ;width: auto;" /><br /><br />
-            <h1 class="header-text"> ลงเวลาการทำงานล่วงเวลา และการทำงานไซต์</h1>
-      </div>
-      <div class="p-lg-6 p-lg-offset-3 p-col-10 p-offset-1">
-            <mat-card class="card">
-                  <mat-card-title class="title-card">
-                        เริ่มต้นใช้งาน
-                  </mat-card-title>
-                  <mat-card-content class="card-content">
-                        <form [formGroup]="form" (submit)="onSubmit($event)">
-                              <mat-form-field appearance="outline" class="input-id-employee">
+  <div class="p-col-12" style="text-align: center;">
+    <img
+      src="{{ cdgImagePath }}"
+      style="height:20vh ;width: auto;"
+      alt="cdg"
+    /><br /><br />
+    <h1 class="header-text">ลงเวลาการทำงานล่วงเวลา และการทำงานไซต์</h1>
+  </div>
+  <div class="p-lg-6 p-lg-offset-3 p-col-10 p-offset-1">
+    <mat-card class="card">
+      <mat-card-title class="title-card">
+        เริ่มต้นใช้งาน
+      </mat-card-title>
+      <mat-card-content class="card-content">
+        <form [formGroup]="form" (submit)="onSubmit()">
+          <mat-form-field appearance="outline" class="input-id-employee">
+            <mat-label>รหัสพนักงาน</mat-label>
+            <input
+              matInput
+              class="input-id-employee"
+              formControlName="employeeId"
+            />
+            <mat-error *ngIf="form.controls.employeeId.hasError('required')">
+              กรุณากรอกรหัสพนักงาน !
+            </mat-error>
+          </mat-form-field>
 
-                                    <mat-label>รหัสพนักงาน</mat-label>
-                                    <input matInput class="input-id-employee" formControlName="employeeId">
-                                    <mat-error *ngIf="form.controls.employeeId.hasError('required')">
-                                          กรุณากรอกรหัสพนักงาน !
-                                    </mat-error>
-
-                              </mat-form-field>
-
-                              <button mat-raised-button class="btn-signin">
-                                    <em class="pi pi-chevron-right icon-btn"></em>
-                                    <div class="confirm-text">ยืนยัน<em class="pi pi-chevron-right"
-                                                style="vertical-align: middle;"></em></div>
-                              </button>
-                        </form>
-
-                  </mat-card-content>
-
-            </mat-card>
-      </div>
+          <button mat-raised-button class="btn-signin">
+            <em class="pi pi-chevron-right icon-btn"></em>
+            <div class="confirm-text">
+              ยืนยัน<em
+                class="pi pi-chevron-right"
+                style="vertical-align: middle;"
+              ></em>
+            </div>
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
-
 
 <p-toast key="errorMessage" position="bottom-center"></p-toast>
