@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
@@ -13,11 +14,19 @@ import com.cdgs.worktime.entity.EmployeeHasSideworkHistoryEntity;
 import com.cdgs.worktime.repository.EmployeeHasSideworkHistoryRespository;
 import com.cdgs.worktime.service.EmployeeHasSideworkHistoryService;
 
+@Service
 public class EmployeeHasSideworkHistoryServiceImpl implements EmployeeHasSideworkHistoryService {
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
-	@Autowired
+
 	EmployeeHasSideworkHistoryRespository employeeHasSideworkHistoryRespository;
+	
+	@Autowired
+	public EmployeeHasSideworkHistoryServiceImpl(
+			EmployeeHasSideworkHistoryRespository employeeHasSideworkHistoryRespository) {
+		super();
+		this.employeeHasSideworkHistoryRespository = employeeHasSideworkHistoryRespository;
+	}
 	
 	@Override
 	public EmployeeHasSideworkHistoryDto getEmployeeHasHistory(Long id) {

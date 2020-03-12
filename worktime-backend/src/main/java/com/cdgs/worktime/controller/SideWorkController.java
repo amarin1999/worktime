@@ -34,10 +34,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SideWorkController {
 
-	@Autowired()
 	SideWorkService sideworkservice;
 	EmployeeService employeeservice;
 	EmployeeHasSideworkHistoryService employeeHasSideworkHistoryService;
+	
+	@Autowired()
+	public SideWorkController(SideWorkService sideworkservice, EmployeeService employeeservice,
+			EmployeeHasSideworkHistoryService employeeHasSideworkHistoryService) {
+		super();
+		this.sideworkservice = sideworkservice;
+		this.employeeservice = employeeservice;
+		this.employeeHasSideworkHistoryService = employeeHasSideworkHistoryService;
+	}
 
 	@GetMapping(path = "/getsideworkbyid/{id}")
 	public ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkById(@PathVariable("id") Long id) {

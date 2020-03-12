@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,17 +31,22 @@ public class EmployeeHasSideworkHistoryEntity implements Serializable {
 
 	@Id
 	@Column(name ="employee_has_sidework_history_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull
 	private Long employeeHasSideworkHistoryId;
 
 	@ManyToOne
-	@JoinColumn(name = "id_employee", insertable = false, updatable = false)
+	@JoinColumn(name = "id_employee")
+	@NotNull
 	private EmployeeEntity employeeId;
 
 	@Column(name = "work_type")
+	@NotNull
 	private String workType;
 
 	@ManyToOne
-	@JoinColumn(name = "id_work_project", insertable = false, updatable = false)
+	@JoinColumn(name = "id_work_project")
+	@NotNull
 	private WorkProjectEntity projectId;
 
 }

@@ -19,8 +19,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
-	@Autowired(required = true)
 	EmployeeRespository employeeRespository;
+	
+	@Autowired
+	public EmployeeServiceImpl(EmployeeRespository employeeRespository) {
+		super();
+		this.employeeRespository = employeeRespository;
+	}
 
 	@Override
 	public List<EmployeeDto> getEmployeeByNo(String no) {
