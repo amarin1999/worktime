@@ -1,40 +1,44 @@
 <div class="p-grid animation-page ">
-      <div class="p-col-12" style="text-align: center;">
-            <img src="../../../assets/images/banner.png" style="height:20vh ;width: auto;" /><br /><br />
-            <h1 class="header-text"> ลงเวลาการทำงานล่วงเวลา และการทำงานไซต์</h1>
-      </div>
-
+  <div class="p-col-12" style="text-align: center;">
+    <img
+      src="{{ cdgImagePath }}"
+      style="height:20vh ;width: auto;"
+    /><br /><br />
+    <h1 class="header-text">ลงเวลาการทำงานนอกสถานที่ และการทำงานล่วงเวลา</h1>
+  </div>
 </div>
-<div class="p-grid animation-page ">
-      <div class="p-col-10 p-offset-1" style="text-align: center;">
-            <div class="p-grid">
-                  <div class="p-col" *ngFor="let item of menu">
-                        <mat-card>
-                              <mat-card-header class="align-center-card">
-                                    <mat-card-title>{{item.title}}</mat-card-title>
-                              </mat-card-header>
-                              <img mat-card-image src="../../../assets/images/{{item.img}}" style="width:40%"
-                                    alt="logo">
-                              <mat-card-content>
-                                    <p style="font-size: 1em;overflow: hidden;">
-                                          {{item.detail}}
-                                    </p>
-                              </mat-card-content>
-                              <mat-card-actions>
+<div class="p-grid p-justify-center animation-page ">
+  <div class="p-col-8 p-lg-10 p-md-12 " style="text-align: center;">
+    <div class="p-grid">
+      <div class="p-sm-12 p-lg-4 p-md-4" *ngFor="let item of menu">
+        <mat-card>
+          <mat-card-header class="align-center-card">
+            <mat-card-title>{{ item.title }}</mat-card-title>
+          </mat-card-header>
 
-                                    <button mat-raised-button class="btn-menu">
-                                        
-                                          <div class="confirm-text">ยืนยัน<i class="pi pi-chevron-right"
-                                                      style="vertical-align: middle;"></i></div>
-                                    </button>
-                              </mat-card-actions>
-                        </mat-card>
-                  </div>
-
-            </div>
-
+          <mat-card-content class="layout-wrapper">
+            <br />
+            <img
+              mat-card-image
+              src="{{ item.img }}"
+              style="width:40%"
+              alt="logo"
+            />
+            <br /><br />
+          </mat-card-content>
+          <mat-card-footer>
+            <button mat-raised-button class="btn-menu">
+              <div class="confirm-text" (click)="openDialog(item.overlay)">
+                ยืนยัน
+                <em
+                  class="pi pi-chevron-right"
+                  style="vertical-align: middle;"
+                ></em>
+              </div>
+            </button>
+          </mat-card-footer>
+        </mat-card>
       </div>
-
+    </div>
+  </div>
 </div>
-
-<p-toast key="errorMessage" position="bottom-center"></p-toast>

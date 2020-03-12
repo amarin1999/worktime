@@ -14,8 +14,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   exports: [
     NavbarComponent,
-    FooterComponent,
-   
+    FooterComponent,   
   ]
 
 })
