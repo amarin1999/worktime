@@ -1,5 +1,6 @@
 package com.cdgs.worktime.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -20,27 +21,26 @@ public class EmployeeHasSideworkHistoryServiceImpl implements EmployeeHasSidewor
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	EmployeeHasSideworkHistoryRespository employeeHasSideworkHistoryRespository;
-	
+
 	@Autowired
 	public EmployeeHasSideworkHistoryServiceImpl(
 			EmployeeHasSideworkHistoryRespository employeeHasSideworkHistoryRespository) {
 		super();
 		this.employeeHasSideworkHistoryRespository = employeeHasSideworkHistoryRespository;
 	}
-	
-	@Override
-	public EmployeeHasSideworkHistoryDto getEmployeeHasHistory(Long id) {
-		EmployeeHasSideworkHistoryEntity entity= new EmployeeHasSideworkHistoryEntity();
-		EmployeeHasSideworkHistoryEntity data= new EmployeeHasSideworkHistoryEntity();
-		EmployeeEntity setId =new EmployeeEntity();
-		setId.setEmployeeId(id);
-		data= setToEmployeeId(setId);
-		entity=employeeHasSideworkHistoryRespository.save(data);
-		return mapEntityToDto(entity);
-		
 
-		
+	@Override
+	public EmployeeHasSideworkHistoryDto getEmployeeHasHistory(List<EmployeeDto> employee) {
+		EmployeeHasSideworkHistoryEntity entity = new EmployeeHasSideworkHistoryEntity();
+		EmployeeHasSideworkHistoryEntity data = new EmployeeHasSideworkHistoryEntity();
+		EmployeeEntity setId = new EmployeeEntity();
+		System.out.println(employee.get(0).getId());
+		data.setIdEmployee(employee.get(0).getId());
+		entity = employeeHasSideworkHistoryRespository.save(data);
+		return mapEntityToDto(entity);
+
 	}
+
 	private EmployeeHasSideworkHistoryDto mapEntityToDto(EmployeeHasSideworkHistoryEntity entity) {
 		EmployeeHasSideworkHistoryDto dto = new EmployeeHasSideworkHistoryDto();
 		if (entity != null) {
@@ -48,13 +48,25 @@ public class EmployeeHasSideworkHistoryServiceImpl implements EmployeeHasSidewor
 			dto.setWorkType(entity.getWorkType());
 		}
 		return dto;
-		
+
 	}
-	
-	private EmployeeHasSideworkHistoryEntity setToEmployeeId(EmployeeEntity id) {
-		EmployeeHasSideworkHistoryEntity entity = new EmployeeHasSideworkHistoryEntity();
-		entity.setEmployeeId(id);
-		return entity;
+
+	private EmployeeEntity mapDtoToEntity(EmployeeDto dto) {
+		EmployeeEntity entity = new EmployeeEntity();
+		if (dto != null) {
+			entity.setEmployeeId(dto.getId());
+			entity.setEmployeeno(dto.getNo());
+			entity.setFirstname(dto.getLastname());
+			entity.setLastname(dto.getLastname());
+		}
+		return null;
+
 	}
+
+//	private EmployeeHasSideworkHistoryEntity setToEmployeeId(EmployeeEntity employeeDto) {
+//		EmployeeHasSideworkHistoryEntity entity = new EmployeeHasSideworkHistoryEntity();
+//		entity.setEmployeeId(employeeDto);
+//		return entity;
+//	}
 
 }

@@ -35,9 +35,12 @@ public class SideworkHistoryEntity implements Serializable {
 	@Column(name = "id_sidework_history")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long sideworkId;
-	
+
+	@Column(name = "employee_has_sidework_history_id")
+	private Long idEmployeeHasSideWorkHistory;
+
 	@ManyToOne
-	@JoinColumn(name ="employee_has_sidework_history_id", insertable = false, updatable = false)
+	@JoinColumn(name = "employee_has_sidework_history_id", insertable = false, updatable = false)
 	private EmployeeHasSideworkHistoryEntity employeeHasSideworkHistoryId;
 
 	@Column(name = "start_time")
@@ -50,7 +53,7 @@ public class SideworkHistoryEntity implements Serializable {
 
 	@Column(name = "work_comment")
 	private String workComment;
-	
+
 	@Column(name = "work_anywhere")
 	private Boolean workAnyWhere;
 

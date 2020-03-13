@@ -48,7 +48,7 @@ export class SideworkformComponent implements OnInit {
       {
         startTime: [new Date(), [Validators.required]],
         endTime: ["", [Validators.required]],
-        workAnyTime: ["", [Validators.maxLength(10)]],
+        workAnyWhere: ["", [Validators.maxLength(10)]],
         remark: ["", [Validators.maxLength(200)]]
       },
       {

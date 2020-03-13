@@ -13,7 +13,7 @@ public class SideWorkPostTimeDto {
 
 	private Date startTime;
 	private Date endTime;
-	private Boolean workAnyTime;
+	private Boolean workAnyWhere;
 	private String remark;
 	private String employeeNo;
 }
