@@ -2,6 +2,7 @@ package com.cdgs.worktime.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cdgs.worktime.dto.EmployeeDto;
@@ -38,7 +40,7 @@ public class SideWorkController {
 	SideWorkService sideworkservice;
 	EmployeeService employeeservice;
 	EmployeeHasSideworkHistoryService employeeHasSideworkHistoryService;
-	
+
 	@Autowired()
 	public SideWorkController(SideWorkService sideworkservice, EmployeeService employeeservice,
 			EmployeeHasSideworkHistoryService employeeHasSideworkHistoryService) {
@@ -99,25 +101,50 @@ public class SideWorkController {
 
 	}
 
+	@GetMapping(path="gettime")
+	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,@RequestParam Date startTime){		
+		ResponseDto<SideworkHistoryDto> res =new ResponseDto<SideworkHistoryDto>();
+		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
+		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
+		SideworkHistoryDto dataSideWork =sideworkservice.getSideWorkTime(startTime, employee.get(0).getId());
+		dto.add(dataSideWork);
+		try {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
+		}catch (Exception e) {
+			log.error("gettime ", e);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+		
+				
+				
+		return null;
+		
+	}
+
 	@PostMapping(path = "/posttime")
 	public ResponseEntity<ResponseDto<SideworkHistoryDto>> postSideWorkTime(
 			@Valid @RequestBody SideWorkPostTimeDto body) {
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
-		
+
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
-		
+
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
 		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();
 		System.out.println(body.getEmployeeNo());
 		employeeData = employeeservice.getEmployeeByNo(body.getEmployeeNo());
-		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService
-				.getEmployeeHasHistory(employeeData);
+		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService.getEmployeeHasHistory(employeeData);
 		try {
-			
+
 			data = sideworkservice.postSideWorkTime(body, employeeHasSideWorkHistoryId);
 			dto.add(data);
-			
+
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);

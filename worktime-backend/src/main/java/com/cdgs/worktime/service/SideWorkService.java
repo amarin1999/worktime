@@ -1,5 +1,6 @@
 package com.cdgs.worktime.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.cdgs.worktime.dto.EmployeeDto;
@@ -15,5 +16,6 @@ public interface SideWorkService {
 	
 
 	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeHasSideworkHistoryDto employee);
-
+	
+	SideworkHistoryDto getSideWorkTime(Date sideWorkDate,Long employeeId );
 }

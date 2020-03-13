@@ -30,8 +30,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 
 	SideWorkRepository sideworkrepository;
 	EmployeeRespository employeerespository;
-	
-	
+
 	@Autowired(required = true)
 	public SideWorkServiceImpl(SideWorkRepository sideworkrepository, EmployeeRespository employeerespository) {
 		super();
@@ -127,24 +126,24 @@ public class SideWorkServiceImpl implements SideWorkService {
 	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,
 			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData) {
 		SideworkHistoryEntity entity = sideworkrepository.findDateTime(sideTime.getStartTime(),
-				employeeHasSideWorkHistoryData.getEmployeeId());
-		SideworkHistoryEntity data =new SideworkHistoryEntity();
+				employeeHasSideWorkHistoryData.getEmployeehasId());
+		SideworkHistoryEntity data = new SideworkHistoryEntity();
 
-		if(entity !=null) {
+		if (entity != null) {
 			entity.setEndTime(sideTime.getEndTime());
 			entity.setLastUpdate(Calendar.getInstance().getTime());
 			entity.setStartTime(sideTime.getStartTime());
 			entity.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			entity.setWorkComment(sideTime.getRemark());
 			return convEntityToDtoPostTime(sideworkrepository.save(entity));
-		}else {
-			data.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistoryData.getEmployeehasId());
-		data.setEndTime(sideTime.getEndTime());
-		data.setLastUpdate(Calendar.getInstance().getTime());
-		data.setStartTime(sideTime.getStartTime());
-		data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
-		data.setWorkComment(sideTime.getRemark());
-		return convEntityToDtoPostTime(sideworkrepository.save(data));
+		} else {
+			data.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistoryData.getEmployeeId());
+			data.setEndTime(sideTime.getEndTime());
+			data.setLastUpdate(Calendar.getInstance().getTime());
+			data.setStartTime(sideTime.getStartTime());
+			data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
+			data.setWorkComment(sideTime.getRemark());
+			return convEntityToDtoPostTime(sideworkrepository.save(data));
 		}
 	}
 
@@ -170,6 +169,12 @@ public class SideWorkServiceImpl implements SideWorkService {
 			entity.setWorkAnyWhere(dto.getWorkAnyWhere());
 		}
 		return entity;
+	}
+
+	@Override
+	public SideworkHistoryDto getSideWorkTime(Date sideWorkDate, Long employeeId) {
+		SideworkHistoryEntity entity = sideworkrepository.findDateTime(sideWorkDate, employeeId);
+		return convEntityToDtoPostTime(entity);
 	}
 
 }
