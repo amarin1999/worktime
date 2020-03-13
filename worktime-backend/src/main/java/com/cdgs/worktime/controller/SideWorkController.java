@@ -101,7 +101,7 @@ public class SideWorkController {
 
 	}
 
-	@GetMapping(path="gettime")
+	@GetMapping(path="/gettime")
 	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,@RequestParam Date startTime){		
 		ResponseDto<SideworkHistoryDto> res =new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
