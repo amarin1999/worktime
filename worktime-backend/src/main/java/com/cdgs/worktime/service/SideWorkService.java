@@ -14,6 +14,6 @@ public interface SideWorkService {
 	EmployeeDto postEmployeeName(EmployeeDto employeeName);
 	
 
-	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData);
+	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeHasSideworkHistoryDto employee);
 
 }

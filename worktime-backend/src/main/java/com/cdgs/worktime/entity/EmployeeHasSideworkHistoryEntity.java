@@ -30,23 +30,25 @@ public class EmployeeHasSideworkHistoryEntity implements Serializable {
 	private static final long serialVersionUID = -3425483119931380227L;
 
 	@Id
-	@Column(name ="employee_has_sidework_history_id")
+	@Column(name = "employee_has_sidework_history_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
 	private Long employeeHasSideworkHistoryId;
 
+	@Column(name = "employee_id")
+	private Long idEmployee;
+
+	@Column(name = "work_project_id")
+	private Long idProject;
+
 	@ManyToOne
-	@JoinColumn(name = "id_employee")
-	@NotNull
+	@JoinColumn(name = "employee_id", insertable = false, updatable = false)
 	private EmployeeEntity employeeId;
 
 	@Column(name = "work_type")
-	@NotNull
 	private String workType;
 
 	@ManyToOne
-	@JoinColumn(name = "id_work_project")
-	@NotNull
+	@JoinColumn(name = "work_project_id", insertable = false, updatable = false)
 	private WorkProjectEntity projectId;
 
 }
