@@ -9,7 +9,7 @@
       <div class="p-grid">
         <div class="{{ formGrid }}">
           <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>เวลาเข้างาน</mat-label>
+            <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
             <input
               readonly
               matInput
@@ -35,7 +35,7 @@
         </div>
         <div class="{{ formGrid }}">
           <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>เวลาออกงาน</mat-label>
+            <mat-label><mat-icon>schedule</mat-icon> เวลาออกงาน</mat-label>
             <input
               readonly
               matInput
@@ -68,21 +68,26 @@
               formControlName="workAnyWhere"
               [color]="'primary'"
               class="example-margin"
-              >Work Anywhere
+            >
+             Work Anywhere
             </mat-checkbox>
           </div>
         </div>
         <div class="p-col-6">
           <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>หมายเหตุ</mat-label>
+            <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
             <textarea formControlName="remark" matInput></textarea>
           </mat-form-field>
         </div>
       </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>ยกเลิก</button>
-      <button mat-button type="submit">ตกลง</button>
+      <button mat-button [color]="'warn'" mat-raised-button mat-dialog-close>
+        <mat-icon>clear</mat-icon> ยกเลิก
+      </button>
+      <button mat-button [color]="'primary'" mat-raised-button type="submit">
+        <mat-icon>check</mat-icon>ตกลง
+      </button>
     </mat-dialog-actions>
   </form>
 </div>

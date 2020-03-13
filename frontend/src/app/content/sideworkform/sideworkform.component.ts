@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import {
   MatDialogRef,
   MatDialog,
-  MatDialogConfig
+  MatDialogConfig,
+  MAT_DIALOG_DATA
 } from "@angular/material/dialog";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import {
@@ -16,6 +17,7 @@ import {
 import { SideworkService } from "src/app/shared/service/sidework.service";
 import { EmployeeService } from "src/app/shared/service/employee.service";
 import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
+import { SideWork } from "src/app/shared/interfaces/sidework";
 
 @Component({
   selector: "app-sideworkform",
@@ -32,29 +34,51 @@ export class SideworkformComponent implements OnInit {
     public build: FormBuilder,
     public sideworkService: SideworkService,
     public employeeService: EmployeeService,
-    public dialogConfirm: MatDialog
+    public dialogConfirm: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: SideWork
   ) {}
 
   ngOnInit(): void {
-    this.employeeService
-      .getEmployeeOnline()
-      .subscribe(res => (this.employeeNo = res.no));
     this.buildForm();
   }
 
   buildForm(): void {
     //สร้างform
-    this.formGroupSideWork = this.build.group(
-      {
-        startTime: [new Date(), [Validators.required]],
-        endTime: ["", [Validators.required]],
-        workAnyWhere: ["", [Validators.maxLength(10)]],
-        remark: ["", [Validators.maxLength(200)]]
-      },
-      {
-        validators: [this.compareTime]
-      }
-    );
+    if (this.data != null) {
+      this.formGroupSideWork = this.build.group(
+        {
+          startTime: [
+            this.data.startTime ? this.data.startTime : new Date(),
+            [Validators.required]
+          ],
+          endTime: [
+            this.data.endTime
+              ? this.data.endTime
+              : this.data.startTime
+              ? new Date()
+              : null,
+            // [Validators.required]
+          ],
+          workAnyWhere: [false, [Validators.maxLength(10)]],
+          remark: [null, [Validators.maxLength(200)]]
+        },
+        {
+          validators: [this.compareTime]
+        }
+      );
+    } else {
+      this.formGroupSideWork = this.build.group(
+        {
+          startTime: [new Date(), [Validators.required]],
+          endTime: [null, [Validators.required]],
+          workAnyWhere: [false, [Validators.maxLength(10)]],
+          remark: [null, [Validators.maxLength(200)]]
+        },
+        {
+          validators: [this.compareTime]
+        }
+      );
+    }
   }
 
   compareTime(group: FormGroup): void {

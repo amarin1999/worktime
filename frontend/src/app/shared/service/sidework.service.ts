@@ -28,4 +28,24 @@ export class SideworkService {
       console.table(error);
     }
   }
+
+  getSideWorkOnDay(employeeId, date: Date) {
+    try {
+      return this.http
+        .get(
+          `${ApiConstants.baseURl}/sidework/gettime?no=${employeeId}&startTime=${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+        )
+        .pipe(
+          map(response => {
+            return {
+              status: response["result"],
+              data: response["data"],
+              code: response["code"]
+            };
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
 }

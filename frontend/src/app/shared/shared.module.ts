@@ -2,13 +2,14 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { MatCardModule } from "@angular/material/card";
 
 // material
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from "@angular/material/card";
 
 // fontawesome
 import {
@@ -45,6 +46,7 @@ import { AuthService } from "./service/auth.service";
     BrowserAnimationsModule,
     MatCardModule,
     MatTooltipModule,
+    MatIconModule,
     HttpClientModule,
     NgxSpinnerModule
   ],

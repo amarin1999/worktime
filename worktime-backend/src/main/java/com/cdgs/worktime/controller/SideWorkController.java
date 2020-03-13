@@ -1,5 +1,6 @@
 package com.cdgs.worktime.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,27 +102,30 @@ public class SideWorkController {
 
 	}
 
-	@GetMapping(path="/gettime")
-	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,@RequestParam Date startTime){		
-		ResponseDto<SideworkHistoryDto> res =new ResponseDto<SideworkHistoryDto>();
+	@GetMapping(path = "/gettime")
+	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,
+			@RequestParam String startTime) throws ParseException {
+		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
-		SideworkHistoryDto dataSideWork =sideworkservice.getSideWorkTime(startTime, employee.get(0).getId());
+
+		SideworkHistoryDto dataSideWork = sideworkservice
+				.getSideWorkTime(new SimpleDateFormat("dd/MM/yyyy").parse(startTime), employee.get(0).getId());
 		dto.add(dataSideWork);
 		try {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(200);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
-		}catch (Exception e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			log.error("gettime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		
-		
+
 	}
 
 	@PostMapping(path = "/posttime")

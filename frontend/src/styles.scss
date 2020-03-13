@@ -15,10 +15,15 @@ $cdgTimeAttendance-primary: mat-palette($mat-indigo);
 $cdgTimeAttendance-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$cdgTimeAttendance-warn: mat-palette($mat-red);
 
+$cdgTimeAttendance-warn: mat-palette($mat-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $cdgTimeAttendance-theme: mat-light-theme(
+  $cdgTimeAttendance-primary,
+  $cdgTimeAttendance-accent,
+  $cdgTimeAttendance-warn
+);
+$cdgTimeAttendance-theme2: mat-light-theme(
   $cdgTimeAttendance-primary,
   $cdgTimeAttendance-accent,
   $cdgTimeAttendance-warn
@@ -53,6 +58,13 @@ h4 {
 }
 mat-dialog-title {
   font-family: "Kanit";
+}
+.mat-button:hover {
+  transform: scale(1.05, 1.05);
+  transition: 0.3s;
+}
+.mat-button {
+  transition: 0.3s !important;
 }
 .wrap-form > * {
   font-family: "Kanit" !important;
