@@ -127,7 +127,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,
 			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData) {
 		SideworkHistoryEntity entity = sideworkrepository.findDateTime(sideTime.getStartTime(),
-				employeeHasSideWorkHistoryData.getEmployeehasId());
+				employeeHasSideWorkHistoryData.getEmployeeId());
 		SideworkHistoryEntity data =new SideworkHistoryEntity();
 
 		if(entity !=null) {

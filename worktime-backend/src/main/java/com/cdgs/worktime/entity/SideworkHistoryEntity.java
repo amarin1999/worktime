@@ -44,11 +44,9 @@ public class SideworkHistoryEntity implements Serializable {
 	private EmployeeHasSideworkHistoryEntity employeeHasSideworkHistoryId;
 
 	@Column(name = "start_time")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
 
 	@Column(name = "end_time")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
 
 	@Column(name = "work_comment")
@@ -58,6 +56,5 @@ public class SideworkHistoryEntity implements Serializable {
 	private Boolean workAnyWhere;
 
 	@Column(name = "last_update_time")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
 }
