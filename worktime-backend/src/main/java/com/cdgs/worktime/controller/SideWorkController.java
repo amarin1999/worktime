@@ -121,9 +121,6 @@ public class SideWorkController {
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 		
-				
-				
-		return null;
 		
 	}
 
