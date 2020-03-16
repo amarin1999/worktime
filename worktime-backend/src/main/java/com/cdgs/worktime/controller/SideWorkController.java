@@ -2,9 +2,15 @@ package com.cdgs.worktime.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.validation.Valid;
 
@@ -108,9 +114,10 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = formatDate.parse(startTime.replaceAll("Z$", "+0000"));
-		System.out.println(formatDate.format(date));
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-M-dd");
+		Date date = formatDate.parse(startTime);
+
+		System.out.println(date);
 		SideworkHistoryDto dataSideWork = sideworkservice
 				.getSideWorkTime(formatDate.format(date), employee.get(0).getId());
 		dto.add(dataSideWork);

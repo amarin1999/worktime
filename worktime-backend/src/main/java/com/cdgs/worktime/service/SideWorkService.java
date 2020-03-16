@@ -11,8 +11,6 @@ import com.cdgs.worktime.dto.SideworkHistoryDto;
 public interface SideWorkService {
 
 	List<SideworkHistoryDto> getSideWorkById(Long id);
-
-	EmployeeDto postEmployeeName(EmployeeDto employeeName);
 	
 
 	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeHasSideworkHistoryDto employee);
