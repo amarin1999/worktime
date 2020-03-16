@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
-import { take } from "rxjs/operators";
+import { finalize, take } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { EmployeeService } from "src/app/shared/service/employee.service";
@@ -37,41 +37,57 @@ export class SideworkformComponent implements OnInit {
   getTimeOnDay(): void {
     this.sideWorkService
       .getSideWorkOnDay(this.employeeNo, new Date())
-      .pipe(take(1))
-      .subscribe(res => {
-        console.log({ res });
-        this.dataSideWork = res.data;
-      });
-    this.buildForm();
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        res => {
+          console.log(res);
+          this.dataSideWork = res.data[0];
+          this.ngOnInit();
+        },
+        error => {
+          console.table(error);
+        }
+      );
   }
 
   buildForm(): void {
+    console.log("dfd");
     //สร้างform
     if (this.dataSideWork != null) {
-      this.formGroupSideWork = this.build.group(
-        {
-          startTime: [
-            this.dataSideWork.startTime
-              ? this.dataSideWork.startTime
-              : new Date(),
-            [Validators.required]
-          ],
-          endTime: [
-            this.dataSideWork.endTime
-              ? this.dataSideWork.endTime
-              : this.dataSideWork.startTime
-              ? new Date()
-              : null
-            // [Validators.required]
-          ],
-          workAnyWhere: [false, [Validators.maxLength(10)]],
-          remark: [null, [Validators.maxLength(200)]]
-        },
-        {
-          validators: [this.compareTime]
-        }
-      );
+      this.formGroupSideWork.patchValue({
+        startTime:this.setStartTime(),
+        remark: this.setStartTime()
+      });
+      // this.formGroupSideWork = this.build.group(
+      //   {
+      //     startTime: [
+      //       this.dataSideWork.startTime
+      //         ? this.dataSideWork.startTime
+      //         : new Date(),
+      //       [Validators.required]
+      //     ],
+      //     endTime: [
+      //       this.dataSideWork.endTime
+      //         ? this.dataSideWork.endTime
+      //         : this.dataSideWork.startTime
+      //         ? new Date()
+      //         : null
+      //       // [Validators.required]
+      //     ],
+      //     workAnyWhere: [false],
+      //     remark: [null, [Validators.maxLength(200)]]
+      //   },
+      //   {
+      //     validators: [this.compareTime]
+      //   }
+      // );
     } else {
+      console.log(false);
       this.formGroupSideWork = this.build.group(
         {
           startTime: [new Date(), [Validators.required]],
@@ -86,6 +102,20 @@ export class SideworkformComponent implements OnInit {
     }
   }
 
+  setStartTime() {
+    console.log('start',this.dataSideWork.startTime);
+
+    return this.dataSideWork.startTime
+      ? new Date(this.dataSideWork.startTime)
+      : new Date();
+  }
+  // setEndTime() {
+  //   this.dataSideWork.endTime
+  //   ? this.dataSideWork.endTime
+  //   : this.dataSideWork.startTime
+  //   ? new Date()
+  //   : null
+  // }
   compareTime(group: FormGroup): void {
     let startTime = group.get("startTime").value;
     let endTime = group.get("endTime").value;

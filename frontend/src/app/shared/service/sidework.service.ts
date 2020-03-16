@@ -29,14 +29,15 @@ export class SideworkService {
     }
   }
 
-  getSideWorkOnDay(employeeId: string, date: Date) {
+  getSideWorkOnDay(employeeId: string, date: Date): Observable<Response> {
+    const dateRequest = `${date.getFullYear()+543}-${date.getMonth() +
+      1}-${date.getDate()}`;
     try {
       return this.http
         .get(
           `${
             ApiConstants.baseURl
-          }/sidework/gettime?no=${employeeId}&startTime=${date.getFullYear()+543}-${date.getMonth() +
-            1}-${date.getDate()}`
+          }/sidework/gettime?no=${employeeId}&startTime=${dateRequest}`
         )
         .pipe(
           map(response => {
