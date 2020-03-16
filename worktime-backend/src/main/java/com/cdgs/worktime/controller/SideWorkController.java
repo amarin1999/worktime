@@ -124,7 +124,7 @@ public class SideWorkController {
 		try {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
-			res.setCode(200);
+			res.setCode(201);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,7 +159,7 @@ public class SideWorkController {
 
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
-			res.setCode(200);
+			res.setCode(201);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("postTime ", e);
