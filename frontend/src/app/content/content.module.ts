@@ -1,3 +1,4 @@
+//module
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
@@ -9,18 +10,19 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatMenuModule } from "@angular/material/menu";
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-  NgxMatTimepickerModule
-} from "ngx-mat-datetime-picker";
+import { MatTabsModule } from "@angular/material/tabs";
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from "ngx-mat-datetime-picker";
+//primgng
 import { MessageService } from "primeng/api";
 import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
+//guard
 import { AuthGuard } from "../shared/guard/auth.guard";
+//service
 import { SideworkService } from "../shared/service/sidework.service";
 import { SharedModule } from "../shared/shared.module";
+//component
 import { ConfirmdialogComponent } from "./confirmdialog/confirmdialog.component";
 import { ContentRoutingModule } from "./content-routing.module";
 import { ContentComponent } from "./content.component";
@@ -28,6 +30,8 @@ import { HomeComponent } from "./home/home.component";
 import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
 import { SideworkformComponent } from "./sideworkform/sideworkform.component";
 import { SigninComponent } from "./signin/signin.component";
+
+
 
 @NgModule({
   declarations: [
@@ -53,6 +57,7 @@ import { SigninComponent } from "./signin/signin.component";
     ToastModule,
     MatRippleModule,
     MatCheckboxModule,
+    MatTabsModule,
     //Date
     MatDatepickerModule,
     MatNativeDateModule,

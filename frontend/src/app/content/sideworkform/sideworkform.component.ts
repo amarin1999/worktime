@@ -22,6 +22,10 @@ export class SideworkformComponent implements OnInit {
   imgLogo: string = LayoutConstants.sideWorkImagePath;
   formGroupSideWork: FormGroup;
   dataSideWork: SideWork;
+  date: Date = new Date();
+  // set วันที่
+  dateRequest = `${this.date.getDate()}-${this.date.getMonth() +
+    1}-${this.date.getFullYear() + 543}`;
   employeeNo: string = localStorage.getItem("employeeId");
 
   constructor(
@@ -83,6 +87,7 @@ export class SideworkformComponent implements OnInit {
   }
 
   checkTimeForm(): void {
+    // check วันเวลาเพื่อ disable form
     if (this.dataSideWork.startTime) {
       if (this.dataSideWork.endTime) {
         this.setValueForm();
@@ -91,12 +96,7 @@ export class SideworkformComponent implements OnInit {
       }
       //disable input วันที่เริ่ม
       this.formGroupSideWork.controls["startTime"].disable();
-      this.formGroupSideWork.patchValue({
-        startTime: this.setStartTime(),
-        endTime: this.setEndTime(),
-        workAnyWhere: this.dataSideWork.workAnyWhere,
-        remark: this.dataSideWork.remark
-      });
+      this.setValueForm();
     }
   }
 
@@ -146,11 +146,14 @@ export class SideworkformComponent implements OnInit {
       configDialog
     );
     //หลังปิด dialog
-    dialogRef.afterClosed().subscribe(confirmStatus => {
-      if (confirmStatus) {
-        this.insertSidework();
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(confirmStatus => {
+        if (confirmStatus) {
+          this.insertSidework();
+        }
+      });
   }
 
   insertSidework(): void {
@@ -176,6 +179,5 @@ export class SideworkformComponent implements OnInit {
           this.dialogRef.close(error);
         }
       );
-    // this.dialogRef.close("this.formGroupSideWork.value");
   }
 }
