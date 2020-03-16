@@ -32,12 +32,12 @@ export class SideworkformComponent implements OnInit {
     private employeeService: EmployeeService,
     private dialogConfirm: MatDialog,
     public spinner: NgxSpinnerService
-  ) {
-    this.getTimeOnDay();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
+    this.getTimeOnDay();
+    
   }
 
   getTimeOnDay(): void {
@@ -54,7 +54,7 @@ export class SideworkformComponent implements OnInit {
         res => {
           console.log(res);
           this.dataSideWork = res.data[0];
-          this.ngOnInit();
+          this.patchValueForm()
         },
         error => {
           console.table(error);
@@ -62,6 +62,41 @@ export class SideworkformComponent implements OnInit {
       );
   }
 
+  patchValueForm() {
+    console.log("dfd");
+    //สร้างform
+    if (this.dataSideWork != null) {
+      this.formGroupSideWork.patchValue({
+        startTime: this.setStartTime(),
+        endTime: this.setEndTime(),
+        workAnyWhere: this.dataSideWork.workAnyWhere,
+        remark: this.dataSideWork.remark
+      });
+      // this.formGroupSideWork = this.build.group(
+      //   {
+      //     startTime: [
+      //       this.dataSideWork.startTime
+      //         ? this.dataSideWork.startTime
+      //         : new Date(),
+      //       [Validators.required]
+      //     ],
+      //     endTime: [
+      //       this.dataSideWork.endTime
+      //         ? this.dataSideWork.endTime
+      //         : this.dataSideWork.startTime
+      //         ? new Date()
+      //         : null
+      //       // [Validators.required]
+      //     ],
+      //     workAnyWhere: [false],
+      //     remark: [null, [Validators.maxLength(200)]]
+      //   },
+      //   {
+      //     validators: [this.compareTime]
+      //   }
+      // );
+    }
+  }
   buildForm(): void {
     console.log("dfd");
     //สร้างform
@@ -128,7 +163,7 @@ export class SideworkformComponent implements OnInit {
   compareTime(group: FormGroup): void {
     let startTime = group.get("startTime").value;
     let endTime = group.get("endTime").value;
-    if (startTime > endTime) {
+    if (startTime > endTime && endTime !== null) {
       group.get("endTime").setValue(undefined);
       group.get("endTime").setErrors({ wrongDate: true });
     } else {
