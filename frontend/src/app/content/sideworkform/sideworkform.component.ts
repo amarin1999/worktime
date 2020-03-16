@@ -18,6 +18,9 @@ import { SideworkService } from "src/app/shared/service/sidework.service";
 import { EmployeeService } from "src/app/shared/service/employee.service";
 import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
 import { SideWork } from "src/app/shared/interfaces/sidework";
+import { finalize, startWith, take } from "rxjs/operators";
+import { NgxSpinnerService } from "ngx-spinner";
+import { defer } from "rxjs";
 
 @Component({
   selector: "app-sideworkform",
@@ -32,11 +35,12 @@ export class SideworkformComponent implements OnInit {
   employeeNo: string = localStorage.getItem("employeeId");
 
   constructor(
-    public dialogRef: MatDialogRef<SideworkformComponent>,
-    public build: FormBuilder,
-    public sideWorkService: SideworkService,
-    public employeeService: EmployeeService,
-    public dialogConfirm: MatDialog
+    private dialogRef: MatDialogRef<SideworkformComponent>,
+    private build: FormBuilder,
+    private sideWorkService: SideworkService,
+    private employeeService: EmployeeService,
+    private dialogConfirm: MatDialog,
+    public spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -44,11 +48,24 @@ export class SideworkformComponent implements OnInit {
   }
 
   getTimeOnDay(): void {
-    this.sideWorkService
-      .getSideWorkOnDay(this.employeeNo, new Date())
-      .subscribe(res => {
-        this.dataSideWork = res.data;
-      });
+    const request = defer(() => {
+      this.spinner.show();
+      return this.sideWorkService
+        .getSideWorkOnDay(this.employeeNo, new Date())
+        .pipe(
+          take(1),
+          finalize(() => {
+            this.spinner.hide();
+          })
+        )
+       
+    });
+
+    request.subscribe(res => {
+      console.log({ res });
+      this.dataSideWork = res.data;
+    })
+
     this.buildForm();
   }
 
@@ -82,7 +99,7 @@ export class SideworkformComponent implements OnInit {
       this.formGroupSideWork = this.build.group(
         {
           startTime: [new Date(), [Validators.required]],
-          endTime: [null, [Validators.required]],
+          endTime: [null],
           workAnyWhere: [false, [Validators.maxLength(10)]],
           remark: [null, [Validators.maxLength(200)]]
         },

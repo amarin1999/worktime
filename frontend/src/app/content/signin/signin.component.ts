@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService } from "primeng/api";
 import { Subscription } from "rxjs";
-import { finalize } from "rxjs/operators";
+import { finalize, take } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { Employee } from "src/app/shared/interfaces/employee";
 import { EmployeeService } from "src/app/shared/service/employee.service";
@@ -40,11 +40,11 @@ export class SigninComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       this.spinner.show();
-      this.request = this.employeeService
+      this.employeeService
         .getEmployee(this.form.get("employeeId").value)
         .pipe(
+          take(1),
           finalize(() => {
-            this.request.unsubscribe();
             this.spinner.hide();
           })
         )

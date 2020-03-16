@@ -29,15 +29,14 @@ export class SideworkService {
     }
   }
 
-  getSideWorkOnDay(employeeId, date: Date) {
-    
+  getSideWorkOnDay(employeeId: string, date: Date) {
     try {
       return this.http
         .get(
           `${
             ApiConstants.baseURl
-          }/sidework/gettime?no=${employeeId}&startTime=${date.getDate()}/${date.getMonth() +
-            1}/${date.getFullYear()}`
+          }/sidework/gettime?no=${employeeId}&startTime=${date.getDate()}-${date.getMonth() +
+            1}-${date.getFullYear()}`
         )
         .pipe(
           map(response => {
