@@ -25,38 +25,50 @@ import { SideWork } from "src/app/shared/interfaces/sidework";
   styleUrls: ["./sideworkform.component.scss"]
 })
 export class SideworkformComponent implements OnInit {
-  formGrid = LayoutConstants.gridFormPrimeNg;
-  formGroupSideWork: FormGroup;
+  formGrid: string = LayoutConstants.gridFormPrimeNg;
   imgLogo: string = LayoutConstants.sideWorkImagePath;
-  employeeNo: string;
+  formGroupSideWork: FormGroup;
+  dataSideWork: SideWork;
+  employeeNo: string = localStorage.getItem("employeeId");
+
   constructor(
     public dialogRef: MatDialogRef<SideworkformComponent>,
     public build: FormBuilder,
-    public sideworkService: SideworkService,
+    public sideWorkService: SideworkService,
     public employeeService: EmployeeService,
-    public dialogConfirm: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: SideWork
+    public dialogConfirm: MatDialog
   ) {}
 
   ngOnInit(): void {
+    this.getTimeOnDay();
+  }
+
+  getTimeOnDay(): void {
+    this.sideWorkService
+      .getSideWorkOnDay(this.employeeNo, new Date())
+      .subscribe(res => {
+        this.dataSideWork = res.data;
+      });
     this.buildForm();
   }
 
   buildForm(): void {
     //สร้างform
-    if (this.data != null) {
+    if (this.dataSideWork != null) {
       this.formGroupSideWork = this.build.group(
         {
           startTime: [
-            this.data.startTime ? this.data.startTime : new Date(),
+            this.dataSideWork.startTime
+              ? this.dataSideWork.startTime
+              : new Date(),
             [Validators.required]
           ],
           endTime: [
-            this.data.endTime
-              ? this.data.endTime
-              : this.data.startTime
+            this.dataSideWork.endTime
+              ? this.dataSideWork.endTime
+              : this.dataSideWork.startTime
               ? new Date()
-              : null,
+              : null
             // [Validators.required]
           ],
           workAnyWhere: [false, [Validators.maxLength(10)]],
@@ -99,6 +111,19 @@ export class SideworkformComponent implements OnInit {
     }
   }
 
+  insertSidework(): void {
+    const request = {
+      ...this.formGroupSideWork.getRawValue(),
+      employeeNo: this.employeeNo
+    };
+    console.log({ request });
+    this.sideWorkService.addSidework(request).subscribe(response => {
+      console.log({ response });
+      this.dialogRef.close();
+    });
+    // this.dialogRef.close("this.formGroupSideWork.value");
+  }
+
   openDialogConfirm(): void {
     //config dialog
     const configDialog: MatDialogConfig<any> = {
@@ -119,18 +144,5 @@ export class SideworkformComponent implements OnInit {
         this.insertSidework();
       }
     });
-  }
-
-  insertSidework(): void {
-    const request = {
-      ...this.formGroupSideWork.getRawValue(),
-      employeeNo: localStorage.getItem("employeeId")
-    };
-    console.log({ request });
-    this.sideworkService.addSidework(request).subscribe(response => {
-      console.log({ response });
-      this.dialogRef.close();
-    });
-    // this.dialogRef.close("this.formGroupSideWork.value");
   }
 }

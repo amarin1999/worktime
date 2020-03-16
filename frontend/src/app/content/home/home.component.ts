@@ -18,7 +18,7 @@ import { finalize } from "rxjs/operators";
 })
 export class HomeComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
-  dataSideworkTime;
+
   menu: { title: string; img: string; overlay: ComponentType<any> }[] = [
     {
       title: "ทำงานนอกสถานที่",
@@ -44,20 +44,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   openDialog(overlay: ComponentType<unknown>): void {
-    const empNo = localStorage.getItem("employeeId");
-    this.sideWorkService.getSideWorkOnDay(empNo, new Date()).subscribe(res => {
-      this.dataSideworkTime = res.data;
-      console.log(res.data);
-      const configDialog: MatDialogConfig<any> = {
-        disableClose: true,
-        autoFocus: false,
-        data: this.dataSideworkTime
-      };
-      const dialogRef = this.dialog.open(overlay, configDialog);
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-      });
+    const configDialog: MatDialogConfig<any> = {
+      disableClose: true,
+      autoFocus: false
+    };
+    const dialogRef = this.dialog.open(overlay, configDialog);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
 }
