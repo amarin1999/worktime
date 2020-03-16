@@ -1,8 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
-import { take } from "rxjs/operators";
+import { take, finalize } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { EmployeeService } from "src/app/shared/service/employee.service";
@@ -28,20 +32,31 @@ export class SideworkformComponent implements OnInit {
     private employeeService: EmployeeService,
     private dialogConfirm: MatDialog,
     public spinner: NgxSpinnerService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.getTimeOnDay();
   }
 
+  ngOnInit(): void {}
+
   getTimeOnDay(): void {
+    this.spinner.show();
     this.sideWorkService
       .getSideWorkOnDay(this.employeeNo, new Date())
-      .pipe(take(1))
-      .subscribe(res => {
-        console.log({ res });
-        this.dataSideWork = res.data;
-      });
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        res => {
+          console.table({ res });
+          this.dataSideWork = res.data;
+        },
+        error => {
+          console.table(error);
+        }
+      );
     this.buildForm();
   }
 
@@ -64,7 +79,7 @@ export class SideworkformComponent implements OnInit {
               : null
             // [Validators.required]
           ],
-          workAnyWhere: [false, [Validators.maxLength(10)]],
+          workAnyWhere: [false],
           remark: [null, [Validators.maxLength(200)]]
         },
         {
@@ -76,7 +91,7 @@ export class SideworkformComponent implements OnInit {
         {
           startTime: [new Date(), [Validators.required]],
           endTime: [null],
-          workAnyWhere: [false, [Validators.maxLength(10)]],
+          workAnyWhere: [false],
           remark: [null, [Validators.maxLength(200)]]
         },
         {
@@ -109,7 +124,7 @@ export class SideworkformComponent implements OnInit {
       ...this.formGroupSideWork.getRawValue(),
       employeeNo: this.employeeNo
     };
-    console.log({ request });
+
     this.sideWorkService.addSidework(request).subscribe(response => {
       console.log({ response });
       this.dialogRef.close();
