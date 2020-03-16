@@ -4,7 +4,6 @@ import { ApiConstants } from "../constants/ApiConstants";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Employee } from "../interfaces/employee";
-import { Response } from "../interfaces/response";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +12,9 @@ export class EmployeeService {
   private employee = new Subject<Employee>();
   constructor(private http: HttpClient) {}
 
-  getEmployee(id: string): Observable<Response> {
+  getEmployee(
+    id: string
+  ): Observable<{ status: string; data: Employee; code: number }> {
     try {
       return this.http.get(`${ApiConstants.baseURl}/getEmployee/${id}`).pipe(
         map(response => {

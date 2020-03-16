@@ -1,10 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef
-} from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
 import { finalize, take } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
@@ -32,16 +28,13 @@ export class SideworkformComponent implements OnInit {
     private employeeService: EmployeeService,
     private dialogConfirm: MatDialog,
     public spinner: NgxSpinnerService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.getTimeOnDay();
   }
 
-  ngOnInit(): void {
-    this.buildForm();
-  }
-
   getTimeOnDay(): void {
-    this.spinner.show();
     this.sideWorkService
       .getSideWorkOnDay(this.employeeNo, new Date())
       .pipe(
@@ -101,7 +94,7 @@ export class SideworkformComponent implements OnInit {
         {
           startTime: [new Date(), [Validators.required]],
           endTime: [null],
-          workAnyWhere: [false],
+          workAnyWhere: [false, [Validators.maxLength(10)]],
           remark: [null, [Validators.maxLength(200)]]
         },
         {
@@ -148,7 +141,7 @@ export class SideworkformComponent implements OnInit {
       ...this.formGroupSideWork.getRawValue(),
       employeeNo: this.employeeNo
     };
-
+    console.log({ request });
     this.sideWorkService.addSidework(request).subscribe(response => {
       console.log({ response });
       this.dialogRef.close();
