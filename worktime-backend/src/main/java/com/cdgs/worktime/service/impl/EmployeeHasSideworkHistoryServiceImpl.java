@@ -34,7 +34,6 @@ public class EmployeeHasSideworkHistoryServiceImpl implements EmployeeHasSidewor
 		EmployeeHasSideworkHistoryEntity entity = new EmployeeHasSideworkHistoryEntity();
 		EmployeeHasSideworkHistoryEntity data = new EmployeeHasSideworkHistoryEntity();
 		EmployeeEntity setId = new EmployeeEntity();
-		System.out.println(employee.get(0).getId());
 		data.setIdEmployee(employee.get(0).getId());
 		entity = employeeHasSideworkHistoryRespository.save(data);
 		return mapEntityToDto(entity);

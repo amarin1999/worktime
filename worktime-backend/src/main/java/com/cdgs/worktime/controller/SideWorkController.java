@@ -108,7 +108,7 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
-
+		System.out.println(startTime);
 		SideworkHistoryDto dataSideWork = sideworkservice
 				.getSideWorkTime(new SimpleDateFormat("dd/MM/yyyy").parse(startTime), employee.get(0).getId());
 		dto.add(dataSideWork);
@@ -138,7 +138,7 @@ public class SideWorkController {
 
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
 		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();
-		System.out.println(body.getEmployeeNo());
+
 		employeeData = employeeservice.getEmployeeByNo(body.getEmployeeNo());
 		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService.getEmployeeHasHistory(employeeData);
 		try {
