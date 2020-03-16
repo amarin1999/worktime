@@ -4,7 +4,7 @@
     ลงเวลาทำงานนอกสถานที่
   </h2>
 
-  <div [formGroup]="formGroupSideWork" (submit)="onSubmit()">
+  <form [formGroup]="formGroupSideWork" (submit)="onSubmit()">
     <mat-dialog-content>
       <div class="p-grid">
         <div class="{{ formGrid }}">
@@ -69,7 +69,7 @@
               [color]="'primary'"
               class="example-margin"
             >
-              Work Anywhere
+             Work Anywhere
             </mat-checkbox>
           </div>
         </div>
@@ -89,5 +89,5 @@
         <mat-icon>check</mat-icon>ตกลง
       </button>
     </mat-dialog-actions>
-  </div>
+  </form>
 </div>

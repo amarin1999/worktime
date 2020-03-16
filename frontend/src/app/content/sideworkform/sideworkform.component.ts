@@ -1,13 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
 import { finalize, take } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
-import { EmployeeService } from "src/app/shared/service/employee.service";
 import { SideworkService } from "src/app/shared/service/sidework.service";
 import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: "app-sideworkform",
@@ -25,16 +29,18 @@ export class SideworkformComponent implements OnInit {
     private dialogRef: MatDialogRef<SideworkformComponent>,
     private build: FormBuilder,
     private sideWorkService: SideworkService,
-    private employeeService: EmployeeService,
     private dialogConfirm: MatDialog,
-    public spinner: NgxSpinnerService
-  ) {}
-
-  ngOnInit(): void {
+    public spinner: NgxSpinnerService,
+    private messageService: MessageService,
+  ) {
+    this.buildForm();
     this.getTimeOnDay();
   }
 
+  ngOnInit(): void {}
+
   getTimeOnDay(): void {
+    this.spinner.show();
     this.sideWorkService
       .getSideWorkOnDay(this.employeeNo, new Date())
       .pipe(
@@ -45,9 +51,8 @@ export class SideworkformComponent implements OnInit {
       )
       .subscribe(
         res => {
-          console.log(res);
           this.dataSideWork = res.data[0];
-          this.ngOnInit();
+          this.patchValueForm();
         },
         error => {
           console.table(error);
@@ -55,58 +60,31 @@ export class SideworkformComponent implements OnInit {
       );
   }
 
-  buildForm(): void {
-    console.log("dfd");
-    //สร้างform
-    if (this.dataSideWork != null) {
+  patchValueForm(): void {
+    if (this.dataSideWork !== null) {
       this.formGroupSideWork.patchValue({
         startTime: this.setStartTime(),
         endTime: this.setEndTime(),
         workAnyWhere: this.dataSideWork.workAnyWhere,
         remark: this.dataSideWork.remark
       });
-      // this.formGroupSideWork = this.build.group(
-      //   {
-      //     startTime: [
-      //       this.dataSideWork.startTime
-      //         ? this.dataSideWork.startTime
-      //         : new Date(),
-      //       [Validators.required]
-      //     ],
-      //     endTime: [
-      //       this.dataSideWork.endTime
-      //         ? this.dataSideWork.endTime
-      //         : this.dataSideWork.startTime
-      //         ? new Date()
-      //         : null
-      //       // [Validators.required]
-      //     ],
-      //     workAnyWhere: [false],
-      //     remark: [null, [Validators.maxLength(200)]]
-      //   },
-      //   {
-      //     validators: [this.compareTime]
-      //   }
-      // );
-    } else {
-      console.log(false);
-      this.formGroupSideWork = this.build.group(
-        {
-          startTime: [new Date(), [Validators.required]],
-          endTime: [null],
-          workAnyWhere: [false, [Validators.maxLength(10)]],
-          remark: [null, [Validators.maxLength(200)]]
-        },
-        {
-          validators: [this.compareTime]
-        }
-      );
     }
+  }
+  buildForm(): void {
+    this.formGroupSideWork = this.build.group(
+      {
+        startTime: [new Date(), [Validators.required]],
+        endTime: [null],
+        workAnyWhere: [false, [Validators.maxLength(10)]],
+        remark: [null, [Validators.maxLength(200)]]
+      },
+      {
+        validators: [this.compareTime]
+      }
+    );
   }
 
   setStartTime() {
-    console.log("start", this.dataSideWork.startTime);
-
     return this.dataSideWork.startTime
       ? new Date(this.dataSideWork.startTime)
       : new Date();
@@ -121,7 +99,7 @@ export class SideworkformComponent implements OnInit {
   compareTime(group: FormGroup): void {
     let startTime = group.get("startTime").value;
     let endTime = group.get("endTime").value;
-    if (startTime > endTime) {
+    if (startTime > endTime && endTime !== null) {
       group.get("endTime").setValue(undefined);
       group.get("endTime").setErrors({ wrongDate: true });
     } else {

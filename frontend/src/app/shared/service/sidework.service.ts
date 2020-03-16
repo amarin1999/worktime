@@ -5,6 +5,7 @@ import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Employee } from "../interfaces/employee";
 import { SideWork } from "../interfaces/sidework";
+import { Response } from "../interfaces/response";
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +13,7 @@ import { SideWork } from "../interfaces/sidework";
 export class SideworkService {
   constructor(private http: HttpClient) {}
 
-  addSidework(body: SideWork): any {
+  addSidework(body: SideWork): Observable<Response> {
     try {
       return this.http
         .post(`${ApiConstants.baseURl}/sidework/posttime`, body)
@@ -30,14 +31,12 @@ export class SideworkService {
   }
 
   getSideWorkOnDay(employeeId: string, date: Date): Observable<Response> {
-    const dateRequest = `${date.getFullYear()+543}-${date.getMonth() +
+    const dateRequest = `${date.getFullYear() + 543}-${date.getMonth() +
       1}-${date.getDate()}`;
     try {
       return this.http
         .get(
-          `${
-            ApiConstants.baseURl
-          }/sidework/gettime?no=${employeeId}&startTime=${dateRequest}`
+          `${ApiConstants.baseURl}/sidework/gettime?no=${employeeId}&startTime=${dateRequest}`
         )
         .pipe(
           map(response => {
