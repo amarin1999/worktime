@@ -9,6 +9,7 @@ import { SideworkformComponent } from "../sideworkform/sideworkform.component";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideworkService } from "src/app/shared/service/sidework.service";
 import { finalize } from "rxjs/operators";
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: "app-home",
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
   ];
   constructor(
     public dialog: MatDialog,
-    private sideWorkService: SideworkService
+    public messageService: MessageService
   ) {}
 
   ngOnInit(): void {}
@@ -49,8 +50,26 @@ export class HomeComponent implements OnInit {
       autoFocus: false
     };
     const dialogRef = this.dialog.open(overlay, configDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if (result.status === "Success") {
+          this.messageService.clear();
+          this.messageService.add({
+            key: "SuccessMessage",
+            severity: "success",
+            summary: "",
+            detail: "ลงเวลาเรียบร้อยแล้ว"
+          });
+        } 
+      },
+      error => {
+        this.messageService.add({
+          key: "errorMessage",
+          severity: "error",
+          summary: "ผิดพลาด",
+          detail: "เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล"
+        });
+      }
+    );
   }
 }

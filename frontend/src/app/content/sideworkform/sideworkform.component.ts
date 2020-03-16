@@ -11,7 +11,6 @@ import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideworkService } from "src/app/shared/service/sidework.service";
 import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
-import { MessageService } from "primeng/api";
 
 @Component({
   selector: "app-sideworkform",
@@ -30,8 +29,7 @@ export class SideworkformComponent implements OnInit {
     private build: FormBuilder,
     private sideWorkService: SideworkService,
     private dialogConfirm: MatDialog,
-    public spinner: NgxSpinnerService,
-    private messageService: MessageService,
+    public spinner: NgxSpinnerService
   ) {
     this.buildForm();
     this.getTimeOnDay();
@@ -52,7 +50,7 @@ export class SideworkformComponent implements OnInit {
       .subscribe(
         res => {
           this.dataSideWork = res.data[0];
-          this.patchValueForm();
+          this.checkTimeForm();
         },
         error => {
           console.table(error);
@@ -60,16 +58,6 @@ export class SideworkformComponent implements OnInit {
       );
   }
 
-  patchValueForm(): void {
-    if (this.dataSideWork !== null) {
-      this.formGroupSideWork.patchValue({
-        startTime: this.setStartTime(),
-        endTime: this.setEndTime(),
-        workAnyWhere: this.dataSideWork.workAnyWhere,
-        remark: this.dataSideWork.remark
-      });
-    }
-  }
   buildForm(): void {
     this.formGroupSideWork = this.build.group(
       {
@@ -83,7 +71,44 @@ export class SideworkformComponent implements OnInit {
       }
     );
   }
+  compareTime(group: FormGroup): void {
+    let startTime = group.get("startTime").value;
+    let endTime = group.get("endTime").value;
+    if (startTime > endTime && endTime !== null) {
+      group.get("endTime").setValue(undefined);
+      group.get("endTime").setErrors({ wrongDate: true });
+    } else {
+      return null;
+    }
+  }
 
+  checkTimeForm(): void {
+    if (this.dataSideWork.startTime) {
+      if (this.dataSideWork.endTime) {
+        this.setValueForm();
+        this.formGroupSideWork.disable();
+        return;
+      }
+      //disable input วันที่เริ่ม
+      this.formGroupSideWork.controls["startTime"].disable();
+      this.formGroupSideWork.patchValue({
+        startTime: this.setStartTime(),
+        endTime: this.setEndTime(),
+        workAnyWhere: this.dataSideWork.workAnyWhere,
+        remark: this.dataSideWork.remark
+      });
+    }
+  }
+
+  setValueForm() {
+    this.formGroupSideWork.controls["startTime"].disable();
+    this.formGroupSideWork.patchValue({
+      startTime: this.setStartTime(),
+      endTime: this.setEndTime(),
+      workAnyWhere: this.dataSideWork.workAnyWhere,
+      remark: this.dataSideWork.remark
+    });
+  }
   setStartTime() {
     return this.dataSideWork.startTime
       ? new Date(this.dataSideWork.startTime)
@@ -96,16 +121,6 @@ export class SideworkformComponent implements OnInit {
       ? new Date()
       : null;
   }
-  compareTime(group: FormGroup): void {
-    let startTime = group.get("startTime").value;
-    let endTime = group.get("endTime").value;
-    if (startTime > endTime && endTime !== null) {
-      group.get("endTime").setValue(undefined);
-      group.get("endTime").setErrors({ wrongDate: true });
-    } else {
-      return null;
-    }
-  }
 
   onSubmit(): void {
     //ถ้า validate ผ่าน
@@ -114,24 +129,13 @@ export class SideworkformComponent implements OnInit {
     }
   }
 
-  insertSidework(): void {
-    const request = {
-      ...this.formGroupSideWork.getRawValue(),
-      employeeNo: this.employeeNo
-    };
-    console.log({ request });
-    this.sideWorkService.addSidework(request).subscribe(response => {
-      console.log({ response });
-      this.dialogRef.close();
-    });
-    // this.dialogRef.close("this.formGroupSideWork.value");
-  }
-
   openDialogConfirm(): void {
     //config dialog
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
       autoFocus: false,
+      width: "350px",
+      height: "150px",
       data: {
         textConfirm: "ยืนยันการเพิ่มข้อมูลเวลาเริ่มงาน ?"
       }
@@ -147,5 +151,31 @@ export class SideworkformComponent implements OnInit {
         this.insertSidework();
       }
     });
+  }
+
+  insertSidework(): void {
+    this.spinner.show();
+    const request = {
+      ...this.formGroupSideWork.getRawValue(),
+      employeeNo: this.employeeNo
+    };
+
+    this.sideWorkService
+      .addSidework(request)
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        response => {
+          this.dialogRef.close(response);
+        },
+        error => {
+          this.dialogRef.close(error);
+        }
+      );
+    // this.dialogRef.close("this.formGroupSideWork.value");
   }
 }

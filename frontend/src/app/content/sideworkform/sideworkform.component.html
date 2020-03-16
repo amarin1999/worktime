@@ -11,7 +11,6 @@
           <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
             <input
-              readonly
               matInput
               [ngxMatDatetimePicker]="pickerStartTime"
               formControlName="startTime"
@@ -25,11 +24,7 @@
               [for]="pickerStartTime"
             ></mat-datepicker-toggle>
 
-            <ngx-mat-datetime-picker
-              touchUi
-              [disableSecond]="true"
-              #pickerStartTime
-            >
+            <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </div>
@@ -54,7 +49,6 @@
               [for]="pickerEndTime"
             ></mat-datepicker-toggle>
             <ngx-mat-datetime-picker
-              touchUi
               disabled="false"
               [disableSecond]="true"
               #pickerEndTime
@@ -69,7 +63,7 @@
               [color]="'primary'"
               class="example-margin"
             >
-             Work Anywhere
+              Work Anywhere
             </mat-checkbox>
           </div>
         </div>
@@ -91,3 +85,4 @@
     </mat-dialog-actions>
   </form>
 </div>
+
