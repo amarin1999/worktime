@@ -74,53 +74,6 @@ public class SideWorkServiceImpl implements SideWorkService {
 
 	}
 
-	@Override
-	public EmployeeDto postEmployeeName(EmployeeDto employeeName) {
-		EmployeeEntity employeeNameData = convDtoToEntity(employeeName);
-		EmployeeEntity entity = new EmployeeEntity();
-		try {
-			if (employeeName != null) {
-				entity = employeerespository.save(employeeNameData);
-			}
-		} catch (Exception e) {
-			log.error("getName Error=>" + e.getMessage());
-		}
-		return convEntityToDto(entity);
-	}
-
-	private EmployeeDto convEntityToDto(EmployeeEntity entity) {
-		EmployeeDto dto = new EmployeeDto();
-		if (entity != null) {
-			dto.setFirstname(entity.getFirstname());
-			dto.setLastname(entity.getLastname());
-		}
-		return dto;
-	}
-
-	private EmployeeEntity convDtoToEntity(EmployeeDto employeeName) {
-		EmployeeEntity entity = new EmployeeEntity();
-		entity.setFirstname(employeeName.getFirstname());
-		entity.setLastname(employeeName.getLastname());
-		return entity;
-	}
-
-	private SideworkHistoryDto convEntityToDtoTime(SideworkHistoryEntity entity) {
-		SideworkHistoryDto dto = new SideworkHistoryDto();
-		if (entity != null) {
-			dto.setStartTime(entity.getStartTime());
-			dto.setEndTime(entity.getEndTime());
-		}
-		return dto;
-	}
-
-	private SideworkHistoryEntity convDtoToEntityTime(SideworkHistoryDto entity) {
-		SideworkHistoryEntity dto = new SideworkHistoryEntity();
-		if (entity != null) {
-			dto.setStartTime(entity.getStartTime());
-			dto.setEndTime(entity.getEndTime());
-		}
-		return dto;
-	}
 
 	@Override
 	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,
@@ -137,7 +90,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			entity.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			entity.setWorkComment(sideTime.getRemark());
 			entity.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistoryData.getEmployeehasId());
-			return convEntityToDtoPostTime(sideworkrepository.save(entity));
+			return convEntityToDto(sideworkrepository.save(entity));
 		} else {
 			data.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistoryData.getEmployeehasId());
 			data.setEndTime(sideTime.getEndTime());
@@ -145,11 +98,11 @@ public class SideWorkServiceImpl implements SideWorkService {
 			data.setStartTime(sideTime.getStartTime());
 			data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			data.setWorkComment(sideTime.getRemark());
-			return convEntityToDtoPostTime(sideworkrepository.save(data));
+			return convEntityToDto(sideworkrepository.save(data));
 		}
 	}
 
-	private SideworkHistoryEntity convDtoToPostTime(SideWorkPostTimeDto dto) {
+	private SideworkHistoryEntity convPostDtoToEntity(SideWorkPostTimeDto dto) {
 		SideworkHistoryEntity entity = new SideworkHistoryEntity();
 		if (dto != null) {
 			entity.setEndTime(dto.getEndTime());
@@ -161,23 +114,25 @@ public class SideWorkServiceImpl implements SideWorkService {
 		return entity;
 	}
 
-	private SideworkHistoryDto convEntityToDtoPostTime(SideworkHistoryEntity dto) {
-		SideworkHistoryDto entity = new SideworkHistoryDto();
-		if (dto != null) {
-			entity.setEndTime(dto.getEndTime());
-			entity.setLastUpdate(Calendar.getInstance().getTime());
-			entity.setStartTime(dto.getStartTime());
-			entity.setWorkComment(dto.getWorkComment());
-			entity.setWorkAnyWhere(dto.getWorkAnyWhere());
+	private SideworkHistoryDto convEntityToDto(SideworkHistoryEntity entity) {
+		SideworkHistoryDto dto = new SideworkHistoryDto();
+		if (entity !=null) {
+			dto.setEndTime(entity.getEndTime());
+			dto.setLastUpdate(Calendar.getInstance().getTime());
+			dto.setStartTime(entity.getStartTime());
+			dto.setWorkComment(entity.getWorkComment());
+			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
+			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
+			dto.setId(entity.getSideworkId());
 		}
-		return entity;
+		return dto;
 	}
 
 	@Override
 	public SideworkHistoryDto getSideWorkTime(String sideWorkDate, Long employeeId) {
 		System.out.println(sideWorkDate);
 		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(sideWorkDate, employeeId);		
-		return convEntityToDtoPostTime(entity);
+		return convEntityToDto(entity);
 	}
 
 }
