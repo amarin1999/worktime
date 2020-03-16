@@ -67,8 +67,10 @@ export class SideworkformComponent implements OnInit {
     //สร้างform
     if (this.dataSideWork != null) {
       this.formGroupSideWork.patchValue({
-        startTime:this.setStartTime(),
-        remark: this.setStartTime()
+        startTime: this.setStartTime(),
+        endTime: this.setEndTime(),
+        workAnyWhere: this.dataSideWork.workAnyWhere,
+        remark: this.dataSideWork.remark
       });
       // this.formGroupSideWork = this.build.group(
       //   {
@@ -110,19 +112,19 @@ export class SideworkformComponent implements OnInit {
   }
 
   setStartTime() {
-    console.log('start',this.dataSideWork.startTime);
+    console.log("start", this.dataSideWork.startTime);
 
     return this.dataSideWork.startTime
       ? new Date(this.dataSideWork.startTime)
       : new Date();
   }
-  // setEndTime() {
-  //   this.dataSideWork.endTime
-  //   ? this.dataSideWork.endTime
-  //   : this.dataSideWork.startTime
-  //   ? new Date()
-  //   : null
-  // }
+  setEndTime() {
+    return this.dataSideWork.endTime
+      ? new Date(this.dataSideWork.endTime)
+      : this.dataSideWork.startTime
+      ? new Date()
+      : null;
+  }
   compareTime(group: FormGroup): void {
     let startTime = group.get("startTime").value;
     let endTime = group.get("endTime").value;
