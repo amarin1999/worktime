@@ -68,7 +68,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 		if (entity != null) {
 			dto.setStartTime(entity.getStartTime());
 			dto.setEndTime(entity.getEndTime());
-			dto.setWorkComment(entity.getWorkComment());
+			dto.setRemark(entity.getRemark());
 		}
 		return dto;
 
@@ -87,7 +87,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			entity.setLastUpdate(Calendar.getInstance().getTime());
 			entity.setStartTime(sideTime.getStartTime());
 			entity.setWorkAnyWhere(sideTime.getWorkAnyWhere());
-			entity.setWorkComment(sideTime.getRemark());
+			entity.setRemark(sideTime.getRemark());
 			entity.setIdEmployeeHasSideWorkHistory(employeeHasSide.getEmployeehasId());
 			return convEntityToDto(sideworkrepository.save(entity));
 		} else {
@@ -96,7 +96,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			data.setLastUpdate(Calendar.getInstance().getTime());
 			data.setStartTime(sideTime.getStartTime());
 			data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
-			data.setWorkComment(sideTime.getRemark());
+			data.setRemark(sideTime.getRemark());
 			return convEntityToDto(sideworkrepository.save(data));
 		}
 	}
@@ -107,7 +107,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			entity.setEndTime(dto.getEndTime());
 			entity.setLastUpdate(Calendar.getInstance().getTime());
 			entity.setStartTime(dto.getStartTime());
-			entity.setWorkComment(dto.getRemark());
+			entity.setRemark(dto.getRemark());
 			entity.setWorkAnyWhere(dto.getWorkAnyWhere());
 		}
 		return entity;
@@ -119,7 +119,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			dto.setEndTime(entity.getEndTime());
 			dto.setLastUpdate(Calendar.getInstance().getTime());
 			dto.setStartTime(entity.getStartTime());
-			dto.setWorkComment(entity.getWorkComment());
+			dto.setRemark(entity.getRemark());
 			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
 			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
 			dto.setId(entity.getSideworkId());

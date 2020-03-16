@@ -15,7 +15,7 @@ public class SideworkHistoryDto {
 	private Long employeehasId;
 	private Date startTime;
 	private Date endTime;
-	private String workComment;
+	private String remark;
 	private Date lastUpdate;
 	private Boolean workAnyWhere;
 }
