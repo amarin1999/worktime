@@ -49,7 +49,7 @@ export class SideworkformComponent implements OnInit {
 
   getTimeOnDay(): void {
     const request = defer(() => {
-      this.spinner.show();
+     
       return this.sideWorkService
         .getSideWorkOnDay(this.employeeNo, new Date())
         .pipe(
