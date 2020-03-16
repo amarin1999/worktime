@@ -17,5 +17,5 @@ public interface SideWorkService {
 
 	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeHasSideworkHistoryDto employee);
 	
-	SideworkHistoryDto getSideWorkTime(Date sideWorkDate,Long employeeId );
+	SideworkHistoryDto getSideWorkTime(String string,Long employeeId );
 }

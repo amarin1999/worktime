@@ -124,7 +124,8 @@ public class SideWorkServiceImpl implements SideWorkService {
 
 	@Override
 	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,
-			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData) {
+			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData) {		
+
 		SideworkHistoryEntity entity = sideworkrepository.findDateTime(sideTime.getStartTime(),
 				employeeHasSideWorkHistoryData.getEmployeeId());
 		SideworkHistoryEntity data = new SideworkHistoryEntity();
@@ -173,8 +174,9 @@ public class SideWorkServiceImpl implements SideWorkService {
 	}
 
 	@Override
-	public SideworkHistoryDto getSideWorkTime(Date sideWorkDate, Long employeeId) {
-		SideworkHistoryEntity entity = sideworkrepository.findDateTime(sideWorkDate, employeeId);
+	public SideworkHistoryDto getSideWorkTime(String sideWorkDate, Long employeeId) {
+		System.out.println(sideWorkDate);
+		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(sideWorkDate, employeeId);		
 		return convEntityToDtoPostTime(entity);
 	}
 
