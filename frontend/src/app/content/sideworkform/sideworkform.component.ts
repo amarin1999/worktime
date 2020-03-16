@@ -1,26 +1,13 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import {
-  MatDialogRef,
-  MatDialog,
-  MatDialogConfig,
-  MAT_DIALOG_DATA
-} from "@angular/material/dialog";
-import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormGroupDirective,
-  FormControl,
-  NgForm
-} from "@angular/forms";
-import { SideworkService } from "src/app/shared/service/sidework.service";
-import { EmployeeService } from "src/app/shared/service/employee.service";
-import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
-import { SideWork } from "src/app/shared/interfaces/sidework";
-import { finalize, startWith, take } from "rxjs/operators";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
-import { defer } from "rxjs";
+import { take } from "rxjs/operators";
+import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
+import { SideWork } from "src/app/shared/interfaces/sidework";
+import { EmployeeService } from "src/app/shared/service/employee.service";
+import { SideworkService } from "src/app/shared/service/sidework.service";
+import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
 
 @Component({
   selector: "app-sideworkform",
@@ -48,24 +35,13 @@ export class SideworkformComponent implements OnInit {
   }
 
   getTimeOnDay(): void {
-    const request = defer(() => {
-     
-      return this.sideWorkService
-        .getSideWorkOnDay(this.employeeNo, new Date())
-        .pipe(
-          take(1),
-          finalize(() => {
-            this.spinner.hide();
-          })
-        )
-       
-    });
-
-    request.subscribe(res => {
-      console.log({ res });
-      this.dataSideWork = res.data;
-    })
-
+    this.sideWorkService
+      .getSideWorkOnDay(this.employeeNo, new Date())
+      .pipe(take(1))
+      .subscribe(res => {
+        console.log({ res });
+        this.dataSideWork = res.data;
+      });
     this.buildForm();
   }
 

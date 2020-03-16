@@ -35,8 +35,8 @@ export class SideworkService {
         .get(
           `${
             ApiConstants.baseURl
-          }/sidework/gettime?no=${employeeId}&startTime=${date.getDate()}-${date.getMonth() +
-            1}-${date.getFullYear()}`
+          }/sidework/gettime?no=${employeeId}&startTime=${date.getFullYear()}-${date.getMonth() +
+            1}-${date.getDate()}`
         )
         .pipe(
           map(response => {
