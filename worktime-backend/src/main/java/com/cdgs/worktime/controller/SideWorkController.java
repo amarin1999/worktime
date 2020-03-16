@@ -1,5 +1,6 @@
 package com.cdgs.worktime.controller;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -116,10 +117,9 @@ public class SideWorkController {
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-M-dd");
 		Date date = formatDate.parse(startTime);
-
 		System.out.println(date);
-		SideworkHistoryDto dataSideWork = sideworkservice
-				.getSideWorkTime(formatDate.format(date), employee.get(0).getId());
+		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(formatDate.format(date),
+				employee.get(0).getId());
 		dto.add(dataSideWork);
 		try {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -139,10 +139,12 @@ public class SideWorkController {
 
 	@PostMapping(path = "/posttime")
 	public ResponseEntity<ResponseDto<SideworkHistoryDto>> postSideWorkTime(
-			@Valid @RequestBody SideWorkPostTimeDto body) {
+			@Valid @RequestBody SideWorkPostTimeDto body) throws ParseException {
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
-
+		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dateformat.format(body.getStartTime());
+		System.out.println(date);
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
@@ -152,7 +154,7 @@ public class SideWorkController {
 		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService.getEmployeeHasHistory(employeeData);
 		try {
 
-			data = sideworkservice.postSideWorkTime(body, employeeHasSideWorkHistoryId);
+			data = sideworkservice.postSideWorkTime(body,employeeData.get(0).getId(),date,employeeHasSideWorkHistoryId);
 			dto.add(data);
 
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());

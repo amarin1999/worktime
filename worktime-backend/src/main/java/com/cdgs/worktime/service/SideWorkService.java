@@ -13,7 +13,7 @@ public interface SideWorkService {
 	List<SideworkHistoryDto> getSideWorkById(Long id);
 	
 
-	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeHasSideworkHistoryDto employee);
+	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,Long employee, String date,EmployeeHasSideworkHistoryDto employeeHasSide );
 	
-	SideworkHistoryDto getSideWorkTime(String string,Long employeeId );
+	SideworkHistoryDto getSideWorkTime(String string,Long employeeId);
 }

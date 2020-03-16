@@ -77,22 +77,21 @@ public class SideWorkServiceImpl implements SideWorkService {
 
 	@Override
 	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,
-			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryData) {		
+			Long employeeId,String date,EmployeeHasSideworkHistoryDto employeeHasSide) {		
 
-		SideworkHistoryEntity entity = sideworkrepository.findDateTime(sideTime.getStartTime(),
-				employeeHasSideWorkHistoryData.getEmployeeId());
-		SideworkHistoryEntity data = new SideworkHistoryEntity();
-
+		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(date, employeeId);
+		System.out.println(entity);
+		SideworkHistoryEntity data = new SideworkHistoryEntity();		
 		if (entity != null) {
 			entity.setEndTime(sideTime.getEndTime());
 			entity.setLastUpdate(Calendar.getInstance().getTime());
 			entity.setStartTime(sideTime.getStartTime());
 			entity.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			entity.setWorkComment(sideTime.getRemark());
-			entity.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistoryData.getEmployeehasId());
+			entity.setIdEmployeeHasSideWorkHistory(employeeHasSide.getEmployeehasId());
 			return convEntityToDto(sideworkrepository.save(entity));
 		} else {
-			data.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistoryData.getEmployeehasId());
+			data.setIdEmployeeHasSideWorkHistory(employeeHasSide.getEmployeehasId());
 			data.setEndTime(sideTime.getEndTime());
 			data.setLastUpdate(Calendar.getInstance().getTime());
 			data.setStartTime(sideTime.getStartTime());
