@@ -36,7 +36,7 @@ export class OvertimeworkformComponent implements OnInit {
   addTime() {
     const rangeTime = this.buildForm.group(
       {
-        startTime: [new Date(), [Validators.required]],
+        startTime: [null, [Validators.required]],
         endTime: [null, [Validators.required]]
       },
       {
@@ -57,5 +57,7 @@ export class OvertimeworkformComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    console.log(this.formGroupOvertimeWork.getRawValue())
+  }
 }

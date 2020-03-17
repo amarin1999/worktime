@@ -71,10 +71,10 @@ mat-dialog-title {
 }
 input:disabled,
 textarea:disabled {
-  color: indigo;
+  color: indigo !important;
 }
 
-mat-dialog-container{
+mat-dialog-container {
   display: none;
 }
 .tooltip-signout {
