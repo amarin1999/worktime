@@ -69,7 +69,14 @@ mat-dialog-title {
 .wrap-form > * {
   font-family: "Kanit" !important;
 }
+input:disabled,
+textarea:disabled {
+  color: indigo;
+}
 
+mat-dialog-container{
+  display: none;
+}
 .tooltip-signout {
   background-color: indigo;
   padding: 10px;

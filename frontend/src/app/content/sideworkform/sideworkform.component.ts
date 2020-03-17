@@ -31,12 +31,12 @@ export class SideworkformComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<SideworkformComponent>,
-    private buildFormSideWork: FormBuilder,
+    private buildForm: FormBuilder,
     private sideWorkService: SideworkService,
     private dialogConfirm: MatDialog,
     private spinner: NgxSpinnerService
   ) {
-    this.buildForm();
+    this.createFormSideWork();
     this.getTimeOnDay();
   }
 
@@ -63,8 +63,8 @@ export class SideworkformComponent implements OnInit {
       );
   }
 
-  buildForm(): void {
-    this.formGroupSideWork = this.buildFormSideWork.group(
+  createFormSideWork(): void {
+    this.formGroupSideWork = this.buildForm.group(
       {
         startTime: [new Date(), [Validators.required]],
         endTime: [null],

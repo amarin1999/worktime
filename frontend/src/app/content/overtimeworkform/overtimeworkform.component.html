@@ -1,61 +1,13 @@
 <div class="wrap-form">
   <h2 mat-dialog-title>
     <img src="{{ imgLogo }}" class="img-form" alt="" />
-    ลงเวลาทำงานนอกสถานที่
+    ลงเวลาทำงานนอกเวลา
+
   </h2>
 
   <br />
   <form [formGroup]="formGroupOvertimeWork" (submit)="onSubmit()">
     <div class="p-grid">
-      <div class="{{ formGrid }}">
-        <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
-          <input
-            matInput
-            [ngxMatDatetimePicker]="pickerStartTime"
-            formControlName="startTime"
-            (focus)="pickerStartTime.open()"
-            placeholder="วว/ดด/ปปปป, 00:00"
-          />
-          <mat-datepicker-toggle
-            disabled="false"
-            matSuffix
-            [for]="pickerStartTime"
-          ></mat-datepicker-toggle>
-
-          <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
-          </ngx-mat-datetime-picker>
-        </mat-form-field>
-      </div>
-      <div class=" {{ formGrid }}">
-        <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label><mat-icon>schedule</mat-icon> เวลาออกงาน</mat-label>
-          <input
-            readonly
-            matInput
-            [ngxMatDatetimePicker]="pickerEndTime"
-            formControlName="endTime"
-            (focus)="pickerEndTime.open()"
-            placeholder="วว/ดด/ปปปป, 00:00"
-          />
-          <mat-error
-            *ngIf="formGroupOvertimeWork.get('endTime').hasError('wrongDate')"
-          >
-            เวลาออกงานต้องมากกว่าเวลาเข้างาน !
-          </mat-error>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="pickerEndTime"
-          ></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker
-            disabled="false"
-            [disableSecond]="true"
-            #pickerEndTime
-          >
-          </ngx-mat-datetime-picker>
-        </mat-form-field>
-      </div>
-
       <div class=" {{ formGrid }}">
         <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label
@@ -71,6 +23,81 @@
         </mat-form-field>
       </div>
     </div>
+    <div
+      *ngFor="let time of formTimeRangeData.controls; let i = index"
+      formArrayName="timeRange"
+    >
+      <div class="p-grid" formGroupName="{{ i }}">
+        <div class="{{ formGrid }}">
+          <span
+            style="z-index: 9999;"
+            matBadge="{{ i + 1 }}"
+            matBadgeOverlap="false"
+          ></span>
+          <mat-form-field
+            appearance="outline"
+            style="width: 100%; display:inline"
+          >
+            <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
+            <input
+              matInput
+              [ngxMatDatetimePicker]="pickerStartTime"
+              formControlName="startTime"
+              (focus)="pickerStartTime.open()"
+              placeholder="วว/ดด/ปปปป, 00:00"
+            />
+            <mat-datepicker-toggle
+              disabled="false"
+              matSuffix
+              [for]="pickerStartTime"
+            ></mat-datepicker-toggle>
+
+            <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+        </div>
+        <div class="{{ formGrid }}">
+          <mat-form-field
+            appearance="outline"
+            style="width: 100%; display:inline"
+          >
+            <mat-label><mat-icon>schedule</mat-icon> เวลาออกงาน</mat-label>
+            <input
+              readonly
+              matInput
+              [ngxMatDatetimePicker]="pickerEndTime"
+              formControlName="endTime"
+              (focus)="pickerEndTime.open()"
+              placeholder="วว/ดด/ปปปป, 00:00"
+            />
+            <mat-error
+              *ngIf="
+                formGroupOvertimeWork.get('timeRange').hasError('wrongDate')
+              "
+            >
+              เวลาออกงานต้องมากกว่าเวลาเข้างาน !
+            </mat-error>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerEndTime"
+            ></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker
+              disabled="false"
+              [disableSecond]="true"
+              #pickerEndTime
+            >
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-col-12 p-justify-center " style="text-align: center;">
+      <button mat-button class="add-overtime-btn" (click)="addTime()">
+        <mat-icon>loupe</mat-icon> เพิ่มเวลาทำงานนอกเวลา
+      </button>
+    </div>
+
     <!-- <p-messages [(value)]="msgs"></p-messages> -->
     <mat-dialog-actions class="wrap-btn">
       <button mat-button [color]="'warn'" mat-raised-button mat-dialog-close>

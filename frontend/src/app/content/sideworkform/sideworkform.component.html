@@ -54,14 +54,11 @@
                   เวลาเลิกงานต้องมากกว่าเวลาเข้างาน !
                 </mat-error>
                 <mat-datepicker-toggle
+                  disabled="false"
                   matSuffix
                   [for]="pickerEndTime"
                 ></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker
-                  disabled="false"
-                  [disableSecond]="true"
-                  #pickerEndTime
-                >
+                <ngx-mat-datetime-picker [disableSecond]="true" #pickerEndTime>
                 </ngx-mat-datetime-picker>
               </mat-form-field>
             </div>
