@@ -87,7 +87,11 @@ mat-dialog-title {
   color: #333377 !important;
   font-family: "Kanit" !important;
 }
-
+.wrap-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0 !important;
+}
 .p-grid {
   margin: 0;
 }

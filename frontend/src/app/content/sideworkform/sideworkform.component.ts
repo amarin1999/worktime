@@ -137,7 +137,7 @@ export class SideworkformComponent implements OnInit {
       width: "350px",
       height: "150px",
       data: {
-        textConfirm: "ยืนยันการเพิ่มข้อมูลเวลาเริ่มงาน ?"
+        textConfirm: "ยืนยันการเพิ่มข้อมูลการลงเวลางาน ?"
       }
     };
     //เปิด dialog
