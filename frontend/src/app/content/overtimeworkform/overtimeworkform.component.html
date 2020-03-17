@@ -1,1 +1,85 @@
-<p>overtimeworkform works!</p>
+<div class="wrap-form">
+  <h2 mat-dialog-title>
+    <img src="{{ imgLogo }}" class="img-form" alt="" />
+    ลงเวลาทำงานนอกสถานที่
+  </h2>
+
+  <br />
+  <form [formGroup]="formGroupOvertimeWork" (submit)="onSubmit()">
+    <div class="p-grid">
+      <div class="{{ formGrid }}">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
+          <input
+            matInput
+            [ngxMatDatetimePicker]="pickerStartTime"
+            formControlName="startTime"
+            (focus)="pickerStartTime.open()"
+            placeholder="วว/ดด/ปปปป, 00:00"
+          />
+          <mat-datepicker-toggle
+            disabled="false"
+            matSuffix
+            [for]="pickerStartTime"
+          ></mat-datepicker-toggle>
+
+          <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+      <div class=" {{ formGrid }}">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label><mat-icon>schedule</mat-icon> เวลาออกงาน</mat-label>
+          <input
+            readonly
+            matInput
+            [ngxMatDatetimePicker]="pickerEndTime"
+            formControlName="endTime"
+            (focus)="pickerEndTime.open()"
+            placeholder="วว/ดด/ปปปป, 00:00"
+          />
+          <mat-error
+            *ngIf="formGroupOvertimeWork.get('endTime').hasError('wrongDate')"
+          >
+            เวลาออกงานต้องมากกว่าเวลาเข้างาน !
+          </mat-error>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerEndTime"
+          ></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker
+            disabled="false"
+            [disableSecond]="true"
+            #pickerEndTime
+          >
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+
+      <div class=" {{ formGrid }}">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label
+            ><mat-icon matSuffix>home_work</mat-icon> ชื่อโครงการ</mat-label
+          >
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="{{ formGrid }}">
+        <mat-form-field appearance="outline" style="width:100%">
+          <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
+          <textarea formControlName="remark" matInput></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- <p-messages [(value)]="msgs"></p-messages> -->
+    <mat-dialog-actions class="wrap-btn">
+      <button mat-button [color]="'warn'" mat-raised-button mat-dialog-close>
+        <mat-icon>clear</mat-icon> ยกเลิก
+      </button>
+      &nbsp;
+      <button mat-button [color]="'primary'" mat-raised-button type="submit">
+        <mat-icon>check</mat-icon>ตกลง
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

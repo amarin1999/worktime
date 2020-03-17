@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   ];
   constructor(
     public dialog: MatDialog,
-    public messageService: MessageService
+    public messageService: MessageService,
   ) {}
 
   ngOnInit(): void {}
