@@ -80,7 +80,6 @@ public class SideWorkServiceImpl implements SideWorkService {
 			Long employeeId,String date,EmployeeHasSideworkHistoryDto employeeHasSide) {		
 
 		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(date, employeeId);
-		System.out.println(entity);
 		SideworkHistoryEntity data = new SideworkHistoryEntity();		
 		if (entity != null) {
 			entity.setEndTime(sideTime.getEndTime());

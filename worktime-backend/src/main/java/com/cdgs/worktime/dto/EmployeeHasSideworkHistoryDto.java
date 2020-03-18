@@ -14,7 +14,6 @@ public class EmployeeHasSideworkHistoryDto {
 	private Long employeeId;
 	private Long employeehasId;
 	private Long workType;
-	private Long workProjectId;
 	
 
 }

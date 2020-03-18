@@ -37,8 +37,7 @@ public class EmployeeHasSideworkHistoryEntity implements Serializable {
 	@Column(name = "employee_id")
 	private Long idEmployee;
 
-	@Column(name = "work_project_id")
-	private Long idProject;
+
 
 	@ManyToOne
 	@JoinColumn(name = "employee_id", insertable = false, updatable = false)
@@ -47,9 +46,7 @@ public class EmployeeHasSideworkHistoryEntity implements Serializable {
 	@Column(name = "work_type")
 	private Long workTypeId;
 
-	@ManyToOne
-	@JoinColumn(name = "work_project_id", insertable = false, updatable = false)
-	private WorkProjectEntity projectId;
+
 	
 	@ManyToOne
 	@JoinColumn(name = "work_type", insertable = false, updatable = false)

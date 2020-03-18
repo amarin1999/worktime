@@ -1,6 +1,7 @@
 package com.cdgs.worktime.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class OtPostTimeDto implements Serializable {
 
 	private Long id;
 	private Long employeehasId;
-	private List<Date> timeRange;
+	private List<TimeListDto> timeRange;
 	private String remark;
 	private Date lastUpdate;
 	private String projectNo;

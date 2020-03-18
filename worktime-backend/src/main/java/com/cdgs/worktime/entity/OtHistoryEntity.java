@@ -54,7 +54,7 @@ public class OtHistoryEntity implements Serializable{/**
 	private Date lastUpDate;
 	
 	@Column(name = "id_project")
-	private Long projectId;
+	private String projectId;
 	
 	
 	@ManyToOne

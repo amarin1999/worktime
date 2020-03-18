@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OtDto implements Serializable {/**
+public class OtHistoryDto implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 253647904391479675L;
@@ -22,4 +22,5 @@ public class OtDto implements Serializable {/**
 	private String remark;
 	private Date lastUpdate;
 	private String projectNo;
+
 }
