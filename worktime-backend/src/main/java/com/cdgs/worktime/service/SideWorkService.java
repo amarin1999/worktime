@@ -10,10 +10,8 @@ import com.cdgs.worktime.dto.SideworkHistoryDto;
 
 public interface SideWorkService {
 
-	List<SideworkHistoryDto> getSideWorkById(Long id);
-	
 
-	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,Long employee, String date,EmployeeHasSideworkHistoryDto employeeHasSide );
+	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,EmployeeDto employee, String date);
 	
 	SideworkHistoryDto getSideWorkTime(String string,Long employeeId);
 }

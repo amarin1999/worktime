@@ -58,56 +58,8 @@ public class SideWorkController {
 		this.employeeHasSideworkHistoryService = employeeHasSideworkHistoryService;
 	}
 
-	@GetMapping(path = "/getsideworkbyid/{id}")
-	public ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkById(@PathVariable("id") Long id) {
-		List<SideworkHistoryDto> dto = new ArrayList<>();
-		ResponseDto<SideworkHistoryDto> res = new ResponseDto<>();
-		try {
-			dto = sideworkservice.getSideWorkById(id);
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(dto);
-			res.setCode(200);
-			if (dto.size() == 0) {
-				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-				res.setData(dto);
-				res.setCode(404);
-				return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.NOT_FOUND);
-
-			}
-			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
-		} catch (Exception e) {
-			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-			res.setData(dto);
-			res.setCode(400);
-			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
-		}
-
-	}
-
-	@PostMapping(path = "/postname/{id}")
-	public ResponseEntity<ResponseDto<EmployeeDto>> postTitleName(@Valid @RequestBody EmployeeDto body,
-			@PathVariable("id") Long id) {
-		ResponseDto<EmployeeDto> res = new ResponseDto<EmployeeDto>();
-		List<EmployeeDto> locations = new ArrayList<EmployeeDto>();
-		EmployeeDto location = new EmployeeDto();
-		try {
-			location = employeeservice.updateEmployeeName(id, body);
-			if (location != null) {
-				locations.add(location);
-			}
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(locations);
-			res.setCode(200);
-			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.OK);
-		} catch (Exception e) {
-			log.error("postName ", e);
-			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-			res.setErrorMessage(e.getMessage());
-			res.setCode(400);
-			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.BAD_REQUEST);
-		}
-
-	}
+	
+	
 
 	@GetMapping(path = "/gettime")
 	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,
@@ -115,10 +67,8 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-M-dd");
-		Date date = formatDate.parse(startTime);
-		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(formatDate.format(date),
-				employee.get(0).getId());
+
+		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(startTime, employee.get(0).getId());
 		dto.add(dataSideWork);
 		try {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
@@ -139,20 +89,21 @@ public class SideWorkController {
 	@PostMapping(path = "/posttime")
 	public ResponseEntity<ResponseDto<SideworkHistoryDto>> postSideWorkTime(
 			@Valid @RequestBody SideWorkPostTimeDto body) throws ParseException {
+		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
+		
+
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		String date = dateformat.format(body.getStartTime());
-		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
 		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();
 
 		employeeData = employeeservice.getEmployeeByNo(body.getEmployeeNo());
-		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService.getEmployeeHasHistory(employeeData,(long) 1);
+		
 		try {
-
-			data = sideworkservice.postSideWorkTime(body,employeeData.get(0).getId(),date,employeeHasSideWorkHistoryId);
+			data = sideworkservice.postSideWorkTime(body, employeeData.get(0), date);
 			dto.add(data);
 
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
