@@ -2,7 +2,9 @@ package com.cdgs.worktime.service.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,8 @@ public class OtServiceImpl implements OtService {
 	public OtHistoryDto postOtTime(OtPostTimeDto otPostTime, EmployeeHasSideworkHistoryDto employeeHasSidework) {
 		OtHistoryEntity entity = new OtHistoryEntity();
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+		Long i= (long) 1 ;
+		List<OtHistoryEntity> entities = new ArrayList<>();
 		for (TimeListDto time : otPostTime.getTimeRange()) {
 			entity.setEmployeeHasSideworkId(employeeHasSidework.getEmployeehasId());
 			entity.setEndTime(time.getEndTime());
@@ -33,9 +36,11 @@ public class OtServiceImpl implements OtService {
 			entity.setProjectId(otPostTime.getProjectNo());
 			entity.setRemark(otPostTime.getRemark());
 			entity.setStartTime(time.getStartTime());
-			otRespositiry.save(entity);
+			entity.setOtHistoryId(i);
+			entities.add(entity);
+			i++;
 		}
-
+		otRespositiry.saveAll(entities);
 		return null;
 
 	}
