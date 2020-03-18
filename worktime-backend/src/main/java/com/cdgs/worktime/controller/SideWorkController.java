@@ -151,7 +151,7 @@ public class SideWorkController {
 		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();
 
 		employeeData = employeeservice.getEmployeeByNo(body.getEmployeeNo());
-		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService.getEmployeeHasHistory(employeeData);
+		employeeHasSideWorkHistoryId = employeeHasSideworkHistoryService.getEmployeeHasHistory(employeeData,(long) 1);
 		try {
 
 			data = sideworkservice.postSideWorkTime(body,employeeData.get(0).getId(),date,employeeHasSideWorkHistoryId);

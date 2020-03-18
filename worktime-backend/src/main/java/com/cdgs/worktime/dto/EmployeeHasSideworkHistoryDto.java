@@ -13,7 +13,7 @@ public class EmployeeHasSideworkHistoryDto {
 
 	private Long employeeId;
 	private Long employeehasId;
-	private String workType;
+	private Long workType;
 	private Long workProjectId;
 	
 
