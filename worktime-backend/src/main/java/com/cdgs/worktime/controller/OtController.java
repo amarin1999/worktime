@@ -37,8 +37,6 @@ public class OtController {
 	EmployeeService employeeService;
 	EmployeeHasSideworkHistoryService employeeHasSideworkService;
 	OtService otService;
-	
-
 
 	public OtController(EmployeeService employeeService, EmployeeHasSideworkHistoryService employeeHasSideworkService,
 			OtService otService) {
@@ -48,30 +46,29 @@ public class OtController {
 		this.otService = otService;
 	}
 
-
-
-	@PostMapping(path="/posttime")
-	private ResponseEntity<ResponseDto<OtHistoryDto>> postOtTime(@Valid @RequestBody OtPostTimeDto body){
-		ResponseDto<OtHistoryDto> res =new ResponseDto<OtHistoryDto>();
+	@PostMapping(path = "/posttime")
+	private ResponseEntity<ResponseDto<OtHistoryDto>> postOtTime(@Valid @RequestBody OtPostTimeDto body) {
+		ResponseDto<OtHistoryDto> res = new ResponseDto<OtHistoryDto>();
 		List<EmployeeDto> employeeData = employeeService.getEmployeeByNo(body.getEmployeeNo());
-		List<OtHistoryDto> dto =new ArrayList<OtHistoryDto>();
-		OtHistoryDto data =new OtHistoryDto();
-		EmployeeHasSideworkHistoryDto employeeHasSideworkData = employeeHasSideworkService.getEmployeeHasHistory(employeeData,(long) 2);
+		List<OtHistoryDto> dto = new ArrayList<OtHistoryDto>();
+		OtHistoryDto data = new OtHistoryDto();
 		
+		EmployeeHasSideworkHistoryDto employeeHasSideworkData = employeeHasSideworkService
+				.getEmployeeHasHistory(employeeData.get(0).getId(), (long) 2);
+
 		try {
-			data = otService.postOtTime(body,employeeHasSideworkData);
+			data = otService.postOtTime(body, employeeHasSideworkData);
 			dto.add(data);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setCode(201);
-			return new ResponseEntity<ResponseDto<OtHistoryDto>>(res,HttpStatus.ACCEPTED);
-		}catch (Exception e) {
+			return new ResponseEntity<ResponseDto<OtHistoryDto>>(res, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
 			log.error("otpostTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
-			return new ResponseEntity<ResponseDto<OtHistoryDto>>(res,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ResponseDto<OtHistoryDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-		
-		
+
 	}
 }

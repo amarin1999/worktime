@@ -36,7 +36,7 @@ public class OtHistoryEntity implements Serializable{/**
 	private Long otHistoryId;
 	
 	@Column(name="employee_has_sidework_history_id")
-	private Long employeeHasSideworkId;
+	private Long employeeHasSideworkId; 
 	
 	@Column(name = "start_time")
 	@Temporal(TemporalType.TIMESTAMP)
