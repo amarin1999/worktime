@@ -121,7 +121,7 @@ export class SideworkformComponent implements OnInit, OnChanges {
     //ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
       this.openDialogConfirm();
-    } else if (this.formGroupSideWork.disable) {
+    } else if (this.formGroupSideWork.disabled) {
       this.msgs = [];
       this.msgs.push({
         severity: "warn",

@@ -20,10 +20,6 @@ export class SideworkComponent implements OnInit {
   requestDay: Observable<Object>;
   //data
   employeeNo: string = localStorage.getItem("employeeNo");
-  //date
-  date: Date = new Date();
-  dateRequest = `${this.date.getDate()}-${this.date.getMonth() +
-    1}-${this.date.getFullYear() + 543}`;
 
   constructor(
     private dialogRef: MatDialogRef<SideworkformComponent>,

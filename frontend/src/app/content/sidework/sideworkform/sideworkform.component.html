@@ -61,8 +61,15 @@
     <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width:100%">
         <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
-        <textarea formControlName="remark" matInput></textarea>
+        <textarea formControlName="remark" matInput> </textarea>
       </mat-form-field>
+      <mat-error
+        class="animation-page"
+        style="font-size: 10.5px;margin-top: -17px;"
+        *ngIf="formGroupSideWork.get('remark').hasError('maxlength')"
+      >
+        * หมายเหตุใส่ข้อมูลได้ไม่เกิน 250 ตัวอักษร
+      </mat-error>
     </div>
   </div>
   <p-messages [(value)]="msgs"></p-messages>
