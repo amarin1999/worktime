@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
             this.messageService.add({
               key: "SuccessMessage",
               severity: "success",
-              summary: "",
+              summary: "แจ้งเตือน",
               detail: "ลงเวลาเรียบร้อยแล้ว"
             });
           }
