@@ -1,6 +1,6 @@
 export class LayoutConstants {
   public static get gridFormPrimeNg(): string {
-    return "p-lg-6 p-md-6 p-sm-12";
+    return "p-col-12 p-lg-6 p-md-6 p-sm-12";
   }
   public static get overtimeImagePath(): string {
     return "../../../assets/images/overtime.svg";

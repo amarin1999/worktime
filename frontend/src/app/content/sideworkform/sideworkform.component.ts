@@ -6,12 +6,12 @@ import {
   MatDialogRef
 } from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
+import { Message } from "primeng/api";
 import { finalize, take } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideworkService } from "src/app/shared/service/sidework.service";
 import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
-
 @Component({
   selector: "app-sideworkform",
   templateUrl: "./sideworkform.component.html",
@@ -23,6 +23,7 @@ export class SideworkformComponent implements OnInit {
   formGroupSideWork: FormGroup;
   dataSideWork: SideWork;
   date: Date = new Date();
+  msgs: Message[] = [];
   // set วันที่
   dateRequest = `${this.date.getDate()}-${this.date.getMonth() +
     1}-${this.date.getFullYear() + 543}`;
@@ -30,12 +31,12 @@ export class SideworkformComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<SideworkformComponent>,
-    private build: FormBuilder,
+    private buildForm: FormBuilder,
     private sideWorkService: SideworkService,
     private dialogConfirm: MatDialog,
-    public spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService
   ) {
-    this.buildForm();
+    this.createFormSideWork();
     this.getTimeOnDay();
   }
 
@@ -62,13 +63,13 @@ export class SideworkformComponent implements OnInit {
       );
   }
 
-  buildForm(): void {
-    this.formGroupSideWork = this.build.group(
+  createFormSideWork(): void {
+    this.formGroupSideWork = this.buildForm.group(
       {
         startTime: [new Date(), [Validators.required]],
         endTime: [null],
-        workAnyWhere: [false, [Validators.maxLength(10)]],
-        remark: [null, [Validators.maxLength(200)]]
+        workAnyWhere: [false],
+        remark: [null, [Validators.maxLength(250)]]
       },
       {
         validators: [this.compareTime]
@@ -100,7 +101,7 @@ export class SideworkformComponent implements OnInit {
     }
   }
 
-  setValueForm() {
+  setValueForm(): void {
     this.formGroupSideWork.controls["startTime"].disable();
     this.formGroupSideWork.patchValue({
       startTime: this.setStartTime(),
@@ -109,12 +110,12 @@ export class SideworkformComponent implements OnInit {
       remark: this.dataSideWork.remark
     });
   }
-  setStartTime() {
+  setStartTime(): Date {
     return this.dataSideWork.startTime
       ? new Date(this.dataSideWork.startTime)
       : new Date();
   }
-  setEndTime() {
+  setEndTime(): Date {
     return this.dataSideWork.endTime
       ? new Date(this.dataSideWork.endTime)
       : this.dataSideWork.startTime
@@ -126,6 +127,14 @@ export class SideworkformComponent implements OnInit {
     //ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
       this.openDialogConfirm();
+    } else if (this.formGroupSideWork.disable) {
+      this.msgs = [];
+      this.msgs.push({
+        severity: "warn",
+        summary: "แจ้งเตือน",
+        detail:
+          "คุณได้ลงเวลาสำหรับวันนี้ไปแล้ว หากต้องการแก้ไขไปที่ประวัติการลงเวลา"
+      });
     }
   }
 
@@ -134,8 +143,8 @@ export class SideworkformComponent implements OnInit {
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
       autoFocus: false,
-      width: "350px",
-      height: "150px",
+      width: "370px",
+      height: "170px",
       data: {
         textConfirm: "ยืนยันการเพิ่มข้อมูลการลงเวลางาน ?"
       }

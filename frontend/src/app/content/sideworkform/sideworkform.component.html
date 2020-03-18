@@ -3,17 +3,21 @@
     <img src="{{ imgLogo }}" class="img-form" alt="" />
     ลงเวลาทำงานนอกสถานที่
   </h2>
-  <mat-tab-group dynamicHeight >
-    <mat-tab label="ลงเวลาทำงานวันนี้">
-      
+  <mat-tab-group dynamicHeight>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>access_time</mat-icon>
+        &nbsp; ลงเวลาทำงานวันนี้
+      </ng-template>
       <ng-template matTabContent>
-        <br/>
+        <br />
         <form [formGroup]="formGroupSideWork" (submit)="onSubmit()">
           <div class="p-grid">
             <div class="{{ formGrid }}">
               <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
                 <input
+                  readonly
                   matInput
                   [ngxMatDatetimePicker]="pickerStartTime"
                   formControlName="startTime"
@@ -51,14 +55,11 @@
                   เวลาเลิกงานต้องมากกว่าเวลาเข้างาน !
                 </mat-error>
                 <mat-datepicker-toggle
+                  disabled="false"
                   matSuffix
                   [for]="pickerEndTime"
                 ></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker
-                  disabled="false"
-                  [disableSecond]="true"
-                  #pickerEndTime
-                >
+                <ngx-mat-datetime-picker [disableSecond]="true" #pickerEndTime>
                 </ngx-mat-datetime-picker>
               </mat-form-field>
             </div>
@@ -73,14 +74,14 @@
                 </mat-checkbox>
               </div>
             </div>
-            <div class="p-col-6">
-              <mat-form-field appearance="outline" style="width: 100%;">
+            <div class="{{ formGrid }}">
+              <mat-form-field appearance="outline" style="width:100%">
                 <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
                 <textarea formControlName="remark" matInput></textarea>
               </mat-form-field>
             </div>
           </div>
-
+          <p-messages [(value)]="msgs"></p-messages>
           <mat-dialog-actions class="wrap-btn">
             <button
               mat-button
@@ -103,6 +104,11 @@
         </form>
       </ng-template>
     </mat-tab>
-    <mat-tab label="ลงเวลาทำงานย้อนหลัง">ลงเวลาทำงานย้อนหลัง </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>history</mat-icon>
+        &nbsp; ลงเวลาทำงานย้อนหลัง
+      </ng-template>
+    </mat-tab>
   </mat-tab-group>
 </div>

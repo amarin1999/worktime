@@ -2,36 +2,24 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-
+import { MatCardModule } from "@angular/material/card";
 // material
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from "@angular/material/card";
-
 // fontawesome
-import {
-  FaIconLibrary,
-  FontAwesomeModule
-} from "@fortawesome/angular-fontawesome";
-import {
-  faFacebook,
-  faTwitter,
-  faYoutube
-} from "@fortawesome/free-brands-svg-icons";
+import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { faFacebook, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { faClock, faHistory } from "@fortawesome/free-solid-svg-icons";
-
 //spinner;
 import { NgxSpinnerModule } from "ngx-spinner";
-
 // primeng
 import { SidebarModule } from "primeng/sidebar";
-
+import { AuthService } from "./service/auth.service";
 //service
 import { EmployeeService } from "./service/employee.service";
-import { AuthService } from "./service/auth.service";
 
 @NgModule({
   declarations: [],
