@@ -117,13 +117,13 @@ export class OvertimeworkformComponent implements OnInit {
 
   // เพิ่มข้อมูลลง DB
   insertOvertimeWork(): void {
-    // const requestData = {
-    //   ...this.formGroupOvertimeWork.getRawValue(),
-    //   employeeNo: localStorage.getItem("employeeId")
-    // };
-    // this.overtimeService.addOverti   meWork(requestData).subscribe(res => {
-    //   console.log({ res });
-    // });
+    const requestData = {
+      ...this.formGroupOvertimeWork.getRawValue(),
+      employeeNo: localStorage.getItem("employeeId")
+    };
+    this.overtimeService.addOvertimeWork(requestData).subscribe(res => {
+      console.log({ res });
+    });
     // this.spinner.show();
     // const request = {
     //   ...this.formGroupSideWork.getRawValue(),

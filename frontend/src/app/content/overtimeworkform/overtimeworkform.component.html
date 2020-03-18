@@ -55,13 +55,13 @@
               formControlName="startTime"
               (focus)="pickerStartTime.open()"
             />
-            <mat-datepicker-toggle
+            <mat-datepicker-toggle  
               disabled="false"
               matSuffix
               [for]="pickerStartTime"
             ></mat-datepicker-toggle>
 
-            <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
+            <ngx-mat-datetime-picker [disableSecond]="true" touchUi #pickerStartTime>
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </div>
@@ -81,11 +81,12 @@
               * เวลาออกงานต้องมากกว่าเวลาเข้างาน
             </mat-error>
 
-            <mat-datepicker-toggle
+            <mat-datepicker-toggle 
               matSuffix
               [for]="pickerEndTime"
             ></mat-datepicker-toggle>
             <ngx-mat-datetime-picker
+           touchUi
               disabled="false"
               [disableSecond]="true"
               #pickerEndTime
@@ -95,10 +96,13 @@
         </div>
       </div>
 
-      <hr style="border: 1px solid #D3D3D3;margin-top: 0px;" />
+      <mat-divider></mat-divider>
     </div>
 
-    <div class="p-col-12 p-justify-center " style="text-align: center;">
+    <div
+      class="p-col-12 p-justify-center "
+      style="text-align: center;margin-top: 10px;"
+    >
       <button mat-button class="add-overtime-btn" (click)="addTime()">
         <mat-icon>loupe</mat-icon> เพิ่มเวลาทำงานนอกเวลา
       </button>
