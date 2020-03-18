@@ -37,8 +37,10 @@ import { ContentRoutingModule } from "./content-routing.module";
 import { ContentComponent } from "./content.component";
 import { HomeComponent } from "./home/home.component";
 import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
-import { SideworkformComponent } from "./sideworkform/sideworkform.component";
+
 import { SigninComponent } from "./signin/signin.component";
+import { SideworkComponent } from './sidework/sidework.component';
+import { SideworkformComponent } from './sidework/sideworkform/sideworkform.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { SigninComponent } from "./signin/signin.component";
     HomeComponent,
     SideworkformComponent,
     OvertimeworkformComponent,
-    ConfirmdialogComponent
+    ConfirmdialogComponent,
+    SideworkComponent
   ],
 
   imports: [

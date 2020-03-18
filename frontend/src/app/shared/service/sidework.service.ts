@@ -41,7 +41,7 @@ export class SideworkService {
           map(response => {
             return {
               status: response["result"],
-              data: response["data"],
+              data: response["data"][0],
               code: response["code"]
             };
           })

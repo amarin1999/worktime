@@ -18,7 +18,7 @@
               formGroupOvertimeWork.controls.projectNo.hasError('required')
             "
           >
-            กรุณากรอกรหัสโครงการ !
+            * กรุณากรอกรหัสโครงการ
           </mat-error>
         </mat-form-field>
       </div>
@@ -55,13 +55,20 @@
               formControlName="startTime"
               (focus)="pickerStartTime.open()"
             />
-            <mat-datepicker-toggle  
+            <mat-error *ngIf="formTimeRangeData.controls">
+              * กรุณากรอกเวลาเข้างาน
+            </mat-error>
+            <mat-datepicker-toggle
               disabled="false"
               matSuffix
               [for]="pickerStartTime"
             ></mat-datepicker-toggle>
 
-            <ngx-mat-datetime-picker [disableSecond]="true" touchUi #pickerStartTime>
+            <ngx-mat-datetime-picker
+              [disableSecond]="true"
+              touchUi
+              #pickerStartTime
+            >
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </div>
@@ -78,15 +85,16 @@
             />
 
             <mat-error *ngIf="formTimeRangeData.controls">
+              * กรุณากรอกข้อมูลเวลาออกงาน <br />
               * เวลาออกงานต้องมากกว่าเวลาเข้างาน
             </mat-error>
 
-            <mat-datepicker-toggle 
+            <mat-datepicker-toggle
               matSuffix
               [for]="pickerEndTime"
             ></mat-datepicker-toggle>
             <ngx-mat-datetime-picker
-           touchUi
+              touchUi
               disabled="false"
               [disableSecond]="true"
               #pickerEndTime
@@ -96,7 +104,7 @@
         </div>
       </div>
 
-      <mat-divider></mat-divider>
+      <mat-divider style="margin-top: 10px;"></mat-divider>
     </div>
 
     <div

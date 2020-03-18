@@ -19,11 +19,11 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.employeeService
-      .getEmployeeOnline()
+      .getEmployeeSignOn()
       .subscribe(res => (this.employee = { ...res }));
   }
 
-  onSignOut(): void {
-    this.authService.logout();
+  signOut(): void {
+    this.authService.onSignout();
   }
 }

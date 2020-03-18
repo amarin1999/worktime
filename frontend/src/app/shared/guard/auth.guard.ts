@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean> {
-    const employeeId: string = localStorage.getItem("employeeId");
+    const employeeId: string = localStorage.getItem("employeeNo");
 
     return this.employeeService
       .getEmployee(employeeId)
@@ -31,10 +31,10 @@ export class AuthGuard implements CanActivate {
       .then(res => {
         const employee: Employee = res.data;
         if (employee) {
-          this.authService.isLoggedIn().next(true);
+          this.authService.isSignIn().next(true);
           return true;
         }
-        // this.authService.isLoggedIn().subscribe(res => console.log(res));
+       
       })
       .catch(() => {
         this.router.navigate(["signin"]);

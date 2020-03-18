@@ -31,7 +31,7 @@ export class EmployeeService {
     }
   }
 
-  getEmployeeOnline(): Subject<Employee> {
+  getEmployeeSignOn(): Subject<Employee> {
     return this.employee;
   }
 }

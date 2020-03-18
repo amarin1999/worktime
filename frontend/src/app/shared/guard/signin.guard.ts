@@ -19,7 +19,7 @@ export class SigninGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Promise<boolean> {
     return this.authService
-      .isLoggedIn()
+      .isSignIn()
       .toPromise()
       .then(res => {
         if (res) {

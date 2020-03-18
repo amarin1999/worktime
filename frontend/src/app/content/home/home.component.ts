@@ -5,8 +5,9 @@ import { MessageService } from "primeng/api";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 //component
 import { OvertimeworkformComponent } from "../overtimeworkform/overtimeworkform.component";
-import { SideworkformComponent } from "../sideworkform/sideworkform.component";
+
 import { take } from "rxjs/operators";
+import { SideworkComponent } from "../sidework/sidework.component";
 
 @Component({
   selector: "app-home",
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
     {
       title: "ทำงานนอกสถานที่",
       img: LayoutConstants.sideWorkImagePath,
-      overlay: SideworkformComponent
+      overlay: SideworkComponent
     },
     {
       title: "ทำงานล่วงเวลา",
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit {
   ];
   constructor(
     public dialog: MatDialog,
-    public messageService: MessageService,
+    public messageService: MessageService
   ) {}
 
   ngOnInit(): void {}
@@ -44,8 +45,7 @@ export class HomeComponent implements OnInit {
   openDialog(overlay: ComponentType<unknown>): void {
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
-      autoFocus: false,
-    
+      autoFocus: false
     };
     const dialogRef = this.dialog.open(overlay, configDialog);
     dialogRef

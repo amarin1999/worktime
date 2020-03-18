@@ -6,21 +6,21 @@ import { EmployeeService } from "./employee.service";
 
 @Injectable()
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
+  private signin = new BehaviorSubject<boolean>(false);
 
   constructor(
     private router: Router,
     private employeeService: EmployeeService
   ) {}
 
-  login(employeeId: string): boolean {
+  onSignin(employeeId: string): boolean {
     try {
       this.employeeService.getEmployee(employeeId).subscribe(res => {
         const employee: Employee = res.data;
         if (employee) {
-          this.loggedIn.next(true);
+          this.signin.next(true);
         } else {
-          this.loggedIn.next(false);
+          this.signin.next(false);
         }
       });
       return true;
@@ -30,13 +30,13 @@ export class AuthService {
     }
   }
 
-  isLoggedIn(): BehaviorSubject<boolean> {
-    return this.loggedIn;
+  isSignIn(): BehaviorSubject<boolean> {
+    return this.signin;
   }
 
-  logout(): void {
+  onSignout(): void {
     localStorage.clear();
-    this.loggedIn.next(false);
+    this.signin.next(false);
     this.router.navigate(["signin"]);
   }
 }

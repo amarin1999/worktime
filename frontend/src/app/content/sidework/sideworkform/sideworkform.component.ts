@@ -1,68 +1,52 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
-import { NgxSpinnerService } from "ngx-spinner";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Message } from "primeng/api";
-import { finalize, first } from "rxjs/operators";
+import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
-import { SideworkService } from "src/app/shared/service/sidework.service";
-import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
+import { ConfirmdialogComponent } from "../../confirmdialog/confirmdialog.component";
+
 @Component({
   selector: "app-sideworkform",
   templateUrl: "./sideworkform.component.html",
   styleUrls: ["./sideworkform.component.scss"]
 })
-export class SideworkformComponent implements OnInit {
+export class SideworkformComponent implements OnInit, OnChanges {
+  @Input("dataSideWork") dataSideWork: SideWork;
+  @Output() insertEmit: EventEmitter<SideWork> = new EventEmitter();
   //constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
-  imgLogo: string = LayoutConstants.sideWorkImagePath;
   //form
   formGroupSideWork: FormGroup;
-  //data
-  dataSideWork: SideWork;
-  employeeNo: string = localStorage.getItem("employeeId");
   //date
   date: Date = new Date();
   dateRequest = `${this.date.getDate()}-${this.date.getMonth() +
     1}-${this.date.getFullYear() + 543}`;
   //message
   msgs: Message[] = [];
-  // set วันที่
 
   constructor(
-    private dialogRef: MatDialogRef<SideworkformComponent>,
     private buildForm: FormBuilder,
-    private sideWorkService: SideworkService,
-    private dialogConfirm: MatDialog,
-    private spinner: NgxSpinnerService
+    private dialogConfirm: MatDialog
   ) {
     this.createFormSideWork();
-    this.getTimeOnDay();
   }
 
   ngOnInit(): void {}
 
-  //เรียกเวลาวันนี้
-  getTimeOnDay(): void {
-    this.spinner.show();
-    this.sideWorkService
-      .getSideWorkOnDay(this.employeeNo, new Date())
-      .pipe(
-        first(),
-        finalize(() => {
-          this.spinner.hide();
-        })
-      )
-      .subscribe(
-        res => {
-          this.dataSideWork = res.data[0];
-          this.checkTimeForm();
-        },
-        error => {
-          console.table(error);
-        }
-      );
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      this.checkTimeForm();
+    }
   }
 
   //สร้าง form
@@ -94,8 +78,8 @@ export class SideworkformComponent implements OnInit {
 
   // check วันเวลาเพื่อ disable form
   checkTimeForm(): void {
-    if (this.dataSideWork.startTime) {
-      if (this.dataSideWork.endTime) {
+    if (this.dataSideWork?.startTime) {
+      if (this.dataSideWork?.endTime) {
         this.setValueForm();
         this.formGroupSideWork.disable();
         return;
@@ -170,34 +154,8 @@ export class SideworkformComponent implements OnInit {
       .pipe(first())
       .subscribe(confirmStatus => {
         if (confirmStatus) {
-          this.insertSideWork();
+          this.insertEmit.emit(this.formGroupSideWork.getRawValue());
         }
       });
-  }
-
-  // เพิ่มข้อมูลลง DB
-  insertSideWork(): void {
-    this.spinner.show();
-    const request = {
-      ...this.formGroupSideWork.getRawValue(),
-      employeeNo: this.employeeNo
-    };
-
-    this.sideWorkService
-      .addSidework(request)
-      .pipe(
-        first(),
-        finalize(() => {
-          this.spinner.hide();
-        })
-      )
-      .subscribe(
-        response => {
-          this.dialogRef.close(response);
-        },
-        error => {
-          this.dialogRef.close(error);
-        }
-      );
   }
 }

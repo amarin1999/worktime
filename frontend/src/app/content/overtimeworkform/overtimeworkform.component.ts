@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
 import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
@@ -67,7 +71,9 @@ export class OvertimeworkformComponent implements OnInit {
 
   // ลบ formarray item
   removeTimeRangeItem(index: number): void {
-    this.formTimeRangeData.removeAt(index);
+    if (this.formTimeRangeData.length !== 1) {
+      this.formTimeRangeData.removeAt(index);
+    }
   }
 
   // validate เวลา
@@ -121,7 +127,7 @@ export class OvertimeworkformComponent implements OnInit {
     this.spinner.show();
     const requestData = {
       ...this.formGroupOvertimeWork.getRawValue(),
-      employeeNo: localStorage.getItem("employeeId")
+      employeeNo: localStorage.getItem("employeeNo")
     };
     this.overtimeService
       .addOvertimeWork(requestData)

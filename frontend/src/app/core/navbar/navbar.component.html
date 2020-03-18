@@ -3,7 +3,7 @@
     <div class="navbar-header">
       <img src="../../../assets/images/banner.png" class="img-logo" />
     </div>
-    <div *ngIf="authService.isLoggedIn() | async">
+    <div *ngIf="authService.isSignIn() | async">
       <div class="main_list">
         <ul class="navlinks">
           <mat-card routerLink="/sss" class="card-nav">
@@ -20,10 +20,10 @@
             </mat-card-header>
           </mat-card>
 
-          <mat-card routerLink="/sss" class="card-nav">
+          <mat-card class="card-nav">
             <em
               class="pi pi-sign-out signout-btn"
-              (click)="onSignOut()"
+              (click)="signOut()"
               matTooltip="ออกจากระบบ"
               matTooltipClass="tooltip-signout"
             >
