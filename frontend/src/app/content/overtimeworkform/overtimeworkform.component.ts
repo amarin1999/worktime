@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { take } from "rxjs/operators";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
+import { NgxSpinnerService } from "ngx-spinner";
+import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { OvertimeService } from "src/app/shared/service/overtime.service";
 import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
@@ -20,8 +21,10 @@ export class OvertimeworkformComponent implements OnInit {
 
   constructor(
     private buildForm: FormBuilder,
+    private dialogRef: MatDialogRef<OvertimeworkformComponent>,
     private overtimeService: OvertimeService,
-    private dialogConfirm: MatDialog
+    private dialogConfirm: MatDialog,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -82,8 +85,6 @@ export class OvertimeworkformComponent implements OnInit {
   // submit
   onSubmit(): void {
     if (this.formGroupOvertimeWork.valid) {
-      console.log(this.formGroupOvertimeWork.getRawValue());
-      
       this.openDialogConfirm();
     }
   }
@@ -107,7 +108,7 @@ export class OvertimeworkformComponent implements OnInit {
     //หลังปิด dialog
     dialogRef
       .afterClosed()
-      .pipe(take(1))
+      .pipe(first())
       .subscribe(confirmStatus => {
         if (confirmStatus) {
           this.insertOvertimeWork();
@@ -117,33 +118,26 @@ export class OvertimeworkformComponent implements OnInit {
 
   // เพิ่มข้อมูลลง DB
   insertOvertimeWork(): void {
+    this.spinner.show();
     const requestData = {
       ...this.formGroupOvertimeWork.getRawValue(),
       employeeNo: localStorage.getItem("employeeId")
     };
-    this.overtimeService.addOvertimeWork(requestData).subscribe(res => {
-      console.log({ res });
-    });
-    // this.spinner.show();
-    // const request = {
-    //   ...this.formGroupSideWork.getRawValue(),
-    //   employeeNo: this.employeeNo
-    // };
-    // this.sideWorkService
-    //   .addSidework(request)
-    //   .pipe(
-    //     take(1),
-    //     finalize(() => {
-    //       this.spinner.hide();
-    //     })
-    //   )
-    //   .subscribe(
-    //     response => {
-    //       this.dialogRef.close(response);
-    //     },
-    //     error => {
-    //       this.dialogRef.close(error);
-    //     }
-    //   );
+    this.overtimeService
+      .addOvertimeWork(requestData)
+      .pipe(
+        first(),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        response => {
+          this.dialogRef.close(response);
+        },
+        error => {
+          this.dialogRef.close(error);
+        }
+      );
   }
 }

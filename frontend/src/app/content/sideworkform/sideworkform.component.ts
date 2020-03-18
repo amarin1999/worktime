@@ -1,13 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef
-} from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
 import { Message } from "primeng/api";
-import { finalize, take } from "rxjs/operators";
+import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideworkService } from "src/app/shared/service/sidework.service";
@@ -53,7 +49,7 @@ export class SideworkformComponent implements OnInit {
     this.sideWorkService
       .getSideWorkOnDay(this.employeeNo, new Date())
       .pipe(
-        take(1),
+        first(),
         finalize(() => {
           this.spinner.hide();
         })
@@ -171,7 +167,7 @@ export class SideworkformComponent implements OnInit {
     //หลังปิด dialog
     dialogRef
       .afterClosed()
-      .pipe(take(1))
+      .pipe(first())
       .subscribe(confirmStatus => {
         if (confirmStatus) {
           this.insertSideWork();
@@ -190,7 +186,7 @@ export class SideworkformComponent implements OnInit {
     this.sideWorkService
       .addSidework(request)
       .pipe(
-        take(1),
+        first(),
         finalize(() => {
           this.spinner.hide();
         })
