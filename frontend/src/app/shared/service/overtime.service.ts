@@ -18,8 +18,8 @@ export class OvertimeService {
         .pipe(
           map(response => {
             return {
-              status: response["result"],
-              code: response["code"]
+              // status: response["result"],
+              // code: response["code"]
             };
           })
         );

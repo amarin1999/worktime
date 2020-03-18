@@ -25,7 +25,7 @@ export class OvertimeworkformComponent implements OnInit {
   buildFormOvertime(): void {
     this.formGroupOvertimeWork = this.buildForm.group({
       timeRange: new FormArray([]),
-      workProject: [null, [Validators.maxLength(45)]],
+      projectNo: [null, [Validators.maxLength(45)]],
       remark: [null, [Validators.maxLength(250)]]
     });
   }

@@ -12,7 +12,7 @@
           <mat-label
             ><mat-icon matSuffix>home_work</mat-icon> ชื่อโครงการ</mat-label
           >
-          <input matInput />
+          <input matInput formControlName="projectNo" />
         </mat-form-field>
       </div>
       <div class="{{ formGrid }}">
@@ -28,11 +28,8 @@
     >
       <div class="p-grid animation-page" formGroupName="{{ i }}">
         <div class="{{ formGrid }}">
-          <!-- <span style="z-index: 9999;" matBadge matBadgeOverlap="false">
-            <ng-template mat-badge-content>
-              <mat-icon>history</mat-icon>
-            </ng-template>
-          </span> -->
+          <span style="z-index: 9999;" backmatBadge="-" matBadgeOverlap="false">
+          </span>
           <mat-form-field
             appearance="outline"
             style="width: 100%; display:inline"
@@ -91,6 +88,7 @@
           </mat-form-field>
         </div>
       </div>
+      <hr style="border: 1px solid #D3D3D3;margin-top: -10px;" />
     </div>
 
     <div class="p-col-12 p-justify-center " style="text-align: center;">
