@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
+import { OvertimeService } from "src/app/shared/service/overtime.service";
 
 @Component({
   selector: "app-overtimeworkform",
@@ -11,8 +12,11 @@ export class OvertimeworkformComponent implements OnInit {
   formGrid: string = LayoutConstants.gridFormPrimeNg;
   imgLogo: string = LayoutConstants.overtimeImagePath;
   formGroupOvertimeWork: FormGroup;
-  
-  constructor(private buildForm: FormBuilder) {
+
+  constructor(
+    private buildForm: FormBuilder,
+    private overtimeService: OvertimeService
+  ) {
     this.buildFormOvertime();
   }
 
@@ -22,7 +26,7 @@ export class OvertimeworkformComponent implements OnInit {
     this.formGroupOvertimeWork = this.buildForm.group({
       timeRange: new FormArray([]),
       workProject: [null, [Validators.maxLength(45)]],
-      remark: [null, [Validators.maxLength(250)]],
+      remark: [null, [Validators.maxLength(250)]]
     });
   }
   get formTimeRangeData() {
@@ -43,6 +47,7 @@ export class OvertimeworkformComponent implements OnInit {
         validators: [this.compareTime]
       }
     );
+    console.log(this.getTime());
     this.getTime().push(rangeTime);
   }
 
@@ -58,6 +63,12 @@ export class OvertimeworkformComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.formGroupOvertimeWork.getRawValue())
+    const requestData = {
+      ...this.formGroupOvertimeWork.getRawValue(),
+      employeeNo: localStorage.getItem("employeeId")
+    };
+    this.overtimeService.addOvertimeWork(requestData).subscribe(res => {
+      console.log({ res });
+    });
   }
 }

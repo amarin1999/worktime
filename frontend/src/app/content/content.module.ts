@@ -37,6 +37,7 @@ import { HomeComponent } from "./home/home.component";
 import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
 import { SideworkformComponent } from "./sideworkform/sideworkform.component";
 import { SigninComponent } from "./signin/signin.component";
+import { OvertimeService } from "../shared/service/overtime.service";
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { SigninComponent } from "./signin/signin.component";
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule
   ],
-  providers: [AuthGuard, MessageService, SideworkService],
+  providers: [AuthGuard, MessageService, SideworkService, OvertimeService],
   exports: [ContentComponent]
 })
 export class ContentModule {}
