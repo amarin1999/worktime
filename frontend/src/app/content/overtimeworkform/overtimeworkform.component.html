@@ -9,15 +9,22 @@
     <div class="p-grid">
       <div class=" {{ formGrid }}">
         <mat-form-field appearance="outline" style="width: 100%;">
-          <mat-label
-            ><mat-icon matSuffix>home_work</mat-icon> ชื่อโครงการ</mat-label
-          >
+          <mat-label>
+            <mat-icon matSuffix>home_work</mat-icon> รหัสโครงการ
+          </mat-label>
           <input matInput formControlName="projectNo" />
+          <mat-error
+            *ngIf="
+              formGroupOvertimeWork.controls.projectNo.hasError('required')
+            "
+          >
+            กรุณากรอกรหัสโครงการ !
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="{{ formGrid }}">
         <mat-form-field appearance="outline" style="width:100%">
-          <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
+          <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ </mat-label>
           <textarea formControlName="remark" matInput></textarea>
         </mat-form-field>
       </div>
@@ -25,16 +32,22 @@
     <div
       *ngFor="let time of formTimeRangeData.controls; let i = index"
       formArrayName="timeRange"
+      class="animation-page"
     >
-      <div class="p-grid animation-page" formGroupName="{{ i }}">
+      <div class="del-item-form-btn">
+        <button
+          mat-button
+          [color]="'warn'"
+          type="submit"
+          (click)="removeTimeRangeItem(i)"
+        >
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </div>
+      <div class="p-grid" formGroupName="{{ i }}">
         <div class="{{ formGrid }}">
-          <span style="z-index: 9999;" backmatBadge="-" matBadgeOverlap="false">
-          </span>
-          <mat-form-field
-            appearance="outline"
-            style="width: 100%; display:inline"
-          >
-            <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label> <mat-icon>schedule</mat-icon> เวลาเข้างาน </mat-label>
             <input
               readonly
               matInput
@@ -54,11 +67,8 @@
         </div>
 
         <div class="{{ formGrid }}">
-          <mat-form-field
-            appearance="outline"
-            style="width: 100%; display:inline"
-          >
-            <mat-label><mat-icon>schedule</mat-icon> เวลาออกงาน</mat-label>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label> <mat-icon>schedule</mat-icon> เวลาออกงาน </mat-label>
             <input
               readonly
               matInput
@@ -67,12 +77,8 @@
               (focus)="pickerEndTime.open()"
             />
 
-            <mat-error
-              *ngIf="
-                formGroupOvertimeWork.get('timeRange').hasError('wrongDate')
-              "
-            >
-              เวลาออกงานต้องมากกว่าเวลาเข้างาน !
+            <mat-error *ngIf="formTimeRangeData.controls">
+              * เวลาออกงานต้องมากกว่าเวลาเข้างาน
             </mat-error>
 
             <mat-datepicker-toggle
@@ -88,7 +94,8 @@
           </mat-form-field>
         </div>
       </div>
-      <hr style="border: 1px solid #D3D3D3;margin-top: -10px;" />
+
+      <hr style="border: 1px solid #D3D3D3;margin-top: 0px;" />
     </div>
 
     <div class="p-col-12 p-justify-center " style="text-align: center;">

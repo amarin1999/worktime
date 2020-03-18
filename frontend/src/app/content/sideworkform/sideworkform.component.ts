@@ -18,16 +18,21 @@ import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component
   styleUrls: ["./sideworkform.component.scss"]
 })
 export class SideworkformComponent implements OnInit {
+  //constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
   imgLogo: string = LayoutConstants.sideWorkImagePath;
+  //form
   formGroupSideWork: FormGroup;
+  //data
   dataSideWork: SideWork;
+  employeeNo: string = localStorage.getItem("employeeId");
+  //date
   date: Date = new Date();
-  msgs: Message[] = [];
-  // set วันที่
   dateRequest = `${this.date.getDate()}-${this.date.getMonth() +
     1}-${this.date.getFullYear() + 543}`;
-  employeeNo: string = localStorage.getItem("employeeId");
+  //message
+  msgs: Message[] = [];
+  // set วันที่
 
   constructor(
     private dialogRef: MatDialogRef<SideworkformComponent>,
@@ -42,6 +47,7 @@ export class SideworkformComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  //เรียกเวลาวันนี้
   getTimeOnDay(): void {
     this.spinner.show();
     this.sideWorkService
@@ -63,6 +69,7 @@ export class SideworkformComponent implements OnInit {
       );
   }
 
+  //สร้าง form
   createFormSideWork(): void {
     this.formGroupSideWork = this.buildForm.group(
       {
@@ -76,6 +83,8 @@ export class SideworkformComponent implements OnInit {
       }
     );
   }
+
+  //validate เวลา
   compareTime(group: FormGroup): void {
     let startTime = group.get("startTime").value;
     let endTime = group.get("endTime").value;
@@ -87,8 +96,8 @@ export class SideworkformComponent implements OnInit {
     }
   }
 
+  // check วันเวลาเพื่อ disable form
   checkTimeForm(): void {
-    // check วันเวลาเพื่อ disable form
     if (this.dataSideWork.startTime) {
       if (this.dataSideWork.endTime) {
         this.setValueForm();
@@ -101,8 +110,8 @@ export class SideworkformComponent implements OnInit {
     }
   }
 
+  // patch ข้อมูลตามที่มี
   setValueForm(): void {
-    this.formGroupSideWork.controls["startTime"].disable();
     this.formGroupSideWork.patchValue({
       startTime: this.setStartTime(),
       endTime: this.setEndTime(),
@@ -110,11 +119,15 @@ export class SideworkformComponent implements OnInit {
       remark: this.dataSideWork.remark
     });
   }
+
+  // เงื่อนไข Starttime
   setStartTime(): Date {
     return this.dataSideWork.startTime
       ? new Date(this.dataSideWork.startTime)
       : new Date();
   }
+
+  // เงื่อนไข Endtime
   setEndTime(): Date {
     return this.dataSideWork.endTime
       ? new Date(this.dataSideWork.endTime)
@@ -123,6 +136,7 @@ export class SideworkformComponent implements OnInit {
       : null;
   }
 
+  // กดปุ่ม
   onSubmit(): void {
     //ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
@@ -138,8 +152,8 @@ export class SideworkformComponent implements OnInit {
     }
   }
 
+  // show confirm return true | false
   openDialogConfirm(): void {
-    //config dialog
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
       autoFocus: false,
@@ -160,12 +174,13 @@ export class SideworkformComponent implements OnInit {
       .pipe(take(1))
       .subscribe(confirmStatus => {
         if (confirmStatus) {
-          this.insertSidework();
+          this.insertSideWork();
         }
       });
   }
 
-  insertSidework(): void {
+  // เพิ่มข้อมูลลง DB
+  insertSideWork(): void {
     this.spinner.show();
     const request = {
       ...this.formGroupSideWork.getRawValue(),

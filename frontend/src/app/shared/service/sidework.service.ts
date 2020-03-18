@@ -1,11 +1,10 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { ApiConstants } from "../constants/ApiConstants";
-import { Observable, Subject } from "rxjs";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { Employee } from "../interfaces/employee";
-import { SideWork } from "../interfaces/sidework";
+import { ApiConstants } from "../constants/ApiConstants";
 import { Response } from "../interfaces/response";
+import { SideWork } from "../interfaces/sidework";
 
 @Injectable({
   providedIn: "root"
