@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class OtPostTimeDto implements Serializable {
 
 	/**
@@ -13,7 +20,7 @@ public class OtPostTimeDto implements Serializable {
 
 	private Long id;
 	private Long employeehasId;
-	private List<Date> date;
+	private List<Date> timeRange;
 	private String remark;
 	private Date lastUpdate;
 	private String projectNo;

@@ -117,7 +117,6 @@ public class SideWorkController {
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-M-dd");
 		Date date = formatDate.parse(startTime);
-		System.out.println(date);
 		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(formatDate.format(date),
 				employee.get(0).getId());
 		dto.add(dataSideWork);
@@ -144,7 +143,6 @@ public class SideWorkController {
 		SideworkHistoryDto data = new SideworkHistoryDto();
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		String date = dateformat.format(body.getStartTime());
-		System.out.println(date);
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();

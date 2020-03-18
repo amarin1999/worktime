@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OtController {
 
 	@PostMapping(path="/posttime")
-	private ResponseEntity<ResponseDto<OtDto>> postOt(@Valid@RequestBody OtPostTimeDto body){
+	private ResponseEntity<ResponseDto<OtDto>> postOt(@Valid @RequestBody OtPostTimeDto body){
 		System.out.println(body);
 		return null;
 		
