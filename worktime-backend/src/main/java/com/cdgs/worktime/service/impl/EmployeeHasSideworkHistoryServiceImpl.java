@@ -30,11 +30,12 @@ public class EmployeeHasSideworkHistoryServiceImpl implements EmployeeHasSidewor
 	}
 
 	@Override
-	public EmployeeHasSideworkHistoryDto getEmployeeHasHistory(List<EmployeeDto> employee) {
+	public EmployeeHasSideworkHistoryDto getEmployeeHasHistory(List<EmployeeDto> employee,Long workType) {
 		EmployeeHasSideworkHistoryEntity entity = new EmployeeHasSideworkHistoryEntity();
 		EmployeeHasSideworkHistoryEntity data = new EmployeeHasSideworkHistoryEntity();
 		EmployeeEntity setId = new EmployeeEntity();
 		data.setIdEmployee(employee.get(0).getId());
+		data.setWorkTypeId(workType);
 		entity = employeeHasSideworkHistoryRespository.save(data);
 		return mapEntityToDto(entity);
 
@@ -44,7 +45,7 @@ public class EmployeeHasSideworkHistoryServiceImpl implements EmployeeHasSidewor
 		EmployeeHasSideworkHistoryDto dto = new EmployeeHasSideworkHistoryDto();
 		if (entity != null) {
 			dto.setEmployeehasId(entity.getEmployeeHasSideworkHistoryId());
-			dto.setWorkType(entity.getWorkType());
+			dto.setWorkType(entity.getWorkTypeId());
 		}
 		return dto;
 
