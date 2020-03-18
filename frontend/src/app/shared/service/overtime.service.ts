@@ -4,6 +4,7 @@ import { ApiConstants } from "../constants/ApiConstants";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { Employee } from "../interfaces/employee";
+import { OvertimeWork } from "../interfaces/overtime";
 
 @Injectable({
   providedIn: "root"
@@ -11,7 +12,7 @@ import { Employee } from "../interfaces/employee";
 export class OvertimeService {
   constructor(private http: HttpClient) {}
 
-  addOvertimeWork(body) {
+  addOvertimeWork(body: OvertimeWork) {
     try {
       return this.http
         .post(`${ApiConstants.baseURl}/overtime/posttime`, body)

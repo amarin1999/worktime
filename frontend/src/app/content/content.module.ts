@@ -19,6 +19,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatDividerModule } from "@angular/material/divider";
 //primgng
 import { MessageService } from "primeng/api";
 import { MessageModule } from "primeng/message";
@@ -29,6 +30,7 @@ import { AuthGuard } from "../shared/guard/auth.guard";
 //service
 import { SideworkService } from "../shared/service/sidework.service";
 import { SharedModule } from "../shared/shared.module";
+import { OvertimeService } from "../shared/service/overtime.service";
 //component
 import { ConfirmdialogComponent } from "./confirmdialog/confirmdialog.component";
 import { ContentRoutingModule } from "./content-routing.module";
@@ -37,7 +39,6 @@ import { HomeComponent } from "./home/home.component";
 import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
 import { SideworkformComponent } from "./sideworkform/sideworkform.component";
 import { SigninComponent } from "./signin/signin.component";
-import { OvertimeService } from "../shared/service/overtime.service";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { OvertimeService } from "../shared/service/overtime.service";
     MatTabsModule,
     MatListModule,
     MatBadgeModule,
+    MatDividerModule,
     //Date
     MatDatepickerModule,
     MatNativeDateModule,
