@@ -18,7 +18,7 @@ public class OtHistoryDto implements Serializable {/**
 
 	private Long id;
 	private Long employeehasId;
-	private List<Date> date;
+	private List<TimeListDto> date;
 	private String remark;
 	private Date lastUpdate;
 	private String projectNo;

@@ -12,10 +12,9 @@ import com.cdgs.worktime.entity.SideworkHistoryEntity;
 
 public interface DataTableRespository extends CrudRepository<SideworkHistoryEntity, String> {
 
-	@Query(value = "SELECT sh.* " + "FROM worktime.sidework_history sh  "
-			+ "JOIN worktime.employee e "
-			+"JOIN  worktime.employee_has_sidework_history esh " 
-			+ "WHERE e.id_employee = :employeeId "
-			+ "and esh.work_type= 1 ", nativeQuery = true)
-	List<SideworkHistoryEntity> getSideworkAll(Long employeeId);
+	@Query(value =" SELECT sh.* "
+			+ "FROM worktime.sidework_history sh INNER JOIN  worktime.employee_has_sidework_history esh "
+			+"ON sh.employee_has_sidework_history_id = esh.employee_has_sidework_history_id "
+			+ "WHERE esh.employee_id = :employeeId"	, nativeQuery = true)
+	List<SideworkHistoryEntity> getSideworkAll(@Param(value = "employeeId") Long employeeId);
 }
