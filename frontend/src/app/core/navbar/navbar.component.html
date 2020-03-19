@@ -1,7 +1,13 @@
 <mat-grid-list cols="12" rowHeight="100px">
   <nav class="navbar navbar-default animation-page" role="navigation">
     <div class="navbar-header">
-      <img src="../../../assets/images/banner.png" class="img-logo" />
+      <img
+        src="../../../assets/images/banner.png"
+        class="img-logo"
+        routerLink="/main"
+        alt="imgNav"
+       
+      />
     </div>
     <div *ngIf="authService.isSignIn() | async">
       <div class="main_list">

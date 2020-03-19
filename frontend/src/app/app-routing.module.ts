@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { HistoryComponent } from "./content/history/history.component";
-import { SigninComponent } from "./content/signin/signin.component";
+import { SignInComponent } from "./content/signin/signin.component";
+import { PageNotFoundComponent } from "./core/page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
@@ -12,16 +12,20 @@ const routes: Routes = [
 
   {
     path: "signin",
-    component: SigninComponent
+    component: SignInComponent
   },
-  // {
-  //   path: "**",
-  //   component: HistoryComponent
-  // }
+  {
+    path: "**",
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: "enabled"
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

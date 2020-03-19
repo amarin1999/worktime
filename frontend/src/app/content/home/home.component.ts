@@ -6,7 +6,7 @@ import { take } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 //component
 import { OvertimeworkformComponent } from "../overtimeworkform/overtimeworkform.component";
-import { SideworkComponent } from "../sidework/sidework.component";
+import { SideWorkComponent } from "../sidework/sidework.component";
 import { Response } from "src/app/shared/interfaces/response";
 import { Router } from "@angular/router";
 
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     {
       title: "ทำงานนอกสถานที่",
       img: LayoutConstants.sideWorkImagePath,
-      link: SideworkComponent
+      link: SideWorkComponent
     },
     {
       title: "ทำงานล่วงเวลา",
@@ -56,35 +56,39 @@ export class HomeComponent implements OnInit {
     if (typeof item.link === "string") {
       this.route.navigate([item.link]);
     } else {
-      const configDialog: MatDialogConfig<any> = {
-        disableClose: true,
-        autoFocus: false
-      };
-      const dialogRef = this.dialog.open(item.link, configDialog);
-      dialogRef
-        .afterClosed()
-        .pipe(take(1))
-        .subscribe(
-          (result: Response) => {
-            if (result.status === "Success") {
-              this.messageService.clear();
-              this.messageService.add({
-                key: "SuccessMessage",
-                severity: "success",
-                summary: "แจ้งเตือน",
-                detail: "ลงเวลาเรียบร้อยแล้ว"
-              });
-            }
-          },
-          error => {
+      this.openDialog(item.link);
+    }
+  }
+
+  openDialog(overlay: ComponentType<any>) {
+    const configDialog: MatDialogConfig<any> = {
+      disableClose: true,
+      autoFocus: false
+    };
+    const dialogRef = this.dialog.open(overlay, configDialog);
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(
+        (result: Response) => {
+          if (result.status === "Success") {
+            this.messageService.clear();
             this.messageService.add({
-              key: "errorMessage",
-              severity: "error",
-              summary: "ผิดพลาด",
-              detail: "เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล"
+              key: "SuccessMessage",
+              severity: "success",
+              summary: "แจ้งเตือน",
+              detail: "ลงเวลาเรียบร้อยแล้ว"
             });
           }
-        );
-    }
+        },
+        error => {
+          this.messageService.add({
+            key: "errorMessage",
+            severity: "error",
+            summary: "ผิดพลาด",
+            detail: "เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล"
+          });
+        }
+      );
   }
 }

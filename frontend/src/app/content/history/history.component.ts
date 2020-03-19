@@ -1,5 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { SideworkService } from "src/app/shared/service/sidework.service";
+import { SideWorkService } from "src/app/shared/service/sidework.service";
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
 
 @Component({
   selector: "app-history",
@@ -7,13 +13,16 @@ import { SideworkService } from "src/app/shared/service/sidework.service";
   styleUrls: ["./history.component.scss"]
 })
 export class HistoryComponent implements OnInit {
-  constructor(private sideWorkService: SideworkService) {}
+  sideWorkItem
+  constructor(private sideWorkService: SideWorkService) {}
 
   ngOnInit(): void {
     this.sideWorkService
       .getHistorySideWork(localStorage.getItem("employeeNo"))
       .subscribe(response => {
-        console.log(response);
+        console.log({ response });
       });
   }
+
+  getHistorySideWork() {}
 }

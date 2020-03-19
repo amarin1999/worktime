@@ -7,7 +7,7 @@ import { OvertimeWork } from "../interfaces/overtime";
 @Injectable({
   providedIn: "root"
 })
-export class OvertimeService {
+export class OvertimeWorkService {
   constructor(private http: HttpClient) {}
 
   addOvertimeWork(body: OvertimeWork) {

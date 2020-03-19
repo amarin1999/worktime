@@ -14,7 +14,7 @@ import { Response } from "src/app/shared/interfaces/response";
   templateUrl: "./signin.component.html",
   styleUrls: ["./signin.component.scss"]
 })
-export class SigninComponent implements OnInit {
+export class SignInComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
   form: FormGroup;
 

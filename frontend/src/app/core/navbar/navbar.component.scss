@@ -98,7 +98,13 @@ mat-card {
 }
 .img-logo {
   width: 10vh;
-  display: inline-block;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.img-logo:hover {
+  transform: scale(1.03, 1.03);
+  transition: 0.2s;
 }
 
 //card
@@ -107,11 +113,10 @@ mat-card {
   background-size: cover;
 }
 
-
 .card-nav {
   background: none;
   border: none;
-  box-shadow: none;  
+  box-shadow: none;
 }
 
 @-webkit-keyframes inM {

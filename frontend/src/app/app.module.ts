@@ -14,12 +14,12 @@ import { AppRoutingModule } from "./app-routing.module";
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    ContentModule,
     AppRoutingModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production
     }),
     CoreModule,
-    ContentModule,
     SharedModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: "th-TH" }],

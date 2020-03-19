@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SideWorkComponent } from './sidework.component';
+import { HistorySideWorkComponent } from './history-side-work.component';
 
-describe('SideworkComponent', () => {
-  let component: SideWorkComponent;
-  let fixture: ComponentFixture<SideWorkComponent>;
+describe('HistorySideWorkComponent', () => {
+  let component: HistorySideWorkComponent;
+  let fixture: ComponentFixture<HistorySideWorkComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SideWorkComponent ]
+      declarations: [ HistorySideWorkComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SideWorkComponent);
+    fixture = TestBed.createComponent(HistorySideWorkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

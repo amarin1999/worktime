@@ -7,11 +7,20 @@ import { MatCardModule } from "@angular/material/card";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatButtonModule } from "@angular/material/button";
+//angular
 import { RouterModule } from "@angular/router";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // fontawesome
-import { FaIconLibrary, FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { faFacebook, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import {
+  FaIconLibrary,
+  FontAwesomeModule
+} from "@fortawesome/angular-fontawesome";
+import {
+  faFacebook,
+  faTwitter,
+  faYoutube
+} from "@fortawesome/free-brands-svg-icons";
 import { faClock, faHistory } from "@fortawesome/free-solid-svg-icons";
 //spinner;
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -31,6 +40,7 @@ import { EmployeeService } from "./service/employee.service";
     SidebarModule,
     FontAwesomeModule,
     MatGridListModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatTooltipModule,
