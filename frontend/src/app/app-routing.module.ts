@@ -1,8 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { HistoryComponent } from "./content/history/history.component";
 import { SignInComponent } from "./content/signin/signin.component";
-import { NavbarComponent } from './core/navbar/navbar.component';
+import { PageNotFoundComponent } from "./core/page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
@@ -17,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: "**",
-    component: NavbarComponent
+    component: PageNotFoundComponent
   }
 ];
 

@@ -15,7 +15,6 @@ import {
 } from "ngx-mat-datetime-picker";
 import { MatListModule } from "@angular/material/list";
 import { MatBadgeModule } from "@angular/material/badge";
-import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -66,7 +65,6 @@ import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/hi
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatMenuModule,
     ReactiveFormsModule,
     MessagesModule,

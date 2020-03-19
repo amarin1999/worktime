@@ -27,10 +27,12 @@ export class SideWorkComponent implements OnInit {
     private sideWorkService: SideWorkService,
     private spinner: NgxSpinnerService
   ) {
-    this.getTimeOnDay();
+  
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getTimeOnDay();
+  }
 
   //เรียกเวลาวันนี้
   getTimeOnDay(): void {

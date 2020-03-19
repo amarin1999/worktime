@@ -7,24 +7,22 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-
 @Component({
   selector: "app-history",
   templateUrl: "./history.component.html",
   styleUrls: ["./history.component.scss"]
 })
-
 export class HistoryComponent implements OnInit {
-
+  sideWorkItem
   constructor(private sideWorkService: SideWorkService) {}
-  
 
   ngOnInit(): void {
-    
     this.sideWorkService
       .getHistorySideWork(localStorage.getItem("employeeNo"))
       .subscribe(response => {
-        console.log({response});
+        console.log({ response });
       });
   }
+
+  getHistorySideWork() {}
 }
