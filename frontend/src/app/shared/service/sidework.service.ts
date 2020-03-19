@@ -50,4 +50,22 @@ export class SideworkService {
       console.table(error);
     }
   }
+
+  getHistorySideWork(id: string) {
+    try {
+      return this.http
+        .get(`${ApiConstants.baseURl}/datatable/getsidework/${id}`)
+        .pipe(
+          map(response => {
+            return {
+              status: response["result"],
+              data: response["data"],
+              code: response["code"]
+            };
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
 }

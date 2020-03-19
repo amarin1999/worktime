@@ -3,6 +3,7 @@
     <img
       src="{{ cdgImagePath }}"
       style="height:20vh ;width: auto;"
+      alt="imgLogo"
     /><br /><br />
     <h1 class="header-text">ลงเวลาการทำงานนอกสถานที่ และการทำงานล่วงเวลา</h1>
   </div>
@@ -28,7 +29,7 @@
           </mat-card-content>
           <mat-card-footer>
             <button mat-raised-button class="btn-menu">
-              <div class="confirm-text" (click)="openDialog(item.overlay)">
+              <div class="confirm-text" (click)="onClickItem(item)">
                 ยืนยัน
                 <em
                   class="pi pi-chevron-right"

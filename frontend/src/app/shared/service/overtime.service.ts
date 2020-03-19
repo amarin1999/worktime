@@ -1,9 +1,7 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { ApiConstants } from "../constants/ApiConstants";
-import { Observable, Subject } from "rxjs";
+import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
-import { Employee } from "../interfaces/employee";
+import { ApiConstants } from "../constants/ApiConstants";
 import { OvertimeWork } from "../interfaces/overtime";
 
 @Injectable({

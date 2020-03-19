@@ -7,6 +7,7 @@ import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideworkService } from "src/app/shared/service/sidework.service";
 import { SideworkformComponent } from "./sideworkform/sideworkform.component";
+import { Response } from "src/app/shared/interfaces/response";
 
 @Component({
   selector: "app-sidework",
@@ -60,7 +61,7 @@ export class SideworkComponent implements OnInit {
         })
       )
       .subscribe(
-        response => {
+        (response: Response) => {
           this.dialogRef.close(response);
         },
         error => {

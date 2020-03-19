@@ -7,7 +7,8 @@ import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 //component
 import { OvertimeworkformComponent } from "../overtimeworkform/overtimeworkform.component";
 import { SideworkComponent } from "../sidework/sidework.component";
-
+import { Response } from "src/app/shared/interfaces/response";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-home",
@@ -18,59 +19,72 @@ import { SideworkComponent } from "../sidework/sidework.component";
 export class HomeComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
 
-  menu: { title: string; img: string; overlay: ComponentType<any> }[] = [
+  menu: {
+    title: string;
+    img: string;
+    link: ComponentType<any> | string;
+  }[] = [
     {
       title: "ทำงานนอกสถานที่",
       img: LayoutConstants.sideWorkImagePath,
-      overlay: SideworkComponent
+      link: SideworkComponent
     },
     {
       title: "ทำงานล่วงเวลา",
       img: LayoutConstants.overtimeImagePath,
-      overlay: OvertimeworkformComponent
+      link: OvertimeworkformComponent
     },
     {
       title: "ประวัติการลงเวลา",
       img: LayoutConstants.historyImagePath,
-      overlay: OvertimeworkformComponent
+      link: "main/history"
     }
   ];
   constructor(
-    public dialog: MatDialog,
-    public messageService: MessageService
+    private dialog: MatDialog,
+    private messageService: MessageService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {}
 
-  openDialog(overlay: ComponentType<unknown>): void {
-    const configDialog: MatDialogConfig<any> = {
-      disableClose: true,
-      autoFocus: false
-    };
-    const dialogRef = this.dialog.open(overlay, configDialog);
-    dialogRef
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe(
-        result => {
-          if (result.status === "Success") {
-            this.messageService.clear();
+  onClickItem(item: {
+    title: string;
+    img: string;
+    link: ComponentType<any> | string;
+  }): void {
+    if (typeof item.link === "string") {
+      this.route.navigate([item.link]);
+    } else {
+      const configDialog: MatDialogConfig<any> = {
+        disableClose: true,
+        autoFocus: false
+      };
+      const dialogRef = this.dialog.open(item.link, configDialog);
+      dialogRef
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe(
+          (result: Response) => {
+            if (result.status === "Success") {
+              this.messageService.clear();
+              this.messageService.add({
+                key: "SuccessMessage",
+                severity: "success",
+                summary: "แจ้งเตือน",
+                detail: "ลงเวลาเรียบร้อยแล้ว"
+              });
+            }
+          },
+          error => {
             this.messageService.add({
-              key: "SuccessMessage",
-              severity: "success",
-              summary: "แจ้งเตือน",
-              detail: "ลงเวลาเรียบร้อยแล้ว"
+              key: "errorMessage",
+              severity: "error",
+              summary: "ผิดพลาด",
+              detail: "เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล"
             });
           }
-        },
-        error => {
-          this.messageService.add({
-            key: "errorMessage",
-            severity: "error",
-            summary: "ผิดพลาด",
-            detail: "เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล"
-          });
-        }
-      );
+        );
+    }
   }
 }

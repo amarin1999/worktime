@@ -152,7 +152,7 @@ export class SideworkformComponent implements OnInit, OnChanges {
     dialogRef
       .afterClosed()
       .pipe(first())
-      .subscribe(confirmStatus => {
+      .subscribe((confirmStatus: boolean) => {
         if (confirmStatus) {
           this.insertEmit.emit(this.formGroupSideWork.getRawValue());
         }

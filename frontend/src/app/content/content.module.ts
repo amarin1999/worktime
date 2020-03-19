@@ -33,15 +33,16 @@ import { SharedModule } from "../shared/shared.module";
 import { OvertimeService } from "../shared/service/overtime.service";
 //component
 import { ConfirmdialogComponent } from "./confirmdialog/confirmdialog.component";
-import { ContentRoutingModule } from "./content-routing.module";
+
 import { ContentComponent } from "./content.component";
 import { HomeComponent } from "./home/home.component";
 import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
-
 import { SigninComponent } from "./signin/signin.component";
-import { SideworkComponent } from './sidework/sidework.component';
-import { SideworkformComponent } from './sidework/sideworkform/sideworkform.component';
-
+import { SideworkComponent } from "./sidework/sidework.component";
+import { SideworkformComponent } from "./sidework/sideworkform/sideworkform.component";
+import { HistoryComponent } from "./history/history.component";
+//route
+import { ContentRoutingModule } from "./content-routing.module";
 @NgModule({
   declarations: [
     ContentComponent,
@@ -50,7 +51,8 @@ import { SideworkformComponent } from './sidework/sideworkform/sideworkform.comp
     SideworkformComponent,
     OvertimeworkformComponent,
     ConfirmdialogComponent,
-    SideworkComponent
+    SideworkComponent,
+    HistoryComponent
   ],
 
   imports: [

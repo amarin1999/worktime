@@ -10,6 +10,7 @@ import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { OvertimeService } from "src/app/shared/service/overtime.service";
 import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
+import { Response } from "src/app/shared/interfaces/response";
 
 @Component({
   selector: "app-overtimeworkform",
@@ -138,7 +139,7 @@ export class OvertimeworkformComponent implements OnInit {
         })
       )
       .subscribe(
-        response => {
+        (response: Response) => {
           this.dialogRef.close(response);
         },
         error => {

@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService } from "primeng/api";
-import { Subscription } from "rxjs";
 import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { Employee } from "src/app/shared/interfaces/employee";
 import { EmployeeService } from "src/app/shared/service/employee.service";
+import { Response } from "src/app/shared/interfaces/response";
 
 @Component({
   selector: "app-signin",
@@ -17,7 +17,6 @@ import { EmployeeService } from "src/app/shared/service/employee.service";
 export class SigninComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
   form: FormGroup;
-  private request: Subscription;
 
   constructor(
     private builder: FormBuilder,
@@ -49,7 +48,7 @@ export class SigninComponent implements OnInit {
           })
         )
         .subscribe(
-          response => {
+          (response: Response) => {
             const employee: Employee = response.data;
             if (employee) {
               localStorage.setItem("employeeNo", employee.no);

@@ -3,17 +3,19 @@ import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "../shared/guard/auth.guard";
 import { ContentComponent } from "./content.component";
 import { HomeComponent } from "./home/home.component";
+import { HistoryComponent } from "./history/history.component";
 
 const routes: Routes = [
   {
-    path: "home",
-    component: HomeComponent,
+    path: "main",
+    component: ContentComponent,
     canActivate: [AuthGuard],
     children: [
       {
-        path: "ss",
-        component: ContentComponent
-      }
+        path: "",
+        component: HomeComponent
+      },
+      { path: "history", component: HistoryComponent }
     ]
   }
 ];
