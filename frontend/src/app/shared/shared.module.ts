@@ -29,9 +29,11 @@ import { SidebarModule } from "primeng/sidebar";
 import { AuthService } from "./service/auth.service";
 //service
 import { EmployeeService } from "./service/employee.service";
+import { FormatDateThPipe } from "./pipe/format-date-th.pipe";
+import { FormatDayThPipe } from "./pipe/format-day-th.pipe";
 
 @NgModule({
-  declarations: [],
+  declarations: [FormatDateThPipe, FormatDayThPipe],
   imports: [],
 
   exports: [
@@ -46,7 +48,9 @@ import { EmployeeService } from "./service/employee.service";
     MatTooltipModule,
     MatIconModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FormatDateThPipe,
+    FormatDayThPipe
   ],
   providers: [EmployeeService, AuthService]
 })

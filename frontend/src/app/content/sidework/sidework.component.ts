@@ -18,32 +18,22 @@ export class SideWorkComponent implements OnInit {
   //constants
   imgLogo: string = LayoutConstants.sideWorkImagePath;
   //request
-  requestDay: Observable<Object>;
-  //data
-  employeeNo: string = localStorage.getItem("employeeNo");
+  requestDay = this.getTimeOnDay();
 
   constructor(
     private dialogRef: MatDialogRef<SideWorkFormComponent>,
     private sideWorkService: SideWorkService,
     private spinner: NgxSpinnerService
-  ) {
-  
-  }
+  ) {}
 
-  ngOnInit(): void {
-    this.getTimeOnDay();
-  }
+  ngOnInit(): void {}
 
   //เรียกเวลาวันนี้
-  getTimeOnDay(): void {
+  getTimeOnDay() {
     this.spinner.show();
-    this.requestDay = this.sideWorkService
-      .getSideWorkOnDay(this.employeeNo, new Date())
-      .pipe(
-        finalize(() => {
-          this.spinner.hide();
-        })
-      );
+    return this.sideWorkService
+      .getSideWorkOnDay(localStorage.getItem("employeeNo"), new Date())
+      .pipe(finalize(() => this.spinner.hide()));
   }
 
   // เพิ่มข้อมูลลง DB
@@ -51,7 +41,7 @@ export class SideWorkComponent implements OnInit {
     this.spinner.show();
     const requestData = {
       ...formItem,
-      employeeNo: this.employeeNo
+      employeeNo: localStorage.getItem("employeeNo")
     };
 
     this.sideWorkService

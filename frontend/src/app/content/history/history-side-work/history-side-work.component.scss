@@ -1,0 +1,32 @@
+.mat-header-cell,
+.td-time {
+  text-align: center;
+}
+td,
+.mat-header-cell {
+  font-size: 1.3em;
+  color: indigo;
+}
+.mat-row {
+  cursor: pointer;
+  color: white;
+  transition: 0.2s;
+}
+.mat-row:hover {
+  background-color: indigo;
+  transition: 0.2s;
+}
+.mat-row:hover td {
+  background-color: indigo !important;
+  color: whitesmoke !important;
+  transition: 0.2s;
+}
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  td {
+    font-size: 0.9em;
+  }
+  .mat-header-cell {
+    font-size: 0.7em;
+  }
+}

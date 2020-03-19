@@ -22,7 +22,7 @@ import { AppRoutingModule } from "./app-routing.module";
     CoreModule,
     SharedModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "th-TH" }],
+  // providers: [{ provide: LOCALE_ID, useValue: "th-TH" }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
