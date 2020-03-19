@@ -8,8 +8,8 @@ import {
 import { NgxSpinnerService } from "ngx-spinner";
 import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { OvertimeService } from "src/app/shared/service/overtime.service";
-import { ConfirmdialogComponent } from "../confirmdialog/confirmdialog.component";
+import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
+import { ConfirmDialogComponent } from "../confirmdialog/confirmdialog.component";
 import { Response } from "src/app/shared/interfaces/response";
 
 @Component({
@@ -27,7 +27,7 @@ export class OvertimeworkformComponent implements OnInit {
   constructor(
     private buildForm: FormBuilder,
     private dialogRef: MatDialogRef<OvertimeworkformComponent>,
-    private overtimeService: OvertimeService,
+    private overtimeService: OvertimeWorkService,
     private dialogConfirm: MatDialog,
     private spinner: NgxSpinnerService
   ) {}
@@ -109,7 +109,7 @@ export class OvertimeworkformComponent implements OnInit {
     };
     //เปิด dialog
     const dialogRef = this.dialogConfirm.open(
-      ConfirmdialogComponent,
+      ConfirmDialogComponent,
       configDialog
     );
     //หลังปิด dialog

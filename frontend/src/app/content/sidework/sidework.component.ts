@@ -5,8 +5,8 @@ import { Observable } from "rxjs";
 import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
-import { SideworkService } from "src/app/shared/service/sidework.service";
-import { SideworkformComponent } from "./sideworkform/sideworkform.component";
+import { SideWorkService } from "src/app/shared/service/sidework.service";
+import { SideWorkFormComponent } from "./sideworkform/sideworkform.component";
 import { Response } from "src/app/shared/interfaces/response";
 
 @Component({
@@ -14,7 +14,7 @@ import { Response } from "src/app/shared/interfaces/response";
   templateUrl: "./sidework.component.html",
   styleUrls: ["./sidework.component.scss"]
 })
-export class SideworkComponent implements OnInit {
+export class SideWorkComponent implements OnInit {
   //constants
   imgLogo: string = LayoutConstants.sideWorkImagePath;
   //request
@@ -23,8 +23,8 @@ export class SideworkComponent implements OnInit {
   employeeNo: string = localStorage.getItem("employeeNo");
 
   constructor(
-    private dialogRef: MatDialogRef<SideworkformComponent>,
-    private sideWorkService: SideworkService,
+    private dialogRef: MatDialogRef<SideWorkFormComponent>,
+    private sideWorkService: SideWorkService,
     private spinner: NgxSpinnerService
   ) {
     this.getTimeOnDay();

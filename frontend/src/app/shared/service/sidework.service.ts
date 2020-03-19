@@ -9,7 +9,7 @@ import { SideWork } from "../interfaces/sidework";
 @Injectable({
   providedIn: "root"
 })
-export class SideworkService {
+export class SideWorkService {
   constructor(private http: HttpClient) {}
 
   addSidework(body: SideWork): Observable<Response> {

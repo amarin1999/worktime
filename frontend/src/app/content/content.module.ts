@@ -20,6 +20,8 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
 //primgng
 import { MessageService } from "primeng/api";
 import { MessageModule } from "primeng/message";
@@ -28,31 +30,34 @@ import { ToastModule } from "primeng/toast";
 //guard
 import { AuthGuard } from "../shared/guard/auth.guard";
 //service
-import { SideworkService } from "../shared/service/sidework.service";
+import { SideWorkService } from "../shared/service/sidework.service";
 import { SharedModule } from "../shared/shared.module";
-import { OvertimeService } from "../shared/service/overtime.service";
+import { OvertimeWorkService } from "../shared/service/overtime.service";
 //component
-import { ConfirmdialogComponent } from "./confirmdialog/confirmdialog.component";
-
+import { ConfirmDialogComponent } from "./confirmdialog/confirmdialog.component";
 import { ContentComponent } from "./content.component";
 import { HomeComponent } from "./home/home.component";
 import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
-import { SigninComponent } from "./signin/signin.component";
-import { SideworkComponent } from "./sidework/sidework.component";
-import { SideworkformComponent } from "./sidework/sideworkform/sideworkform.component";
+import { SignInComponent } from "./signin/signin.component";
+import { SideWorkComponent } from "./sidework/sidework.component";
+import { SideWorkFormComponent } from "./sidework/sideworkform/sideworkform.component";
 import { HistoryComponent } from "./history/history.component";
 //route
 import { ContentRoutingModule } from "./content-routing.module";
+import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
+import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
 @NgModule({
   declarations: [
     ContentComponent,
-    SigninComponent,
+    SignInComponent,
     HomeComponent,
-    SideworkformComponent,
+    SideWorkFormComponent,
     OvertimeworkformComponent,
-    ConfirmdialogComponent,
-    SideworkComponent,
-    HistoryComponent
+    ConfirmDialogComponent,
+    SideWorkComponent,
+    HistoryComponent,
+    HistorySideWorkComponent,
+    HistoryOvertimeWorkComponent
   ],
 
   imports: [
@@ -73,6 +78,8 @@ import { ContentRoutingModule } from "./content-routing.module";
     MatListModule,
     MatBadgeModule,
     MatDividerModule,
+    MatTableModule,
+    MatPaginatorModule,
     //Date
     MatDatepickerModule,
     MatNativeDateModule,
@@ -80,7 +87,7 @@ import { ContentRoutingModule } from "./content-routing.module";
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule
   ],
-  providers: [AuthGuard, MessageService, SideworkService, OvertimeService],
+  providers: [AuthGuard, MessageService, SideWorkService, OvertimeWorkService],
   exports: [ContentComponent]
 })
 export class ContentModule {}

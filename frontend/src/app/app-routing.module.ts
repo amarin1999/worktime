@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HistoryComponent } from "./content/history/history.component";
-import { SigninComponent } from "./content/signin/signin.component";
+import { SignInComponent } from "./content/signin/signin.component";
+import { NavbarComponent } from './core/navbar/navbar.component';
 
 const routes: Routes = [
   {
@@ -12,16 +13,20 @@ const routes: Routes = [
 
   {
     path: "signin",
-    component: SigninComponent
+    component: SignInComponent
   },
-  // {
-  //   path: "**",
-  //   component: HistoryComponent
-  // }
+  {
+    path: "**",
+    component: NavbarComponent
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: "enabled"
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

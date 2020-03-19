@@ -13,14 +13,14 @@ import { Message } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
-import { ConfirmdialogComponent } from "../../confirmdialog/confirmdialog.component";
+import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
 
 @Component({
   selector: "app-sideworkform",
   templateUrl: "./sideworkform.component.html",
   styleUrls: ["./sideworkform.component.scss"]
 })
-export class SideworkformComponent implements OnInit, OnChanges {
+export class SideWorkFormComponent implements OnInit, OnChanges {
   @Input("dataSideWork") dataSideWork: SideWork;
   @Output() insertEmit: EventEmitter<SideWork> = new EventEmitter();
   //constants
@@ -145,7 +145,7 @@ export class SideworkformComponent implements OnInit, OnChanges {
     };
     //เปิด dialog
     const dialogRef = this.dialogConfirm.open(
-      ConfirmdialogComponent,
+      ConfirmDialogComponent,
       configDialog
     );
     //หลังปิด dialog
