@@ -26,4 +26,22 @@ export class OvertimeWorkService {
       console.table(error);
     }
   }
+
+  getHistoryOvertimeWork(id: string) {
+    try {
+      return this.http
+        .get(`${ApiConstants.baseURl}/datatable/getot/${id}`)
+        .pipe(
+          map(response => {
+            return {
+              status: response["result"],
+              data: response["data"],
+              code: response["code"]
+            };
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
 }

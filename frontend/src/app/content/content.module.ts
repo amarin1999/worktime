@@ -45,6 +45,7 @@ import { HistoryComponent } from "./history/history.component";
 import { ContentRoutingModule } from "./content-routing.module";
 import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
 import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
+import { CoreModule } from "../core/core.module";
 @NgModule({
   declarations: [
     ContentComponent,
@@ -61,6 +62,7 @@ import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/hi
 
   imports: [
     SharedModule,
+    CoreModule,
     ContentRoutingModule,
     MatDialogModule,
     MatFormFieldModule,

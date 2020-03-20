@@ -1,5 +1,5 @@
 <div class="p-grid p-justify-center animation-page">
-      
+  <app-banner [text]="x"></app-banner>
   <div class="p-col-10">
     <mat-tab-group>
       <mat-tab>
@@ -14,9 +14,13 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>access_time</mat-icon>
-          &nbsp; ทำงานนอกเวลา </ng-template
-        >Content 2
+          &nbsp; ทำงานนอกเวลา
+        </ng-template>
+        <app-history-overtime-work
+          [overtimeWorkHistory]="(overtimeWorkHistory | async)?.data"
+        ></app-history-overtime-work>
       </mat-tab>
     </mat-tab-group>
   </div>
 </div>
+<br /><br /><br />
