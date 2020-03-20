@@ -1,15 +1,11 @@
-<mat-form-field appearance="legacy">
-  <mat-label>Legacy form field</mat-label>
-  <input (keyup)="applyFilter($event)" matInput placeholder="Placeholder" />
-  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-  <mat-hint>Hint</mat-hint>
-</mat-form-field>
-<mat-form-field appearance="standard">
-  <mat-label>Standard form field</mat-label>
-  <input matInput placeholder="Placeholder">
-  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-  <mat-hint>Hint</mat-hint>
-</mat-form-field>
+<div class="p-grid">
+  <div class="p-col" style="margin-top: 15px;">
+    <mat-form-field appearance="outline">
+      <mat-label><mat-icon>search</mat-icon> ค้นหา...</mat-label>
+      <input (keyup)="applyFilter($event)" matInput />
+    </mat-form-field>
+  </div>
+</div>
 
 <table
   class="mat-elevation-z8"
@@ -18,7 +14,7 @@
   [dataSource]="dataSource"
   style="width: 100%;max-width: 120%;"
 >
-  <!-- date Column -->
+  <!-- day Column -->
   <ng-container matColumnDef="day">
     <th id="day" mat-header-cell *matHeaderCellDef mat-sort-header>
       <mat-icon>event</mat-icon>
@@ -63,6 +59,8 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
   <tr
+    matTooltip="คลิกเพื่อแก้ไข"
+    matTooltipClass="tooltip-signout"
     class="row-item"
     mat-row
     *matRowDef="let row; columns: displayedColumns"

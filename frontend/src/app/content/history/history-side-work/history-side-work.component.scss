@@ -6,33 +6,39 @@
   display: flex;
   justify-content: center;
 }
+::ng-deep .mat-form-field-flex {
+  box-shadow: none;
+  padding: 10px;
+}
 td,
 .mat-header-cell {
   font-size: 1.3em;
-  color: indigo;
+}
+.mat-header-cell {
+  color: white;
 }
 .mat-row {
   cursor: pointer;
   color: white;
   transition: 0.2s;
 }
-.mat-row:hover {
-  background-color: indigo;
-  transition: 0.2s;
-}
+
 .mat-row:hover td {
-  background-color: indigo !important;
+  background-color: #4169E1 !important;
   color: whitesmoke !important;
   transition: 0.2s;
 }
 .mat-header-row {
-  background-color: #00ffff;
+  background-color: indigo;
 }
 .mat-icon {
   vertical-align: middle;
 }
 
-.mat-sort-header-arrow{
+.ng-tns-c118-4 {
+  box-shadow: none !important;
+}
+.mat-sort-header-arrow {
   display: block !important;
 }
 /* จอเล็ก */
