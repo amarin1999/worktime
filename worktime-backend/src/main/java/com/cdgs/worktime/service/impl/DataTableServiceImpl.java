@@ -62,7 +62,7 @@ public class DataTableServiceImpl implements DataTableService {
 
 	private SideworkDateToSting mapSideworkEntityToDto(SideworkHistoryEntity entity) {
 		SideworkDateToSting dto =new SideworkDateToSting();
-		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -105,14 +105,19 @@ public class DataTableServiceImpl implements DataTableService {
 
 	private OtNoListDto mapOtEntityToDto(OtHistoryEntity entity) {
 		OtNoListDto dto =new OtNoListDto();
+		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		if(entity != null) {
 			dto.setEmployeehasId(entity.getEmployeeHasSideworkId());
-			dto.setEndTime(entity.getEndTime());
+			dto.setEndTime(timeFormat.format(entity.getEndTime()));
 			dto.setId(entity.getOtHistoryId());
 			dto.setLastUpdate(entity.getLastUpDate());
 			dto.setRemark(entity.getRemark());
-			dto.setStartTime(entity.getStartTime());
+			dto.setStartTime(timeFormat.format(entity.getStartTime()));
 			dto.setIdProject(entity.getProjectId());
+			dto.setDay(dateFormat.format(entity.getStartTime()));
 		}
 		return dto;
 		

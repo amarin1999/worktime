@@ -17,9 +17,10 @@ public class OtNoListDto implements Serializable {/**
 
 	private Long id;
 	private Long employeehasId;
-	private Date startTime;
-	private Date endTime;
+	private String startTime;
+	private String endTime;
 	private String remark;
 	private Date lastUpdate;
 	private String idProject;
+	private String day;
 }
