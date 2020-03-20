@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.OtNoListDto;
+import com.cdgs.worktime.dto.SideworkDateToSting;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.service.DataTableService;
 import com.cdgs.worktime.service.EmployeeService;
@@ -38,11 +39,11 @@ public class DataTableController {
 	}
 
 	@GetMapping(path = "/getsidework/{no}")
-	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideworkData(
+	private ResponseEntity<ResponseDto<SideworkDateToSting>> getSideworkData(
 			@PathVariable(value = "no") String employeeNo) {
 		
-		ResponseDto<SideworkHistoryDto> res =new ResponseDto<SideworkHistoryDto>();
-		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
+		ResponseDto<SideworkDateToSting> res =new ResponseDto<SideworkDateToSting>();
+		List<SideworkDateToSting> dto = new ArrayList<SideworkDateToSting>();
 		
 		List<EmployeeDto> employee = employeeService.getEmployeeByNo(employeeNo);
 	
@@ -51,13 +52,13 @@ public class DataTableController {
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(201);
-			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res,HttpStatus.ACCEPTED);
+			return new ResponseEntity<ResponseDto<SideworkDateToSting>>(res,HttpStatus.ACCEPTED);
 		}catch (Exception e) {
 			log.error(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
-			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ResponseDto<SideworkDateToSting>>(res,HttpStatus.BAD_REQUEST);
 		}
 	}
 	
