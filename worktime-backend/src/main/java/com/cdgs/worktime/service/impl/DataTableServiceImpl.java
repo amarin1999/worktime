@@ -62,9 +62,9 @@ public class DataTableServiceImpl implements DataTableService {
 
 	private SideworkDateToSting mapSideworkEntityToDto(SideworkHistoryEntity entity) {
 		SideworkDateToSting dto =new SideworkDateToSting();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MMM-dd");
+		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		if(entity != null) {
 			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
@@ -72,7 +72,7 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setId(entity.getSideworkId());
 			dto.setLastUpdate(entity.getLastUpdate());
 			dto.setRemark(entity.getRemark());
-			dto.setStartTime(timeFormat.format(entity.getClass()));
+			dto.setStartTime(timeFormat.format(entity.getStartTime()));
 			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
 			dto.setDay(dateFormat.format(entity.getStartTime()));
 		}

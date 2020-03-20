@@ -46,9 +46,10 @@ public class DataTableController {
 		List<SideworkDateToSting> dto = new ArrayList<SideworkDateToSting>();
 		
 		List<EmployeeDto> employee = employeeService.getEmployeeByNo(employeeNo);
-	
+		
+		
 		try {
-			dto=dataTableService.getSideWorkAll(employee.get(0).getId());			
+			dto=dataTableService.getSideWorkAll(employee.get(0).getId());	
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(201);
