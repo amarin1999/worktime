@@ -19,9 +19,9 @@ import { MatSort } from "@angular/material/sort";
 export class HistorySideWorkComponent implements OnInit, OnChanges {
   @Input("sideWorkHistory") dataSideWork: PeriodicElement[];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   // column
-  displayedColumns: string[] = ["date", "startTime", "endTime", "remark"];
+  displayedColumns: string[] = ["day", "startTime", "endTime", "remark"];
 
   // source
   dataSource = new MatTableDataSource<PeriodicElement>(this.dataSideWork);
@@ -31,12 +31,17 @@ export class HistorySideWorkComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
       console.log(this.dataSideWork);
-      
+
       this.dataSource = new MatTableDataSource<PeriodicElement>(
         this.dataSideWork
       );
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
- 
-    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

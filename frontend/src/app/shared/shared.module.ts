@@ -30,10 +30,9 @@ import { AuthService } from "./service/auth.service";
 //service
 import { EmployeeService } from "./service/employee.service";
 import { FormatDateThPipe } from "./pipe/format-date-th.pipe";
-import { FormatDayThPipe } from "./pipe/format-day-th.pipe";
 
 @NgModule({
-  declarations: [FormatDateThPipe, FormatDayThPipe],
+  declarations: [FormatDateThPipe],
   imports: [],
 
   exports: [
@@ -49,8 +48,7 @@ import { FormatDayThPipe } from "./pipe/format-day-th.pipe";
     MatIconModule,
     HttpClientModule,
     NgxSpinnerModule,
-    FormatDateThPipe,
-    FormatDayThPipe
+    FormatDateThPipe
   ],
   providers: [EmployeeService, AuthService]
 })

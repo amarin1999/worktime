@@ -7,6 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
 export interface PeriodicElement {
+  date: string | number | Date;
   name: string;
   position: number;
   weight: number;

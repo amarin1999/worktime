@@ -51,7 +51,7 @@ export class SideWorkService {
     }
   }
 
-  getHistorySideWork(id: string) {
+  getHistorySideWork(id: string): Observable<Response> {
     try {
       return this.http
         .get(`${ApiConstants.baseURl}/datatable/getsidework/${id}`)
