@@ -6,11 +6,24 @@ import "moment/locale/th";
   name: "formatDateTh"
 })
 export class FormatDateThPipe implements PipeTransform {
-  transform(date: Date) {
-    if (date) {
-      return moment(date).format("LT");
-    } else {
-      return "";
+  transform(date: Date, type: string) {
+    switch (type) {
+      case "day": {
+        return moment(date)
+          .add(543, "year")
+          .format("LL");
+      }
+      case "time": {
+        return moment(date).format("LT");
+      }
+      default: {
+        return "";
+      }
     }
+    // if (type == "day") {
+    //   return moment(date).format("LL");
+    // } else {
+    //   return "";
+    // }
   }
 }

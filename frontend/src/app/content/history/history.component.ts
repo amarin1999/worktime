@@ -6,7 +6,9 @@ import { finalize } from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
+import { FormatDateThPipe } from "src/app/shared/pipe/format-date-th.pipe";
 export interface PeriodicElement {
+  date: string | number | Date;
   name: string;
   position: number;
   weight: number;
@@ -19,24 +21,32 @@ export interface PeriodicElement {
   styleUrls: ["./history.component.scss"]
 })
 export class HistoryComponent implements OnInit {
- 
-  sideWorkHistory: Observable<Response> = this.getHistorySideWork();
+  sideWorkHistory;
   overtimeWorkHistory: Observable<Response> = this.getHistoryOvertimeWork();
   cdgImagePath: string = LayoutConstants.cdgImagePath;
 
   constructor(
     private sideWorkService: SideWorkService,
     private overtimeWorkService: OvertimeWorkService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+    private pipeDate: FormatDateThPipe
+  ) {
+    this.getHistorySideWork();
+  }
 
   ngOnInit(): void {}
 
   getHistorySideWork() {
     this.spinner.show();
-    return this.sideWorkService
+    this.sideWorkService
       .getHistorySideWork(localStorage.getItem("employeeNo"))
-      .pipe(finalize(() => this.spinner.hide()));
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe(response => {
+        console.log(response);
+        console.log({ response });
+
+        this.setValue(response.data);
+      });
   }
 
   getHistoryOvertimeWork() {
@@ -44,5 +54,18 @@ export class HistoryComponent implements OnInit {
     return this.overtimeWorkService
       .getHistoryOvertimeWork(localStorage.getItem("employeeNo"))
       .pipe(finalize(() => this.spinner.hide()));
+  }
+
+  setValue(value) {
+    this.sideWorkHistory = value.map(item => {
+      console.log(item);
+      return {
+        ...item,
+        day: this.pipeDate.transform(item.startTime, "day"),
+        startTime: this.pipeDate.transform(item.startTime, "time"),
+        endTime: this.pipeDate.transform(item.startTime, "time")
+      };
+    });
+    console.log(this.sideWorkHistory);
   }
 }

@@ -1,61 +1,75 @@
-<div>
-  <table
-    class="mat-elevation-z8"
-    matSort
-    mat-table
-    [dataSource]="dataSource"
-    style="width: 100%;max-width: 120%;"
-  >
-    <!-- date Column -->
-    <ng-container matColumnDef="date">
-      <th id="date" mat-header-cell *matHeaderCellDef mat-sort-header>
-        <mat-icon>today</mat-icon><span> วันที่</span>
-      </th>
-      <td mat-cell class="td-time" *matCellDef="let element">
-        {{ element.startTime | formatDayTh }}
-      </td>
-    </ng-container>
+<mat-form-field appearance="legacy">
+  <mat-label>Legacy form field</mat-label>
+  <input (keyup)="applyFilter($event)" matInput placeholder="Placeholder" />
+  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  <mat-hint>Hint</mat-hint>
+</mat-form-field>
+<mat-form-field appearance="standard">
+  <mat-label>Standard form field</mat-label>
+  <input matInput placeholder="Placeholder">
+  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  <mat-hint>Hint</mat-hint>
+</mat-form-field>
 
-    <!-- startTime Column -->
-    <ng-container matColumnDef="startTime">
-      <th id="startTime" mat-header-cell *matHeaderCellDef mat-sort-header>
-        <mat-icon>call_missed</mat-icon> <span> เวลาเข้างาน</span>
-      </th>
-      <td mat-cell class="td-time" *matCellDef="let element">
-        {{ element.startTime | formatDateTh }}
-      </td>
-    </ng-container>
+<table
+  class="mat-elevation-z8"
+  matSort
+  mat-table
+  [dataSource]="dataSource"
+  style="width: 100%;max-width: 120%;"
+>
+  <!-- date Column -->
+  <ng-container matColumnDef="day">
+    <th id="day" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-icon>event</mat-icon>
+      <span id="sortItem">&nbsp;วันที่</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.day }}
+    </td>
+  </ng-container>
 
-    <!-- endTime Column -->
-    <ng-container matColumnDef="endTime">
-      <th id="endTime" mat-header-cell *matHeaderCellDef mat-sort-header>
-        <mat-icon>call_missed_outgoing</mat-icon> <span> เวลาออกงาน</span>
-      </th>
-      <td mat-cell class="td-time" *matCellDef="let element">
-        {{ element.endTime | formatDateTh }}
-      </td>
-    </ng-container>
+  <!-- startTime Column -->
+  <ng-container matColumnDef="startTime">
+    <th id="startTime" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-icon>call_missed</mat-icon>
+      <span id="sortItem">&nbsp;เวลาเข้างาน</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.startTime }}
+    </td>
+  </ng-container>
 
-    <!-- remark Column -->
-    <ng-container matColumnDef="remark">
-      <th id="remark" mat-header-cell *matHeaderCellDef mat-sort-header>
-        <mat-icon>notes</mat-icon> <span> หมายเหตุ</span>
-      </th>
-      <td mat-cell class="td-time" *matCellDef="let element">
-        {{ element.remark }}
-      </td>
-    </ng-container>
+  <!-- endTime Column -->
+  <ng-container matColumnDef="endTime">
+    <th id="endTime" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-icon>call_missed_outgoing</mat-icon>
+      <span id="sortItem"> &nbsp;เวลาออกงาน</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.endTime }}
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      class="row-item"
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-    ></tr>
-  </table>
+  <!-- remark Column -->
+  <ng-container matColumnDef="remark">
+    <th id="remark" mat-header-cell *matHeaderCellDef>
+      <mat-icon>notes</mat-icon> <span> หมายเหตุ</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.remark }}
+    </td>
+  </ng-container>
 
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-  ></mat-paginator>
-</div>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr
+    class="row-item"
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+  ></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 15, 20]"
+  showFirstLastButtons
+></mat-paginator>

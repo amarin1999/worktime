@@ -13,6 +13,7 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule
 } from "ngx-mat-datetime-picker";
+import { MatSortModule } from "@angular/material/sort";
 import { MatListModule } from "@angular/material/list";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -46,6 +47,7 @@ import { ContentRoutingModule } from "./content-routing.module";
 import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
 import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
 import { CoreModule } from "../core/core.module";
+import { FormatDateThPipe } from "../shared/pipe/format-date-th.pipe";
 @NgModule({
   declarations: [
     ContentComponent,
@@ -80,6 +82,7 @@ import { CoreModule } from "../core/core.module";
     MatDividerModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     //Date
     MatDatepickerModule,
     MatNativeDateModule,
@@ -87,7 +90,13 @@ import { CoreModule } from "../core/core.module";
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule
   ],
-  providers: [AuthGuard, MessageService, SideWorkService, OvertimeWorkService],
+  providers: [
+    AuthGuard,
+    MessageService,
+    SideWorkService,
+    OvertimeWorkService,
+    FormatDateThPipe
+  ],
   exports: [ContentComponent]
 })
 export class ContentModule {}

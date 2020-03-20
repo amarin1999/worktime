@@ -2,6 +2,10 @@
 .td-time {
   text-align: center;
 }
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
 td,
 .mat-header-cell {
   font-size: 1.3em;
@@ -22,20 +26,24 @@ td,
   transition: 0.2s;
 }
 .mat-header-row {
-  background-color: #00FFFF;
+  background-color: #00ffff;
 }
-.mat-icon{
+.mat-icon {
   vertical-align: middle;
+}
+
+.mat-sort-header-arrow{
+  display: block !important;
 }
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
-  td{
+  td {
     font-size: 0.8em;
   }
-// .mat-icon{
-//   font-size: em;
-// }
   .mat-header-cell > span {
+    display: none;
+  }
+  #sortItem {
     display: none;
   }
 }
