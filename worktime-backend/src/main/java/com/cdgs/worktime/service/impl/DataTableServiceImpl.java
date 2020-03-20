@@ -13,6 +13,8 @@ import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.entity.OtHistoryEntity;
 import com.cdgs.worktime.entity.SideworkHistoryEntity;
 import com.cdgs.worktime.repository.DataTableRespository;
+import com.cdgs.worktime.repository.OtRespositiry;
+import com.cdgs.worktime.repository.SideWorkRepository;
 import com.cdgs.worktime.service.DataTableService;
 import com.cdgs.worktime.service.SideWorkService;
 
@@ -20,13 +22,13 @@ import com.cdgs.worktime.service.SideWorkService;
 public class DataTableServiceImpl implements DataTableService {
 
 	
-	DataTableRespository dataTableRespository;
-	
-	
-	@Autowired
-	public DataTableServiceImpl(DataTableRespository dataTableRespository) {
+	SideWorkRepository sideWorkRepository;
+	OtRespositiry otRespositiry;
+
+	public DataTableServiceImpl(SideWorkRepository sideWorkRepository, OtRespositiry otRespositiry) {
 		super();
-		this.dataTableRespository = dataTableRespository;
+		this.sideWorkRepository = sideWorkRepository;
+		this.otRespositiry = otRespositiry;
 	}
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
@@ -35,7 +37,7 @@ public class DataTableServiceImpl implements DataTableService {
 	public List<SideworkHistoryDto> getSideWorkAll(Long employeeId) {	
 		List<SideworkHistoryEntity> entity =new ArrayList<SideworkHistoryEntity>();
 		try {
-			entity = dataTableRespository.getSideworkAll(employeeId);	
+			entity = sideWorkRepository.getSideworkAll(employeeId);	
 		}catch (Exception e) { 
 			log.error("getEmployeeByNo >>> " + e.getMessage());
 		}
@@ -71,10 +73,11 @@ public class DataTableServiceImpl implements DataTableService {
 	@Override
 	public List<OtNoListDto> getOtAll(Long employeeId) {
 		List<OtHistoryEntity> entity =new ArrayList<OtHistoryEntity>();
+		
 		try {
-			entity = dataTableRespository.getOtAll(employeeId);
+			entity = otRespositiry.getOtAll(employeeId);
 		}catch (Exception e) { 
-			log.error("getEmployeeByNo >>> " + e.getMessage());
+			log.error("getOtAll >>> " + e.getMessage());
 		}
 		return mapOtListEntityToDto(entity);
 	}
