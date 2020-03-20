@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cdgs.worktime.dto.EmployeeDto;
+import com.cdgs.worktime.dto.OtNoListDto;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.service.DataTableService;
 import com.cdgs.worktime.service.EmployeeService;
@@ -57,8 +58,28 @@ public class DataTableController {
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res,HttpStatus.BAD_REQUEST);
 		}
+	}
 	
-		
+		@GetMapping(path = "/getot/{no}")
+		private ResponseEntity<ResponseDto<OtNoListDto>> getOtData(
+				@PathVariable(value = "no") String employeeNo) {			
+			ResponseDto<OtNoListDto> res =new ResponseDto<OtNoListDto>();
+			List<OtNoListDto> dto = new ArrayList<OtNoListDto>();
+			List<EmployeeDto> employee = employeeService.getEmployeeByNo(employeeNo);
+			
+			try {
+				dto=dataTableService.getOtAll(employee.get(0).getId());			
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setData(dto);
+				res.setCode(201);
+				return new ResponseEntity<ResponseDto<OtNoListDto>>(res,HttpStatus.ACCEPTED);
+			}catch (Exception e) {
+				log.error(e.getMessage());
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				res.setErrorMessage(e.getMessage());
+				res.setCode(400);
+				return new ResponseEntity<ResponseDto<OtNoListDto>>(res,HttpStatus.BAD_REQUEST);
+			}
 				
 		
 	}

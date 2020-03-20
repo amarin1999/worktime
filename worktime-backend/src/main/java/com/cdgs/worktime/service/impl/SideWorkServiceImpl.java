@@ -49,7 +49,6 @@ public class SideWorkServiceImpl implements SideWorkService {
 		SideworkHistoryEntity data = new SideworkHistoryEntity();
 
 		if (entity != null) {
-
 			entity.setEndTime(sideTime.getEndTime());
 			entity.setLastUpdate(Calendar.getInstance().getTime());
 			entity.setStartTime(sideTime.getStartTime());

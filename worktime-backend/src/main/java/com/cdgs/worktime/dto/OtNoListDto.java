@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class WorkProjectDto implements Serializable {/**
+public class OtNoListDto implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7900738635522301915L;
@@ -21,5 +21,5 @@ public class WorkProjectDto implements Serializable {/**
 	private Date endTime;
 	private String remark;
 	private Date lastUpdate;
-	private Boolean workAnyWhere;
+	private String idProject;
 }

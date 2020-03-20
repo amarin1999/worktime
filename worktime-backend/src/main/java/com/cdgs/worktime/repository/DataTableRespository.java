@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.cdgs.worktime.entity.EmployeeEntity;
+import com.cdgs.worktime.entity.OtHistoryEntity;
 import com.cdgs.worktime.entity.SideworkHistoryEntity;
 
 public interface DataTableRespository extends CrudRepository<SideworkHistoryEntity, String> {
@@ -17,4 +18,10 @@ public interface DataTableRespository extends CrudRepository<SideworkHistoryEnti
 			+"ON sh.employee_has_sidework_history_id = esh.employee_has_sidework_history_id "
 			+ "WHERE esh.employee_id = :employeeId"	, nativeQuery = true)
 	List<SideworkHistoryEntity> getSideworkAll(@Param(value = "employeeId") Long employeeId);
+	
+	@Query(value =" SELECT ot.* "
+			+ "FROM worktime.ot_history ot INNER JOIN  worktime.employee_has_sidework_history esh "
+			+"ON ot.employee_has_sidework_history_id = esh.employee_has_sidework_history_id "
+			+ "WHERE esh.employee_id = :employeeId"	, nativeQuery = true)
+	List<OtHistoryEntity> getOtAll(@Param(value = "employeeId") Long employeeId);
 }

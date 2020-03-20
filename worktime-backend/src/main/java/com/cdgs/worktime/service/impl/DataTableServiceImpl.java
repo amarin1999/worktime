@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdgs.worktime.dto.OtNoListDto;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
+import com.cdgs.worktime.entity.OtHistoryEntity;
 import com.cdgs.worktime.entity.SideworkHistoryEntity;
 import com.cdgs.worktime.repository.DataTableRespository;
 import com.cdgs.worktime.service.DataTableService;
@@ -37,21 +39,21 @@ public class DataTableServiceImpl implements DataTableService {
 		}catch (Exception e) { 
 			log.error("getEmployeeByNo >>> " + e.getMessage());
 		}
-		return mapListEntityToDto(entity);
+		return mapSideworkListEntityToDto(entity);
 	}
 
-	private List<SideworkHistoryDto> mapListEntityToDto(List<SideworkHistoryEntity> entities) {
+	private List<SideworkHistoryDto> mapSideworkListEntityToDto(List<SideworkHistoryEntity> entities) {
 		List<SideworkHistoryDto> listDto = new ArrayList<>();
 		if (!entities.isEmpty()) {
 			for (SideworkHistoryEntity entitiy : entities) {
-				listDto.add(mapEntityToDto(entitiy));
+				listDto.add(mapSideworkEntityToDto(entitiy));
 			}
 		}
 		return listDto;
 
 	}
 
-	private SideworkHistoryDto mapEntityToDto(SideworkHistoryEntity entity) {
+	private SideworkHistoryDto mapSideworkEntityToDto(SideworkHistoryEntity entity) {
 		SideworkHistoryDto dto =new SideworkHistoryDto();
 		if(entity != null) {
 			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
@@ -61,6 +63,43 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setRemark(entity.getRemark());
 			dto.setStartTime(entity.getStartTime());
 			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
+		}
+		return dto;
+		
+	}
+
+	@Override
+	public List<OtNoListDto> getOtAll(Long employeeId) {
+		List<OtHistoryEntity> entity =new ArrayList<OtHistoryEntity>();
+		try {
+			entity = dataTableRespository.getOtAll(employeeId);
+		}catch (Exception e) { 
+			log.error("getEmployeeByNo >>> " + e.getMessage());
+		}
+		return mapOtListEntityToDto(entity);
+	}
+	
+	private List<OtNoListDto> mapOtListEntityToDto(List<OtHistoryEntity> entities) {
+		List<OtNoListDto> listDto = new ArrayList<>();
+		if (!entities.isEmpty()) {
+			for (OtHistoryEntity entitiy : entities) {
+				listDto.add(mapOtEntityToDto(entitiy));
+			}
+		}
+		return listDto;
+
+	}
+
+	private OtNoListDto mapOtEntityToDto(OtHistoryEntity entity) {
+		OtNoListDto dto =new OtNoListDto();
+		if(entity != null) {
+			dto.setEmployeehasId(entity.getEmployeeHasSideworkId());
+			dto.setEndTime(entity.getEndTime());
+			dto.setId(entity.getOtHistoryId());
+			dto.setLastUpdate(entity.getLastUpDate());
+			dto.setRemark(entity.getRemark());
+			dto.setStartTime(entity.getStartTime());
+			dto.setIdProject(entity.getProjectId());
 		}
 		return dto;
 		
