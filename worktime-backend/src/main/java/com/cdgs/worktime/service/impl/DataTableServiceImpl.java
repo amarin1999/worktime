@@ -1,18 +1,25 @@
 package com.cdgs.worktime.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.logging.java.SimpleFormatter;
 import org.springframework.stereotype.Service;
 
 import com.cdgs.worktime.dto.OtNoListDto;
+import com.cdgs.worktime.dto.SideworkDateToSting;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.entity.OtHistoryEntity;
 import com.cdgs.worktime.entity.SideworkHistoryEntity;
-import com.cdgs.worktime.repository.DataTableRespository;
+import com.cdgs.worktime.repository.OtRespositiry;
+import com.cdgs.worktime.repository.SideWorkRepository;
 import com.cdgs.worktime.service.DataTableService;
 import com.cdgs.worktime.service.SideWorkService;
 
@@ -20,30 +27,30 @@ import com.cdgs.worktime.service.SideWorkService;
 public class DataTableServiceImpl implements DataTableService {
 
 	
-	DataTableRespository dataTableRespository;
-	
-	
-	@Autowired
-	public DataTableServiceImpl(DataTableRespository dataTableRespository) {
+	SideWorkRepository sideWorkRepository;
+	OtRespositiry otRespositiry;
+
+	public DataTableServiceImpl(SideWorkRepository sideWorkRepository, OtRespositiry otRespositiry) {
 		super();
-		this.dataTableRespository = dataTableRespository;
+		this.sideWorkRepository = sideWorkRepository;
+		this.otRespositiry = otRespositiry;
 	}
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	@Override
-	public List<SideworkHistoryDto> getSideWorkAll(Long employeeId) {	
+	public List<SideworkDateToSting> getSideWorkAll(Long employeeId) {	
 		List<SideworkHistoryEntity> entity =new ArrayList<SideworkHistoryEntity>();
 		try {
-			entity = dataTableRespository.getSideworkAll(employeeId);	
+			entity = sideWorkRepository.getSideworkAll(employeeId);	
 		}catch (Exception e) { 
 			log.error("getEmployeeByNo >>> " + e.getMessage());
 		}
 		return mapSideworkListEntityToDto(entity);
 	}
 
-	private List<SideworkHistoryDto> mapSideworkListEntityToDto(List<SideworkHistoryEntity> entities) {
-		List<SideworkHistoryDto> listDto = new ArrayList<>();
+	private List<SideworkDateToSting> mapSideworkListEntityToDto(List<SideworkHistoryEntity> entities) {
+		List<SideworkDateToSting> listDto = new ArrayList<>();
 		if (!entities.isEmpty()) {
 			for (SideworkHistoryEntity entitiy : entities) {
 				listDto.add(mapSideworkEntityToDto(entitiy));
@@ -53,16 +60,21 @@ public class DataTableServiceImpl implements DataTableService {
 
 	}
 
-	private SideworkHistoryDto mapSideworkEntityToDto(SideworkHistoryEntity entity) {
-		SideworkHistoryDto dto =new SideworkHistoryDto();
+	private SideworkDateToSting mapSideworkEntityToDto(SideworkHistoryEntity entity) {
+		SideworkDateToSting dto =new SideworkDateToSting();
+		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		if(entity != null) {
 			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
-			dto.setEndTime(entity.getEndTime());
+			dto.setEndTime(timeFormat.format(entity.getEndTime()));
 			dto.setId(entity.getSideworkId());
 			dto.setLastUpdate(entity.getLastUpdate());
 			dto.setRemark(entity.getRemark());
-			dto.setStartTime(entity.getStartTime());
+			dto.setStartTime(timeFormat.format(entity.getStartTime()));
 			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
+			dto.setDay(dateFormat.format(entity.getStartTime()));
 		}
 		return dto;
 		
@@ -71,10 +83,11 @@ public class DataTableServiceImpl implements DataTableService {
 	@Override
 	public List<OtNoListDto> getOtAll(Long employeeId) {
 		List<OtHistoryEntity> entity =new ArrayList<OtHistoryEntity>();
+		
 		try {
-			entity = dataTableRespository.getOtAll(employeeId);
+			entity = otRespositiry.getOtAll(employeeId);
 		}catch (Exception e) { 
-			log.error("getEmployeeByNo >>> " + e.getMessage());
+			log.error("getOtAll >>> " + e.getMessage());
 		}
 		return mapOtListEntityToDto(entity);
 	}
