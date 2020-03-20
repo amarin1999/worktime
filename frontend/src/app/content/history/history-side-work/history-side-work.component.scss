@@ -21,12 +21,21 @@ td,
   color: whitesmoke !important;
   transition: 0.2s;
 }
+.mat-header-row {
+  background-color: #00FFFF;
+}
+.mat-icon{
+  vertical-align: middle;
+}
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
-  td {
-    font-size: 0.9em;
+  td{
+    font-size: 0.8em;
   }
-  .mat-header-cell {
-    font-size: 0.7em;
+// .mat-icon{
+//   font-size: em;
+// }
+  .mat-header-cell > span {
+    display: none;
   }
 }

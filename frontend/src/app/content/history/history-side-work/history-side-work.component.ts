@@ -9,6 +9,7 @@ import {
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { PeriodicElement } from "../history.component";
+import { MatSort } from "@angular/material/sort";
 
 @Component({
   selector: "app-history-side-work",
@@ -18,7 +19,7 @@ import { PeriodicElement } from "../history.component";
 export class HistorySideWorkComponent implements OnInit, OnChanges {
   @Input("sideWorkHistory") dataSideWork: PeriodicElement[];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   // column
   displayedColumns: string[] = ["date", "startTime", "endTime", "remark"];
 
@@ -33,6 +34,7 @@ export class HistorySideWorkComponent implements OnInit, OnChanges {
         this.dataSideWork
       );
     }
-    this.dataSource.paginator = this.paginator;
+ 
+    this.dataSource.sort = this.sort;
   }
 }

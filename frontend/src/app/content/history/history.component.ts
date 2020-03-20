@@ -19,7 +19,7 @@ export interface PeriodicElement {
   styleUrls: ["./history.component.scss"]
 })
 export class HistoryComponent implements OnInit {
-  x = "d";
+ 
   sideWorkHistory: Observable<Response> = this.getHistorySideWork();
   overtimeWorkHistory: Observable<Response> = this.getHistoryOvertimeWork();
   cdgImagePath: string = LayoutConstants.cdgImagePath;
