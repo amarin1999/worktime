@@ -96,7 +96,6 @@ public class SideWorkServiceImpl implements SideWorkService {
 
 	@Override
 	public SideworkHistoryDto getSideWorkTime(String sideWorkDate, Long employeeId) {
-		System.out.println(sideWorkDate);
 		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(sideWorkDate, employeeId);
 		return convEntityToDto(entity);
 	}
