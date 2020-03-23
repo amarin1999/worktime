@@ -105,7 +105,7 @@ public class DataTableServiceImpl implements DataTableService {
 
 	private OtNoListDto mapOtEntityToDto(OtHistoryEntity entity) {
 		OtNoListDto dto =new OtNoListDto();
-		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));

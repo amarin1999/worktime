@@ -27,7 +27,6 @@ public class OtServiceImpl implements OtService {
 	public OtHistoryDto postOtTime(OtPostTimeDto otPostTime, EmployeeHasSideworkHistoryDto employeeHasSidework) {
 		OtHistoryEntity entity = new OtHistoryEntity();
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Long i= (long) 1 ;
 		List<OtHistoryEntity> entities = new ArrayList<>();
 		for (TimeListDto time : otPostTime.getTimeRange()) {
 			entity.setEmployeeHasSideworkId(employeeHasSidework.getEmployeehasId());
@@ -36,9 +35,8 @@ public class OtServiceImpl implements OtService {
 			entity.setProjectId(otPostTime.getProjectNo());
 			entity.setRemark(otPostTime.getRemark());
 			entity.setStartTime(time.getStartTime());
-			entity.setOtHistoryId(i);
+			entity.setOtHistoryId((long) 0);
 			entities.add(entity);
-			i++;
 		}
 		otRespositiry.saveAll(entities);
 		return null;
