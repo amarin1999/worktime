@@ -30,10 +30,9 @@ public class EmployeeHasSideworkHistoryServiceImpl implements EmployeeHasSidewor
 	}
 
 	@Override
-	public EmployeeHasSideworkHistoryDto getEmployeeHasHistory(Long employee,Long workType) {
+	public EmployeeHasSideworkHistoryDto postEmployeeHasHistory(Long employee,Long workType) {
 		EmployeeHasSideworkHistoryEntity entity = new EmployeeHasSideworkHistoryEntity();
 		EmployeeHasSideworkHistoryEntity data = new EmployeeHasSideworkHistoryEntity();
-		EmployeeEntity setId = new EmployeeEntity();
 		data.setIdEmployee(employee);
 		data.setWorkTypeId(workType);
 		entity = employeeHasSideworkHistoryRespository.save(data);

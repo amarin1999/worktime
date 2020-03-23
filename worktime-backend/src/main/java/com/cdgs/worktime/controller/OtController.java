@@ -54,7 +54,7 @@ public class OtController {
 		OtHistoryDto data = new OtHistoryDto();
 		
 		EmployeeHasSideworkHistoryDto employeeHasSideworkData = employeeHasSideworkService
-				.getEmployeeHasHistory(employeeData.get(0).getId(), (long) 2);
+				.postEmployeeHasHistory(employeeData.get(0).getId(), (long) 2);
 
 		try {
 			data = otService.postOtTime(body, employeeHasSideworkData);

@@ -58,9 +58,6 @@ public class SideWorkController {
 		this.employeeHasSideworkHistoryService = employeeHasSideworkHistoryService;
 	}
 
-	
-	
-
 	@GetMapping(path = "/gettime")
 	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,
 			@RequestParam String startTime) throws ParseException {
@@ -92,8 +89,6 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
-		
-
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		String date = dateformat.format(body.getStartTime());
 
@@ -101,7 +96,6 @@ public class SideWorkController {
 		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();
 
 		employeeData = employeeservice.getEmployeeByNo(body.getEmployeeNo());
-		
 		try {
 			data = sideworkservice.postSideWorkTime(body, employeeData.get(0), date);
 			dto.add(data);

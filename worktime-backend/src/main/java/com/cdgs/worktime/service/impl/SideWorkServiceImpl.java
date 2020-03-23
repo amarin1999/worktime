@@ -47,7 +47,6 @@ public class SideWorkServiceImpl implements SideWorkService {
 
 		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(date, employee.getId());
 		SideworkHistoryEntity data = new SideworkHistoryEntity();
-
 		if (entity != null) {
 			entity.setEndTime(sideTime.getEndTime());
 			entity.setLastUpdate(Calendar.getInstance().getTime());
@@ -57,7 +56,8 @@ public class SideWorkServiceImpl implements SideWorkService {
 			return convEntityToDto(sideworkrepository.save(entity));
 		} else {
 			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistory = employeeHasSideworkHistoryService
-					.getEmployeeHasHistory(employee.getId(), (long) 1);
+					.postEmployeeHasHistory(employee.getId(), (long) 1);
+
 			data.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistory.getEmployeehasId());
 			data.setEndTime(sideTime.getEndTime());
 			data.setLastUpdate(Calendar.getInstance().getTime());
