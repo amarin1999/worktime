@@ -70,7 +70,6 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
 			dto.setEndTime(timeFormat.format(entity.getEndTime()));
 			dto.setId(entity.getSideworkId());
-			dto.setLastUpdate(entity.getLastUpdate());
 			dto.setRemark(entity.getRemark());
 			dto.setStartTime(timeFormat.format(entity.getStartTime()));
 			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
@@ -111,7 +110,6 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setEmployeehasId(entity.getEmployeeHasSideworkId());
 			dto.setEndTime(dateFormat.format(entity.getEndTime()));
 			dto.setId(entity.getOtHistoryId());
-			dto.setLastUpdate(entity.getLastUpDate());
 			dto.setRemark(entity.getRemark());
 			dto.setStartTime(dateFormat.format(entity.getStartTime()));
 			dto.setIdProject(entity.getProjectId());

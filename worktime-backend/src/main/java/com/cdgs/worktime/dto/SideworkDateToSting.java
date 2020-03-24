@@ -23,7 +23,6 @@ public class SideworkDateToSting implements Serializable {
 	private String endTime;
 	private String day;
 	private String remark;
-	private Date lastUpdate;
 	private Boolean workAnyWhere;
 
 }
