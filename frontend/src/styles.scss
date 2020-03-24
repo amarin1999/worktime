@@ -99,7 +99,6 @@ mat-dialog-container {
   justify-content: flex-end;
   margin: 0 !important;
   margin-right: 10px !important;
- 
 }
 .p-grid {
   margin: 0;
@@ -107,7 +106,6 @@ mat-dialog-container {
 .animation-page {
   animation: fadeFromTop 0.5s;
 }
-
 
 @keyframes fadeFromTop {
   0% {
@@ -117,5 +115,15 @@ mat-dialog-container {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+//responsive
+
+
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  .header-text {
+    font-size: 1.5em !important;
   }
 }

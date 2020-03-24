@@ -27,6 +27,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 // primeng
 import { SidebarModule } from "primeng/sidebar";
 import { AuthService } from "./service/auth.service";
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 //service
 import { EmployeeService } from "./service/employee.service";
 import { FormatDateThPipe } from "./pipe/format-date-th.pipe";
@@ -50,7 +51,8 @@ import { WorkAnywherePipe } from './pipe/work-anywhere.pipe';
     HttpClientModule,
     NgxSpinnerModule,
     FormatDateThPipe,
-    WorkAnywherePipe
+    WorkAnywherePipe,
+    ScrollPanelModule
   ],
   providers: [EmployeeService, AuthService]
 })

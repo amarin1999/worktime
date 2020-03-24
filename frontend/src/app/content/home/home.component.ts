@@ -14,7 +14,8 @@ import { Router } from "@angular/router";
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: []
+  providers: [],
+  
 })
 export class HomeComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;

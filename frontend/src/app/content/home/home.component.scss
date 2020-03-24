@@ -1,31 +1,4 @@
-.align-center-card {
-  display: flex;
-  justify-content: center;
-}
-mat-card-title {
-  font-size: 1.5em !important;
-  color: #333377;
-}
-mat-card {
-  padding: 50px 2vw;
-  border-radius: 20px;
-  font-size: 1.3em;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-}
-mat-catd-header {
-  font-size: 50px;
-}
-mat-card-content {
-  display: flex;
-  flex: 1;
-}
 
-mat-card-footer {
-  margin-top: auto;
-}
 .btn-menu {
   background-color: #333377;
   color: whitesmoke;
@@ -40,33 +13,11 @@ mat-card-footer {
   background-color: #336699;
 }
 
-.layout-wrapper {
-  display: block;
 
-  height: auto !important;
-}
-
-div.scrollmenu {
-  background-color: #333;
-  overflow: auto;
-  white-space: nowrap;
-}
-
-div.scrollmenu a {
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px;
-  text-decoration: none;
-}
-
-div.scrollmenu a:hover {
-  background-color: #777;
-}
 
 // เผื่อใช้ แนวนอน scrollbar https://codeburst.io/how-to-create-horizontal-scrolling-containers-d8069651e9c6
 .scrolling-wrapper {
-  overflow-x: scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
   text-align: center;
   white-space: nowrap;
@@ -74,6 +25,7 @@ div.scrollmenu a:hover {
   .card {
     display: inline-block;
   }
+
   padding: 30px;
 }
 
@@ -86,34 +38,35 @@ div.scrollmenu a:hover {
     flex: 0 0 auto;
   }
 }
+
+
 .card {
   background-color: whitesmoke;
   text-align: center;
-  padding: 30px;
+  padding: 20px;
   width: 25%;
   color: indigo;
-  margin: 30px;
-  border-radius: 30px/30px;
+  margin: 20px;
+  border-radius: 20px/20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .margin-menu {
   width: 20%;
 }
 .card > h1 {
-  font-size: 2em !important;
+  font-size: 1.8em !important;
   padding: 15px;
   font-family: "Kanit";
+  text-align: center;
 }
 .confirm-text {
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
-@media screen and (max-width: 1024px) {
-}
-
+//responsive
 @media screen and (max-width: 768px) {
   .card {
-    width: 50%;
+    width: 40%;
   }
 }
 

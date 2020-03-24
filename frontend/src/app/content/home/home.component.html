@@ -1,43 +1,8 @@
 <app-banner
   [text]="'ลงเวลาการทำงานนอกสถานที่ และการทำงานล่วงเวลา'"
 ></app-banner>
-<!-- <div class="p-grid p-justify-center animation-page ">
-  <div class="p-col-8 p-lg-10 p-md-12 " style="text-align: center;">
-    <div class="p-grid">
-      <div class="p-sm-12 p-lg-4 p-md-4" *ngFor="let item of menu">
-        <mat-card>
-          <mat-card-header class="align-center-card">
-            <mat-card-title>{{ item.title }}</mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content class="layout-wrapper">
-            <br />
-            <img
-              mat-card-image
-              src="{{ item.img }}"
-              style="width:40%"
-              alt="logo"
-            />
-            <br /><br />
-          </mat-card-content>
-          <mat-card-footer>
-            <button mat-raised-button class="btn-menu">
-              <div class="confirm-text" (click)="onClickItem(item)">
-                ยืนยัน
-                <em
-                  class="pi pi-chevron-right"
-                  style="vertical-align: middle;"
-                ></em>
-              </div>
-            </button>
-          </mat-card-footer>
-        </mat-card>
-      </div>
-    </div>
-  </div>
-</div> -->
-<div class="scrolling-wrapper animation-page">  
-  <div class="card" *ngFor="let item of menu">
+<p-scrollPanel class="scrolling-wrapper" styleClass="custombar1">
+  <div class="card animation-page" *ngFor="let item of menu">
     <h1>{{ item.title }}</h1>
     <img src="{{ item.img }}" style="width:40%" alt="logo" />
     <br />
@@ -49,8 +14,9 @@
         <em class="pi pi-chevron-right" style="vertical-align: middle;"></em>
       </div>
     </button>
+    <br />
+    <br />
   </div>
-  
-</div>
+</p-scrollPanel>
 <p-toast key="errorMessage" position="bottom-center"></p-toast>
 <p-toast key="SuccessMessage" position="bottom-center"></p-toast>
