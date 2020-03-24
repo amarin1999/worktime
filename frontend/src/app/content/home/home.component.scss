@@ -1,4 +1,3 @@
-
 .btn-menu {
   background-color: #333377;
   color: whitesmoke;
@@ -13,8 +12,6 @@
   background-color: #336699;
 }
 
-
-
 // เผื่อใช้ แนวนอน scrollbar https://codeburst.io/how-to-create-horizontal-scrolling-containers-d8069651e9c6
 .scrolling-wrapper {
   overflow-x: hidden;
@@ -25,20 +22,17 @@
   .card {
     display: inline-block;
   }
-
-  padding: 30px;
+  padding: 300px;
 }
 
 .scrolling-wrapper-flexbox {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-
   .card {
     flex: 0 0 auto;
   }
 }
-
 
 .card {
   background-color: whitesmoke;

@@ -21,7 +21,7 @@ export class HistoryOvertimeWorkComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  displayedColumns: string[] = ["startTime", "endTime", "remark"];
+  displayedColumns: string[] = ["idProject", "startTime", "endTime", "remark"];
 
   // source
   dataSource = new MatTableDataSource<PeriodicElement>(this.dataOvertimeWork);
@@ -31,7 +31,6 @@ export class HistoryOvertimeWorkComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.dataOvertimeWork);
     if (changes) {
       this.dataSource = new MatTableDataSource<PeriodicElement>(
         this.dataOvertimeWork

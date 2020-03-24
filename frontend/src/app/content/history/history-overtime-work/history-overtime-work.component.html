@@ -14,7 +14,16 @@
   [dataSource]="dataSource"
   style="width: 100%;"
 >
-  <!-- day Column -->
+  <!--projIdColumn -->
+  <ng-container matColumnDef="idProject">
+    <th id="idProject" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-icon>apps</mat-icon>
+      <span id="sortItem">&nbsp;รหัสโครงการ</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.idProject }}
+    </td>
+  </ng-container>
 
   <!-- startTime Column -->
   <ng-container matColumnDef="startTime">

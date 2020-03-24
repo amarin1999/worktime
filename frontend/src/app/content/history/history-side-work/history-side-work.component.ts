@@ -35,7 +35,6 @@ export class HistorySideWorkComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log( this.dataSideWork);
     if (changes) {
       this.dataSource = new MatTableDataSource<PeriodicElement>(
         this.dataSideWork

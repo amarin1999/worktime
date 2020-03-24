@@ -64,11 +64,7 @@
               [for]="pickerStartTime"
             ></mat-datepicker-toggle>
 
-            <ngx-mat-datetime-picker
-              [disableSecond]="true"
-              touchUi
-              #pickerStartTime
-            >
+            <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </div>
@@ -94,7 +90,6 @@
               [for]="pickerEndTime"
             ></mat-datepicker-toggle>
             <ngx-mat-datetime-picker
-              touchUi
               disabled="false"
               [disableSecond]="true"
               #pickerEndTime
