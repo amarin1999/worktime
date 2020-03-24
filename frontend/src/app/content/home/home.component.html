@@ -1,5 +1,7 @@
-<app-banner [text]="'ลงเวลาการทำงานนอกสถานที่ และการทำงานล่วงเวลา'"></app-banner>
-<div class="p-grid p-justify-center animation-page ">
+<app-banner
+  [text]="'ลงเวลาการทำงานนอกสถานที่ และการทำงานล่วงเวลา'"
+></app-banner>
+<!-- <div class="p-grid p-justify-center animation-page ">
   <div class="p-col-8 p-lg-10 p-md-12 " style="text-align: center;">
     <div class="p-grid">
       <div class="p-sm-12 p-lg-4 p-md-4" *ngFor="let item of menu">
@@ -33,7 +35,22 @@
       </div>
     </div>
   </div>
+</div> -->
+<div class="scrolling-wrapper animation-page">  
+  <div class="card" *ngFor="let item of menu">
+    <h1>{{ item.title }}</h1>
+    <img src="{{ item.img }}" style="width:40%" alt="logo" />
+    <br />
+    <br />
+    <br />
+    <button mat-raised-button class="btn-menu" (click)="onClickItem(item)">
+      <div class="confirm-text">
+        ยืนยัน
+        <em class="pi pi-chevron-right" style="vertical-align: middle;"></em>
+      </div>
+    </button>
+  </div>
+  
 </div>
-
 <p-toast key="errorMessage" position="bottom-center"></p-toast>
 <p-toast key="SuccessMessage" position="bottom-center"></p-toast>

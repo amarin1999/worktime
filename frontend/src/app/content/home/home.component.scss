@@ -46,23 +46,80 @@ mat-card-footer {
   height: auto !important;
 }
 
+div.scrollmenu {
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
 // เผื่อใช้ แนวนอน scrollbar https://codeburst.io/how-to-create-horizontal-scrolling-containers-d8069651e9c6
-// .scrolling-wrapper {
-//   overflow-x: scroll;
-//   overflow-y: hidden;
-//   white-space: nowrap;
-//   -webkit-overflow-scrolling: touch;
-//   .card {
-//     display: inline-block;
-//   }
-// }
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  .card {
+    display: inline-block;
+  }
+  padding: 30px;
+}
 
-// .scrolling-wrapper-flexbox {
-//   display: flex;
-//   flex-wrap: nowrap;
-//   overflow-x: auto;
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 
-//   .card {
-//     flex: 0 0 auto;
-//   }
-// }
+  .card {
+    flex: 0 0 auto;
+  }
+}
+.card {
+  background-color: whitesmoke;
+  text-align: center;
+  padding: 30px;
+  width: 25%;
+  color: indigo;
+  margin: 30px;
+  border-radius: 30px/30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.margin-menu {
+  width: 20%;
+}
+.card > h1 {
+  font-size: 2em !important;
+  padding: 15px;
+  font-family: "Kanit";
+}
+.confirm-text {
+  font-size: 1.2em;
+}
+
+@media screen and (max-width: 1024px) {
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    width: 50%;
+  }
+}
+
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  .card {
+    width: 80%;
+  }
+}

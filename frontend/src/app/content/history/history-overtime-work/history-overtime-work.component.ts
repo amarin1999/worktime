@@ -31,7 +31,7 @@ export class HistoryOvertimeWorkComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(  this.dataOvertimeWork)
+    console.log(this.dataOvertimeWork);
     if (changes) {
       this.dataSource = new MatTableDataSource<PeriodicElement>(
         this.dataOvertimeWork
