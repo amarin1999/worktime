@@ -20,10 +20,8 @@ export interface PeriodicElement {
   styleUrls: ["./history.component.scss"]
 })
 export class HistoryComponent implements OnInit {
- 
   sideWorkHistory: Observable<Response> = this.getHistorySideWork();
   overtimeWorkHistory: Observable<Response> = this.getHistoryOvertimeWork();
-  cdgImagePath: string = LayoutConstants.cdgImagePath;
 
   constructor(
     private sideWorkService: SideWorkService,
@@ -33,14 +31,14 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getHistorySideWork() {
+  getHistorySideWork(): Observable<Response> {
     this.spinner.show();
     return this.sideWorkService
       .getHistorySideWork(localStorage.getItem("employeeNo"))
       .pipe(finalize(() => this.spinner.hide()));
   }
 
-  getHistoryOvertimeWork() {
+  getHistoryOvertimeWork(): Observable<Response> {
     this.spinner.show();
     return this.overtimeWorkService
       .getHistoryOvertimeWork(localStorage.getItem("employeeNo"))

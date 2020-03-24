@@ -30,9 +30,10 @@ import { AuthService } from "./service/auth.service";
 //service
 import { EmployeeService } from "./service/employee.service";
 import { FormatDateThPipe } from "./pipe/format-date-th.pipe";
+import { WorkAnywherePipe } from './pipe/work-anywhere.pipe';
 
 @NgModule({
-  declarations: [FormatDateThPipe],
+  declarations: [FormatDateThPipe, WorkAnywherePipe],
   imports: [],
 
   exports: [
@@ -48,7 +49,8 @@ import { FormatDateThPipe } from "./pipe/format-date-th.pipe";
     MatIconModule,
     HttpClientModule,
     NgxSpinnerModule,
-    FormatDateThPipe
+    FormatDateThPipe,
+    WorkAnywherePipe
   ],
   providers: [EmployeeService, AuthService]
 })

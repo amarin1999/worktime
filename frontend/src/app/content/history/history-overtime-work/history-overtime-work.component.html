@@ -1,1 +1,64 @@
-<p>history-overtime-work works!</p>
+<div class="p-grid">
+  <div class="p-col" style="margin-top: 15px;">
+    <mat-form-field appearance="outline">
+      <mat-label><mat-icon>search</mat-icon> ค้นหา...</mat-label>
+      <input (keyup)="applyFilter($event)" matInput />
+    </mat-form-field>
+  </div>
+</div>
+
+<table
+  class="mat-elevation-z8"
+  matSort
+  mat-table
+  [dataSource]="dataSource"
+  style="width: 100%;"
+>
+  <!-- day Column -->
+
+  <!-- startTime Column -->
+  <ng-container matColumnDef="startTime">
+    <th id="startTime" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-icon>call_missed</mat-icon>
+      <span id="sortItem">&nbsp;เวลาเข้างาน</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.startTime }}
+    </td>
+  </ng-container>
+
+  <!-- endTime Column -->
+  <ng-container matColumnDef="endTime">
+    <th id="endTime" mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-icon>call_missed_outgoing</mat-icon>
+      <span id="sortItem"> &nbsp;เวลาออกงาน</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.endTime }}
+    </td>
+  </ng-container>
+
+  <!-- remark Column -->
+  <ng-container matColumnDef="remark">
+    <th id="remark" mat-header-cell *matHeaderCellDef>
+      <mat-icon>notes</mat-icon> <span> หมายเหตุ</span>
+    </th>
+    <td mat-cell class="td-time" *matCellDef="let element">
+      {{ element.remark }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr
+    matTooltip="คลิกเพื่อแก้ไข"
+    matTooltipClass="tooltip-signout"
+    class="row-item"
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+  ></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 15, 20]"
+  showFirstLastButtons
+></mat-paginator>

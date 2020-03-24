@@ -1,7 +1,4 @@
-.mat-header-cell,
-.td-time {
-  text-align: center;
-}
+// table
 ::ng-deep .mat-sort-header-container {
   display: flex;
   justify-content: center;
@@ -10,6 +7,14 @@
   box-shadow: none;
   padding: 10px;
 }
+::ng-deep .mat-sort-header-arrow {
+  color: #fff;
+}
+.mat-header-cell,
+.td-time {
+  text-align: center;
+}
+
 td,
 .mat-header-cell {
   font-size: 1.3em;
@@ -24,7 +29,7 @@ td,
 }
 
 .mat-row:hover td {
-  background-color: #4169E1 !important;
+  background-color: #4169e1 !important;
   color: whitesmoke !important;
   transition: 0.2s;
 }
@@ -35,12 +40,6 @@ td,
   vertical-align: middle;
 }
 
-.ng-tns-c118-4 {
-  box-shadow: none !important;
-}
-.mat-sort-header-arrow {
-  display: block !important;
-}
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
   td {

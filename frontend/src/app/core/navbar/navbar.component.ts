@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { Employee } from "src/app/shared/interfaces/employee";
 import { AuthService } from "src/app/shared/service/auth.service";
 import { EmployeeService } from "src/app/shared/service/employee.service";
@@ -25,5 +25,20 @@ export class NavbarComponent implements OnInit {
 
   signOut(): void {
     this.authService.onSignout();
+  }
+
+  @HostListener("window:scroll", ["$event"])
+  onWindowScroll(e:Event) {
+    if (window.pageYOffset > 70) {
+      const element = document.getElementById("wrapNavbar");
+      if (element !== null) {
+        element.id = "wrapNavbarScroll";
+      }
+    } else {
+      const element = document.getElementById("wrapNavbarScroll");
+      if (element !== null) {
+        element.id = "wrapNavbar";
+      }
+    }
   }
 }

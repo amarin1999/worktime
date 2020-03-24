@@ -21,7 +21,13 @@ export class HistorySideWorkComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   // column
-  displayedColumns: string[] = ["day", "startTime", "endTime", "remark"];
+  displayedColumns: string[] = [
+    "day",
+    "startTime",
+    "endTime",
+    "workAnywhere",
+    "remark"
+  ];
 
   // source
   dataSource = new MatTableDataSource<PeriodicElement>(this.dataSideWork);
@@ -29,9 +35,8 @@ export class HistorySideWorkComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
+    console.log( this.dataSideWork);
     if (changes) {
-      console.log(this.dataSideWork);
-
       this.dataSource = new MatTableDataSource<PeriodicElement>(
         this.dataSideWork
       );
