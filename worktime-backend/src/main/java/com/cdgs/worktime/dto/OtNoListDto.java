@@ -22,5 +22,4 @@ public class OtNoListDto implements Serializable {/**
 	private String remark;
 	private Date lastUpdate;
 	private String idProject;
-	private String day;
 }
