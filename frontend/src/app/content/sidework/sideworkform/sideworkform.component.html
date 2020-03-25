@@ -9,8 +9,7 @@
           [ngxMatDatetimePicker]="pickerStartTime"
           formControlName="startTime"
           (focus)="pickerStartTime.open()"
-          placeholder="วว/ดด/ปปปป, 00:00"
-        />
+          />
 
         <mat-datepicker-toggle
           disabled="false"
@@ -18,8 +17,7 @@
           [for]="pickerStartTime"
         ></mat-datepicker-toggle>
 
-        <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
-        </ngx-mat-datetime-picker>
+        <ngx-mat-datetime-picker #pickerStartTime> </ngx-mat-datetime-picker>
       </mat-form-field>
     </div>
     <div class="{{ formGrid }}">
@@ -30,8 +28,7 @@
           matInput
           [ngxMatDatetimePicker]="pickerEndTime"
           formControlName="endTime"
-          (focus)="pickerEndTime.open()"
-          placeholder="วว/ดด/ปปปป, 00:00"
+          (focus)="pickerEndTime.open()"        
         />
         <mat-error
           *ngIf="formGroupSideWork.get('endTime').hasError('wrongDate')"
@@ -43,8 +40,7 @@
           matSuffix
           [for]="pickerEndTime"
         ></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker [disableSecond]="true" #pickerEndTime>
-        </ngx-mat-datetime-picker>
+        <ngx-mat-datetime-picker #pickerEndTime touchUi> </ngx-mat-datetime-picker>
       </mat-form-field>
     </div>
     <div class="p-col-12">

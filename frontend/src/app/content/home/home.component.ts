@@ -1,14 +1,14 @@
 import { ComponentType } from "@angular/cdk/portal";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
-import { take } from "rxjs/operators";
+import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
+import { Response } from "src/app/shared/interfaces/response";
 //component
 import { OvertimeworkformComponent } from "../overtimeworkform/overtimeworkform.component";
 import { SideWorkComponent } from "../sidework/sidework.component";
-import { Response } from "src/app/shared/interfaces/response";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-home",
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.dialog.open(overlay, configDialog);
     dialogRef
       .afterClosed()
-      .pipe(take(1))
+      .pipe(first())
       .subscribe(
         (result: Response) => {
           if (result.status === "Success") {

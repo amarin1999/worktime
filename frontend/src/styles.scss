@@ -52,13 +52,13 @@ body {
 h4 {
   font-family: "Kanit";
 }
-
-.mat-form-field-flex {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
 mat-dialog-title {
   font-family: "Kanit";
 }
+mat-dialog-container {
+  display: none;
+}
+
 .mat-button:hover {
   transform: scale(1.05, 1.05);
   transition: 0.3s;
@@ -74,9 +74,6 @@ textarea:disabled {
   color: indigo !important;
 }
 
-mat-dialog-container {
-  display: none;
-}
 .tooltip-signout {
   background-color: indigo;
   padding: 10px;
@@ -120,10 +117,12 @@ mat-dialog-container {
 
 //responsive
 
-
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
   .header-text {
     font-size: 1.5em !important;
+  }
+  .mat-calendar {
+    width: 100% !important;
   }
 }

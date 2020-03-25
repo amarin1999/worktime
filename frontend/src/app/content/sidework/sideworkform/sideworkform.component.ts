@@ -37,11 +37,11 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   constructor(
     private buildForm: FormBuilder,
     private dialogConfirm: MatDialog
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.createFormSideWork();
   }
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {

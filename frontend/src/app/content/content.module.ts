@@ -27,6 +27,7 @@ import { MessageService } from "primeng/api";
 import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
+import { CalendarModule } from "primeng/calendar";
 //guard
 import { AuthGuard } from "../shared/guard/auth.guard";
 //service
@@ -84,12 +85,18 @@ import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    CalendarModule,
     //Date
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule
+  ],
+  entryComponents: [
+    SideWorkComponent,
+    OvertimeworkformComponent,
+    ConfirmDialogComponent,
   ],
   providers: [
     AuthGuard,

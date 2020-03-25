@@ -64,7 +64,7 @@
               [for]="pickerStartTime"
             ></mat-datepicker-toggle>
 
-            <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
+            <ngx-mat-datetime-picker #pickerStartTime>
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </div>
@@ -91,9 +91,10 @@
             ></mat-datepicker-toggle>
             <ngx-mat-datetime-picker
               disabled="false"
-              [disableSecond]="true"
+             
               #pickerEndTime
             >
+            
             </ngx-mat-datetime-picker>
           </mat-form-field>
         </div>

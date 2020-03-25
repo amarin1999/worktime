@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "postinstall": "ngcc",
     "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build",
     "test": "ng test",
@@ -31,7 +30,7 @@
     "bootstrap": "4.1.1",
     "moment": "^2.24.0",
     "ngx-bootstrap": "^5.5.0",
-    "ngx-mat-datetime-picker": "^2.0.1",
+    "ngx-mat-datetime-picker": "^2.0.3",
     "ngx-spinner": "^9.0.0",
     "primeflex": "^1.0.0",
     "primeicons": "^2.0.0",
