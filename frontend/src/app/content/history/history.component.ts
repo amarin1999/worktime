@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { SideWorkService } from "src/app/shared/service/sidework.service";
-import { Observable } from "rxjs";
-import { Response } from "src/app/shared/interfaces/response";
-import { finalize } from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
-import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
+import { Observable } from "rxjs";
+import { finalize } from "rxjs/operators";
+import { Response } from "src/app/shared/interfaces/response";
 import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
+import { SideWorkService } from "src/app/shared/service/sidework.service";
 export interface PeriodicElement {
   date: string | number | Date;
   name: string;
@@ -26,7 +25,8 @@ export class HistoryComponent implements OnInit {
   constructor(
     private sideWorkService: SideWorkService,
     private overtimeWorkService: OvertimeWorkService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+
   ) {}
 
   ngOnInit(): void {}

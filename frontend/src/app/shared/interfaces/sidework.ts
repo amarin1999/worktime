@@ -5,4 +5,5 @@ export interface SideWork {
   workAnyWhere?: boolean;
   remark: string;
   employeeNo?: string;
+  type?: string;
 }

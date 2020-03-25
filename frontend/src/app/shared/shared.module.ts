@@ -1,17 +1,16 @@
-// angular module
+//angular module
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
-import { MatCardModule } from "@angular/material/card";
-// material
+import { RouterModule } from "@angular/router";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+//material
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatButtonModule } from "@angular/material/button";
-//angular
-import { RouterModule } from "@angular/router";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-// fontawesome
+import { MatCardModule } from "@angular/material/card";
+//fontawesome
 import {
   FaIconLibrary,
   FontAwesomeModule
@@ -22,19 +21,19 @@ import {
   faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 import { faClock, faHistory } from "@fortawesome/free-solid-svg-icons";
-//spinner;
+//spinner
 import { NgxSpinnerModule } from "ngx-spinner";
-// primeng
+//primeng
 import { SidebarModule } from "primeng/sidebar";
 import { AuthService } from "./service/auth.service";
-import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { ScrollPanelModule } from "primeng/scrollpanel";
 //service
 import { EmployeeService } from "./service/employee.service";
-import { FormatDateThPipe } from "./pipe/format-date-th.pipe";
-import { WorkAnywherePipe } from './pipe/work-anywhere.pipe';
+//pipe
+import { WorkAnywherePipe } from "./pipe/work-anywhere.pipe";
 
 @NgModule({
-  declarations: [FormatDateThPipe, WorkAnywherePipe],
+  declarations: [WorkAnywherePipe],
   imports: [],
 
   exports: [
@@ -50,7 +49,6 @@ import { WorkAnywherePipe } from './pipe/work-anywhere.pipe';
     MatIconModule,
     HttpClientModule,
     NgxSpinnerModule,
-    FormatDateThPipe,
     WorkAnywherePipe,
     ScrollPanelModule
   ],

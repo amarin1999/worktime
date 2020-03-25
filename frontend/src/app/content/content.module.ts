@@ -47,8 +47,10 @@ import { ContentRoutingModule } from "./content-routing.module";
 import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
 import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
 import { CoreModule } from "../core/core.module";
-import { FormatDateThPipe } from "../shared/pipe/format-date-th.pipe";
+//pipe
 import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
+import { EditWorkComponent } from "./edit-work/edit-work.component";
+import { EditSideWorkComponent } from "./edit-work/edit-side-work/edit-side-work.component";
 @NgModule({
   declarations: [
     ContentComponent,
@@ -60,7 +62,9 @@ import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
     SideWorkComponent,
     HistoryComponent,
     HistorySideWorkComponent,
-    HistoryOvertimeWorkComponent
+    HistoryOvertimeWorkComponent,
+    EditWorkComponent,
+    EditSideWorkComponent
   ],
 
   imports: [
@@ -96,7 +100,6 @@ import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
     MessageService,
     SideWorkService,
     OvertimeWorkService,
-    FormatDateThPipe,
     WorkAnywherePipe
   ],
   exports: [ContentComponent]

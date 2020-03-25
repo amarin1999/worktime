@@ -27,10 +27,6 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   formGrid: string = LayoutConstants.gridFormPrimeNg;
   //form
   formGroupSideWork: FormGroup;
-  //date
-  date: Date = new Date();
-  dateRequest = `${this.date.getDate()}-${this.date.getMonth() +
-    1}-${this.date.getFullYear() + 543}`;
   //message
   msgs: Message[] = [];
 
