@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.TimeZone;
 
 import org.slf4j.Logger;
@@ -53,14 +54,14 @@ public class DataTableServiceImpl implements DataTableService {
 		List<SideworkDateToSting> listDto = new ArrayList<>();
 		if (!entities.isEmpty()) {
 			for (SideworkHistoryEntity entitiy : entities) {
-				listDto.add(mapSideworkEntityToDto(entitiy));
+				listDto.add(mapSideworkEntityToDtoString(entitiy));
 			}
 		}
 		return listDto;
 
 	}
 
-	private SideworkDateToSting mapSideworkEntityToDto(SideworkHistoryEntity entity) {
+	private SideworkDateToSting mapSideworkEntityToDtoString(SideworkHistoryEntity entity) {
 		SideworkDateToSting dto =new SideworkDateToSting();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -116,6 +117,25 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setIdProject(entity.getProjectId());
 			dto.setEndTime(dateFormat.format(entity.getEndTime()));
 		}
+		return dto;
+		
+	}
+
+	@Override
+	public SideworkHistoryDto getSideWork(Long sideWorkId) {
+		Optional<SideworkHistoryEntity> data = sideWorkRepository.findById(sideWorkId);		
+		return mapSideworkEntityToDto(data.get());
+	}
+	
+	private SideworkHistoryDto mapSideworkEntityToDto(SideworkHistoryEntity entity) {
+		SideworkHistoryDto dto= new SideworkHistoryDto();
+		dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
+		dto.setEndTime(entity.getEndTime());
+		dto.setId(entity.getSideworkId());
+		dto.setLastUpdate(entity.getLastUpdate());
+		dto.setRemark(entity.getRemark());
+		dto.setStartTime(entity.getStartTime());
+		dto.setWorkAnyWhere(entity.getWorkAnyWhere());
 		return dto;
 		
 	}

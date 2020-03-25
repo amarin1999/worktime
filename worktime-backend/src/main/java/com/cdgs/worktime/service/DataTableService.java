@@ -11,5 +11,7 @@ public interface DataTableService {
 	List<SideworkDateToSting> getSideWorkAll(Long employeeId);
 	
 	List<OtNoListDto> getOtAll(Long employeeId);
+	
+	SideworkHistoryDto getSideWork(Long sideWorkId);
 
 }
