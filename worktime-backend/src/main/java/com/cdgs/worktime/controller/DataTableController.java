@@ -69,9 +69,8 @@ public class DataTableController {
 			ResponseDto<OtNoListDto> res =new ResponseDto<OtNoListDto>();
 			List<OtNoListDto> dto = new ArrayList<OtNoListDto>();
 			List<EmployeeDto> employee = employeeService.getEmployeeByNo(employeeNo);
-			
-			try {
-				dto=dataTableService.getOtAll(employee.get(0).getId());		
+			try {		
+				dto=dataTableService.getOtAll(employee.get(0).getId());	
 				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 				res.setData(dto);
 				res.setCode(201);

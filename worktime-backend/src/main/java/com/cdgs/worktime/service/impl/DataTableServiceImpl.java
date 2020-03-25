@@ -68,7 +68,9 @@ public class DataTableServiceImpl implements DataTableService {
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		if(entity != null) {
 			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
+			if(entity.getEndTime() != null) {
 			dto.setEndTime(timeFormat.format(entity.getEndTime()));
+			}
 			dto.setId(entity.getSideworkId());
 			dto.setRemark(entity.getRemark());
 			dto.setStartTime(timeFormat.format(entity.getStartTime()));
@@ -82,7 +84,7 @@ public class DataTableServiceImpl implements DataTableService {
 	@Override
 	public List<OtNoListDto> getOtAll(Long employeeId) {
 		List<OtHistoryEntity> entity =new ArrayList<OtHistoryEntity>();
-		
+	
 		try {
 			entity = otRespositiry.getOtAll(employeeId);
 		}catch (Exception e) { 
@@ -108,7 +110,6 @@ public class DataTableServiceImpl implements DataTableService {
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		if(entity != null) {
 			dto.setEmployeehasId(entity.getEmployeeHasSideworkId());
-			dto.setEndTime(dateFormat.format(entity.getEndTime()));
 			dto.setId(entity.getOtHistoryId());
 			dto.setRemark(entity.getRemark());
 			dto.setStartTime(dateFormat.format(entity.getStartTime()));
