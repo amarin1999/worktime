@@ -114,6 +114,7 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setRemark(entity.getRemark());
 			dto.setStartTime(dateFormat.format(entity.getStartTime()));
 			dto.setIdProject(entity.getProjectId());
+			dto.setEndTime(dateFormat.format(entity.getEndTime()));
 		}
 		return dto;
 		
