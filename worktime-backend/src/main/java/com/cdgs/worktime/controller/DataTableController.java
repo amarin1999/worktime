@@ -83,7 +83,7 @@ public class DataTableController {
 
 	}
 
-	@GetMapping(path = "/getsideworkbyedit/{id}")
+	@GetMapping(path = "/getsideworkforedit/{id}")
 	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkByEdit(@PathVariable(value = "id") Long id) {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dtoList = new ArrayList<SideworkHistoryDto>();
