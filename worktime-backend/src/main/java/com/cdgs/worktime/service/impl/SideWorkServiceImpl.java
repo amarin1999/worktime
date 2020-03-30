@@ -64,7 +64,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			data.setStartTime(sideTime.getStartTime());
 			data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			data.setRemark(sideTime.getRemark());
-			data.setDay(sideTime.getDay()));
+			data.setDay(sideTime.getDay());
 			return convEntityToDto(sideworkrepository.save(data));
 		}
 	}
