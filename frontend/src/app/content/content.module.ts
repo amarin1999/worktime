@@ -10,9 +10,9 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatTabsModule } from "@angular/material/tabs";
 import {
   NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-  NgxMatTimepickerModule
-} from "ngx-mat-datetime-picker";
+  NgxMatTimepickerModule,
+  NgxMatNativeDateModule
+} from "@angular-material-components/datetime-picker";
 import { MatSortModule } from "@angular/material/sort";
 import { MatListModule } from "@angular/material/list";
 import { MatBadgeModule } from "@angular/material/badge";
@@ -45,11 +45,13 @@ import { SideWorkFormComponent } from "./sidework/sideworkform/sideworkform.comp
 import { HistoryComponent } from "./history/history.component";
 //route
 import { ContentRoutingModule } from "./content-routing.module";
-import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
-import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
+
 import { CoreModule } from "../core/core.module";
 import { FormatDateThPipe } from "../shared/pipe/format-date-th.pipe";
 import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
+import { TestComponent } from './test/test.component';
+import { Test2Component } from './history/test2/test2.component';
+import { HistorySideWorkComponent } from './history/history-side-work/history-side-work.component';
 @NgModule({
   declarations: [
     ContentComponent,
@@ -60,8 +62,10 @@ import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
     ConfirmDialogComponent,
     SideWorkComponent,
     HistoryComponent,
-    HistorySideWorkComponent,
-    HistoryOvertimeWorkComponent
+   
+    TestComponent,
+    Test2Component,
+    HistorySideWorkComponent
   ],
 
   imports: [
@@ -97,6 +101,7 @@ import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
     SideWorkComponent,
     OvertimeworkformComponent,
     ConfirmDialogComponent,
+  
   ],
   providers: [
     AuthGuard,
