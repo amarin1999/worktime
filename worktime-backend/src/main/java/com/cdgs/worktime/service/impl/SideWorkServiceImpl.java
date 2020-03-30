@@ -53,17 +53,18 @@ public class SideWorkServiceImpl implements SideWorkService {
 			entity.setStartTime(sideTime.getStartTime());
 			entity.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			entity.setRemark(sideTime.getRemark());
+			entity.setDay(sideTime.getDay());
 			return convEntityToDto(sideworkrepository.save(entity));
 		} else {
 			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistory = employeeHasSideworkHistoryService
 					.postEmployeeHasHistory(employee.getId(), (long) 1);
-
 			data.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistory.getEmployeehasId());
 			data.setEndTime(sideTime.getEndTime());
 			data.setLastUpdate(Calendar.getInstance().getTime());
 			data.setStartTime(sideTime.getStartTime());
 			data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			data.setRemark(sideTime.getRemark());
+			data.setDay(sideTime.getDay());
 			return convEntityToDto(sideworkrepository.save(data));
 		}
 	}

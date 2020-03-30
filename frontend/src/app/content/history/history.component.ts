@@ -32,14 +32,14 @@ export class HistoryComponent implements OnInit {
   ngOnInit(): void {}
 
   getHistorySideWork(): Observable<Response> {
-    this.spinner.show();
+
     return this.sideWorkService
       .getHistorySideWork(localStorage.getItem("employeeNo"))
       .pipe(finalize(() => this.spinner.hide()));
   }
 
   getHistoryOvertimeWork(): Observable<Response> {
-    this.spinner.show();
+
     return this.overtimeWorkService
       .getHistoryOvertimeWork(localStorage.getItem("employeeNo"))
       .pipe(finalize(() => this.spinner.hide()));

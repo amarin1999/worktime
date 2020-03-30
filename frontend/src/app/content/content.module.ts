@@ -28,6 +28,7 @@ import { MessageService } from "primeng/api";
 import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
+import { CalendarModule } from "primeng/calendar";
 //guard
 import { AuthGuard } from "../shared/guard/auth.guard";
 //service

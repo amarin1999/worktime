@@ -60,4 +60,9 @@ public class SideworkHistoryEntity implements Serializable {
 	@Column(name = "last_update_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
+	
+	@Column(name = "day")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date day;
+
 }
