@@ -1,16 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-// moment
-import * as moment from "moment";
 import { Message } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
@@ -52,7 +42,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   createFormSideWork(): void {
     this.formGroupSideWork = this.buildForm.group(
       {
-        day: [null, [Validators.required]],
+        date: [null, [Validators.required]],
         startTime: [null, [Validators.required]],
         endTime: [null, [Validators.required]],
         workAnyWhere: [false],
@@ -75,58 +65,6 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
       return null;
     }
   }
-  // lateTime(group: FormGroup): void {
-  //   let endTime = moment(group.get("endTime").value).format("l");
-  //   let lateDay = moment(group.get("startTime").value)
-  //     .add(1, "day")
-  //     .format("l");
-  //   if (endTime > lateDay) {
-  //     group.get("endTime").setValue(undefined);
-  //     group.get("endTime").setErrors({ lateDate: true });
-  //   } else {
-  //     return null;
-  //   }
-  // }
-  // check วันเวลาเพื่อ disable form
-  // checkTimeForm(): void {
-  //   if (this.dataSideWork?.startTime) {
-  //     if (this.dataSideWork?.endTime) {
-  //       this.setValueForm();
-  //       this.formGroupSideWork.disable();
-  //       return;
-  //     }
-  //     //disable input วันที่เริ่ม
-  //     this.formGroupSideWork.controls["startTime"].disable();
-  //     this.formGroupSideWork.controls["endTime"].disable();
-  //     this.setValueForm();
-  //   }
-  // }
-
-  // // patch ข้อมูลตามที่มี
-  // setValueForm(): void {
-  //   this.formGroupSideWork.patchValue({
-  //     startTime: this.setStartTime(),
-  //     endTime: this.setEndTime(),
-  //     workAnyWhere: this.dataSideWork.workAnyWhere,
-  //     remark: this.dataSideWork.remark
-  //   });
-  // }
-
-  // // เงื่อนไข Starttime
-  // setStartTime(): Date {
-  //   return this.dataSideWork.startTime
-  //     ? new Date(this.dataSideWork.startTime)
-  //     : new Date();
-  // }
-
-  // // เงื่อนไข Endtime
-  // setEndTime(): Date {
-  //   return this.dataSideWork.endTime
-  //     ? new Date(this.dataSideWork.endTime)
-  //     : this.dataSideWork.startTime
-  //     ? new Date()
-  //     : null;
-  // }
 
   // กดปุ่ม
   onSubmit(): void {

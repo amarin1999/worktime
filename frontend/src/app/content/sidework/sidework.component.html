@@ -1,16 +1,13 @@
-<div class="wrap-form animation-page">
+<div class="wrap-formSideWork animation-page">
   <h2 mat-dialog-title>
     <img src="{{ imgLogo }}" class="img-form" alt="" />
     ลงเวลาทำงานนอกสถานที่
   </h2>
-
-
-  <div>
-    <br />
+   
     <!-- component -->
     <app-sideworkform
       (insertEmit)="insertSideWork($event)"
       [dataSideWork]="(requestDay | async)?.data"
     ></app-sideworkform>
-  </div>
+
 </div>
