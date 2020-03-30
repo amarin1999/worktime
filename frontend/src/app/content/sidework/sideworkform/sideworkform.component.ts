@@ -31,8 +31,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   //message
   msgs: Message[] = [];
   minDate = new Date(-1);
-  maxDate = new Date()
-
+  maxDate = new Date();
 
   constructor(
     private buildForm: FormBuilder,
@@ -55,7 +54,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
       {
         day: [null, [Validators.required]],
         startTime: [null, [Validators.required]],
-        endTime: [null],
+        endTime: [null, [Validators.required]],
         workAnyWhere: [false],
         remark: [null, [Validators.maxLength(250)]]
       },
@@ -134,7 +133,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
     //ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
       console.log(this.formGroupSideWork.getRawValue());
-      
+
       this.openDialogConfirm();
     } else if (this.formGroupSideWork.disabled) {
       this.msgs = [];

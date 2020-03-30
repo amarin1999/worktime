@@ -3,9 +3,11 @@
   display: flex;
   justify-content: center;
 }
+
 ::ng-deep .mat-sort-header-arrow {
   color: #fff;
 }
+
 .mat-header-cell,
 .td-time {
   text-align: center;
@@ -22,6 +24,7 @@ td,
   color: white;
   transition: 0.2s;
 }
+
 .mat-row:hover td {
   background-color: #4169e1 !important;
   color: whitesmoke !important;

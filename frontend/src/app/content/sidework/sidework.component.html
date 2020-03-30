@@ -3,33 +3,14 @@
     <img src="{{ imgLogo }}" class="img-form" alt="" />
     ลงเวลาทำงานนอกสถานที่
   </h2>
-  <mat-tab-group dynamicHeight>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>access_time</mat-icon>
-        &nbsp; ลงเวลาทำงานวันนี้
-      </ng-template>
-      <ng-template matTabContent>
-        <br />
-        <!-- component -->
-        <app-sideworkform
-          (insertEmit)="insertSideWork($event)"
-          [dataSideWork]="(requestDay | async)?.data"
-        ></app-sideworkform>
-      </ng-template>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>history</mat-icon>
-        &nbsp; ลงเวลาทำงานย้อนหลัง
-      </ng-template>
-      <ng-template matTabContent>
-        <br />
-        <!-- component -->
-        <app-side-work-past-form
-          (insertEmit)="insertSideWork($event)"
-        ></app-side-work-past-form>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+
+
+  <div>
+    <br />
+    <!-- component -->
+    <app-sideworkform
+      (insertEmit)="insertSideWork($event)"
+      [dataSideWork]="(requestDay | async)?.data"
+    ></app-sideworkform>
+  </div>
 </div>

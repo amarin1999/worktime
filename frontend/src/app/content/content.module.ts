@@ -28,7 +28,7 @@ import { MessageService } from "primeng/api";
 import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
-import { CalendarModule } from "primeng/calendar";
+
 //guard
 import { AuthGuard } from "../shared/guard/auth.guard";
 //service
@@ -52,7 +52,7 @@ import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
 import { EditWorkComponent } from "./edit-work/edit-work.component";
 import { EditSideWorkComponent } from "./edit-work/edit-side-work/edit-side-work.component";
 import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
-import { SideWorkPastFormComponent } from "./sidework/side-work-past-form/side-work-past-form.component";
+
 @NgModule({
   declarations: [
     ContentComponent,
@@ -66,8 +66,7 @@ import { SideWorkPastFormComponent } from "./sidework/side-work-past-form/side-w
     HistorySideWorkComponent,
     HistoryOvertimeWorkComponent,
     EditWorkComponent,
-    EditSideWorkComponent,
-    SideWorkPastFormComponent
+    EditSideWorkComponent,  
   ],
 
   imports: [
