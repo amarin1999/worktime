@@ -9,12 +9,13 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+// moment
+import * as moment from "moment";
 import { Message } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
-
 @Component({
   selector: "app-sideworkform",
   templateUrl: "./sideworkform.component.html",
@@ -29,27 +30,31 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   formGroupSideWork: FormGroup;
   //message
   msgs: Message[] = [];
+  minDate = new Date(-1);
+  maxDate = new Date()
+
 
   constructor(
     private buildForm: FormBuilder,
     private dialogConfirm: MatDialog
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.createFormSideWork();
   }
 
-  ngOnInit(): void {}
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      this.checkTimeForm();
-    }
+    // if (changes) {
+    //   this.checkTimeForm();
+    // }
   }
 
   //สร้าง form
   createFormSideWork(): void {
     this.formGroupSideWork = this.buildForm.group(
       {
-        startTime: [new Date(), [Validators.required]],
+        day: [null, [Validators.required]],
+        startTime: [null, [Validators.required]],
         endTime: [null],
         workAnyWhere: [false],
         remark: [null, [Validators.maxLength(250)]]
@@ -71,51 +76,65 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
       return null;
     }
   }
-
+  // lateTime(group: FormGroup): void {
+  //   let endTime = moment(group.get("endTime").value).format("l");
+  //   let lateDay = moment(group.get("startTime").value)
+  //     .add(1, "day")
+  //     .format("l");
+  //   if (endTime > lateDay) {
+  //     group.get("endTime").setValue(undefined);
+  //     group.get("endTime").setErrors({ lateDate: true });
+  //   } else {
+  //     return null;
+  //   }
+  // }
   // check วันเวลาเพื่อ disable form
-  checkTimeForm(): void {
-    if (this.dataSideWork?.startTime) {
-      if (this.dataSideWork?.endTime) {
-        this.setValueForm();
-        this.formGroupSideWork.disable();
-        return;
-      }
-      //disable input วันที่เริ่ม
-      this.formGroupSideWork.controls["startTime"].disable();
-      this.setValueForm();
-    }
-  }
+  // checkTimeForm(): void {
+  //   if (this.dataSideWork?.startTime) {
+  //     if (this.dataSideWork?.endTime) {
+  //       this.setValueForm();
+  //       this.formGroupSideWork.disable();
+  //       return;
+  //     }
+  //     //disable input วันที่เริ่ม
+  //     this.formGroupSideWork.controls["startTime"].disable();
+  //     this.formGroupSideWork.controls["endTime"].disable();
+  //     this.setValueForm();
+  //   }
+  // }
 
-  // patch ข้อมูลตามที่มี
-  setValueForm(): void {
-    this.formGroupSideWork.patchValue({
-      startTime: this.setStartTime(),
-      endTime: this.setEndTime(),
-      workAnyWhere: this.dataSideWork.workAnyWhere,
-      remark: this.dataSideWork.remark
-    });
-  }
+  // // patch ข้อมูลตามที่มี
+  // setValueForm(): void {
+  //   this.formGroupSideWork.patchValue({
+  //     startTime: this.setStartTime(),
+  //     endTime: this.setEndTime(),
+  //     workAnyWhere: this.dataSideWork.workAnyWhere,
+  //     remark: this.dataSideWork.remark
+  //   });
+  // }
 
-  // เงื่อนไข Starttime
-  setStartTime(): Date {
-    return this.dataSideWork.startTime
-      ? new Date(this.dataSideWork.startTime)
-      : new Date();
-  }
+  // // เงื่อนไข Starttime
+  // setStartTime(): Date {
+  //   return this.dataSideWork.startTime
+  //     ? new Date(this.dataSideWork.startTime)
+  //     : new Date();
+  // }
 
-  // เงื่อนไข Endtime
-  setEndTime(): Date {
-    return this.dataSideWork.endTime
-      ? new Date(this.dataSideWork.endTime)
-      : this.dataSideWork.startTime
-      ? new Date()
-      : null;
-  }
+  // // เงื่อนไข Endtime
+  // setEndTime(): Date {
+  //   return this.dataSideWork.endTime
+  //     ? new Date(this.dataSideWork.endTime)
+  //     : this.dataSideWork.startTime
+  //     ? new Date()
+  //     : null;
+  // }
 
   // กดปุ่ม
   onSubmit(): void {
     //ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
+      console.log(this.formGroupSideWork.getRawValue());
+      
       this.openDialogConfirm();
     } else if (this.formGroupSideWork.disabled) {
       this.msgs = [];

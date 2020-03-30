@@ -3,18 +3,15 @@
   display: flex;
   justify-content: center;
 }
-::ng-deep .mat-form-field-flex {
-  box-shadow: none;
-  padding: 10px;
-}
+
 ::ng-deep .mat-sort-header-arrow {
   color: #fff;
 }
+
 .mat-header-cell,
 .td-time {
   text-align: center;
 }
-
 td,
 .mat-header-cell {
   font-size: 1.3em;
@@ -40,6 +37,12 @@ td,
   vertical-align: middle;
 }
 
+.ng-tns-c118-4 {
+  box-shadow: none !important;
+}
+.mat-sort-header-arrow {
+  display: block !important;
+}
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
   td {

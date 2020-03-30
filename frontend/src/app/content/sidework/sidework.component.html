@@ -23,6 +23,13 @@
         <mat-icon>history</mat-icon>
         &nbsp; ลงเวลาทำงานย้อนหลัง
       </ng-template>
+      <ng-template matTabContent>
+        <br />
+        <!-- component -->
+        <app-side-work-past-form
+          (insertEmit)="insertSideWork($event)"
+        ></app-side-work-past-form>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>

@@ -10,6 +10,7 @@ import { SharedModule } from "./shared/shared.module";
 import { ContentModule } from "./content/content.module";
 //route
 import { AppRoutingModule } from "./app-routing.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,7 +21,8 @@ import { AppRoutingModule } from "./app-routing.module";
       enabled: environment.production
     }),
     CoreModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: "th-TH" }],
   bootstrap: [AppComponent]

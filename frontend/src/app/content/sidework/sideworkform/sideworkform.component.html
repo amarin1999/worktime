@@ -2,49 +2,54 @@
   <div class="p-grid">
     <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label><mat-icon>schedule</mat-icon> เวลาเข้างาน</mat-label>
+        <mat-label>กรุณาเลือกวันที่</mat-label>
         <input
           readonly
           matInput
-          [ngxMatDatetimePicker]="pickerStartTime"
-          formControlName="startTime"
-          (focus)="pickerStartTime.open()"
-          placeholder="วว/ดด/ปปปป, 00:00"
+          formControlName="day"
+          [matDatepicker]="pickerDate"
+          (focus)="pickerDate.open()"
+          [min]="minDate"
+          [max]="maxDate"
         />
-
         <mat-datepicker-toggle
-          disabled="false"
           matSuffix
-          [for]="pickerStartTime"
+          [for]="pickerDate"
         ></mat-datepicker-toggle>
-
-        <ngx-mat-datetime-picker [disableSecond]="true" #pickerStartTime>
-        </ngx-mat-datetime-picker>
+        <mat-datepicker touchUi #pickerDate></mat-datepicker>
       </mat-form-field>
-    </div>
-    <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label><mat-icon>schedule</mat-icon> เวลาออกงาน</mat-label>
+        <mat-label>กรุณาเลือกวันที่</mat-label>
         <input
-          readonly
           matInput
-          [ngxMatDatetimePicker]="pickerEndTime"
+          formControlName="startTime"
+          [ngxTimepicker]="pickerStartTime"
+          [format]="24"
+          readonly
+        />
+        <ngx-material-timepicker #pickerStartTime></ngx-material-timepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>กรุณาเลือกวันที่</mat-label>
+        <input
+          matInput
           formControlName="endTime"
-          (focus)="pickerEndTime.open()"
-          placeholder="วว/ดด/ปปปป, 00:00"
+          [ngxTimepicker]="pickerEndTime"
+          [format]="24"
+          readonly
         />
         <mat-error
           *ngIf="formGroupSideWork.get('endTime').hasError('wrongDate')"
         >
           * เวลาเลิกงานต้องมากกว่าเวลาเข้างาน
         </mat-error>
-        <mat-datepicker-toggle
-          disabled="false"
-          matSuffix
-          [for]="pickerEndTime"
-        ></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker [disableSecond]="true" #pickerEndTime>
-        </ngx-mat-datetime-picker>
+        <mat-error
+          *ngIf="formGroupSideWork.get('endTime').hasError('lateDate')"
+        >
+          * ท่านไม่สามารถลงเวลาทำงานล่าช้าเกิน 1 วันได้
+        </mat-error>
+        <ngx-material-timepicker #pickerEndTime></ngx-material-timepicker>
       </mat-form-field>
     </div>
     <div class="p-col-12">

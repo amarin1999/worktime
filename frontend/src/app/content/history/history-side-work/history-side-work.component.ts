@@ -12,14 +12,14 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { first } from "rxjs/operators";
-import { EditWorkComponent } from "../../edit-work/edit-work.component";
-
 @Component({
-  selector: "app-history-side-work",
-  templateUrl: "./history-side-work.component.html",
-  styleUrls: ["./history-side-work.component.scss"]
+  selector: 'app-history-side-work',
+  templateUrl: './history-side-work.component.html',
+  styleUrls: ['./history-side-work.component.scss']
 })
-export class HistorySideWorkComponent implements OnInit, OnChanges {
+export class HistorySideWorkComponent implements OnInit {
+
+  
   @Input("sideWorkHistory") dataSideWork: SideWork[];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -57,13 +57,7 @@ export class HistorySideWorkComponent implements OnInit, OnChanges {
       data: { ...itemSideWork, type: "sideWork" }
     };
 
-    const dialogRef = this.dialog.open(EditWorkComponent, configDialog);
-    dialogRef
-      .afterClosed()
-      .pipe(first())
-      .subscribe(
-        (result: Response) => {},
-        error => {}
-      );
   }
+
+
 }
