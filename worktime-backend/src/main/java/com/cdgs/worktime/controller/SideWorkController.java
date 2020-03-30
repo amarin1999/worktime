@@ -90,7 +90,7 @@ public class SideWorkController {
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		String date = dateformat.format(body.getStartTime());
+		String date = dateformat.format(body.getDay());
 
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
 		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();

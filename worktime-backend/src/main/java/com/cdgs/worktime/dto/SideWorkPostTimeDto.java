@@ -22,4 +22,6 @@ public class SideWorkPostTimeDto implements Serializable {
 	private Boolean workAnyWhere;
 	private String remark;
 	private String employeeNo;
+	private Date day;
+	
 }
