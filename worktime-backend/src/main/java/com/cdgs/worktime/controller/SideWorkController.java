@@ -59,21 +59,21 @@ public class SideWorkController {
 	}
 
 	@GetMapping(path = "/gettime")
-	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no, @RequestParam String date) throws ParseException {
+	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,
+			@RequestParam String date) throws ParseException {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
 //		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(date, employee.get(0).getId());
-		System.out.println(dataSideWork);
-			if (dataSideWork.getId() != null) {
-				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-				res.setCode(200);
-			} else {
-				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-				res.setCode(404);
-			}				
-			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
+		if (dataSideWork.getId() != null) {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setCode(200);
+		} else {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setCode(404);
+		}
+		return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/posttime")
@@ -82,8 +82,6 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
-
-		System.out.println(body);
 
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		String date = dateformat.format(body.getDate());
