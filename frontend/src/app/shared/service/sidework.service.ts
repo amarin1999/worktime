@@ -30,12 +30,11 @@ export class SideWorkService {
   }
 
   getSideWorkOnDay(employeeId: string, date: Date): Observable<Response> {
-    const dateRequest = `${date.getFullYear() + 543}-${date.getMonth() +
-      1}-${date.getDate()}`;
+    const dateRequest = new Date(date);
     try {
       return this.http
         .get(
-          `${ApiConstants.baseURl}/sidework/gettime?no=${employeeId}&date=${date}`
+          `${ApiConstants.baseURl}/sidework/gettime?no=${employeeId}&date=${dateRequest}`
         )
         .pipe(
           map(response => {
