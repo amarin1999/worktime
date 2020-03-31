@@ -65,8 +65,9 @@ public class SideWorkController {
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
 //		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(date, employee.get(0).getId());
+		System.out.println(dataSideWork);
 			if (dataSideWork != null) {
-				System.out.println(true);
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			} else {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			}			
