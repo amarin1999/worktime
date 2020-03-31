@@ -8,7 +8,7 @@
     <app-sideworkform
       (insertEmit)="insertSideWork($event)"
       (checkDateEmit)="checkDay($event)"
-      [dataSideWork]="(requestDay | async)?.data"
+      [dateValid]="isDateValid"
     ></app-sideworkform>
 
 </div>

@@ -16,7 +16,7 @@ export class SideWorkComponent implements OnInit {
   //constants
   imgLogo: string = LayoutConstants.sideWorkImagePath;
   //request
-  requestDay = this.getTimeOnDay();
+  isDateValid: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<SideWorkFormComponent>,
@@ -33,18 +33,29 @@ export class SideWorkComponent implements OnInit {
     //   .getSideWorkOnDay(localStorage.getItem("employeeNo"), new Date())
     //   .pipe(finalize(() => this.spinner.hide()));
   }
-  checkDay(date: Date) {
+
+  checkDay(date: Date): void {
     this.spinner.show();
-    return this.sideWorkService
+    this.sideWorkService
       .getSideWorkOnDay(localStorage.getItem("employeeNo"), date)
       .pipe(
         first(),
         finalize(() => this.spinner.hide())
       )
-      .subscribe((res: Response) => {
-        console.log(res);
-      });
+      .subscribe(
+        (res: Response) => {
+          if (res.code === 200) {
+            this.isDateValid = true;
+          } else if (res.code === 404) {
+            this.isDateValid = false;
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
+
   // เพิ่มข้อมูลลง DB
   insertSideWork(formItem: SideWork): void {
     this.spinner.show();

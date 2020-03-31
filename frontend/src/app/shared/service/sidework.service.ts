@@ -48,7 +48,7 @@ export class SideWorkService {
           })
         );
     } catch (error) {
-      console.table(error);
+      return error;
     }
   }
 
