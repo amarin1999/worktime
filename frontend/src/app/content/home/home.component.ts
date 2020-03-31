@@ -14,8 +14,7 @@ import { SideWorkComponent } from "../sidework/sidework.component";
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: [],
-  
+  providers: []
 })
 export class HomeComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
@@ -71,7 +70,7 @@ export class HomeComponent implements OnInit {
       .afterClosed()
       .pipe(first())
       .subscribe(
-        (result: Response) => {
+        (result) => {
           if (result.status === "Success") {
             this.messageService.clear();
             this.messageService.add({
@@ -79,6 +78,14 @@ export class HomeComponent implements OnInit {
               severity: "success",
               summary: "แจ้งเตือน",
               detail: "ลงเวลาเรียบร้อยแล้ว"
+            });
+          } else if (result.error){
+            console.log(result)
+            this.messageService.add({
+              key: "errorMessage",
+              severity: "error",
+              summary: "ผิดพลาด",
+              detail: result.error.errorMessage
             });
           }
         },

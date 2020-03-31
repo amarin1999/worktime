@@ -1,57 +1,54 @@
 //module
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from "@angular-material-components/datetime-picker";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { CoreModule } from "../core/core.module";
-//material
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatTabsModule } from "@angular/material/tabs";
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatTimepickerModule,
-  NgxMatNativeDateModule
-} from "@angular-material-components/datetime-picker";
-import { MatSortModule } from "@angular/material/sort";
-import { MatListModule } from "@angular/material/list";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+//material
+import { MatDialogModule } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
-import { MatTableModule } from "@angular/material/table";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatListModule } from "@angular/material/list";
+import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
+import { MatTableModule } from "@angular/material/table";
+import { MatTabsModule } from "@angular/material/tabs";
 import { NgxMaterialTimepickerModule } from "ngx-material-timepicker";
 //primgng
 import { MessageService } from "primeng/api";
 import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
-
+import { CoreModule } from "../core/core.module";
 //guard
 import { AuthGuard } from "../shared/guard/auth.guard";
-//service
-import { SideWorkService } from "../shared/service/sidework.service";
-import { SharedModule } from "../shared/shared.module";
-import { OvertimeWorkService } from "../shared/service/overtime.service";
-//component
-import { ConfirmDialogComponent } from "./confirmdialog/confirmdialog.component";
-import { ContentComponent } from "./content.component";
-import { HomeComponent } from "./home/home.component";
-import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
-import { SignInComponent } from "./signin/signin.component";
-import { SideWorkComponent } from "./sidework/sidework.component";
-import { SideWorkFormComponent } from "./sidework/sideworkform/sideworkform.component";
-import { HistoryComponent } from "./history/history.component";
-import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
-//route
-import { ContentRoutingModule } from "./content-routing.module";
 //pipe
 import { WorkAnywherePipe } from "../shared/pipe/work-anywhere.pipe";
-import { EditWorkComponent } from "./edit-work/edit-work.component";
+//service
+import { OvertimeWorkService } from "../shared/service/overtime.service";
+import { SideWorkService } from "../shared/service/sidework.service";
+import { SharedModule } from "../shared/shared.module";
+//component
+import { ConfirmDialogComponent } from "./confirmdialog/confirmdialog.component";
+//route
+import { ContentRoutingModule } from "./content-routing.module";
+import { ContentComponent } from "./content.component";
 import { EditSideWorkComponent } from "./edit-work/edit-side-work/edit-side-work.component";
+import { EditWorkComponent } from "./edit-work/edit-work.component";
+import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
 import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
+import { HistoryComponent } from "./history/history.component";
+import { HomeComponent } from "./home/home.component";
+import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
+import { SideWorkComponent } from "./sidework/sidework.component";
+import { SideWorkFormComponent } from "./sidework/sideworkform/sideworkform.component";
+import { SignInComponent } from "./signin/signin.component";
+
+
 
 @NgModule({
   declarations: [

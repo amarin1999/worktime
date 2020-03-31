@@ -29,12 +29,23 @@ export class SideWorkComponent implements OnInit {
 
   //เรียกเวลาวันนี้
   getTimeOnDay() {
+    // this.spinner.show();
+    // return this.sideWorkService
+    //   .getSideWorkOnDay(localStorage.getItem("employeeNo"), new Date())
+    //   .pipe(finalize(() => this.spinner.hide()));
+  }
+  checkDay(dateItem: Date) {
     this.spinner.show();
     return this.sideWorkService
-      .getSideWorkOnDay(localStorage.getItem("employeeNo"), new Date())
-      .pipe(finalize(() => this.spinner.hide()));
+      .getSideWorkOnDay(localStorage.getItem("employeeNo"), dateItem)
+      .pipe(
+        first(),
+        finalize(() => this.spinner.hide())
+      )
+      .subscribe((res: Response) => {
+        console.log(res);
+      });
   }
-
   // เพิ่มข้อมูลลง DB
   insertSideWork(formItem: SideWork): void {
     this.spinner.show();

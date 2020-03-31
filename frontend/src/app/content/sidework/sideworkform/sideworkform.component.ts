@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Message } from "primeng/api";
@@ -14,6 +22,7 @@ import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.compon
 export class SideWorkFormComponent implements OnInit, OnChanges {
   @Input("dataSideWork") dataSideWork: SideWork;
   @Output() insertEmit: EventEmitter<SideWork> = new EventEmitter();
+  @Output() checkDateEmit: EventEmitter<any> = new EventEmitter();
   //constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
   //form
@@ -66,6 +75,9 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
     }
   }
 
+  checkDate(event): void {     
+    this.checkDateEmit.emit(event.value);
+  }
   // กดปุ่ม
   onSubmit(): void {
     //ถ้า validate ผ่าน
