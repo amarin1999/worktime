@@ -68,10 +68,11 @@ public class SideWorkController {
 		System.out.println(dataSideWork);
 			if (dataSideWork != null) {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setCode(200);
 			} else {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-			}			
-			res.setCode(201);
+				res.setCode(404);
+			}				
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
 	}
 
