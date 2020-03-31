@@ -29,8 +29,9 @@ public interface SideWorkRepository extends CrudRepository<SideworkHistoryEntity
 
 
 	@Query(value = "SELECT sh.* " + "FROM worktime.sidework_history sh  "
-			+ "JOIN  worktime.employee_has_sidework_history esh " 
-			+ "WHERE DATE(sh.start_time) = :sideWorkDate "
+			+ "INNER JOIN  worktime.employee_has_sidework_history esh    "
+			+ " ON sh.employee_has_sidework_history_id = esh.employee_has_sidework_history_id " 
+			+ "WHERE sh.day = :sideWorkDate "
 			+"and esh.employee_id=:employeeId", nativeQuery = true)
 	SideworkHistoryEntity findDateTimeByString(String sideWorkDate, Long employeeId);
 	
