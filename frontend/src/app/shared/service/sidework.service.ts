@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { ApiConstants } from "../constants/ApiConstants";
 import { Response } from "../interfaces/response";
 import { SideWork } from "../interfaces/sidework";
-
+import * as moment from "moment";
 @Injectable({
   providedIn: "root"
 })
@@ -30,7 +30,9 @@ export class SideWorkService {
   }
 
   getSideWorkOnDay(employeeId: string, date: Date): Observable<Response> {
-    const dateRequest = new Date(date);
+    const dateRequest = moment(date)
+      .add(543, "year")
+      .format("YYYY-MM-DD");
     try {
       return this.http
         .get(

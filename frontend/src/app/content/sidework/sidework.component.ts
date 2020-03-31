@@ -7,7 +7,6 @@ import { Response } from "src/app/shared/interfaces/response";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideWorkService } from "src/app/shared/service/sidework.service";
 import { SideWorkFormComponent } from "./sideworkform/sideworkform.component";
-
 @Component({
   selector: "app-sidework",
   templateUrl: "./sidework.component.html",
@@ -34,10 +33,10 @@ export class SideWorkComponent implements OnInit {
     //   .getSideWorkOnDay(localStorage.getItem("employeeNo"), new Date())
     //   .pipe(finalize(() => this.spinner.hide()));
   }
-  checkDay(dateItem: Date) {
+  checkDay(date: Date) {
     this.spinner.show();
     return this.sideWorkService
-      .getSideWorkOnDay(localStorage.getItem("employeeNo"), dateItem)
+      .getSideWorkOnDay(localStorage.getItem("employeeNo"), date)
       .pipe(
         first(),
         finalize(() => this.spinner.hide())
