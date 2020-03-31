@@ -17,11 +17,11 @@ public class SideWorkPostTimeDto implements Serializable {
 	 */
 	private static final long serialVersionUID = 8886815346590834119L;
 	
-	private Date startTime;
-	private Date endTime;
+	private String startTime;
+	private String endTime;
 	private Boolean workAnyWhere;
 	private String remark;
 	private String employeeNo;
-	private Date day;
+	private Date date;
 	
 }

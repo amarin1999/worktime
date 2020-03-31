@@ -1,5 +1,8 @@
 package com.cdgs.worktime.service.impl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,38 +46,40 @@ public class SideWorkServiceImpl implements SideWorkService {
 	}
 
 	@Override
-	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeDto employee, String date) {
+	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeDto employee, String date) throws ParseException {
 
 		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(date, employee.getId());
 		SideworkHistoryEntity data = new SideworkHistoryEntity();
+		 SimpleDateFormat formatTime=new SimpleDateFormat("HH:mm"); 
 		if (entity != null) {
-			entity.setEndTime(sideTime.getEndTime());
+			entity.setEndTime(formatTime.parse(sideTime.getEndTime()));
 			entity.setLastUpdate(Calendar.getInstance().getTime());
-			entity.setStartTime(sideTime.getStartTime());
+			entity.setStartTime(formatTime.parse(sideTime.getStartTime()));
 			entity.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			entity.setRemark(sideTime.getRemark());
-			entity.setDay(sideTime.getDay());
+			entity.setDay(sideTime.getDate());
 			return convEntityToDto(sideworkrepository.save(entity));
 		} else {
 			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistory = employeeHasSideworkHistoryService
 					.postEmployeeHasHistory(employee.getId(), (long) 1);
 			data.setIdEmployeeHasSideWorkHistory(employeeHasSideWorkHistory.getEmployeehasId());
-			data.setEndTime(sideTime.getEndTime());
+			data.setEndTime(formatTime.parse(sideTime.getEndTime()));
 			data.setLastUpdate(Calendar.getInstance().getTime());
-			data.setStartTime(sideTime.getStartTime());
+			data.setStartTime(formatTime.parse(sideTime.getStartTime()));
 			data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			data.setRemark(sideTime.getRemark());
-			data.setDay(sideTime.getDay());
+			data.setDay(sideTime.getDate());
 			return convEntityToDto(sideworkrepository.save(data));
 		}
 	}
 
-	private SideworkHistoryEntity convPostDtoToEntity(SideWorkPostTimeDto dto) {
+	private SideworkHistoryEntity convPostDtoToEntity(SideWorkPostTimeDto dto) throws ParseException {
 		SideworkHistoryEntity entity = new SideworkHistoryEntity();
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		if (dto != null) {
-			entity.setEndTime(dto.getEndTime());
+			entity.setEndTime(timeFormat.parse(dto.getEndTime()));
 			entity.setLastUpdate(Calendar.getInstance().getTime());
-			entity.setStartTime(dto.getStartTime());
+			entity.setStartTime(timeFormat.parse(dto.getStartTime()));
 			entity.setRemark(dto.getRemark());
 			entity.setWorkAnyWhere(dto.getWorkAnyWhere());
 		}

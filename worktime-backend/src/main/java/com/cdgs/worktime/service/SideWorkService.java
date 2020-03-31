@@ -1,5 +1,6 @@
 package com.cdgs.worktime.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import com.cdgs.worktime.dto.SideworkHistoryDto;
 public interface SideWorkService {
 
 
-	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,EmployeeDto employee, String date);
+	SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime,EmployeeDto employee, String date) throws ParseException;
 	
 	SideworkHistoryDto getSideWorkTime(String string,Long employeeId);
 }

@@ -89,9 +89,11 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
+		
+		System.out.println(body);
+		
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		String date = dateformat.format(body.getDay());
-
+		String date = dateformat.format(body.getDate());
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
 		List<EmployeeDto> employeeData = new ArrayList<EmployeeDto>();
 
