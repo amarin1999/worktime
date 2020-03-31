@@ -59,26 +59,18 @@ public class SideWorkController {
 	}
 
 	@GetMapping(path = "/gettime")
-	private ResponseEntity<ResponseDto<SideworkHistoryDto>> getSideWorkTime(@RequestParam String no,
-			@RequestParam String startTime) throws ParseException {
+	private Boolean getSideWorkTime(@RequestParam String no, @RequestParam Date date) throws ParseException {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(startTime, employee.get(0).getId());
-		dto.add(dataSideWork);
-		try {
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(dto);
-			res.setCode(201);
-			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error("gettime ", e);
-			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-			res.setErrorMessage(e.getMessage());
-			res.setCode(400);
-			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
+		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(dateFormat.format(date),
+				employee.get(0).getId());
+		if (dataSideWork != null) {
+			return true;
+		} else {
+			return false;
 		}
 
 	}
@@ -89,9 +81,9 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		SideworkHistoryDto data = new SideworkHistoryDto();
-		
+
 		System.out.println(body);
-		
+
 		DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		String date = dateformat.format(body.getDate());
 		EmployeeHasSideworkHistoryDto employeeHasSideWorkHistoryId = new EmployeeHasSideworkHistoryDto();
