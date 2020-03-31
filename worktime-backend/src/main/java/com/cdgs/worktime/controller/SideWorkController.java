@@ -63,12 +63,10 @@ public class SideWorkController {
 		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
 		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
 		List<EmployeeDto> employee = employeeservice.getEmployeeByNo(no);
-		System.out.println(date);
 //		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SideworkHistoryDto dataSideWork = sideworkservice.getSideWorkTime(date, employee.get(0).getId());
-
 			if (dataSideWork != null) {
-				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				System.out.println(true);
 			} else {
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			}			
