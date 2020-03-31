@@ -76,7 +76,7 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setRemark(entity.getRemark());
 			dto.setStartTime(timeFormat.format(entity.getStartTime()));
 			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
-			dto.setDay(dateFormat.format(entity.getStartTime()));
+			dto.setDay(dateFormat.format(entity.getDay()));
 		}
 		return dto;
 		
