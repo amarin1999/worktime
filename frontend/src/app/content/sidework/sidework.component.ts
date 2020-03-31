@@ -26,14 +26,6 @@ export class SideWorkComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  //เรียกเวลาวันนี้
-  getTimeOnDay() {
-    // this.spinner.show();
-    // return this.sideWorkService
-    //   .getSideWorkOnDay(localStorage.getItem("employeeNo"), new Date())
-    //   .pipe(finalize(() => this.spinner.hide()));
-  }
-
   checkDay(date: Date): void {
     this.spinner.show();
     this.sideWorkService

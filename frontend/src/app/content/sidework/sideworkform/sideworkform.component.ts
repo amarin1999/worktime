@@ -29,7 +29,8 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   formGroupSideWork: FormGroup;
   //message
   msgs: Message[] = [];
-  minDate = new Date(-1);
+  currentDate = new Date();
+  minDate = new Date(this.currentDate.setDate(this.currentDate.getDate() - 1));
   maxDate = new Date();
 
   constructor(
