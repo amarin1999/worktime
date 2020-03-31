@@ -35,7 +35,7 @@ export class SideWorkService {
     try {
       return this.http
         .get(
-          `${ApiConstants.baseURl}/sidework/gettime?no=${employeeId}&startTime=${dateRequest}`
+          `${ApiConstants.baseURl}/sidework/gettime?no=${employeeId}&date=${date}`
         )
         .pipe(
           map(response => {
