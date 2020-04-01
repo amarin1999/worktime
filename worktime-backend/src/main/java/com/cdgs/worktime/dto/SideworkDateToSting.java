@@ -21,7 +21,7 @@ public class SideworkDateToSting implements Serializable {
 	private Long employeehasId;
 	private String startTime;
 	private String endTime;
-	private String day;
+	private String date;
 	private String remark;
 	private Boolean workAnyWhere;
 

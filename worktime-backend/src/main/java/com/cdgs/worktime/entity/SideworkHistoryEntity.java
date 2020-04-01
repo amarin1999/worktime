@@ -63,6 +63,6 @@ public class SideworkHistoryEntity implements Serializable {
 	
 	@Column(name = "day")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date day;
+	private Date date;
 
 }

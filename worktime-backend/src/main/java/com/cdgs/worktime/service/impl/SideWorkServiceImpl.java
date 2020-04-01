@@ -57,7 +57,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			entity.setStartTime(formatTime.parse(sideTime.getStartTime()));
 			entity.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			entity.setRemark(sideTime.getRemark());
-			entity.setDay(sideTime.getDate());
+			entity.setDate(sideTime.getDate());
 			return convEntityToDto(sideworkrepository.save(entity));
 		} else {
 			EmployeeHasSideworkHistoryDto employeeHasSideWorkHistory = employeeHasSideworkHistoryService
@@ -68,7 +68,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 			data.setStartTime(formatTime.parse(sideTime.getStartTime()));
 			data.setWorkAnyWhere(sideTime.getWorkAnyWhere());
 			data.setRemark(sideTime.getRemark());
-			data.setDay(sideTime.getDate());
+			data.setDate(sideTime.getDate());
 			return convEntityToDto(sideworkrepository.save(data));
 		}
 	}
