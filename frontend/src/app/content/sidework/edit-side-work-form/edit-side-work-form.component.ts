@@ -1,25 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { SideWork } from "src/app/shared/interfaces/sidework";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
 import { first } from "rxjs/operators";
+import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
+import { SideWork } from "src/app/shared/interfaces/sidework";
+import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
 
 @Component({
-  selector: "app-edit-side-work",
-  templateUrl: "./edit-side-work.component.html",
-  styleUrls: ["./edit-side-work.component.scss"]
+  selector: "app-edit-side-work-form",
+  templateUrl: "./edit-side-work-form.component.html",
+  styleUrls: ["./edit-side-work-form.component.scss"]
 })
-export class EditSideWorkComponent implements OnInit {
-  @Input("dataSideWork") dataSideWork: SideWork;
-  @Output() patchEmit: EventEmitter<SideWork> = new EventEmitter();
+export class EditSideWorkFormComponent implements OnInit {
+  @Input("dataForm") dataForm: SideWork;
+  @Output() editEmit: EventEmitter<SideWork> = new EventEmitter();
+
   //constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
   //form
   formGroupSideWork: FormGroup;
-  //img
-  imgLogo: string = LayoutConstants.sideWorkImagePath;
+
   constructor(
     private buildForm: FormBuilder,
     private dialogConfirm: MatDialog
@@ -33,10 +33,14 @@ export class EditSideWorkComponent implements OnInit {
   createFormSideWork(): void {
     this.formGroupSideWork = this.buildForm.group(
       {
-        startTime: [new Date(), [Validators.required]],
-        endTime: [null],
-        workAnyWhere: [false],
-        remark: [null, [Validators.maxLength(250)]]
+        date: [
+          { value: this.dataForm.date, disabled: true },
+          [Validators.required]
+        ],
+        startTime: [this.dataForm.startTime, [Validators.required]],
+        endTime: [this.dataForm.endTime, [Validators.required]],
+        workAnyWhere: [this.dataForm.workAnyWhere],
+        remark: [this.dataForm.remark, [Validators.maxLength(250)]]
       },
       {
         validators: [this.compareTime]
@@ -86,7 +90,7 @@ export class EditSideWorkComponent implements OnInit {
       .pipe(first())
       .subscribe((confirmStatus: boolean) => {
         if (confirmStatus) {
-          this.patchEmit.emit(this.formGroupSideWork.getRawValue());
+          this.editEmit.emit(this.formGroupSideWork.getRawValue());
         }
       });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
 import { finalize, first } from "rxjs/operators";
@@ -7,6 +7,9 @@ import { Response } from "src/app/shared/interfaces/response";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideWorkService } from "src/app/shared/service/sidework.service";
 import { SideWorkFormComponent } from "./sideworkform/sideworkform.component";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import * as moment from "moment";
+
 @Component({
   selector: "app-sidework",
   templateUrl: "./sidework.component.html",
@@ -21,11 +24,13 @@ export class SideWorkComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<SideWorkFormComponent>,
     private sideWorkService: SideWorkService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    @Inject(MAT_DIALOG_DATA) public dataForm: SideWork
   ) {}
 
   ngOnInit(): void {}
 
+  //เช็ควันว่าลงเวลาแล้วหรือยัง
   checkDay(date: Date): void {
     this.spinner.show();
     this.sideWorkService
@@ -36,10 +41,15 @@ export class SideWorkComponent implements OnInit {
       )
       .subscribe(
         (res: Response) => {
-          if (res.code === 200) {
-            this.isDateValid = true;
-          } else if (res.code === 404) {
-            this.isDateValid = false;
+          switch (res.code) {
+            case 200: {
+              this.isDateValid = true;
+              break;
+            }
+            case 404: {
+              this.isDateValid = false;
+              break;
+            }
           }
         },
         error => {
@@ -48,14 +58,37 @@ export class SideWorkComponent implements OnInit {
       );
   }
 
-  // เพิ่มข้อมูลลง DB
-  insertSideWork(formItem: SideWork): void {
-    this.spinner.show();
-    const requestData = {
-      ...formItem,
-      employeeNo: localStorage.getItem("employeeNo")
-    };
+  //check type จัดการข้อมูล
+  emitSideWork(formItem: SideWork): void {
+    switch (this.dataForm.type) {
+      case "edit": {
+        //set วันที่ format
+        const dateFormat = moment(formItem.date, "DD/MM/YYYY").format(
+          "YYYY-MM-DD"
+        );
+        delete formItem.date;
+        const requestData = {
+          date: dateFormat,
+          ...formItem,
+          employeeNo: localStorage.getItem("employeeNo")
+        };
+        this.editSideWork(requestData);
+        break;
+      }
+      case "add": {
+        const requestData = {
+          ...formItem,
+          employeeNo: localStorage.getItem("employeeNo")
+        };
+        this.insertSideWork(requestData);
+        break;
+      }
+    }
+  }
 
+  //เพิ่มข้อมูล
+  insertSideWork(requestData: SideWork) {
+    this.spinner.show();
     this.sideWorkService
       .addSidework(requestData)
       .pipe(
@@ -66,6 +99,32 @@ export class SideWorkComponent implements OnInit {
       )
       .subscribe(
         (response: Response) => {
+          this.dialogRef.close(response);
+        },
+        error => {
+          this.dialogRef.close(error);
+        }
+      );
+  }
+
+  //แก้ไขข้อมูล
+  editSideWork(requestData: SideWork): void {
+    this.spinner.show();
+    this.sideWorkService
+      .addSidework(requestData)
+      .pipe(
+        first(),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        (response: Response) => {
+          //patch subject sideWork
+          this.sideWorkService
+            .setSideWork(localStorage.getItem("employeeNo"))
+            .pipe(first())
+            .subscribe();
           this.dialogRef.close(response);
         },
         error => {

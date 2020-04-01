@@ -77,8 +77,8 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   }
 
   setFormDate(): void {
+    this.msgs = [];
     if (this.dateValid) {
-      this.msgs = [];
       this.msgs.push({
         severity: "warn",
         summary: "แจ้งเตือน",
@@ -95,17 +95,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   onSubmit(): void {
     //ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
-      console.log(this.formGroupSideWork.getRawValue());
-
       this.openDialogConfirm();
-    } else if (this.formGroupSideWork.disabled) {
-      this.msgs = [];
-      this.msgs.push({
-        severity: "warn",
-        summary: "แจ้งเตือน",
-        detail:
-          "คุณได้ลงเวลาสำหรับวันนี้ไปแล้ว หากต้องการแก้ไขไปที่ประวัติการลงเวลา"
-      });
     }
   }
 

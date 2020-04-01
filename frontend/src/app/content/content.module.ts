@@ -37,17 +37,15 @@ import { ConfirmDialogComponent } from "./confirmdialog/confirmdialog.component"
 //route
 import { ContentRoutingModule } from "./content-routing.module";
 import { ContentComponent } from "./content.component";
-import { EditSideWorkComponent } from "./edit-work/edit-side-work/edit-side-work.component";
-import { EditWorkComponent } from "./edit-work/edit-work.component";
 import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
 import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
 import { HistoryComponent } from "./history/history.component";
 import { HomeComponent } from "./home/home.component";
 import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
+import { EditSideWorkFormComponent } from "./sidework/edit-side-work-form/edit-side-work-form.component";
 import { SideWorkComponent } from "./sidework/sidework.component";
 import { SideWorkFormComponent } from "./sidework/sideworkform/sideworkform.component";
 import { SignInComponent } from "./signin/signin.component";
-
 
 
 @NgModule({
@@ -62,8 +60,7 @@ import { SignInComponent } from "./signin/signin.component";
     HistoryComponent,
     HistorySideWorkComponent,
     HistoryOvertimeWorkComponent,
-    EditWorkComponent,
-    EditSideWorkComponent,  
+    EditSideWorkFormComponent
   ],
 
   imports: [

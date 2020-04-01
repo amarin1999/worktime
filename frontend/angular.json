@@ -119,7 +119,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {
@@ -137,5 +139,8 @@
       }
     }
   },
-  "defaultProject": "cdgTimeAttendance"
+  "defaultProject": "cdgTimeAttendance",
+  "cli": {
+    "analytics": "e2b18320-4e89-4d05-9f93-193be44b5e65"
+  }
 }

@@ -1,14 +1,30 @@
-<div class="wrap-formSideWork animation-page">
-  <h2 mat-dialog-title>
-    <img src="{{ imgLogo }}" class="img-form" alt="" />
-    ลงเวลาทำงานนอกสถานที่
-  </h2>
-   
+<div *ngIf="dataForm.type == 'add'; else editForm">
+  <div class="wrap-formSideWork animation-page">
+    <h2 mat-dialog-title>
+      <img src="{{ imgLogo }}" class="img-form" alt="" />
+      ลงเวลาทำงานนอกสถานที่
+    </h2>
+
     <!-- component -->
     <app-sideworkform
-      (insertEmit)="insertSideWork($event)"
+      (insertEmit)="emitSideWork($event)"
       (checkDateEmit)="checkDay($event)"
       [dateValid]="isDateValid"
     ></app-sideworkform>
-
+  </div>
 </div>
+
+<ng-template #editForm>
+  <div class="wrap-formSideWork animation-page">
+    <h2 mat-dialog-title>
+      <img src="{{ imgLogo }}" class="img-form" alt="" />
+      แก้ไขการลงเวลาทำงานนอกสถานที่
+    </h2>
+
+    <!-- component -->
+    <app-edit-side-work-form
+      (editEmit)="emitSideWork($event)"
+      [dataForm]="dataForm"
+    ></app-edit-side-work-form>
+  </div>
+</ng-template>

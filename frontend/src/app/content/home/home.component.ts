@@ -5,10 +5,10 @@ import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { Response } from "src/app/shared/interfaces/response";
 //component
 import { OvertimeworkformComponent } from "../overtimeworkform/overtimeworkform.component";
 import { SideWorkComponent } from "../sidework/sidework.component";
+import { Menu } from "src/app/shared/interfaces/menu";
 
 @Component({
   selector: "app-home",
@@ -19,20 +19,18 @@ import { SideWorkComponent } from "../sidework/sidework.component";
 export class HomeComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
 
-  menu: {
-    title: string;
-    img: string;
-    link: ComponentType<any> | string;
-  }[] = [
+  menu: Menu[] = [
     {
       title: "ทำงานนอกสถานที่",
       img: LayoutConstants.sideWorkImagePath,
-      link: SideWorkComponent
+      link: SideWorkComponent,
+      type: "add"
     },
     {
       title: "ทำงานล่วงเวลา",
       img: LayoutConstants.overtimeImagePath,
-      link: OvertimeworkformComponent
+      link: OvertimeworkformComponent,
+      type: "add"
     },
     {
       title: "ประวัติการลงเวลา",
@@ -48,29 +46,26 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onClickItem(item: {
-    title: string;
-    img: string;
-    link: ComponentType<any> | string;
-  }): void {
+  onClickItem(item: Menu): void {
     if (typeof item.link === "string") {
       this.route.navigate([item.link]);
     } else {
-      this.openDialog(item.link);
+      this.openDialog(item.type, item.link);
     }
   }
 
-  openDialog(overlay: ComponentType<any>) {
+  openDialog(type: string, overlay: ComponentType<any>) {
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
-      autoFocus: false
+      autoFocus: false,
+      data: { type }
     };
     const dialogRef = this.dialog.open(overlay, configDialog);
     dialogRef
       .afterClosed()
       .pipe(first())
       .subscribe(
-        (result) => {
+        result => {
           if (result.status === "Success") {
             this.messageService.clear();
             this.messageService.add({
@@ -79,8 +74,7 @@ export class HomeComponent implements OnInit {
               summary: "แจ้งเตือน",
               detail: "ลงเวลาเรียบร้อยแล้ว"
             });
-          } else if (result.error){
-            console.log(result)
+          } else if (result.error) {
             this.messageService.add({
               key: "errorMessage",
               severity: "error",

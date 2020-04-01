@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditWorkComponent } from './edit-work.component';
+import { EditSideWorkFormComponent } from './edit-side-work-form.component';
 
-describe('EditWorkComponent', () => {
-  let component: EditWorkComponent;
-  let fixture: ComponentFixture<EditWorkComponent>;
+describe('EditSideWorkFormComponent', () => {
+  let component: EditSideWorkFormComponent;
+  let fixture: ComponentFixture<EditSideWorkFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditWorkComponent ]
+      declarations: [ EditSideWorkFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditWorkComponent);
+    fixture = TestBed.createComponent(EditSideWorkFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

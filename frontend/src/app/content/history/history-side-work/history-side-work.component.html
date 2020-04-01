@@ -15,13 +15,13 @@
   style="width: 100%;"
 >
   <!-- day Column -->
-  <ng-container matColumnDef="day">
-    <th id="day" mat-header-cell *matHeaderCellDef mat-sort-header>
+  <ng-container matColumnDef="date">
+    <th id="date" mat-header-cell *matHeaderCellDef mat-sort-header>
       <mat-icon>event</mat-icon>
       <span id="sortItem">&nbsp;วันที่</span>
     </th>
     <td mat-cell class="td-time" *matCellDef="let element">
-      {{ element.day }}
+      {{ element.date }}
     </td>
   </ng-container>
 
@@ -60,7 +60,7 @@
       <mat-icon>notes</mat-icon> <span> หมายเหตุ</span>
     </th>
     <td mat-cell class="td-time" *matCellDef="let element">
-      {{ element.remark }}ss
+      {{ element.remark }}
     </td>
   </ng-container>
 
@@ -79,3 +79,5 @@
   [pageSizeOptions]="[5, 10, 15, 20]"
   showFirstLastButtons
 ></mat-paginator>
+<p-toast key="errorMessage" position="bottom-center"></p-toast>
+<p-toast key="SuccessMessage" position="bottom-center"></p-toast>
