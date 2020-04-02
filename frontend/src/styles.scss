@@ -44,6 +44,9 @@ h4 {
   color: whitesmoke;
 }
 
+.mat-divider {
+  border-top-color: #d3d3d3;
+}
 .mat-form-field-flex {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -54,16 +57,16 @@ h4 {
 .mat-button {
   transition: 0.3s !important;
 }
-.wrap-form > *,
-.wrap-formSideWork > * {
+.mat-dialog-title {
   font-family: "Kanit" !important;
 }
+
 input:disabled,
 textarea:disabled {
   color: indigo !important;
 }
 
-.tooltip-signout {
+.tooltip-primary {
   background-color: indigo;
   padding: 10px;
   font-size: 1.3em;
@@ -120,5 +123,3 @@ textarea:disabled {
     width: 60vw;
   }
 }
-
-

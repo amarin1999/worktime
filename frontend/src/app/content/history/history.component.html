@@ -16,7 +16,7 @@
         </ng-template>
         
         <app-history-side-work
-          [sideWorkHistory]="(sideWorkHistory | async)?.data"
+          [sideWorkHistory]="sideWorkHistory | async"
         ></app-history-side-work>
       </mat-tab>
       <mat-tab>

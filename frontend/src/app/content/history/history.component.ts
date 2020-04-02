@@ -1,17 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import { Observable } from "rxjs";
-import { finalize } from "rxjs/operators";
+import { Observable, Subject } from "rxjs";
+import { finalize, first } from "rxjs/operators";
 import { Response } from "src/app/shared/interfaces/response";
 import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
 import { SideWorkService } from "src/app/shared/service/sidework.service";
-export interface PeriodicElement {
-  date: string | number | Date;
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { SideWork } from "src/app/shared/interfaces/sidework";
 
 @Component({
   selector: "app-history",
@@ -19,23 +13,24 @@ export interface PeriodicElement {
   styleUrls: ["./history.component.scss"]
 })
 export class HistoryComponent implements OnInit {
-  sideWorkHistory: Observable<Response> = this.getHistorySideWork();
+  sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   overtimeWorkHistory: Observable<Response> = this.getHistoryOvertimeWork();
 
   constructor(
     private sideWorkService: SideWorkService,
     private overtimeWorkService: OvertimeWorkService,
-    private spinner: NgxSpinnerService,
-
+    private spinner: NgxSpinnerService
   ) {}
 
-  ngOnInit(): void {}
-
-  getHistorySideWork(): Observable<Response> {
-    this.spinner.show();
-    return this.sideWorkService
+  ngOnInit(): void {
+    this.sideWorkService
       .getHistorySideWork(localStorage.getItem("employeeNo"))
-      .pipe(finalize(() => this.spinner.hide()));
+      .pipe(first())
+      .subscribe();
+  }
+
+  getHistorySideWork(): Subject<SideWork[]> {
+    return this.sideWorkService.getSideWork();
   }
 
   getHistoryOvertimeWork(): Observable<Response> {

@@ -1,6 +1,6 @@
 export interface SideWork {
   id?: number;
-  day: Date;
+  date: Date;
   startTime: Date;
   endTime: Date;
   workAnyWhere?: boolean;

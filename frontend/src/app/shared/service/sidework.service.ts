@@ -1,15 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { ApiConstants } from "../constants/ApiConstants";
 import { Response } from "../interfaces/response";
 import { SideWork } from "../interfaces/sidework";
 import * as moment from "moment";
+
 @Injectable({
   providedIn: "root"
 })
 export class SideWorkService {
+  sideWorkItem = new Subject<SideWork[]>();
   constructor(private http: HttpClient) {}
 
   addSidework(body: SideWork): Observable<Response> {
@@ -17,6 +19,7 @@ export class SideWorkService {
       return this.http
         .post(`${ApiConstants.baseURl}/sidework/posttime`, body)
         .pipe(
+       
           map(response => {
             return {
               status: response["result"],
@@ -24,15 +27,18 @@ export class SideWorkService {
             };
           })
         );
+        
     } catch (error) {
       console.table(error);
     }
   }
 
   getSideWorkOnDay(employeeId: string, date: Date): Observable<Response> {
+    date = new Date(date);
     const dateRequest = moment(date)
-      .add(543, "year")
+      // .add(543, "year")
       .format("YYYY-MM-DD");
+
     try {
       return this.http
         .get(
@@ -58,6 +64,7 @@ export class SideWorkService {
         .get(`${ApiConstants.baseURl}/datatable/getsidework/${id}`)
         .pipe(
           map(response => {
+            this.sideWorkItem.next(response["data"]);
             return {
               status: response["result"],
               data: response["data"],
@@ -68,5 +75,23 @@ export class SideWorkService {
     } catch (error) {
       console.table(error);
     }
+  }
+
+  setSideWork(id: string) {
+    try {
+      return this.http
+        .get(`${ApiConstants.baseURl}/datatable/getsidework/${id}`)
+        .pipe(
+          map(response => {
+            this.sideWorkItem.next(response["data"]);
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
+
+  getSideWork(): Subject<SideWork[]> {
+    return this.sideWorkItem;
   }
 }

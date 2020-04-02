@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { ApiConstants } from "../constants/ApiConstants";
 import { OvertimeWork } from "../interfaces/overtime";
+import { Observable } from "rxjs";
+import { Response } from "../interfaces/response";
 
 @Injectable({
   providedIn: "root"
@@ -10,7 +12,7 @@ import { OvertimeWork } from "../interfaces/overtime";
 export class OvertimeWorkService {
   constructor(private http: HttpClient) {}
 
-  addOvertimeWork(body: OvertimeWork) {
+  addOvertimeWork(body: OvertimeWork): Observable<Response> {
     try {
       return this.http
         .post(`${ApiConstants.baseURl}/overtime/posttime`, body)

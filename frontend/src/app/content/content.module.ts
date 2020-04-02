@@ -1,5 +1,9 @@
 //module
-import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from "@angular-material-components/datetime-picker";
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from "@angular-material-components/datetime-picker";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatBadgeModule } from "@angular/material/badge";
@@ -37,18 +41,17 @@ import { ConfirmDialogComponent } from "./confirmdialog/confirmdialog.component"
 //route
 import { ContentRoutingModule } from "./content-routing.module";
 import { ContentComponent } from "./content.component";
-import { EditSideWorkComponent } from "./edit-work/edit-side-work/edit-side-work.component";
-import { EditWorkComponent } from "./edit-work/edit-work.component";
 import { HistoryOvertimeWorkComponent } from "./history/history-overtime-work/history-overtime-work.component";
 import { HistorySideWorkComponent } from "./history/history-side-work/history-side-work.component";
 import { HistoryComponent } from "./history/history.component";
 import { HomeComponent } from "./home/home.component";
-import { OvertimeworkformComponent } from "./overtimeworkform/overtimeworkform.component";
+import { EditOvertimeWorkFormComponent } from "./overtime-work/edit-overtime-work-form/edit-overtime-work-form.component";
+import { InsertOvertimeWorkFormComponent } from "./overtime-work/insert-overtime-work-form/insert-overtime-work-form.component";
+import { OvertimeWorkComponent } from "./overtime-work/overtime-work.component";
+import { EditSideWorkFormComponent } from "./sidework/edit-side-work-form/edit-side-work-form.component";
 import { SideWorkComponent } from "./sidework/sidework.component";
 import { SideWorkFormComponent } from "./sidework/sideworkform/sideworkform.component";
 import { SignInComponent } from "./signin/signin.component";
-
-
 
 @NgModule({
   declarations: [
@@ -56,14 +59,15 @@ import { SignInComponent } from "./signin/signin.component";
     SignInComponent,
     HomeComponent,
     SideWorkFormComponent,
-    OvertimeworkformComponent,
     ConfirmDialogComponent,
     SideWorkComponent,
     HistoryComponent,
     HistorySideWorkComponent,
     HistoryOvertimeWorkComponent,
-    EditWorkComponent,
-    EditSideWorkComponent,  
+    EditSideWorkFormComponent,
+    OvertimeWorkComponent,
+    EditOvertimeWorkFormComponent,
+    InsertOvertimeWorkFormComponent
   ],
 
   imports: [
@@ -94,11 +98,6 @@ import { SignInComponent } from "./signin/signin.component";
     NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule
-  ],
-  entryComponents: [
-    SideWorkComponent,
-    OvertimeworkformComponent,
-    ConfirmDialogComponent
   ],
   providers: [
     AuthGuard,

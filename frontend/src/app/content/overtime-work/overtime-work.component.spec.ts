@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OvertimeworkformComponent } from './overtimeworkform.component';
+import { OvertimeWorkComponent } from './overtime-work.component';
 
-describe('OvertimeworkformComponent', () => {
-  let component: OvertimeworkformComponent;
-  let fixture: ComponentFixture<OvertimeworkformComponent>;
+describe('OvertimeWorkComponent', () => {
+  let component: OvertimeWorkComponent;
+  let fixture: ComponentFixture<OvertimeWorkComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OvertimeworkformComponent ]
+      declarations: [ OvertimeWorkComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OvertimeworkformComponent);
+    fixture = TestBed.createComponent(OvertimeWorkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
