@@ -20,7 +20,7 @@ import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.compon
   styleUrls: ["./sideworkform.component.scss"]
 })
 export class SideWorkFormComponent implements OnInit, OnChanges {
-  @Input("dateValid") dateValid: boolean;
+  @Input("dateValid") dateValid: { status: boolean };
   @Output() insertEmit: EventEmitter<SideWork> = new EventEmitter();
   @Output() checkDateEmit: EventEmitter<any> = new EventEmitter();
   //constants
@@ -43,9 +43,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      this.setFormDate();
-    }
+    this.setFormDate();
   }
 
   //สร้าง form
@@ -78,7 +76,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
 
   setFormDate(): void {
     this.msgs = [];
-    if (this.dateValid) {
+    if (this.dateValid.status) {
       this.msgs.push({
         severity: "warn",
         summary: "แจ้งเตือน",
@@ -91,6 +89,7 @@ export class SideWorkFormComponent implements OnInit, OnChanges {
   checkDate(event: HTMLInputElement): void {
     this.checkDateEmit.emit(event.value);
   }
+
   // กดปุ่ม
   onSubmit(): void {
     //ถ้า validate ผ่าน

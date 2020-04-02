@@ -17,7 +17,7 @@ export class SideWorkComponent implements OnInit {
   //constants
   imgLogo: string = LayoutConstants.sideWorkImagePath;
   //request
-  isDateValid: boolean = false;
+  isDateValid = { status: false };
 
   constructor(
     private dialogRef: MatDialogRef<SideWorkComponent>,
@@ -41,11 +41,12 @@ export class SideWorkComponent implements OnInit {
         (res: Response) => {
           switch (res.code) {
             case 200: {
-              this.isDateValid = true;
+              this.isDateValid = { status: true };
+              console.log("dssd");
               break;
             }
             case 404: {
-              this.isDateValid = false;
+              this.isDateValid = { status: false };
               break;
             }
           }
