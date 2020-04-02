@@ -25,6 +25,7 @@ export class OvertimeWorkComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  //เพิ่มข้อมูล ot
   insertOvertimeWork(overtimeWorkItem: OvertimeWork) {
     this.spinner.show();
     const requestData = {
@@ -49,15 +50,14 @@ export class OvertimeWorkComponent implements OnInit {
       );
   }
 
+  //แก้ไขข้อมูล ot
   editOvertimeWork(overtimeWorkItem: OvertimeWork): void {
     this.spinner.show();
     const requestData = {
-      id:this.dataForm.id,
-      ...overtimeWorkItem,
-      employeeNo: localStorage.getItem("employeeNo")
+      id: this.dataForm.id,
+      ...overtimeWorkItem
     };
-    console.log({requestData});
-    
+    console.log({ requestData });
     this.overtimeWorkService
       .editOvertimeWork(requestData)
       .pipe(

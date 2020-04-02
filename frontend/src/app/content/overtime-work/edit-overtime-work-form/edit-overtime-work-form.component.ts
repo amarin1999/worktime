@@ -27,9 +27,7 @@ export class EditOvertimeWorkFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.buildFormOvertime();
-
-    console.log(this.dataForm);
+    this.buildFormOvertime();    
   }
 
   // สร้างฟอร์ม
