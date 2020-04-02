@@ -92,17 +92,16 @@ public class OtServiceImpl implements OtService {
 	@Override
 	public OtHistoryDto putOtTime(OtPutTimeDto body) {
 		OtHistoryEntity entity = otRespositiry.getOtById(body.getId());
-		entity.setEmployeeHasSideworkId(body.getEmployeehasId());
+
+		System.out.println(entity);
 		entity.setEndTime(body.getEndTime());
 		entity.setLastUpDate(Calendar.getInstance().getTime());
 		entity.setOtHistoryId(body.getId());
-		entity.setProjectId(body.getIdProject());
+		entity.setProjectId(body.getProjectNo());
 		entity.setRemark(body.getRemark());
 		entity.setStartTime(body.getStartTime());
 		otRespositiry.save(entity);
 		return null;
 	}
-
-	
 
 }

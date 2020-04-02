@@ -91,26 +91,27 @@ public class OtController {
 			res.setCode(200);
 			return new ResponseEntity<ResponseDto<OtNoListDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			
+
 			log.error("otgetTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
-			return new ResponseEntity<ResponseDto<OtNoListDto>>(res,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ResponseDto<OtNoListDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 
-
 	}
-	
+
 	@PutMapping(path = "/puttime")
 	private ResponseEntity<ResponseDto<OtHistoryDto>> putOtTime(@Valid @RequestBody OtPutTimeDto body) {
 		ResponseDto<OtHistoryDto> res = new ResponseDto<OtHistoryDto>();
 		List<OtHistoryDto> dto = new ArrayList<OtHistoryDto>();
 		OtHistoryDto data = new OtHistoryDto();
+
 		try {
 			data = otService.putOtTime(body);
 			dto.add(data);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<OtHistoryDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {

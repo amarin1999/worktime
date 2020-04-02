@@ -19,9 +19,8 @@ public class OtPutTimeDto implements Serializable {
 	private static final long serialVersionUID = -4692275615269266522L;
 	
 	private Long id;
-	private Long employeehasId;
 	private Date startTime;
 	private Date endTime;
 	private String remark;
-	private String idProject;
+	private String projectNo;
 }

@@ -15,7 +15,7 @@ public interface OtRespositiry extends CrudRepository<OtHistoryEntity, Long> {
 			+ "WHERE esh.employee_id = :employeeId", nativeQuery = true)
 	List<OtHistoryEntity> getOtAll(@Param(value = "employeeId") Long employeeId);
 
-	@Query(value = " SELECT ot.*" + "FROM ot_history ot " + "WHERE ot.id_project = :otId", nativeQuery = true)
+	@Query(value = " SELECT ot.*" + "FROM ot_history ot " + "WHERE ot.id_ot_history = :otId", nativeQuery = true)
 	OtHistoryEntity getOtById(@Param(value = "otId") Long otId);
 
 }
