@@ -15,4 +15,8 @@ export class LayoutConstants {
   public static get cdgImagePath(): string {
     return "../../../assets/images/banner.png";
   }
+
+  public static get editWorkImagePath(): string {
+    return "../../../assets/images/edit.svg";
+  }
 }

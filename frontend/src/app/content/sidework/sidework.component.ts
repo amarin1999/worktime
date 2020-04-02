@@ -15,8 +15,8 @@ import { SideWorkService } from "src/app/shared/service/sidework.service";
 })
 export class SideWorkComponent implements OnInit {
   //constants
-  imgLogo: string = LayoutConstants.sideWorkImagePath;
-  //request
+  imgLogo: string = LayoutConstants.editWorkImagePath;
+  //datevalid
   isDateValid = { status: false };
 
   constructor(
@@ -42,7 +42,6 @@ export class SideWorkComponent implements OnInit {
           switch (res.code) {
             case 200: {
               this.isDateValid = { status: true };
-              console.log("dssd");
               break;
             }
             case 404: {

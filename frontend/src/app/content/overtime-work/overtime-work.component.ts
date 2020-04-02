@@ -13,7 +13,7 @@ import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
   styleUrls: ["./overtime-work.component.scss"]
 })
 export class OvertimeWorkComponent implements OnInit {
-  imgLogo: string = LayoutConstants.overtimeImagePath;
+  imgLogo: string = LayoutConstants.editWorkImagePath;
 
   constructor(
     private dialogRef: MatDialogRef<OvertimeWorkComponent>,
