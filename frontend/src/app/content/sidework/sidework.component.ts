@@ -60,6 +60,7 @@ export class SideWorkComponent implements OnInit {
 
   //check type จัดการข้อมูล
   emitSideWork(formItem: SideWork): void {
+    this.spinner.show();
     switch (this.dataForm.type) {
       case "edit": {
         //set วันที่ format
@@ -88,7 +89,6 @@ export class SideWorkComponent implements OnInit {
 
   //เพิ่มข้อมูล
   insertSideWork(requestData: SideWork): void {
-    this.spinner.show();
     this.sideWorkService
       .addSidework(requestData)
       .pipe(
@@ -109,7 +109,6 @@ export class SideWorkComponent implements OnInit {
 
   //แก้ไขข้อมูล
   editSideWork(requestData: SideWork): void {
-    this.spinner.show();
     this.sideWorkService
       .addSidework(requestData)
       .pipe(

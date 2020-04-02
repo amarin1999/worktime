@@ -29,6 +29,23 @@ export class OvertimeWorkService {
     }
   }
 
+  editOvertimeWork(body: OvertimeWork): Observable<Response> {
+    try {
+      return this.http
+        .put(`${ApiConstants.baseURl}/overtime/puttime`, body)
+        .pipe(
+          map(response => {
+            return {
+              status: response["result"],
+              code: response["code"]
+            };
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
+
   getHistoryOvertimeWork(id: string) {
     try {
       return this.http

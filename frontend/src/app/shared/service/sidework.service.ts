@@ -19,7 +19,6 @@ export class SideWorkService {
       return this.http
         .post(`${ApiConstants.baseURl}/sidework/posttime`, body)
         .pipe(
-       
           map(response => {
             return {
               status: response["result"],
@@ -27,7 +26,6 @@ export class SideWorkService {
             };
           })
         );
-        
     } catch (error) {
       console.table(error);
     }
@@ -77,7 +75,7 @@ export class SideWorkService {
     }
   }
 
-  setSideWork(id: string) {
+  setSideWork(id: string): Observable<any> {
     try {
       return this.http
         .get(`${ApiConstants.baseURl}/datatable/getsidework/${id}`)

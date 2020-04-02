@@ -1,18 +1,11 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild
-} from "@angular/core";
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { MessageService } from "primeng/api";
 import { OvertimeWork } from "src/app/shared/interfaces/overtime";
-import { EditOvertimeWorkFormComponent } from "../../overtime-work/edit-overtime-work-form/edit-overtime-work-form.component";
+import { OvertimeWorkComponent } from "../../overtime-work/overtime-work.component";
 
 @Component({
   selector: "app-history-overtime-work",
@@ -58,10 +51,7 @@ export class HistoryOvertimeWorkComponent implements OnInit, OnChanges {
       data: { ...itemOvertimeWork, type: "edit" }
     };
 
-    let dialogRef = this.dialog.open(
-      EditOvertimeWorkFormComponent,
-      configDialog
-    );
+    let dialogRef = this.dialog.open(OvertimeWorkComponent, configDialog);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result.status === "Success") {

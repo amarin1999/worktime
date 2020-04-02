@@ -5,7 +5,6 @@ import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
 
-
 @Component({
   selector: "app-insert-overtime-work-form",
   templateUrl: "./insert-overtime-work-form.component.html",
@@ -15,13 +14,13 @@ export class InsertOvertimeWorkFormComponent implements OnInit {
   @Output() insertEmit: EventEmitter<any> = new EventEmitter();
   // constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
-  imgLogo: string = LayoutConstants.overtimeImagePath;
+
   // form
   formGroupOvertimeWork: FormGroup;
 
   constructor(
     private buildForm: FormBuilder,
-    private dialogConfirm: MatDialog,  
+    private dialogConfirm: MatDialog
   ) {}
 
   ngOnInit(): void {

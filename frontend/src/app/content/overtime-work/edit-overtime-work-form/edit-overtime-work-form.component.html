@@ -1,3 +1,90 @@
+<form [formGroup]="formGroupOvertimeWork" (submit)="onSubmit()">
+  <div class="p-grid">
+    <div class=" {{ formGrid }}">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>
+          <mat-icon matSuffix>home_work</mat-icon> รหัสโครงการ
+        </mat-label>
+        <input matInput formControlName="projectNo" />
+        <mat-error
+          *ngIf="formGroupOvertimeWork.get('projectNo').hasError('required')"
+        >
+          * กรุณากรอกรหัสโครงการ
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="{{ formGrid }}">
+      <mat-form-field appearance="outline" style="width:100%">
+        <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ </mat-label>
+        <textarea formControlName="remark" matInput></textarea>
+      </mat-form-field>
+    </div>
+  </div>
 
+  <div class="p-grid">
+    <div class="{{ formGrid }}">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label> <mat-icon>schedule</mat-icon> เวลาเข้างาน </mat-label>
+        <input
+          readonly
+          matInput
+          [ngxMatDatetimePicker]="pickerStartTime"
+          formControlName="startTime"
+          (focus)="pickerStartTime.open()"
+        />
+        <mat-error
+          *ngIf="formGroupOvertimeWork.get('startTime').hasError('required'); "
+        >
+          * กรุณากรอกเวลาเข้างาน
+        </mat-error>
+        <mat-datepicker-toggle
+          disabled="false"
+          matSuffix
+          [for]="pickerStartTime"
+        ></mat-datepicker-toggle>
 
+        <ngx-mat-datetime-picker touchUi #pickerStartTime>
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+    </div>
 
+    <div class="{{ formGrid }}">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label> <mat-icon>schedule</mat-icon> เวลาออกงาน </mat-label>
+        <input
+          readonly
+          matInput
+          [ngxMatDatetimePicker]="pickerEndTime"
+          formControlName="endTime"
+          (focus)="pickerEndTime.open()"
+        />
+
+        <mat-error
+          *ngIf="formGroupOvertimeWork.get('endTime').hasError('required')"
+        >
+          * กรุณากรอกข้อมูลเวลาออกงาน
+        </mat-error>
+        <mat-error
+          *ngIf="formGroupOvertimeWork.get('endTime').hasError('wrongDate')"
+        >
+          * เวลาเลิกงานต้องมากกว่าเวลาเข้างาน
+        </mat-error>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerEndTime"
+        ></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker touchUi #pickerEndTime>
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-dialog-actions class="wrap-btn">
+    <button mat-button [color]="'warn'" mat-raised-button mat-dialog-close>
+      <mat-icon>clear</mat-icon> ยกเลิก
+    </button>
+    &nbsp;
+    <button mat-button [color]="'primary'" mat-raised-button type="submit">
+      <mat-icon>check</mat-icon>ตกลง
+    </button>
+  </mat-dialog-actions>
+</form>
