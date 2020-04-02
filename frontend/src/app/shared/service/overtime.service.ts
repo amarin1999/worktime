@@ -3,13 +3,15 @@ import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { ApiConstants } from "../constants/ApiConstants";
 import { OvertimeWork } from "../interfaces/overtime";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { Response } from "../interfaces/response";
 
 @Injectable({
   providedIn: "root"
 })
 export class OvertimeWorkService {
+  overtimeWorkItem = new Subject<OvertimeWork[]>();
+
   constructor(private http: HttpClient) {}
 
   addOvertimeWork(body: OvertimeWork): Observable<Response> {
@@ -45,13 +47,31 @@ export class OvertimeWorkService {
       console.table(error);
     }
   }
+  setOvertimeWork(id: string): Observable<any> {
+    try {
+      return this.http
+        .get(`${ApiConstants.baseURl}/datatable/getot/${id}`)
+        .pipe(
+          map(response => {
+            this.overtimeWorkItem.next(response["data"]);
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
 
+  getOvertimeWork(): Subject<OvertimeWork[]> {
+    return this.overtimeWorkItem;
+  }
+  
   getHistoryOvertimeWork(id: string) {
     try {
       return this.http
         .get(`${ApiConstants.baseURl}/datatable/getot/${id}`)
         .pipe(
           map(response => {
+            this.overtimeWorkItem.next(response["data"]);
             return {
               status: response["result"],
               data: response["data"],

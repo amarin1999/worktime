@@ -2,11 +2,10 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { NgxSpinnerService } from "ngx-spinner";
 import { finalize, first } from "rxjs/operators";
+import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { OvertimeWork } from "src/app/shared/interfaces/overtime";
 import { Response } from "src/app/shared/interfaces/response";
 import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
-import { InsertOvertimeWorkFormComponent } from "./insert-overtime-work-form/insert-overtime-work-form.component";
-import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 
 @Component({
   selector: "app-overtime-work",
@@ -17,7 +16,7 @@ export class OvertimeWorkComponent implements OnInit {
   imgLogo: string = LayoutConstants.overtimeImagePath;
 
   constructor(
-    private dialogRef: MatDialogRef<InsertOvertimeWorkFormComponent>,
+    private dialogRef: MatDialogRef<OvertimeWorkComponent>,
     private overtimeWorkService: OvertimeWorkService,
     private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public dataForm: OvertimeWork
@@ -68,6 +67,10 @@ export class OvertimeWorkComponent implements OnInit {
       )
       .subscribe(
         (response: Response) => {
+          this.overtimeWorkService
+            .setOvertimeWork(localStorage.getItem("employeeNo"))
+            .pipe(first())
+            .subscribe();
           this.dialogRef.close(response);
         },
         error => {

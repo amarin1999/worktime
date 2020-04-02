@@ -1,14 +1,12 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import * as moment from "moment";
 import { NgxSpinnerService } from "ngx-spinner";
 import { finalize, first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { Response } from "src/app/shared/interfaces/response";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { SideWorkService } from "src/app/shared/service/sidework.service";
-import { SideWorkFormComponent } from "./sideworkform/sideworkform.component";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import * as moment from "moment";
 
 @Component({
   selector: "app-sidework",
@@ -22,7 +20,7 @@ export class SideWorkComponent implements OnInit {
   isDateValid: boolean = false;
 
   constructor(
-    private dialogRef: MatDialogRef<SideWorkFormComponent>,
+    private dialogRef: MatDialogRef<SideWorkComponent>,
     private sideWorkService: SideWorkService,
     private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public dataForm: SideWork

@@ -1,6 +1,6 @@
 export interface OvertimeWork {
   id?: number;
-  timeRange: [
+  timeRange?: [
     {
       startTime: Date;
       endTime: Date;
@@ -9,7 +9,8 @@ export interface OvertimeWork {
   startTime?: Date;
   endTime?: Date;
   idProject?: string;
-  projectNo: boolean;
+  projectNo?: boolean;
   remark: string;
   employeeNo?: string;
+  employeehasId?:number;
 }

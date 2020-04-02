@@ -25,7 +25,7 @@
           &nbsp; ทำงานนอกเวลา
         </ng-template>
         <app-history-overtime-work
-          [overtimeWorkHistory]="(overtimeWorkHistory | async)?.data"
+          [overtimeWorkHistory]="overtimeWorkHistory | async"
         ></app-history-overtime-work>
       </mat-tab>
     </mat-tab-group>
