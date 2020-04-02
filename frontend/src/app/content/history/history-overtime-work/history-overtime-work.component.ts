@@ -6,10 +6,13 @@ import {
   SimpleChanges,
   ViewChild
 } from "@angular/core";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { OvertimeWork } from 'src/app/shared/interfaces/overtime';
+import { MessageService } from "primeng/api";
+import { OvertimeWork } from "src/app/shared/interfaces/overtime";
+import { EditOvertimeWorkFormComponent } from "../../overtime-work/edit-overtime-work-form/edit-overtime-work-form.component";
 
 @Component({
   selector: "app-history-overtime-work",
@@ -26,7 +29,10 @@ export class HistoryOvertimeWorkComponent implements OnInit, OnChanges {
   // source
   dataSource = new MatTableDataSource<OvertimeWork>(this.dataOvertimeWork);
 
-  constructor() {}
+  constructor(
+    private dialog: MatDialog,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -43,5 +49,37 @@ export class HistoryOvertimeWorkComponent implements OnInit, OnChanges {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openDialogEdit(itemOvertimeWork: OvertimeWork): void {
+    const configDialog: MatDialogConfig<Object> = {
+      disableClose: true,
+      autoFocus: false,
+      data: { ...itemOvertimeWork, type: "edit" }
+    };
+
+    let dialogRef = this.dialog.open(
+      EditOvertimeWorkFormComponent,
+      configDialog
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.status === "Success") {
+        this.messageService.clear();
+        this.messageService.add({
+          key: "SuccessMessage",
+          severity: "success",
+          summary: "แจ้งเตือน",
+          detail: "แก้ไขการลงเวลาเรียบร้อยแล้ว"
+        });
+      } else if (result.error) {
+        this.messageService.add({
+          key: "errorMessage",
+          severity: "error",
+          summary: "ผิดพลาด",
+          detail: result.error.errorMessage
+        });
+      }
+    });
   }
 }

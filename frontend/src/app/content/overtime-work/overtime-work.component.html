@@ -1,0 +1,7 @@
+<div *ngIf="dataForm.type == 'add'; else editForm">
+  <app-insert-overtime-work-form
+    (insertEmit)="insertOvertimeWork($event)"
+  ></app-insert-overtime-work-form>
+</div>
+
+<ng-template #editForm> </ng-template>

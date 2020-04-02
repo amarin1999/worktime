@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
   }
 
   @HostListener("window:scroll", ["$event"])
-  onWindowScroll(e:Event) {
+  onWindowScroll(e: Event) {
     if (window.pageYOffset > 70) {
       const element = document.getElementById("wrapNavbar");
       if (element !== null) {

@@ -1,23 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogRef
-} from "@angular/material/dialog";
-import { NgxSpinnerService } from "ngx-spinner";
-import { finalize, first } from "rxjs/operators";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
-import { ConfirmDialogComponent } from "../confirmdialog/confirmdialog.component";
-import { Response } from "src/app/shared/interfaces/response";
+import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
+
 
 @Component({
-  selector: "app-overtimeworkform",
-  templateUrl: "./overtimeworkform.component.html",
-  styleUrls: ["./overtimeworkform.component.scss"]
+  selector: "app-insert-overtime-work-form",
+  templateUrl: "./insert-overtime-work-form.component.html",
+  styleUrls: ["./insert-overtime-work-form.component.scss"]
 })
-export class OvertimeworkformComponent implements OnInit {
+export class InsertOvertimeWorkFormComponent implements OnInit {
+  @Output() insertEmit: EventEmitter<any> = new EventEmitter();
   // constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
   imgLogo: string = LayoutConstants.overtimeImagePath;
@@ -26,10 +21,7 @@ export class OvertimeworkformComponent implements OnInit {
 
   constructor(
     private buildForm: FormBuilder,
-    private dialogRef: MatDialogRef<OvertimeworkformComponent>,
-    private overtimeService: OvertimeWorkService,
-    private dialogConfirm: MatDialog,
-    private spinner: NgxSpinnerService
+    private dialogConfirm: MatDialog,  
   ) {}
 
   ngOnInit(): void {
@@ -118,33 +110,8 @@ export class OvertimeworkformComponent implements OnInit {
       .pipe(first())
       .subscribe(confirmStatus => {
         if (confirmStatus) {
-          this.insertOvertimeWork();
+          this.insertEmit.emit(this.formGroupOvertimeWork.getRawValue());
         }
       });
-  }
-
-  // เพิ่มข้อมูลลง DB
-  insertOvertimeWork(): void {
-    this.spinner.show();
-    const requestData = {
-      ...this.formGroupOvertimeWork.getRawValue(),
-      employeeNo: localStorage.getItem("employeeNo")
-    };
-    this.overtimeService
-      .addOvertimeWork(requestData)
-      .pipe(
-        first(),
-        finalize(() => {
-          this.spinner.hide();
-        })
-      )
-      .subscribe(
-        (response: Response) => {
-          this.dialogRef.close(response);
-        },
-        error => {
-          this.dialogRef.close(error);
-        }
-      );
   }
 }

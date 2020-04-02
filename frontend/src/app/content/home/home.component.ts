@@ -5,10 +5,11 @@ import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-//component
-import { OvertimeworkformComponent } from "../overtimeworkform/overtimeworkform.component";
-import { SideWorkComponent } from "../sidework/sidework.component";
+//interface
 import { Menu } from "src/app/shared/interfaces/menu";
+import { OvertimeWorkComponent } from "../overtime-work/overtime-work.component";
+//component
+import { SideWorkComponent } from "../sidework/sidework.component";
 
 @Component({
   selector: "app-home",
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
     {
       title: "ทำงานล่วงเวลา",
       img: LayoutConstants.overtimeImagePath,
-      link: OvertimeworkformComponent,
+      link: OvertimeWorkComponent,
       type: "add"
     },
     {
@@ -54,7 +55,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  openDialog(type: string, overlay: ComponentType<any>) {
+  openDialog(type: string, overlay: ComponentType<any>): void {
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
       autoFocus: false,

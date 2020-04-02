@@ -87,7 +87,7 @@ export class SideWorkComponent implements OnInit {
   }
 
   //เพิ่มข้อมูล
-  insertSideWork(requestData: SideWork) {
+  insertSideWork(requestData: SideWork): void {
     this.spinner.show();
     this.sideWorkService
       .addSidework(requestData)

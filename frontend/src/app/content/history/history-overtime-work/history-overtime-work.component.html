@@ -59,8 +59,9 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
   <tr
+    (click)="openDialogEdit(row)"
     matTooltip="คลิกเพื่อแก้ไข"
-    matTooltipClass="tooltip-signout"
+    matTooltipClass="tooltip-primary"
     class="row-item"
     mat-row
     *matRowDef="let row; columns: displayedColumns"
