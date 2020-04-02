@@ -56,7 +56,6 @@ export class OvertimeWorkComponent implements OnInit {
       id: this.dataForm.id,
       ...overtimeWorkItem
     };
-    console.log({ requestData });
     this.overtimeWorkService
       .editOvertimeWork(requestData)
       .pipe(

@@ -36,7 +36,7 @@ export class HistoryComponent implements OnInit {
         first(),
         finalize(() => this.spinner.hide())
       )
-      .subscribe(error => {
+      .subscribe(null, error => {
         console.log(error);
       });
 
@@ -47,7 +47,7 @@ export class HistoryComponent implements OnInit {
         first(),
         finalize(() => this.spinner.hide())
       )
-      .subscribe(error => {
+      .subscribe(null, error => {
         console.log(error);
       });
   }
