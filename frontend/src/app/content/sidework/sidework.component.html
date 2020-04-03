@@ -2,7 +2,7 @@
   <div *ngIf="dataForm.type == 'add'; else editForm">
     <!-- add -->
     <h2 mat-dialog-title>
-      <img src="{{ imgLogo }}" class="img-form" alt="" />
+      <img src="{{ img.imgInsert }}" class="img-form" alt="" />
       ลงเวลาทำงานนอกสถานที่
     </h2>
 
@@ -16,7 +16,7 @@
   <!-- edit -->
   <ng-template #editForm>
     <h2 mat-dialog-title>
-      <img src="{{ imgLogo }}" class="img-form" alt="" />
+      <img src="{{ img.imgEdit }}" class="img-form" alt="" />
       แก้ไขการลงเวลาทำงานนอกสถานที่
     </h2>
 

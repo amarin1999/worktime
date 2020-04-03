@@ -15,7 +15,11 @@ import { SideWorkService } from "src/app/shared/service/sidework.service";
 })
 export class SideWorkComponent implements OnInit {
   //constants
-  imgLogo: string = LayoutConstants.editWorkImagePath;
+  img = {
+    imgInsert: LayoutConstants.sideWorkImagePath,
+    imgEdit: LayoutConstants.editWorkImagePath
+  };
+
   //datevalid
   isDateValid = { status: false };
 
