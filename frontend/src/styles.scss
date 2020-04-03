@@ -47,9 +47,10 @@ h4 {
 .mat-divider {
   border-top-color: #d3d3d3;
 }
-.mat-form-field-flex {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
+// เงา input เผื่อใช้
+// .mat-form-field-flex {
+//   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// }
 .mat-button:hover {
   transform: scale(1.05, 1.05);
   transition: 0.3s;
