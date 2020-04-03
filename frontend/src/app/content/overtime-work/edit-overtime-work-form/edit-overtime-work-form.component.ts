@@ -1,11 +1,11 @@
-import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import * as moment from "moment";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
 import { OvertimeWork } from "src/app/shared/interfaces/overtime";
-import * as moment from "moment";
+import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
 
 @Component({
   selector: "app-edit-overtime-work-form",
@@ -27,7 +27,7 @@ export class EditOvertimeWorkFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.buildFormOvertime();    
+    this.buildFormOvertime();
   }
 
   // สร้างฟอร์ม

@@ -24,12 +24,13 @@ export class HistoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.spinner.show();
-    this.loadItemWork();
+    this.loadSideWork();
+    this.loadOvertimeWork();
   }
 
-  loadItemWork(): void {
-    // load Sidework
+  // load Sidework
+  loadSideWork() {
+    this.spinner.show();
     this.sideWorkService
       .getHistorySideWork(localStorage.getItem("employeeNo"))
       .pipe(
@@ -39,8 +40,10 @@ export class HistoryComponent implements OnInit {
       .subscribe(null, error => {
         console.log(error);
       });
-
-    // load Ot
+  }
+  // load Ot
+  loadOvertimeWork() {
+    this.spinner.show();
     this.overtimeWorkService
       .getHistoryOvertimeWork(localStorage.getItem("employeeNo"))
       .pipe(
@@ -52,6 +55,7 @@ export class HistoryComponent implements OnInit {
       });
   }
 
+  // item for table
   getHistorySideWork(): Subject<SideWork[]> {
     return this.sideWorkService.getSideWork();
   }

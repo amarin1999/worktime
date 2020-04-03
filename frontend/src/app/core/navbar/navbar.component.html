@@ -50,11 +50,11 @@
 
   <p-sidebar [(visible)]="showToggle" position="top">
     <div class="menu-responsive">
-      {{ employee.firstname }}
-      {{ employee.lastname }}
-      <br/>
+      {{ employee?.firstname }}
+      {{ employee?.lastname }}
+      <br />
       รหัสพนักงาน
-      {{ employee.no }}
+      {{ employee?.no }}
     </div>
     <hr />
     <div class="menu-responsive">

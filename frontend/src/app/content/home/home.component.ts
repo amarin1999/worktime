@@ -7,9 +7,9 @@ import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 //interface
 import { Menu } from "src/app/shared/interfaces/menu";
-import { OvertimeWorkComponent } from "../overtime-work/overtime-work.component";
 //component
 import { SideWorkComponent } from "../sidework/sidework.component";
+import { OvertimeWorkComponent } from "../overtime-work/overtime-work.component";
 
 @Component({
   selector: "app-home",
@@ -76,6 +76,7 @@ export class HomeComponent implements OnInit {
               detail: "ลงเวลาเรียบร้อยแล้ว"
             });
           } else if (result.error) {
+            this.messageService.clear();
             this.messageService.add({
               key: "errorMessage",
               severity: "error",
@@ -85,6 +86,7 @@ export class HomeComponent implements OnInit {
           }
         },
         error => {
+          this.messageService.clear();
           this.messageService.add({
             key: "errorMessage",
             severity: "error",
