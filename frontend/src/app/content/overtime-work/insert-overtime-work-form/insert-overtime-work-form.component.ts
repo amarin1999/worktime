@@ -14,7 +14,8 @@ export class InsertOvertimeWorkFormComponent implements OnInit {
   @Output() insertEmit: EventEmitter<any> = new EventEmitter();
   // constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
-
+  // date
+  maxDate: Date = new Date();
   // form
   formGroupOvertimeWork: FormGroup;
 

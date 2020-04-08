@@ -45,6 +45,7 @@
             [ngxMatDatetimePicker]="pickerStartTime"
             formControlName="startTime"
             (focus)="pickerStartTime.open()"
+            [max]="maxDate"
           />
           <mat-error *ngIf="formTimeRangeData.controls">
             * กรุณากรอกเวลาเข้างาน
@@ -71,6 +72,7 @@
             [ngxMatDatetimePicker]="pickerEndTime"
             formControlName="endTime"
             (focus)="pickerEndTime.open()"
+            [max]="maxDate"
           />
 
           <mat-error *ngIf="formTimeRangeData.controls">

@@ -17,7 +17,8 @@ export class EditOvertimeWorkFormComponent implements OnInit {
   @Output() editEmit: EventEmitter<any> = new EventEmitter();
   // constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
-
+  // date
+  maxDate: Date = new Date();
   // form
   formGroupOvertimeWork: FormGroup;
 

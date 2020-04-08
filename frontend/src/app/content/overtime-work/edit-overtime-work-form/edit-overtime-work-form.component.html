@@ -31,6 +31,7 @@
           [ngxMatDatetimePicker]="pickerStartTime"
           formControlName="startTime"
           (focus)="pickerStartTime.open()"
+          [max]="maxDate"
         />
         <mat-error
           *ngIf="formGroupOvertimeWork.get('startTime').hasError('required'); "
@@ -57,6 +58,7 @@
           [ngxMatDatetimePicker]="pickerEndTime"
           formControlName="endTime"
           (focus)="pickerEndTime.open()"
+          [max]="maxDate"
         />
 
         <mat-error
