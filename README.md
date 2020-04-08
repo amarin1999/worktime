@@ -11,7 +11,7 @@ mockup layout (figma): https://www.figma.com/file/vmusoDdraupGHqAYj3NoSo/%E0%B8%
 * Lombok (extention for eclipse)
 * Spring Tool (from Market ecilpse Spring tool 4)
 * Connect Database port 3306 (Default) [Password&&Username: root]
-##Install Develop
+## Install Develop
 1) Install path java And marven in PC Environment
 2) Install MySql server version 5.5
 3) Import Database
