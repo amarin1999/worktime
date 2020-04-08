@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
+import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "app-insert-overtime-work-form",

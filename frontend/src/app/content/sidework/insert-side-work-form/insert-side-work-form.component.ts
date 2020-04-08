@@ -2,7 +2,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
   SimpleChanges
@@ -13,13 +12,14 @@ import { Message } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
-import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
+import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
+
 @Component({
-  selector: "app-sideworkform",
-  templateUrl: "./sideworkform.component.html",
-  styleUrls: ["./sideworkform.component.scss"]
+  selector: "app-insert-side-work-form",
+  templateUrl: "./insert-side-work-form.component.html",
+  styleUrls: ["./insert-side-work-form.component.scss"]
 })
-export class SideWorkFormComponent implements OnInit, OnChanges {
+export class InsertSideWorkFormComponent implements OnInit {
   @Input("dateValid") dateValid: { status: boolean };
   @Output() insertEmit: EventEmitter<SideWork> = new EventEmitter();
   @Output() checkDateEmit: EventEmitter<any> = new EventEmitter();

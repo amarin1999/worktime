@@ -7,11 +7,11 @@
     </h2>
 
     <!-- componentAdd -->
-    <app-sideworkform
+    <app-insert-side-work-form
       (insertEmit)="emitSideWork($event)"
       (checkDateEmit)="checkDay($event)"
       [dateValid]="isDateValid"
-    ></app-sideworkform>
+    ></app-insert-side-work-form>
   </div>
   <!-- edit -->
   <ng-template #editForm>

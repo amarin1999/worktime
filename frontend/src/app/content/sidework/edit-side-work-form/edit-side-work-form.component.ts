@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
-import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
+import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "app-edit-side-work-form",

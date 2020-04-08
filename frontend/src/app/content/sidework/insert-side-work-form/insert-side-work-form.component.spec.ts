@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmDialogComponent } from './confirmdialog.component';
+import { InsertSideWorkFormComponent } from './insert-side-work-form.component';
 
-describe('ConfirmdialogComponent', () => {
-  let component: ConfirmDialogComponent;
-  let fixture: ComponentFixture<ConfirmDialogComponent>;
+describe('InsertSideWorkFormComponent', () => {
+  let component: InsertSideWorkFormComponent;
+  let fixture: ComponentFixture<InsertSideWorkFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmDialogComponent ]
+      declarations: [ InsertSideWorkFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfirmDialogComponent);
+    fixture = TestBed.createComponent(InsertSideWorkFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

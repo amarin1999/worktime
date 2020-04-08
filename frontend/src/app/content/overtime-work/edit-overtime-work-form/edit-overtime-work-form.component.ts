@@ -5,7 +5,7 @@ import * as moment from "moment";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { OvertimeWork } from "src/app/shared/interfaces/overtime";
-import { ConfirmDialogComponent } from "../../confirmdialog/confirmdialog.component";
+import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "app-edit-overtime-work-form",
