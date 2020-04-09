@@ -10,12 +10,18 @@ import { Menu } from "src/app/shared/interfaces/menu";
 //component
 import { SideWorkComponent } from "../sidework/sidework.component";
 import { OvertimeWorkComponent } from "../overtime-work/overtime-work.component";
+//animate
+import { trigger, transition, useAnimation } from "@angular/animations";
+import { flipInY } from "ng-animate";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: []
+  providers: [],
+  animations: [
+    trigger("flipInY", [transition("* => *", useAnimation(flipInY))]),
+  ],
 })
 export class HomeComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
@@ -25,19 +31,19 @@ export class HomeComponent implements OnInit {
       title: "ทำงานนอกสถานที่",
       img: LayoutConstants.sideWorkImagePath,
       link: SideWorkComponent,
-      type: "add"
+      type: "add",
     },
     {
       title: "ทำงานล่วงเวลา",
       img: LayoutConstants.overtimeImagePath,
       link: OvertimeWorkComponent,
-      type: "add"
+      type: "add",
     },
     {
       title: "ประวัติการลงเวลา",
       img: LayoutConstants.historyImagePath,
-      link: "main/history"
-    }
+      link: "main/history",
+    },
   ];
   constructor(
     private dialog: MatDialog,
@@ -59,21 +65,21 @@ export class HomeComponent implements OnInit {
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
       autoFocus: false,
-      data: { type }
+      data: { type },
     };
     const dialogRef = this.dialog.open(overlay, configDialog);
     dialogRef
       .afterClosed()
       .pipe(first())
       .subscribe(
-        result => {
+        (result) => {
           if (result.status === "Success") {
             this.messageService.clear();
             this.messageService.add({
               key: "SuccessMessage",
               severity: "success",
               summary: "แจ้งเตือน",
-              detail: "ลงเวลาเรียบร้อยแล้ว"
+              detail: "ลงเวลาเรียบร้อยแล้ว",
             });
           } else if (result.error) {
             this.messageService.clear();
@@ -81,17 +87,17 @@ export class HomeComponent implements OnInit {
               key: "errorMessage",
               severity: "error",
               summary: "ผิดพลาด",
-              detail: result.error.errorMessage
+              detail: result.error.errorMessage,
             });
           }
         },
-        error => {
+        (error) => {
           this.messageService.clear();
           this.messageService.add({
             key: "errorMessage",
             severity: "error",
             summary: "ผิดพลาด",
-            detail: "เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล"
+            detail: "เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล",
           });
         }
       );
