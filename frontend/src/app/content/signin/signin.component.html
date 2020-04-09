@@ -1,8 +1,8 @@
-<div class="p-grid animation-page ">
+<div class="p-grid animation-page">
   <div class="p-col-12" style="text-align: center;">
     <img
       src="{{ cdgImagePath }}"
-      style="height:20vh ;width: auto;"
+      style="height: 20vh; width: auto;"
       alt="cdg"
     /><br /><br />
     <h1 class="header-text">ลงเวลาการทำงานล่วงเวลา และการทำงานไซต์</h1>
@@ -21,6 +21,7 @@
               class="input-id-employee"
               formControlName="employeeId"
             />
+
             <mat-error *ngIf="form.controls.employeeId.hasError('required')">
               * กรุณากรอกรหัสพนักงาน
             </mat-error>

@@ -3,3 +3,7 @@
   min-height: calc(99% - 84px);
   height: auto !important;
 }
+::ng-deep .mat-calendar{
+  height: 100% !important;
+  width: 100% !important;
+}
