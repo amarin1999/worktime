@@ -85,7 +85,7 @@ export class EditOvertimeWorkFormComponent implements OnInit {
       width: "370px",
       height: "170px",
       data: {
-        textConfirm: "ยืนยันการเพิ่มข้อมูลการลงเวลางาน ?"
+        textConfirm: "ยืนยันการแก้ไขข้อมูลการลงเวลางาน ?"
       }
     };
     //เปิด dialog
