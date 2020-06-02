@@ -1,5 +1,5 @@
-<div class="wrap-formSideWork animation-page">
-  <div *ngIf="dataForm.type == 'add'; else editForm">
+<div class="wrap-formSideWork animation-page"> 
+ <div *ngIf="dataForm.type == 'add'; else editForm"> 
     <!-- add -->
     <h2 mat-dialog-title>
       <img src="{{ img.imgInsert }}" class="img-form" alt="" />
@@ -26,4 +26,4 @@
       [dataForm]="dataForm"
     ></app-edit-side-work-form>
   </ng-template>
-</div>
+</div> 

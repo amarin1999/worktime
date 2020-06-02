@@ -12,5 +12,6 @@ export interface OvertimeWork {
   projectNo?: boolean;
   remark: string;
   employeeNo?: string;
-  employeehasId?:number;
+  employeehasId?: number;
+  type?: string;
 }

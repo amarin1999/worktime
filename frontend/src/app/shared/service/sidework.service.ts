@@ -6,6 +6,7 @@ import { ApiConstants } from "../constants/ApiConstants";
 import { Response } from "../interfaces/response";
 import { SideWork } from "../interfaces/sidework";
 import * as moment from "moment";
+import { Calendar } from '../interfaces/calendar';
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +19,23 @@ export class SideWorkService {
     try {
       return this.http
         .post(`${ApiConstants.baseURl}/sidework/posttime`, body)
+        .pipe(
+          map(response => {
+            return {
+              status: response["result"],
+              code: response["code"]
+            };
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
+
+  editSideWork(body: SideWork): Observable<Response> {
+    try {
+      return this.http
+        .put(`${ApiConstants.baseURl}/sidework/puttime`, body)
         .pipe(
           map(response => {
             return {
@@ -92,4 +110,6 @@ export class SideWorkService {
   getSideWork(): Subject<SideWork[]> {
     return this.sideWorkItem;
   }
+
 }
+

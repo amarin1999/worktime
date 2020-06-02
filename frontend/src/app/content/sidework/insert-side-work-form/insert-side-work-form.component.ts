@@ -53,7 +53,7 @@ export class InsertSideWorkFormComponent implements OnInit {
         date: [null, [Validators.required]],
         startTime: [null, [Validators.required]],
         endTime: [null, [Validators.required]],
-        workAnyWhere: [false],
+        workAnyWhere: [true],
         remark: [null, [Validators.maxLength(250)]]
       },
       {
@@ -94,34 +94,34 @@ export class InsertSideWorkFormComponent implements OnInit {
   onSubmit(): void {
     //ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
-      this.openDialogConfirm();
+      this.insertEmit.emit(this.formGroupSideWork.getRawValue());
     }
   }
 
   // show confirm return true | false
-  openDialogConfirm(): void {
-    const configDialog: MatDialogConfig<any> = {
-      disableClose: true,
-      autoFocus: false,
-      width: "370px",
-      height: "170px",
-      data: {
-        textConfirm: "ยืนยันการเพิ่มข้อมูลการลงเวลางาน ?"
-      }
-    };
-    //เปิด dialog
-    const dialogRef = this.dialogConfirm.open(
-      ConfirmDialogComponent,
-      configDialog
-    );
-    //หลังปิด dialog
-    dialogRef
-      .afterClosed()
-      .pipe(first())
-      .subscribe((confirmStatus: boolean) => {
-        if (confirmStatus) {
-          this.insertEmit.emit(this.formGroupSideWork.getRawValue());
-        }
-      });
-  }
+  // openDialogConfirm(): void {
+  //   const configDialog: MatDialogConfig<any> = {
+  //     disableClose: true,
+  //     autoFocus: false,
+  //     width: "370px",
+  //     height: "170px",
+  //     data: {
+  //       textConfirm: "ยืนยันการเพิ่มข้อมูลการลงเวลางาน ?"
+  //     }
+  //   };
+  //   //เปิด dialog
+  //   const dialogRef = this.dialogConfirm.open(
+  //     ConfirmDialogComponent,
+  //     configDialog
+  //   );
+  //   //หลังปิด dialog
+  //   dialogRef
+  //     .afterClosed()
+  //     .pipe(first())
+  //     .subscribe((confirmStatus: boolean) => {
+  //       if (confirmStatus) {
+  //         this.insertEmit.emit(this.formGroupSideWork.getRawValue());
+  //       }
+  //     });
+  // }
 }

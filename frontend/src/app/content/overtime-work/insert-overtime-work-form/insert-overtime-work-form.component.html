@@ -20,6 +20,7 @@
       </mat-form-field>
     </div>
   </div>
+  
   <div
     *ngFor="let time of formTimeRangeData.controls; let i = index"
     formArrayName="timeRange"
@@ -35,9 +36,9 @@
         <mat-icon>remove_circle</mat-icon>
       </button>
     </div>
-    <div class="p-grid" formGroupName="{{ i }}">
-      <div class="{{ formGrid }}">
-        <mat-form-field appearance="outline" style="width: 100%;">
+    <div class="p-grid" formGroupName="{{ i }}"  >
+      <div class="{{ formGrid }}" >
+        <!-- <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label> <mat-icon>call_missed</mat-icon> เวลาเข้างาน </mat-label>
           <input
             readonly
@@ -58,7 +59,9 @@
 
           <ngx-mat-datetime-picker touchUi #pickerStartTime>
           </ngx-mat-datetime-picker>
-        </mat-form-field>
+        </mat-form-field>  -->
+        <p-calendar formControlName="startTime" showTime="true" appendTo="body" showIcon = "true" [maxDate]="maxDate"
+        dateFormat="dd/m/yy" placeholder="เวลาเข้างาน"  ></p-calendar> <br>
       </div>
 
       <div class="{{ formGrid }}">
@@ -74,7 +77,6 @@
             (focus)="pickerEndTime.open()"
             [max]="maxDate"
           />
-
           <mat-error *ngIf="formTimeRangeData.controls">
             * กรุณากรอกข้อมูลเวลาออกงาน <br />
             * เวลาออกงานต้องมากกว่าเวลาเข้างาน
@@ -86,12 +88,15 @@
           ></mat-datepicker-toggle>
           <ngx-mat-datetime-picker touchUi #pickerEndTime>
           </ngx-mat-datetime-picker>
-        </mat-form-field>
-      </div>
-    </div>
+        </mat-form-field> 
+        <!-- <p-calendar formControlName="endTime" showTime="true" appendTo="body" [maxDate]="maxDate"
+        dateFormat="dd/m/yy" placeholder="เวลาออกงาน" ></p-calendar> <br> -->
 
-    <mat-divider style="margin-top: 10px;"></mat-divider>
-  </div>
+      </div>
+    
+    </div>
+     <mat-divider style="margin-top: 10px;"></mat-divider>
+  </div> 
 
   <div
     class="p-col-12 p-justify-center "

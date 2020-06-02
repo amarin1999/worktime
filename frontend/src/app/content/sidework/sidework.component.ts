@@ -110,9 +110,14 @@ export class SideWorkComponent implements OnInit {
   }
 
   //แก้ไขข้อมูล
-  editSideWork(requestData: SideWork): void {
+  editSideWork(sideWorkItem: SideWork): void {
+    this.spinner.show();
+    const requestData = {
+      id: this.dataForm.id,
+      ...sideWorkItem
+    };
     this.sideWorkService
-      .addSidework(requestData)
+      .editSideWork(requestData)
       .pipe(
         first(),
         finalize(() => {

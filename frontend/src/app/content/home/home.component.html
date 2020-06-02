@@ -3,20 +3,21 @@
 ></app-banner>
 
 <p-scrollPanel class="scrolling-wrapper" [style]="{ width: '100%' }">
-  <div [@flipInY]="flipInY" class="card" *ngFor="let item of menu">
+  <div class="card" *ngFor="let item of menu" (click)="onClickItem(item)">
+    <br />
     <h1>{{ item.title }}</h1>
     <img src="{{ item.img }}" style="width:40%" alt="logo" />
     <br />
     <br />
     <br />
-    <button mat-raised-button class="btn-menu" (click)="onClickItem(item)">
+    <!-- <button mat-raised-button class="btn-menu" (click)="onClickItem(item)">
       <div class="confirm-text">
         ยืนยัน
         <em class="pi pi-chevron-right" style="vertical-align: middle;"></em>
       </div>
-    </button>
+    </button> 
     <br />
-    <br />
+    <br /> -->
   </div>
 </p-scrollPanel>
 

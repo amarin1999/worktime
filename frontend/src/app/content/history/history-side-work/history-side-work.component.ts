@@ -38,6 +38,7 @@ export class HistorySideWorkComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
       this.dataSource = new MatTableDataSource<SideWork>(this.dataSideWork);

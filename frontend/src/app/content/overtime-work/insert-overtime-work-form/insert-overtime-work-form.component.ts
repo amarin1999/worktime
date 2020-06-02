@@ -84,34 +84,34 @@ export class InsertOvertimeWorkFormComponent implements OnInit {
   // submit
   onSubmit(): void {
     if (this.formGroupOvertimeWork.valid) {
-      this.openDialogConfirm();
+      this.insertEmit.emit(this.formGroupOvertimeWork.getRawValue());
     }
   }
 
   // show confirm return true | false
-  openDialogConfirm(): void {
-    const configDialog: MatDialogConfig<any> = {
-      disableClose: true,
-      autoFocus: false,
-      width: "370px",
-      height: "170px",
-      data: {
-        textConfirm: "ยืนยันการเพิ่มข้อมูลการลงเวลางาน ?"
-      }
-    };
-    //เปิด dialog
-    const dialogRef = this.dialogConfirm.open(
-      ConfirmDialogComponent,
-      configDialog
-    );
-    //หลังปิด dialog
-    dialogRef
-      .afterClosed()
-      .pipe(first())
-      .subscribe(confirmStatus => {
-        if (confirmStatus) {
-          this.insertEmit.emit(this.formGroupOvertimeWork.getRawValue());
-        }
-      });
-  }
+  // openDialogConfirm(): void {
+  //   const configDialog: MatDialogConfig<any> = {
+  //     disableClose: true,
+  //     autoFocus: false,
+  //     width: "370px",
+  //     height: "170px",
+  //     data: {
+  //       textConfirm: "ยืนยันการเพิ่มข้อมูลการลงเวลางาน ?"
+  //     }
+  //   };
+  //   //เปิด dialog
+  //   const dialogRef = this.dialogConfirm.open(
+  //     ConfirmDialogComponent,
+  //     configDialog
+  //   );
+  //   //หลังปิด dialog
+  //   dialogRef
+  //     .afterClosed()
+  //     .pipe(first())
+  //     .subscribe(confirmStatus => {
+  //       if (confirmStatus) {
+  //         this.insertEmit.emit(this.formGroupOvertimeWork.getRawValue());
+  //       }
+  //     });
+  // }
 }

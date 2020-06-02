@@ -28,6 +28,7 @@ import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { ToastModule } from "primeng/toast";
 import { CoreModule } from "../core/core.module";
+import { FullCalendarModule } from "primeng/fullcalendar";
 //guard
 import { AuthGuard } from "../shared/guard/auth.guard";
 //pipe
@@ -53,12 +54,14 @@ import { SideWorkComponent } from "./sidework/sidework.component";
 import { SignInComponent } from "./signin/signin.component";
 import { InsertSideWorkFormComponent } from './sidework/insert-side-work-form/insert-side-work-form.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-
+import { CalendarModule } from 'primeng/calendar';
+import { SideworkCalendarComponent } from './sidework-calendar/sidework-calendar.component';
+import { CalendarService } from '../shared/service/calendar.service';
 @NgModule({
   declarations: [
     ContentComponent,
     SignInComponent,
-    HomeComponent,  
+    HomeComponent,
     ConfirmDialogComponent,
     SideWorkComponent,
     HistoryComponent,
@@ -68,7 +71,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     OvertimeWorkComponent,
     EditOvertimeWorkFormComponent,
     InsertOvertimeWorkFormComponent,
-    InsertSideWorkFormComponent
+    InsertSideWorkFormComponent,
+    SideworkCalendarComponent,
   ],
 
   imports: [
@@ -98,15 +102,18 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MatNativeDateModule,
     NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
-    NgxMatTimepickerModule
+    NgxMatTimepickerModule,
+    CalendarModule,
+    FullCalendarModule
   ],
   providers: [
     AuthGuard,
     MessageService,
     SideWorkService,
     OvertimeWorkService,
-    WorkAnywherePipe
+    WorkAnywherePipe,
+    CalendarService
   ],
-  exports: [ContentComponent]
+  exports: [ContentComponent],
 })
 export class ContentModule {}

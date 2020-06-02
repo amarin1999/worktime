@@ -13,6 +13,8 @@ import { OvertimeWorkComponent } from "../overtime-work/overtime-work.component"
 //animate
 import { trigger, transition, useAnimation } from "@angular/animations";
 import { flipInY } from "ng-animate";
+import { SideworkCalendarComponent } from '../sidework-calendar/sidework-calendar.component';
+
 
 @Component({
   selector: "app-home",
@@ -30,7 +32,7 @@ export class HomeComponent implements OnInit {
     {
       title: "ทำงานนอกสถานที่",
       img: LayoutConstants.sideWorkImagePath,
-      link: SideWorkComponent,
+      link: "main/sidework-calendar",
       type: "add",
     },
     {
