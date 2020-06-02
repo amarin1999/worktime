@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
 import com.cdgs.worktime.entity.EmployeeEntity;
 import com.cdgs.worktime.entity.EmployeeHasSideworkHistoryEntity;
+import com.cdgs.worktime.entity.OtHistoryEntity;
 import com.cdgs.worktime.entity.SideworkHistoryEntity;
 
 public interface SideWorkRepository extends CrudRepository<SideworkHistoryEntity, Long> {
@@ -18,10 +19,7 @@ public interface SideWorkRepository extends CrudRepository<SideworkHistoryEntity
 	@Query(value = "SELECT sh.* " + "FROM worktime.sidework_history sh  "
 			+ "JOIN  worktime.employee_has_sidework_history esh "
 			+ "JOIN worktime.employee e WHERE e.id_employee= :id", nativeQuery = true)
-	List<SideworkHistoryEntity> getSideWorkById(@Param("id") Long id);
-
-	
-
+	SideworkHistoryEntity getSideWorkById(@Param("id") Long id);
 
 	@Query(value = "SELECT sh.* " + "FROM worktime.sidework_history sh  "
 			+ "INNER JOIN  worktime.employee_has_sidework_history esh    "
@@ -35,4 +33,7 @@ public interface SideWorkRepository extends CrudRepository<SideworkHistoryEntity
 			+"ON sh.employee_has_sidework_history_id = esh.employee_has_sidework_history_id "
 			+ "WHERE esh.employee_id = :employeeId"	, nativeQuery = true)
 	List<SideworkHistoryEntity> getSideworkAll(@Param(value = "employeeId") Long employeeId);
+	
+	@Query(value = " SELECT sw.*" + "FROM sidework_history sw " + "WHERE sw.id_sidework_history = :swId", nativeQuery = true)
+	SideworkHistoryEntity getSideWorkIdById(@Param(value = "swId") Long swId);
 }

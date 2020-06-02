@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cdgs.worktime.dto.CalendarDto;
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.OtNoListDto;
 import com.cdgs.worktime.dto.SideworkDateToSting;
@@ -102,5 +103,54 @@ public class DataTableController {
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping(path = "/getsideworkcalendar/{no}")
+	private ResponseEntity<ResponseDto<CalendarDto>> getSideworkCalendar(
+			@PathVariable(value = "no") String employeeNo) {
+
+		ResponseDto<CalendarDto> res = new ResponseDto<CalendarDto>();
+		List<CalendarDto> dto = new ArrayList<CalendarDto>();
+
+		List<EmployeeDto> employee = employeeService.getEmployeeByNo(employeeNo);
+
+		try {
+			dto = dataTableService.getSideWorkCalendar(employee.get(0).getId());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(201);
+			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(path = "/getotcalendar/{no}")
+	private ResponseEntity<ResponseDto<CalendarDto>> getOtCalendar(
+			@PathVariable(value = "no") String employeeNo) {
+
+		ResponseDto<CalendarDto> res = new ResponseDto<CalendarDto>();
+		List<CalendarDto> dto = new ArrayList<CalendarDto>();
+
+		List<EmployeeDto> employee = employeeService.getEmployeeByNo(employeeNo);
+
+		try {
+			dto = dataTableService.getOtCalendar(employee.get(0).getId());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(201);
+			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 
 }

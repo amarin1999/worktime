@@ -115,7 +115,7 @@ public class OtController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<OtHistoryDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			log.error("otpostTime ", e);
+			log.error("otputTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

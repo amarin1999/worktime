@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
+import com.cdgs.worktime.dto.OtHistoryDto;
+import com.cdgs.worktime.dto.OtPutTimeDto;
 import com.cdgs.worktime.dto.SideWorkPostTimeDto;
+import com.cdgs.worktime.dto.SideWorkPutTimeDto;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.service.EmployeeHasSideworkHistoryService;
 import com.cdgs.worktime.service.EmployeeService;
@@ -104,6 +108,29 @@ public class SideWorkController {
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@PutMapping(path = "/puttime")
+	private ResponseEntity<ResponseDto<SideworkHistoryDto>> putSideWorkTime(@Valid @RequestBody SideWorkPutTimeDto body) {
+		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
+		List<SideworkHistoryDto> dto = new ArrayList<SideworkHistoryDto>();
+		SideworkHistoryDto data = new SideworkHistoryDto();
+
+		try {
+			data = sideworkservice.putSideWorkTime(body);
+			dto.add(data);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(201);
+			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			log.error("sideworkputtime", e);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+
 	}
 
 }

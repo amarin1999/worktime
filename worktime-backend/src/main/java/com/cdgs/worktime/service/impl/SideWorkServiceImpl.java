@@ -18,6 +18,7 @@ import org.w3c.dom.ls.LSInput;
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
 import com.cdgs.worktime.dto.SideWorkPostTimeDto;
+import com.cdgs.worktime.dto.SideWorkPutTimeDto;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.entity.EmployeeEntity;
 import com.cdgs.worktime.entity.EmployeeHasSideworkHistoryEntity;
@@ -46,7 +47,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 	}
 
 	@Override
-	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeDto employee, String date) throws ParseException {
+	public SideworkHistoryDto postSideWorkTime(SideWorkPostTimeDto sideTime, EmployeeDto employee, String date) throws ParseException  {
 
 		SideworkHistoryEntity entity = sideworkrepository.findDateTimeByString(date, employee.getId());
 		SideworkHistoryEntity data = new SideworkHistoryEntity();
@@ -73,7 +74,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 		}
 	}
 
-	private SideworkHistoryEntity convPostDtoToEntity(SideWorkPostTimeDto dto) throws ParseException {
+	private SideworkHistoryEntity convPostDtoToEntity(SideWorkPostTimeDto dto) throws ParseException  {
 		SideworkHistoryEntity entity = new SideworkHistoryEntity();
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		if (dto != null) {
@@ -89,8 +90,7 @@ public class SideWorkServiceImpl implements SideWorkService {
 	private SideworkHistoryDto convEntityToDto(SideworkHistoryEntity entity) {
 		SideworkHistoryDto dto = new SideworkHistoryDto();
 		if (entity != null) {
-			dto.setEndTime(entity.getEndTime());
-			dto.setLastUpdate(Calendar.getInstance().getTime());
+			
 			dto.setStartTime(entity.getStartTime());
 			dto.setRemark(entity.getRemark());
 			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
@@ -106,4 +106,22 @@ public class SideWorkServiceImpl implements SideWorkService {
 		return convEntityToDto(entity);
 	}
 
+	@Override
+	public SideworkHistoryDto putSideWorkTime(SideWorkPutTimeDto body) throws ParseException {
+		
+		SideworkHistoryEntity entity = sideworkrepository.getSideWorkIdById(body.getId());
+		SideworkHistoryEntity data = new SideworkHistoryEntity();
+		SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm"); 
+		
+		System.out.println(entity);
+		entity.setEndTime(formatTime.parse(body.getEndTime()));
+		entity.setLastUpdate(Calendar.getInstance().getTime());
+		entity.setStartTime(formatTime.parse(body.getStartTime()));
+		entity.setWorkAnyWhere(body.getWorkAnyWhere());
+		entity.setRemark(body.getRemark());
+		sideworkrepository.save(entity);
+		
+		return null;
+	}
+	
 }

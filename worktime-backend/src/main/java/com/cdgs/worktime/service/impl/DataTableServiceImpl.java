@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.java.SimpleFormatter;
 import org.springframework.stereotype.Service;
 
+import com.cdgs.worktime.dto.CalendarDto;
 import com.cdgs.worktime.dto.OtNoListDto;
 import com.cdgs.worktime.dto.SideworkDateToSting;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
@@ -140,4 +141,73 @@ public class DataTableServiceImpl implements DataTableService {
 		
 	}
 
+	public List<CalendarDto> getSideWorkCalendar(Long employeeId) {	
+		List<SideworkHistoryEntity> entity = new ArrayList<SideworkHistoryEntity>();
+		try {
+			entity = sideWorkRepository.getSideworkAll(employeeId);	
+		}catch (Exception e) { 
+			log.error("getEmployeeByNo >>> " + e.getMessage());
+		}
+		return mapSideworkCalendarListEntityToDto(entity);
+	}
+
+	private List<CalendarDto> mapSideworkCalendarListEntityToDto(List<SideworkHistoryEntity> entities) {
+		List<CalendarDto> listDto = new ArrayList<>();
+		if (!entities.isEmpty()) {
+			for (SideworkHistoryEntity entitiy : entities) {
+				listDto.add(mapSideworkCalendarEntityToDto(entitiy));
+			}
+		}
+		return listDto;
+
+	}
+	
+	private CalendarDto mapSideworkCalendarEntityToDto(SideworkHistoryEntity entity) {
+		CalendarDto dto = new CalendarDto();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+			dto.setId(entity.getSideworkId());
+			dto.setTitle("Work Anywhere");
+			dto.setStart(entity.getDate());
+			dto.setStartTime(entity.getStartTime());
+			dto.setEndTime(entity.getEndTime());
+		return dto;
+		
+	}
+	
+	public List<CalendarDto> getOtCalendar(Long employeeId) {	
+		List<OtHistoryEntity> entity = new ArrayList<OtHistoryEntity>();
+		try {
+			entity = otRespositiry.getOtAll(employeeId);
+		}catch (Exception e) { 
+			log.error("getEmployeeByNo >>> " + e.getMessage());
+		}
+		return mapOtCalendarListEntityToDto(entity);
+	}
+
+	private List<CalendarDto> mapOtCalendarListEntityToDto(List<OtHistoryEntity> entities) {
+		List<CalendarDto> listDto = new ArrayList<>();
+		if (!entities.isEmpty()) {
+			for (OtHistoryEntity entitiy : entities) {
+				listDto.add(mapOtCalendarEntityToDto(entitiy));
+			}
+		}
+		return listDto;
+
+	}
+	
+	private CalendarDto mapOtCalendarEntityToDto(OtHistoryEntity entity) {
+		CalendarDto dto = new CalendarDto();
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+			dto.setId(entity.getOtHistoryId());
+			dto.setTitle("OT: "+timeFormat.format(entity.getStartTime())+" ถึง  "+timeFormat.format(entity.getEndTime()));
+			dto.setStart(entity.getStartTime());
+//			dto.setStartTime(entity.getStartTime());
+//			dto.setEndTime(entity.getEndTime());
+		return dto;
+		
+	}
 }
