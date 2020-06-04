@@ -43,22 +43,22 @@ export class SideworkCalendarComponent implements OnInit {
       defaultView: "dayGridMonth",
       locale: "th",
       displayEventTime: false,
-      themeSystem: 'standard',
+      themeSystem: "standard",
       header: {
-        left: 'dayGridMonth,timeGridWeek,timeGridDay ',
-        center: 'title',
-        right: 'today prev,next '
+        left: "dayGridMonth,timeGridWeek,timeGridDay ",
+        center: "title",
+        right: "today prev,next ",
       },
       editable: true,
       selectable: true,
-      eventColor: '',
       dateClick: (e) => {
-        this.openDialog("add");  // click on date to open dialog
+        this.openDialog("add"); // click on date to open dialog
       },
       // eventSources: [
       //   this.events,
       //   this.events1
       // ]
+
     };
   }
 
