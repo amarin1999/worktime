@@ -169,12 +169,13 @@ public class DataTableServiceImpl implements DataTableService {
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 			dto.setId(entity.getSideworkId());
-			dto.setTitle("Work Anywhere");
+			dto.setTitle("ทำงานนอกสถานที่: "+timeFormat.format(entity.getStartTime())+" ถึง  "+timeFormat.format(entity.getEndTime()));
 			dto.setStart(entity.getDate());
 			dto.setStartTime(entity.getStartTime());
 			dto.setEndTime(entity.getEndTime());
+			dto.setRemark(entity.getRemark());
+			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
 		return dto;
-		
 	}
 	
 	public List<CalendarDto> getOtCalendar(Long employeeId) {	

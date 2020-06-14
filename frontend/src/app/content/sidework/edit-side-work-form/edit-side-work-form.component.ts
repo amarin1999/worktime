@@ -5,6 +5,7 @@ import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-edit-side-work-form",
@@ -22,7 +23,8 @@ export class EditSideWorkFormComponent implements OnInit {
 
   constructor(
     private buildForm: FormBuilder,
-    private dialogConfirm: MatDialog
+    private dialogConfirm: MatDialog,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,10 @@ export class EditSideWorkFormComponent implements OnInit {
     if (this.formGroupSideWork.valid) {
       this.editEmit.emit(this.formGroupSideWork.getRawValue());
     }
+    // reload calendar when submit
+    this.route.navigateByUrl('', { skipLocationChange: true }).then(() => {
+      this.route.navigate(['main/sidework-calendar']);
+    });
   }
 
   // show confirm return true | false
