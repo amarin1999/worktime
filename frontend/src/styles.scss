@@ -29,8 +29,16 @@ body {
   font-family: "Kanit";
 }
 
+h2 {
+  font-family: "Kanit" !important;
+}
+
 h4 {
   font-family: "Kanit";
+}
+
+table {
+  background-color: ghostwhite !important;
 }
 .wrap-form {
   max-height: 500px;
@@ -41,7 +49,7 @@ h4 {
 .mat-calendar-header,
 .timepicker__header {
   background-color: indigo !important;
-  color: whitesmoke;
+  color: ghostwhite;
 }
 
 .mat-divider {
