@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -7,8 +7,12 @@ import thLocale from "@fullcalendar/core/locales/th";
 import { SideWorkComponent } from '../sidework/sidework.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'primeng/api';
-import { first, finalize } from 'rxjs/operators';
+import { first, finalize, map } from 'rxjs/operators';
 import { Calendar } from 'src/app/shared/interfaces/calendar';
+import { SideWork } from 'src/app/shared/interfaces/sidework';
+import { SideWorkService } from 'src/app/shared/service/sidework.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "app-sidework-calendar",
@@ -16,25 +20,24 @@ import { Calendar } from 'src/app/shared/interfaces/calendar';
   styleUrls: ["./sidework-calendar.component.scss"],
 })
 export class SideworkCalendarComponent implements OnInit {
+  sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   events: Calendar[];
-  events1: Calendar[];
   options: any;
+  searchId: number;
+  data: SideWork[];
+  item: SideWork;
 
   constructor(
     private dialog: MatDialog,
     private messageService: MessageService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private sideworkService: SideWorkService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
-    // get sidework events show on calendar
-    this.calendarService.getSideWorkEventForCalendar
-    (localStorage.getItem("employeeNo"))
-      .then(events => { this.events = events; });
-    // get ot events show on calendar
-    // this.calendarService.getOtEventForCalendar
-    //   (localStorage.getItem("employeeNo"))
-    //   .then(events => { this.events = events; });
+    this.loadEvent();
+    this.loadSideWork();
 
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -43,26 +46,49 @@ export class SideworkCalendarComponent implements OnInit {
       defaultView: "dayGridMonth",
       locale: "th",
       displayEventTime: false,
-      themeSystem: "standard",
       header: {
-        left: "dayGridMonth,timeGridWeek,timeGridDay ",
+        left: "dayGridMonth,today",
         center: "title",
-        right: "today prev,next ",
+        right: "prev,next ",
       },
       editable: true,
       selectable: true,
-      dateClick: (e) => {
-        this.openDialog("add"); // click on date to open dialog
+      dateClick: () => {
+        this.openDialogInsert("add");
       },
-      // eventSources: [
-      //   this.events,
-      //   this.events1
-      // ]
-
+      eventClick: (el) => {
+        this.searchId = parseInt(el.event.id);
+        this.item = this.data.find((i) => i.id === this.searchId);
+        this.openDialogEdit(this.item);
+      },
     };
   }
 
-  openDialog(type: string): void {
+  loadEvent() {
+    // get sidework events show on calendar
+    this.calendarService
+      .getSideWorkEventForCalendar(localStorage.getItem("employeeNo"))
+      .then((events) => {
+        this.events = events;
+      });
+  }
+
+  loadSideWork() {
+    this.spinner.show();
+    this.sideworkService
+      .getHistorySideWork(localStorage.getItem("employeeNo"))
+      .pipe(
+        first(),
+        finalize(() => this.spinner.hide())
+      )
+      .subscribe((res) => { this.data = res["data"] as SideWork[]; });
+  }
+
+  getHistorySideWork(): Subject<SideWork[]> {
+    return this.sideworkService.getSideWork();
+  }
+
+  openDialogInsert(type: string): void {
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
       autoFocus: false,
@@ -102,5 +128,33 @@ export class SideworkCalendarComponent implements OnInit {
           });
         }
       );
+  }
+
+  openDialogEdit(itemSideWork: SideWork): void {
+    const configDialog: MatDialogConfig<Object> = {
+      disableClose: true,
+      autoFocus: false,
+      data: { ...itemSideWork, type: "edit" },
+    };
+
+    let dialogRef = this.dialog.open(SideWorkComponent, configDialog);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.status === "Success") {
+        this.messageService.clear();
+        this.messageService.add({
+          key: "SuccessMessage",
+          severity: "success",
+          summary: "แจ้งเตือน",
+          detail: "แก้ไขการลงเวลาเรียบร้อยแล้ว",
+        });
+      } else if (result.error) {
+        this.messageService.add({
+          key: "errorMessage",
+          severity: "error",
+          summary: "ผิดพลาด",
+          detail: result.error.errorMessage,
+        });
+      }
+    });
   }
 }
