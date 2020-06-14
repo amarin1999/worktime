@@ -52,7 +52,7 @@ export class SignInComponent implements OnInit {
             const employee: Employee = response.data;
             if (employee) {
               localStorage.setItem("employeeNo", employee.no);
-              this.route.navigate([""]);
+              this.route.navigate(["main/sidework-calendar"]);
             }
           },
           error => {
