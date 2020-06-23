@@ -26,6 +26,7 @@ export class SideworkCalendarComponent implements OnInit {
   searchId: number;
   data: SideWork[];
   item: SideWork;
+  dateCilckValue: Date;
 
   constructor(
     private dialog: MatDialog,
@@ -53,7 +54,8 @@ export class SideworkCalendarComponent implements OnInit {
       },
       editable: true,
       selectable: true,
-      dateClick: () => {
+      dateClick: (el) => {
+        this.dateCilckValue = el.date;
         this.openDialogInsert("add");
       },
       eventClick: (el) => {
@@ -92,7 +94,7 @@ export class SideworkCalendarComponent implements OnInit {
     const configDialog: MatDialogConfig<any> = {
       disableClose: true,
       autoFocus: false,
-      data: { type },
+      data: { type, dateClickValue: this.dateCilckValue },
     };
     const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
     dialogRef

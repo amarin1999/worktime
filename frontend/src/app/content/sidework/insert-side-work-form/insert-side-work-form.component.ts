@@ -4,21 +4,23 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  Inject
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Message } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: "app-insert-side-work-form",
   templateUrl: "./insert-side-work-form.component.html",
-  styleUrls: ["./insert-side-work-form.component.scss"]
+  styleUrls: ["./insert-side-work-form.component.scss"],
 })
 export class InsertSideWorkFormComponent implements OnInit {
   @Input("dateValid") dateValid: { status: boolean };
@@ -37,7 +39,8 @@ export class InsertSideWorkFormComponent implements OnInit {
   constructor(
     private buildForm: FormBuilder,
     private dialogConfirm: MatDialog,
-    private route: Router
+    private route: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 
   ngOnInit(): void {
@@ -52,16 +55,29 @@ export class InsertSideWorkFormComponent implements OnInit {
   createFormSideWork(): void {
     this.formGroupSideWork = this.buildForm.group(
       {
-        date: [null, [Validators.required]],
-        startTime: ['08:00', [Validators.required]],
-        endTime: ['17:00', [Validators.required]],
+        date: [this.checkShowClickDate(), [Validators.required]],
+        startTime: ["08:00", [Validators.required]],
+        endTime: ["17:00", [Validators.required]],
         workAnyWhere: [true],
-        remark: [null, [Validators.maxLength(250)]]
+        remark: [null, [Validators.maxLength(250)]],
       },
       {
-        validators: [this.compareTime]
+        validators: [this.compareTime],
       }
     );
+  }
+
+  checkShowClickDate() { // set default date formgroup
+      const clickDate = this.data.dateClickValue.getDate();
+      const getDate = this.currentDate.getDate() + 1;
+      this.currentDate.setDate(this.currentDate.getDate() + 1);
+      if (clickDate === getDate) {
+        return this.currentDate;
+      } else if (clickDate === getDate - 1) {
+        return this.data.dateClickValue;
+      } else {
+        return null;
+      }
   }
 
   //validate เวลา
@@ -83,7 +99,7 @@ export class InsertSideWorkFormComponent implements OnInit {
         severity: "warn",
         summary: "แจ้งเตือน",
         detail:
-          "คุณได้ลงเวลาสำหรับวันนี้ไปแล้ว หากต้องการแก้ไขไปที่ประวัติการลงเวลา"
+          "คุณได้ลงเวลาสำหรับวันนี้ไปแล้ว หากต้องการแก้ไขไปที่ประวัติการลงเวลา",
       });
       this.formGroupSideWork.get("date").setValue(null);
     }
@@ -99,8 +115,8 @@ export class InsertSideWorkFormComponent implements OnInit {
       this.insertEmit.emit(this.formGroupSideWork.getRawValue());
     }
     // reload calendar when submit
-    this.route.navigateByUrl('', { skipLocationChange: true }).then(() => {
-      this.route.navigate(['main/sidework-calendar']);
+    this.route.navigateByUrl("", { skipLocationChange: true }).then(() => {
+      this.route.navigate(["main/sidework-calendar"]);
     });
   }
 

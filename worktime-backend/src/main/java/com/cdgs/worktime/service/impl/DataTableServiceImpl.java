@@ -168,8 +168,9 @@ public class DataTableServiceImpl implements DataTableService {
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+		Boolean workAnywhere = entity.getWorkAnyWhere();
 			dto.setId(entity.getSideworkId());
-			dto.setTitle("ทำงานนอกสถานที่: "+timeFormat.format(entity.getStartTime())+" ถึง  "+timeFormat.format(entity.getEndTime()));
+			dto.setTitle(timeFormat.format(entity.getStartTime())+" ถึง  "+timeFormat.format(entity.getEndTime())+((workAnywhere == true)? " (ทำงานนอกสถานที่)" : ""));
 			dto.setStart(entity.getDate());
 			dto.setStartTime(entity.getStartTime());
 			dto.setEndTime(entity.getEndTime());
