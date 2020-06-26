@@ -55,7 +55,7 @@ export class InsertSideWorkFormComponent implements OnInit {
   createFormSideWork(): void {
     this.formGroupSideWork = this.buildForm.group(
       {
-        date: [this.checkShowClickDate(), [Validators.required]],
+        date: [this.data.dateClickValue, [Validators.required]],
         startTime: ["08:00", [Validators.required]],
         endTime: ["17:00", [Validators.required]],
         workAnyWhere: [true],

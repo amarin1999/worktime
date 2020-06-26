@@ -9,8 +9,6 @@
             formControlName="date"
             [matDatepicker]="pickerDate"
             (focus)="pickerDate.open()"
-            [min]="minDate"
-            [max]="maxDate"
             (dateChange)="checkDate($event)"
           />
           <mat-datepicker-toggle

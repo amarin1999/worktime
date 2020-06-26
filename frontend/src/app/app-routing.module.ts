@@ -6,7 +6,7 @@ import { PageNotFoundComponent } from "./core/page-not-found/page-not-found.comp
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "main",
+    redirectTo: "signin", // main
     pathMatch: "full"
   },
 
