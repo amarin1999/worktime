@@ -108,6 +108,10 @@ textarea:disabled {
 .animation-page {
   animation: fadeFromTop 0.5s;
 }
+.fc {
+  height: 650px !important;
+}
+
 
 @keyframes fadeFromTop {
   0% {
