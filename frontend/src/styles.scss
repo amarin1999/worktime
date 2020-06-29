@@ -108,10 +108,16 @@ textarea:disabled {
 .animation-page {
   animation: fadeFromTop 0.5s;
 }
-.fc {
-  height: 650px !important;
-}
 
+.mat-grid-list{
+  height: calc(55px) !important; 
+}
+// .wrap-content {
+//   max-height: 500px;
+// }
+// .fc {
+//   height: 660 !important;
+// }
 
 @keyframes fadeFromTop {
   0% {
