@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { first } from "rxjs/operators";
+import { first, finalize } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: "app-edit-side-work-form",
   templateUrl: "./edit-side-work-form.component.html",
-  styleUrls: ["./edit-side-work-form.component.scss"]
+  styleUrls: ["./edit-side-work-form.component.scss"],
 })
 export class EditSideWorkFormComponent implements OnInit {
   @Input("dataForm") dataForm: SideWork;
@@ -37,15 +37,15 @@ export class EditSideWorkFormComponent implements OnInit {
       {
         date: [
           { value: this.dataForm.date, disabled: true },
-          [Validators.required]
+          [Validators.required],
         ],
         startTime: [this.dataForm.startTime, [Validators.required]],
         endTime: [this.dataForm.endTime, [Validators.required]],
         workAnyWhere: [this.dataForm.workAnyWhere],
-        remark: [this.dataForm.remark, [Validators.maxLength(250)]]
+        remark: [this.dataForm.remark, [Validators.maxLength(250)]],
       },
       {
-        validators: [this.compareTime]
+        validators: [this.compareTime],
       }
     );
   }
@@ -69,9 +69,11 @@ export class EditSideWorkFormComponent implements OnInit {
       this.editEmit.emit(this.formGroupSideWork.getRawValue());
     }
     // reload calendar when submit
-    this.route.navigateByUrl('', { skipLocationChange: true }).then(() => {
-      this.route.navigate(['main/sidework-calendar']);
-    });
+    this.route
+      .navigateByUrl("/sidework-calendar", { skipLocationChange: true })
+      .then(() => {
+        this.route.navigate(["main/sidework-calendar"]);
+      });
   }
 
   // show confirm return true | false

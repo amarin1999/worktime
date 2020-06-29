@@ -5,17 +5,21 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  Inject
+  Inject,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogConfig,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
 import { Message } from "primeng/api";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { SideWork } from "src/app/shared/interfaces/sidework";
 import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
-import { Router } from '@angular/router';
-import * as moment from 'moment';
+import { Router } from "@angular/router";
+import * as moment from "moment";
 
 @Component({
   selector: "app-insert-side-work-form",
@@ -40,7 +44,7 @@ export class InsertSideWorkFormComponent implements OnInit {
     private buildForm: FormBuilder,
     private dialogConfirm: MatDialog,
     private route: Router,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
@@ -67,17 +71,18 @@ export class InsertSideWorkFormComponent implements OnInit {
     );
   }
 
-  checkShowClickDate() { // set default date formgroup
-      const clickDate = this.data.dateClickValue.getDate();
-      const getDate = this.currentDate.getDate() + 1;
-      this.currentDate.setDate(this.currentDate.getDate() + 1);
-      if (clickDate === getDate) {
-        return this.currentDate;
-      } else if (clickDate === getDate - 1) {
-        return this.data.dateClickValue;
-      } else {
-        return null;
-      }
+  checkShowClickDate() {
+    // set default date formgroup
+    const clickDate = this.data.dateClickValue.getDate();
+    const getDate = this.currentDate.getDate() + 1;
+    this.currentDate.setDate(this.currentDate.getDate() + 1);
+    if (clickDate === getDate) {
+      return this.currentDate;
+    } else if (clickDate === getDate - 1) {
+      return this.data.dateClickValue;
+    } else {
+      return null;
+    }
   }
 
   //validate เวลา
@@ -115,9 +120,13 @@ export class InsertSideWorkFormComponent implements OnInit {
       this.insertEmit.emit(this.formGroupSideWork.getRawValue());
     }
     // reload calendar when submit
-    this.route.navigateByUrl("", { skipLocationChange: true }).then(() => {
-      this.route.navigate(["main/sidework-calendar"]);
-    });
+    this.route
+      .navigateByUrl("/sidework-calendar", {
+        skipLocationChange: true,
+      })
+      .then(() => {
+        this.route.navigate(["main/sidework-calendar"]);
+      });
   }
 
   // show confirm return true | false

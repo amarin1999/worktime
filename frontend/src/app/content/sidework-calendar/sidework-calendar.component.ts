@@ -1,18 +1,18 @@
-import { Component, OnInit, Input, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, Input } from '@angular/core';
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { CalendarService } from "src/app/shared/service/calendar.service";
+import { CalendarService } from 'src/app/shared/service/calendar.service';
 import thLocale from "@fullcalendar/core/locales/th";
-import { SideWorkComponent } from "../sidework/sidework.component";
-import { MatDialogConfig, MatDialog } from "@angular/material/dialog";
-import { MessageService } from "primeng/api";
-import { first, finalize, map } from "rxjs/operators";
-import { Calendar } from "src/app/shared/interfaces/calendar";
-import { SideWork } from "src/app/shared/interfaces/sidework";
-import { SideWorkService } from "src/app/shared/service/sidework.service";
-import { NgxSpinnerService } from "ngx-spinner";
-import { Subject } from "rxjs";
+import { SideWorkComponent } from '../sidework/sidework.component';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MessageService } from 'primeng/api';
+import { first, finalize, map } from 'rxjs/operators';
+import { Calendar } from 'src/app/shared/interfaces/calendar';
+import { SideWork } from 'src/app/shared/interfaces/sidework';
+import { SideWorkService } from 'src/app/shared/service/sidework.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "app-sidework-calendar",
@@ -37,13 +37,14 @@ export class SideworkCalendarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadSideWork();
     this.loadEvent();
+    this.loadSideWork();
 
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       locales: [thLocale],
-      height: "parent",
+      // height: "parent",
+      aspectRatio: 2.2,
       defaultView: "dayGridMonth",
       locale: "th",
       displayEventTime: false,
@@ -58,13 +59,11 @@ export class SideworkCalendarComponent implements OnInit {
         this.dateCilckValue = el.date;
         this.openDialogInsert("add");
       },
-      eventClick: (el, event) => {
+      eventClick: (el) => {
         this.searchId = parseInt(el.event.id);
         this.item = this.data.find((i) => i.id === this.searchId);
         this.openDialogEdit(this.item);
-        console.log(el);
       },
-
     };
   }
 
@@ -85,9 +84,7 @@ export class SideworkCalendarComponent implements OnInit {
         first(),
         finalize(() => this.spinner.hide())
       )
-      .subscribe((res) => {
-        this.data = res["data"] as SideWork[];
-      });
+      .subscribe((res) => { this.data = res["data"] as SideWork[]; });
   }
 
   getHistorySideWork(): Subject<SideWork[]> {
