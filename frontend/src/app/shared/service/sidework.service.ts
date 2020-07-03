@@ -1,18 +1,20 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, BehaviorSubject, Subject } from "rxjs";
-import { map } from "rxjs/operators";
-import { ApiConstants } from "../constants/ApiConstants";
-import { Response } from "../interfaces/response";
-import { SideWork } from "../interfaces/sidework";
-import * as moment from "moment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ApiConstants } from '../constants/ApiConstants';
+import { Response } from '../interfaces/response';
+import { SideWork } from '../interfaces/sidework';
+import * as moment from 'moment';
 import { Calendar } from '../interfaces/calendar';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class SideWorkService {
   sideWorkItem = new Subject<SideWork[]>();
+  public afterSave = false;
+
   constructor(private http: HttpClient) {}
 
   addSidework(body: SideWork): Observable<Response> {
@@ -20,10 +22,10 @@ export class SideWorkService {
       return this.http
         .post(`${ApiConstants.baseURl}/sidework/posttime`, body)
         .pipe(
-          map(response => {
+          map((response) => {
             return {
-              status: response["result"],
-              code: response["code"]
+              status: response['result'],
+              code: response['code'],
             };
           })
         );
@@ -37,10 +39,10 @@ export class SideWorkService {
       return this.http
         .put(`${ApiConstants.baseURl}/sidework/puttime`, body)
         .pipe(
-          map(response => {
+          map((response) => {
             return {
-              status: response["result"],
-              code: response["code"]
+              status: response['result'],
+              code: response['code'],
             };
           })
         );
@@ -53,7 +55,7 @@ export class SideWorkService {
     date = new Date(date);
     const dateRequest = moment(date)
       // .add(543, "year")
-      .format("YYYY-MM-DD");
+      .format('YYYY-MM-DD');
 
     try {
       return this.http
@@ -61,11 +63,11 @@ export class SideWorkService {
           `${ApiConstants.baseURl}/sidework/gettime?no=${employeeId}&date=${dateRequest}`
         )
         .pipe(
-          map(response => {
+          map((response) => {
             return {
-              status: response["result"],
-              data: response["data"],
-              code: response["code"]
+              status: response['result'],
+              data: response['data'],
+              code: response['code'],
             };
           })
         );
@@ -79,12 +81,12 @@ export class SideWorkService {
       return this.http
         .get(`${ApiConstants.baseURl}/datatable/getsidework/${id}`)
         .pipe(
-          map(response => {
-            this.sideWorkItem.next(response["data"]);
+          map((response) => {
+            this.sideWorkItem.next(response['data']);
             return {
-              status: response["result"],
-              data: response["data"],
-              code: response["code"]
+              status: response['result'],
+              data: response['data'],
+              code: response['code'],
             };
           })
         );
@@ -98,8 +100,8 @@ export class SideWorkService {
       return this.http
         .get(`${ApiConstants.baseURl}/datatable/getsidework/${id}`)
         .pipe(
-          map(response => {
-            this.sideWorkItem.next(response["data"]);
+          map((response) => {
+            this.sideWorkItem.next(response['data']);
           })
         );
     } catch (error) {
@@ -111,5 +113,20 @@ export class SideWorkService {
     return this.sideWorkItem;
   }
 
+  deleteSideWork(sideworkId: number) {
+    try {
+      return this.http
+        .delete(`${ApiConstants.baseURl}/sidework/deletetime/${sideworkId}`)
+        .pipe(
+          map((response) => {
+            return {
+              status: response['result'],
+              code: response['code'],
+            };
+          })
+        );
+    } catch (error) {
+      console.table(error);
+    }
+  }
 }
-
