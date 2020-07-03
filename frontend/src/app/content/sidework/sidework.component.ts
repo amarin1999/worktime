@@ -1,26 +1,26 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import * as moment from "moment";
-import { NgxSpinnerService } from "ngx-spinner";
-import { finalize, first } from "rxjs/operators";
-import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { Response } from "src/app/shared/interfaces/response";
-import { SideWork } from "src/app/shared/interfaces/sidework";
-import { SideWorkService } from "src/app/shared/service/sidework.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize, first } from 'rxjs/operators';
+import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
+import { Response } from 'src/app/shared/interfaces/response';
+import { SideWork } from 'src/app/shared/interfaces/sidework';
+import { SideWorkService } from 'src/app/shared/service/sidework.service';
 
 @Component({
-  selector: "app-sidework",
-  templateUrl: "./sidework.component.html",
-  styleUrls: ["./sidework.component.scss"]
+  selector: 'app-sidework',
+  templateUrl: './sidework.component.html',
+  styleUrls: ['./sidework.component.scss'],
 })
 export class SideWorkComponent implements OnInit {
-  //constants
+  // constants
   img = {
     imgInsert: LayoutConstants.sideWorkImagePath,
-    imgEdit: LayoutConstants.editWorkImagePath
+    imgEdit: LayoutConstants.editWorkImagePath,
   };
 
-  //datevalid
+  // datevalid
   isDateValid = { status: false };
 
   constructor(
@@ -32,11 +32,11 @@ export class SideWorkComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  //เช็ควันว่าลงเวลาแล้วหรือยัง
+  // เช็ควันว่าลงเวลาแล้วหรือยัง
   checkDay(date: Date): void {
     this.spinner.show();
     this.sideWorkService
-      .getSideWorkOnDay(localStorage.getItem("employeeNo"), date)
+      .getSideWorkOnDay(localStorage.getItem('employeeNo'), date)
       .pipe(
         first(),
         finalize(() => this.spinner.hide())
@@ -54,34 +54,34 @@ export class SideWorkComponent implements OnInit {
             }
           }
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
   }
 
-  //check type จัดการข้อมูล
+  // check type จัดการข้อมูล
   emitSideWork(formItem: SideWork): void {
     this.spinner.show();
     switch (this.dataForm.type) {
-      case "edit": {
+      case 'edit': {
         //set วันที่ format
-        const dateFormat = moment(formItem.date, "DD/MM/YYYY").format(
-          "YYYY-MM-DD"
+        const dateFormat = moment(formItem.date, 'DD/MM/YYYY').format(
+          'YYYY-MM-DD'
         );
         delete formItem.date;
         const requestData = {
           date: dateFormat,
           ...formItem,
-          employeeNo: localStorage.getItem("employeeNo")
+          employeeNo: localStorage.getItem('employeeNo'),
         };
         this.editSideWork(requestData);
         break;
       }
-      case "add": {
+      case 'add': {
         const requestData = {
           ...formItem,
-          employeeNo: localStorage.getItem("employeeNo")
+          employeeNo: localStorage.getItem('employeeNo'),
         };
         this.insertSideWork(requestData);
         break;
@@ -89,7 +89,7 @@ export class SideWorkComponent implements OnInit {
     }
   }
 
-  //เพิ่มข้อมูล
+  // เพิ่มข้อมูล
   insertSideWork(requestData: SideWork): void {
     this.sideWorkService
       .addSidework(requestData)
@@ -103,18 +103,18 @@ export class SideWorkComponent implements OnInit {
         (response: Response) => {
           this.dialogRef.close(response);
         },
-        error => {
+        (error) => {
           this.dialogRef.close(error);
         }
       );
   }
 
-  //แก้ไขข้อมูล
+  // แก้ไขข้อมูล
   editSideWork(sideWorkItem: SideWork): void {
     this.spinner.show();
     const requestData = {
       id: this.dataForm.id,
-      ...sideWorkItem
+      ...sideWorkItem,
     };
     this.sideWorkService
       .editSideWork(requestData)
@@ -126,16 +126,32 @@ export class SideWorkComponent implements OnInit {
       )
       .subscribe(
         (response: Response) => {
-          //patch subject sideWork
+          // patch subject sideWork
           this.sideWorkService
-            .setSideWork(localStorage.getItem("employeeNo"))
+            .setSideWork(localStorage.getItem('employeeNo'))
             .pipe(first())
             .subscribe();
           this.dialogRef.close(response);
         },
-        error => {
+        (error) => {
           this.dialogRef.close(error);
         }
       );
+  }
+
+  // ลบข้อมูล
+  deleteSideWork(sideworkId: number): void {
+    this.spinner.show();
+    this.sideWorkService
+      .deleteSideWork(sideworkId)
+      .pipe(
+        first(),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe((error) => {
+        this.dialogRef.close(error);
+      });
   }
 }

@@ -124,4 +124,54 @@ public class SideWorkServiceImpl implements SideWorkService {
 		return null;
 	}
 	
+	@Override
+	public SideworkHistoryDto getSideworkByNo(Long no) {
+		SideworkHistoryEntity entity = new SideworkHistoryEntity();
+		try {
+			entity = sideworkrepository.getSideWorkIdById(no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getEmployeeByNo >>> " + e.getMessage());
+		}
+		return mapListEntityToDto(entity);
+
+	}
+	
+	private SideworkHistoryDto mapListEntityToDto(SideworkHistoryEntity entities) {
+		SideworkHistoryDto dtoList = new SideworkHistoryDto();
+		if (entities != null) {
+				dtoList = mapEntityToDto(entities);
+		}
+		return dtoList;
+		
+	}
+
+	private SideworkHistoryDto mapEntityToDto(SideworkHistoryEntity entity) {
+		SideworkHistoryDto dto = new SideworkHistoryDto();
+		SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm"); 
+		if (entity != null) {
+			dto.setId(entity.getSideworkId());
+			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
+			dto.setStartTime(entity.getStartTime());
+			dto.setEndTime(entity.getEndTime());
+			dto.setLastUpdate(entity.getLastUpdate());
+			dto.setRemark(entity.getRemark());
+			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
+		}
+		return dto;
+	}
+
+	@Override
+	public boolean deleteSideWorktime(Long sideworkId) {
+		try {
+			sideworkrepository.deleteSideWorkById(sideworkId);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getSidework >>> " + e.getMessage());
+			return false;
+		}
+		
+	}
+	
 }

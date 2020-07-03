@@ -20,6 +20,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -118,7 +119,7 @@ public class SideWorkController {
 
 		try {
 			data = sideworkservice.putSideWorkTime(body);
-			dto.add(data);
+			dto.add(data); 
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 			res.setData(dto);
 			res.setCode(201);
@@ -130,7 +131,24 @@ public class SideWorkController {
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-
 	}
-
+	
+	
+	
+	@DeleteMapping(path = "/deletetime/{sideworkId}")
+	private ResponseEntity<ResponseDto<SideworkHistoryDto>> deleteSideWorkTime(@PathVariable(value = "sideworkId") Long sideworkId){
+		ResponseDto<SideworkHistoryDto> res = new ResponseDto<SideworkHistoryDto>();
+		SideworkHistoryDto sidework = sideworkservice.getSideworkByNo(sideworkId);
+		if (sidework.getId()!= null) {
+			sideworkservice.deleteSideWorktime(sideworkId);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setCode(200);
+			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
+		} else {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.BAD_REQUEST);
+		}	
+			
+	}
 }

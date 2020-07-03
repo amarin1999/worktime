@@ -22,5 +22,11 @@ public interface SideWorkService {
 	SideworkHistoryDto getSideWorkTime(String string,Long employeeId);
 	
 	SideworkHistoryDto putSideWorkTime(SideWorkPutTimeDto body) throws ParseException;
+	
+	SideworkHistoryDto getSideworkByNo(Long no);
+	
+	
+	
+	boolean deleteSideWorktime(Long sideworkId);
 
 }

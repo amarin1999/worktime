@@ -1,20 +1,33 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { first, finalize } from "rxjs/operators";
-import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { SideWork } from "src/app/shared/interfaces/sidework";
-import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Inject,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { first, finalize } from 'rxjs/operators';
+import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
+import { SideWork } from 'src/app/shared/interfaces/sidework';
+import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
+import { SideWorkService } from 'src/app/shared/service/sidework.service';
 
 @Component({
-  selector: "app-edit-side-work-form",
-  templateUrl: "./edit-side-work-form.component.html",
-  styleUrls: ["./edit-side-work-form.component.scss"],
+  selector: 'app-edit-side-work-form',
+  templateUrl: './edit-side-work-form.component.html',
+  styleUrls: ['./edit-side-work-form.component.scss'],
 })
 export class EditSideWorkFormComponent implements OnInit {
-  @Input("dataForm") dataForm: SideWork;
+  @Input('dataForm') dataForm: SideWork;
   @Output() editEmit: EventEmitter<SideWork> = new EventEmitter();
+  @Output() deleteEmit: EventEmitter<SideWork> = new EventEmitter();
 
   //constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
@@ -24,7 +37,9 @@ export class EditSideWorkFormComponent implements OnInit {
   constructor(
     private buildForm: FormBuilder,
     private dialogConfirm: MatDialog,
-    private route: Router
+    private route: Router,
+    private sideworkService: SideWorkService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
@@ -50,13 +65,13 @@ export class EditSideWorkFormComponent implements OnInit {
     );
   }
 
-  //validate เวลา
+  // validate เวลา
   compareTime(group: FormGroup): void {
-    let startTime = group.get("startTime").value;
-    let endTime = group.get("endTime").value;
+    const startTime = group.get('startTime').value;
+    const endTime = group.get('endTime').value;
     if (startTime > endTime && endTime !== null) {
-      group.get("endTime").setValue(undefined);
-      group.get("endTime").setErrors({ wrongDate: true });
+      group.get('endTime').setValue(undefined);
+      group.get('endTime').setErrors({ wrongDate: true });
     } else {
       return null;
     }
@@ -64,42 +79,55 @@ export class EditSideWorkFormComponent implements OnInit {
 
   // กดปุ่ม
   onSubmit(): void {
-    //ถ้า validate ผ่าน
+    // ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
       this.editEmit.emit(this.formGroupSideWork.getRawValue());
     }
+    this.sideworkService.afterSave = true;
     // reload calendar when submit
     this.route
-      .navigateByUrl("/sidework-calendar", { skipLocationChange: true })
+      .navigateByUrl('/sidework-calendar', { skipLocationChange: true })
       .then(() => {
-        this.route.navigate(["main/sidework-calendar"]);
+        this.route.navigate(['main/sidework-calendar']);
       });
   }
 
+  deleteSidework(): void {
+    this.openDialogConfirm();
+  }
+
   // show confirm return true | false
-  // openDialogConfirm(): void {
-  //   const configDialog: MatDialogConfig<any> = {
-  //     disableClose: true,
-  //     autoFocus: false,
-  //     width: "370px",
-  //     height: "170px",
-  //     data: {
-  //       textConfirm: "ยืนยันการแก้ไขการลงเวลางาน ?"
-  //     }
-  //   };
-  //   //เปิด dialog
-  //   const dialogRef = this.dialogConfirm.open(
-  //     ConfirmDialogComponent,
-  //     configDialog
-  //   );
-  //   //หลังปิด dialog
-  //   dialogRef
-  //     .afterClosed()
-  //     .pipe(first())
-  //     .subscribe((confirmStatus: boolean) => {
-  //       if (confirmStatus) {
-  //         this.editEmit.emit(this.formGroupSideWork.getRawValue());
-  //       }
-  //     });
-  // }
+  openDialogConfirm(): void {
+    const configDialog: MatDialogConfig<any> = {
+      disableClose: true,
+      autoFocus: false,
+      width: '370px',
+      height: '170px',
+      data: {
+        textConfirm: 'ยืนยันการลบรายการ ?',
+      },
+    };
+    //เปิด dialog
+    const dialogRef = this.dialogConfirm.open(
+      ConfirmDialogComponent,
+      configDialog
+    );
+    //หลังปิด dialog
+    dialogRef
+      .afterClosed()
+      .pipe(first())
+      .subscribe((confirmStatus: boolean) => {
+        if (confirmStatus) {
+          this.deleteEmit.emit(this.data.sideworkId);
+          // reload calendar when submit
+          this.route
+            .navigateByUrl('/sidework-calendar', {
+              skipLocationChange: true,
+            })
+            .then(() => {
+              this.route.navigate(['main/sidework-calendar']);
+            });
+        }
+      });
+  }
 }

@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdgs.worktime.dto.EmployeeHasSideworkHistoryDto;
 import com.cdgs.worktime.entity.EmployeeEntity;
@@ -34,6 +36,12 @@ public interface SideWorkRepository extends CrudRepository<SideworkHistoryEntity
 			+ "WHERE esh.employee_id = :employeeId"	, nativeQuery = true)
 	List<SideworkHistoryEntity> getSideworkAll(@Param(value = "employeeId") Long employeeId);
 	
-	@Query(value = " SELECT sw.*" + "FROM sidework_history sw " + "WHERE sw.id_sidework_history = :swId", nativeQuery = true)
-	SideworkHistoryEntity getSideWorkIdById(@Param(value = "swId") Long swId);
+	@Query(value = " SELECT sw.*" + "FROM sidework_history sw " + "WHERE sw.id_sidework_history = :sideworkId", nativeQuery = true)
+	SideworkHistoryEntity getSideWorkIdById(@Param(value = "sideworkId") Long sideworkId);
+	
+	@Modifying
+	@Transactional
+	@Query(value = " DELETE FROM sidework_history WHERE sidework_history.id_sidework_history = :sideworkId", nativeQuery = true)
+	Integer deleteSideWorkById(@Param(value = "sideworkId") Long sideworkId);
+	
 }
