@@ -25,13 +25,13 @@ import { SideWorkService } from 'src/app/shared/service/sidework.service';
   styleUrls: ['./edit-side-work-form.component.scss'],
 })
 export class EditSideWorkFormComponent implements OnInit {
-  @Input('dataForm') dataForm: SideWork;
+  @Input() dataForm: SideWork;
   @Output() editEmit: EventEmitter<SideWork> = new EventEmitter();
   @Output() deleteEmit: EventEmitter<SideWork> = new EventEmitter();
 
-  //constants
+  // constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
-  //form
+  // form
   formGroupSideWork: FormGroup;
 
   constructor(
@@ -46,7 +46,7 @@ export class EditSideWorkFormComponent implements OnInit {
     this.createFormSideWork();
   }
 
-  //สร้าง form
+  // สร้าง form
   createFormSideWork(): void {
     this.formGroupSideWork = this.buildForm.group(
       {
@@ -83,13 +83,7 @@ export class EditSideWorkFormComponent implements OnInit {
     if (this.formGroupSideWork.valid) {
       this.editEmit.emit(this.formGroupSideWork.getRawValue());
     }
-    this.sideworkService.afterSave = true;
-    // reload calendar when submit
-    this.route
-      .navigateByUrl('/sidework-calendar', { skipLocationChange: true })
-      .then(() => {
-        this.route.navigate(['main/sidework-calendar']);
-      });
+
   }
 
   deleteSidework(): void {
@@ -107,26 +101,18 @@ export class EditSideWorkFormComponent implements OnInit {
         textConfirm: 'ยืนยันการลบรายการ ?',
       },
     };
-    //เปิด dialog
+    // เปิด dialog
     const dialogRef = this.dialogConfirm.open(
       ConfirmDialogComponent,
       configDialog
     );
-    //หลังปิด dialog
+    // หลังปิด dialog
     dialogRef
       .afterClosed()
       .pipe(first())
       .subscribe((confirmStatus: boolean) => {
         if (confirmStatus) {
           this.deleteEmit.emit(this.data.sideworkId);
-          // reload calendar when submit
-          this.route
-            .navigateByUrl('/sidework-calendar', {
-              skipLocationChange: true,
-            })
-            .then(() => {
-              this.route.navigate(['main/sidework-calendar']);
-            });
         }
       });
   }

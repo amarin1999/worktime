@@ -1,21 +1,56 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ApiConstants } from '../constants/ApiConstants';
 import { Response } from '../interfaces/response';
 import { SideWork } from '../interfaces/sidework';
 import * as moment from 'moment';
 import { Calendar } from '../interfaces/calendar';
+import { CalendarService } from './calendar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SideWorkService {
   sideWorkItem = new Subject<SideWork[]>();
-  public afterSave = false;
 
-  constructor(private http: HttpClient) {}
+  private changeEventCalendar = new Subject<void>();
+  onLoadEventCalendar$ = this.changeEventCalendar.pipe(
+    switchMap((_) =>
+      this.calendarService.getSideWorkEventForCalendar(
+        localStorage.getItem('employeeNo')
+      )
+    )
+  );
+
+  private changeSideworkCalendar = new Subject<void>();
+  onLoadSideworkCalendar$ = this.changeSideworkCalendar.pipe(
+    switchMap((__) =>
+      this.getSideworkCalendar(localStorage.getItem('employeeNo'))
+    )
+  );
+
+  constructor(
+    private http: HttpClient,
+    private calendarService: CalendarService
+  ) {}
+
+  loadEventCalendar() {
+    this.changeEventCalendar.next();
+  }
+
+  loadSideworkCalendar() {
+    this.changeSideworkCalendar.next();
+  }
+
+  getSideworkCalendar(id: string) {
+    return this.http
+      .get<{ data: SideWork[] }>(
+        `${ApiConstants.baseURl}/datatable/getsidework/${id}`
+      )
+      .pipe(map((res) => res.data));
+  }
 
   addSidework(body: SideWork): Observable<Response> {
     try {

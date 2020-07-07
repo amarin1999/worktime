@@ -1,11 +1,11 @@
 export interface Calendar {
     id?: number;
-    title: string;
-    start: Date;
+    title?: string;
+    start?: Date;
     end?: Date;
     startTime?: Date;
     endTime?: Date;
     workAnyWhere?: boolean;
-    remark: string;
+    remark?: string;
     employeeNo?: string;
 }

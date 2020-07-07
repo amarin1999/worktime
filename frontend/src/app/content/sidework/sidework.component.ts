@@ -30,7 +30,9 @@ export class SideWorkComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dataForm: SideWork
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sideWorkService.loadEventCalendar();
+  }
 
   // เช็ควันว่าลงเวลาแล้วหรือยัง
   checkDay(date: Date): void {
@@ -65,7 +67,7 @@ export class SideWorkComponent implements OnInit {
     this.spinner.show();
     switch (this.dataForm.type) {
       case 'edit': {
-        //set วันที่ format
+        // set วันที่ format
         const dateFormat = moment(formItem.date, 'DD/MM/YYYY').format(
           'YYYY-MM-DD'
         );
@@ -97,6 +99,9 @@ export class SideWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          // reload calendar
+          this.sideWorkService.loadEventCalendar();
+          this.sideWorkService.loadSideworkCalendar();
         })
       )
       .subscribe(
@@ -122,6 +127,9 @@ export class SideWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          // reload calendar
+          this.sideWorkService.loadEventCalendar();
+          this.sideWorkService.loadSideworkCalendar();
         })
       )
       .subscribe(
@@ -148,10 +156,14 @@ export class SideWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          // reload calendar
+          this.sideWorkService.loadEventCalendar();
+          this.sideWorkService.loadSideworkCalendar();
         })
       )
       .subscribe((error) => {
         this.dialogRef.close(error);
       });
   }
+
 }
