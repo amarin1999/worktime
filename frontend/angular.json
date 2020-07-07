@@ -39,7 +39,8 @@
               "src/styles.scss",
               "node_modules/@fullcalendar/core/main.min.css",
               "node_modules/@fullcalendar/daygrid/main.min.css",
-              "node_modules/@fullcalendar/timegrid/main.min.css"
+              "node_modules/@fullcalendar/timegrid/main.min.css",
+              "src/assets/fonts/Kanit.scss"
             ],
             "scripts": []
           },
