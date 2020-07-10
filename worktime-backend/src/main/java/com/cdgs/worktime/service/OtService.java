@@ -13,9 +13,13 @@ import com.cdgs.worktime.dto.OtPutTimeDto;
 public interface OtService {
 	
 	OtHistoryDto postOtTime(OtPostTimeDto otPostTime,EmployeeHasSideworkHistoryDto employeeHasSidework );
+	
 	OtNoListDto getOtTime(Long id);
 	
 	OtHistoryDto putOtTime(OtPutTimeDto bady);
-
+	
+	OtNoListDto getOtbyNo(Long no);
+	
+	boolean deleteOtTime(Long OtId);
 
 }

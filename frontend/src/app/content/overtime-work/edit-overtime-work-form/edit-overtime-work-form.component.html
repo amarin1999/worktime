@@ -14,7 +14,7 @@
       </mat-form-field>
     </div>
     <div class="{{ formGrid }}">
-      <mat-form-field appearance="outline" style="width:100%">
+      <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ </mat-label>
         <textarea formControlName="remark" matInput></textarea>
       </mat-form-field>
@@ -34,7 +34,7 @@
           [max]="maxDate"
         />
         <mat-error
-          *ngIf="formGroupOvertimeWork.get('startTime').hasError('required'); "
+          *ngIf="formGroupOvertimeWork.get('startTime').hasError('required')"
         >
           * กรุณากรอกเวลาเข้างาน
         </mat-error>
@@ -51,7 +51,9 @@
 
     <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label> <mat-icon>call_missed_outgoing</mat-icon> เวลาออกงาน </mat-label>
+        <mat-label>
+          <mat-icon>call_missed_outgoing</mat-icon> เวลาออกงาน
+        </mat-label>
         <input
           readonly
           matInput
@@ -81,7 +83,10 @@
     </div>
   </div>
   <mat-dialog-actions class="wrap-btn">
-    <button mat-button [color]="'warn'" mat-raised-button mat-dialog-close>
+    <button mat-button [color]="'warn'" mat-raised-button type="button" (click)="deleteOvertime()">
+      <mat-icon>delete</mat-icon> ลบรายการ
+    </button>
+    <button mat-button mat-raised-button mat-dialog-close>
       <mat-icon>clear</mat-icon> ยกเลิก
     </button>
     &nbsp;

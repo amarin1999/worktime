@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -121,6 +122,23 @@ public class OtController {
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<OtHistoryDto>>(res, HttpStatus.BAD_REQUEST);
 		}
-
 	}
+	
+	@DeleteMapping(path = "/deletetime/{OtId}")
+	private ResponseEntity<ResponseDto<OtNoListDto>> deleteOtTime(@PathVariable(value = "OtId") Long OtId){
+		ResponseDto<OtNoListDto> res = new ResponseDto<OtNoListDto>();
+		OtNoListDto ot = otService.getOtbyNo(OtId);
+		if (ot.getId()!= null) {
+			otService.deleteOtTime(OtId);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setCode(200);
+			return new ResponseEntity<ResponseDto<OtNoListDto>>(res, HttpStatus.OK);
+		} else {
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setCode(400);
+			return new ResponseEntity<ResponseDto<OtNoListDto>>(res, HttpStatus.BAD_REQUEST);
+		}	
+	}
+	
+	
 }

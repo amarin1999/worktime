@@ -38,7 +38,7 @@
     </div>
     <div class="p-grid" formGroupName="{{ i }}"  >
       <div class="{{ formGrid }}" >
-        <!-- <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-form-field appearance="outline" style="width: 100%;">
           <mat-label> <mat-icon>call_missed</mat-icon> เวลาเข้างาน </mat-label>
           <input
             readonly
@@ -59,9 +59,9 @@
 
           <ngx-mat-datetime-picker touchUi #pickerStartTime>
           </ngx-mat-datetime-picker>
-        </mat-form-field>  -->
-        <p-calendar formControlName="startTime" showTime="true" appendTo="body" showIcon = "true" [maxDate]="maxDate"
-        dateFormat="dd/m/yy" placeholder="เวลาเข้างาน"  ></p-calendar> <br>
+        </mat-form-field> 
+        <!-- <p-calendar formControlName="startTime" showTime="true" appendTo="body" showIcon = "true" [maxDate]="maxDate"
+        dateFormat="dd/m/yy" placeholder="เวลาเข้างาน"  ></p-calendar> <br> -->
       </div>
 
       <div class="{{ formGrid }}">

@@ -20,7 +20,7 @@ import com.cdgs.worktime.dto.SideworkDateToSting;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.entity.OtHistoryEntity;
 import com.cdgs.worktime.entity.SideworkHistoryEntity;
-import com.cdgs.worktime.repository.OtRespositiry;
+import com.cdgs.worktime.repository.OtRespository;
 import com.cdgs.worktime.repository.SideWorkRepository;
 import com.cdgs.worktime.service.DataTableService;
 import com.cdgs.worktime.service.SideWorkService;
@@ -30,12 +30,12 @@ public class DataTableServiceImpl implements DataTableService {
 
 	
 	SideWorkRepository sideWorkRepository;
-	OtRespositiry otRespositiry;
+	OtRespository otRespository;
 
-	public DataTableServiceImpl(SideWorkRepository sideWorkRepository, OtRespositiry otRespositiry) {
+	public DataTableServiceImpl(SideWorkRepository sideWorkRepository, OtRespository otRespository) {
 		super();
 		this.sideWorkRepository = sideWorkRepository;
-		this.otRespositiry = otRespositiry;
+		this.otRespository = otRespository;
 	}
 
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
@@ -88,7 +88,7 @@ public class DataTableServiceImpl implements DataTableService {
 		List<OtHistoryEntity> entity =new ArrayList<OtHistoryEntity>();
 	
 		try {
-			entity = otRespositiry.getOtAll(employeeId);
+			entity = otRespository.getOtAll(employeeId);
 		}catch (Exception e) { 
 			log.error("getOtAll >>> " + e.getMessage());
 		}
@@ -182,7 +182,7 @@ public class DataTableServiceImpl implements DataTableService {
 	public List<CalendarDto> getOtCalendar(Long employeeId) {	
 		List<OtHistoryEntity> entity = new ArrayList<OtHistoryEntity>();
 		try {
-			entity = otRespositiry.getOtAll(employeeId);
+			entity = otRespository.getOtAll(employeeId);
 		}catch (Exception e) { 
 			log.error("getEmployeeByNo >>> " + e.getMessage());
 		}

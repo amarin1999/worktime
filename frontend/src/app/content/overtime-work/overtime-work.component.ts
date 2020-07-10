@@ -8,14 +8,14 @@ import { Response } from "src/app/shared/interfaces/response";
 import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
 
 @Component({
-  selector: "app-overtime-work",
-  templateUrl: "./overtime-work.component.html",
-  styleUrls: ["./overtime-work.component.scss"]
+  selector: 'app-overtime-work',
+  templateUrl: './overtime-work.component.html',
+  styleUrls: ['./overtime-work.component.scss'],
 })
 export class OvertimeWorkComponent implements OnInit {
   img = {
     imgInsert: LayoutConstants.overtimeImagePath,
-    imgEdit: LayoutConstants.editWorkImagePath
+    imgEdit: LayoutConstants.editWorkImagePath,
   };
 
   constructor(
@@ -27,12 +27,12 @@ export class OvertimeWorkComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  //เพิ่มข้อมูล ot
+  // เพิ่มข้อมูล ot
   insertOvertimeWork(overtimeWorkItem: OvertimeWork) {
     this.spinner.show();
     const requestData = {
       ...overtimeWorkItem,
-      employeeNo: localStorage.getItem("employeeNo")
+      employeeNo: localStorage.getItem('employeeNo'),
     };
     this.overtimeWorkService
       .addOvertimeWork(requestData)
@@ -46,18 +46,18 @@ export class OvertimeWorkComponent implements OnInit {
         (response: Response) => {
           this.dialogRef.close(response);
         },
-        error => {
+        (error) => {
           this.dialogRef.close(error);
         }
       );
   }
 
-  //แก้ไขข้อมูล ot
+  // แก้ไขข้อมูล ot
   editOvertimeWork(overtimeWorkItem: OvertimeWork): void {
     this.spinner.show();
     const requestData = {
       id: this.dataForm.id,
-      ...overtimeWorkItem
+      ...overtimeWorkItem,
     };
     this.overtimeWorkService
       .editOvertimeWork(requestData)
@@ -70,14 +70,30 @@ export class OvertimeWorkComponent implements OnInit {
       .subscribe(
         (response: Response) => {
           this.overtimeWorkService
-            .setOvertimeWork(localStorage.getItem("employeeNo"))
+            .setOvertimeWork(localStorage.getItem('employeeNo'))
             .pipe(first())
             .subscribe();
           this.dialogRef.close(response);
         },
-        error => {
+        (error) => {
           this.dialogRef.close(error);
         }
       );
+  }
+
+  // ลบข้อมูล
+  deleteOvertime(otId: number): void {
+    this.spinner.show();
+    this.overtimeWorkService
+      .deleteOvertime(otId)
+      .pipe(
+        first(),
+        finalize(() => {
+          this.spinner.hide();
+        })
+      )
+      .subscribe((error) => {
+        this.dialogRef.close(error);
+      });
   }
 }

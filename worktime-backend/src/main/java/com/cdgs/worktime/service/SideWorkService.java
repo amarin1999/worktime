@@ -25,8 +25,6 @@ public interface SideWorkService {
 	
 	SideworkHistoryDto getSideworkByNo(Long no);
 	
-	
-	
 	boolean deleteSideWorktime(Long sideworkId);
 
 }

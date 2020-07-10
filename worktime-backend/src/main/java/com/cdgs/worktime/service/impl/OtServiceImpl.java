@@ -19,10 +19,11 @@ import com.cdgs.worktime.dto.OtNoListDto;
 import com.cdgs.worktime.dto.OtPostTimeDto;
 import com.cdgs.worktime.dto.OtPutTimeDto;
 import com.cdgs.worktime.dto.SideworkDateToSting;
+import com.cdgs.worktime.dto.SideworkHistoryDto;
 import com.cdgs.worktime.dto.TimeListDto;
 import com.cdgs.worktime.entity.OtHistoryEntity;
 import com.cdgs.worktime.entity.SideworkHistoryEntity;
-import com.cdgs.worktime.repository.OtRespositiry;
+import com.cdgs.worktime.repository.OtRespository;
 import com.cdgs.worktime.service.OtService;
 
 @Service
@@ -31,7 +32,7 @@ public class OtServiceImpl implements OtService {
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	@Autowired
-	OtRespositiry otRespositiry;
+	OtRespository otRespository;
 
 	@Override
 	public OtHistoryDto postOtTime(OtPostTimeDto otPostTime, EmployeeHasSideworkHistoryDto employeeHasSidework) {
@@ -48,14 +49,14 @@ public class OtServiceImpl implements OtService {
 			entity.setOtHistoryId((long) 0);
 			entities.add(entity);
 		}
-		otRespositiry.saveAll(entities);
+		otRespository.saveAll(entities);
 		return null;
 
 	}
 
 	@Override
 	public OtNoListDto getOtTime(Long id) {
-		Optional<OtHistoryEntity> entity = otRespositiry.findById(id);
+		Optional<OtHistoryEntity> entity = otRespository.findById(id);
 		return mapOtEntityToDtoNolist(entity.get());
 
 	}
@@ -91,7 +92,7 @@ public class OtServiceImpl implements OtService {
 
 	@Override
 	public OtHistoryDto putOtTime(OtPutTimeDto body) {
-		OtHistoryEntity entity = otRespositiry.getOtById(body.getId());
+		OtHistoryEntity entity = otRespository.getOtById(body.getId());
 
 		System.out.println(entity);
 		entity.setEndTime(body.getEndTime());
@@ -100,8 +101,59 @@ public class OtServiceImpl implements OtService {
 		entity.setProjectId(body.getProjectNo());
 		entity.setRemark(body.getRemark());
 		entity.setStartTime(body.getStartTime());
-		otRespositiry.save(entity);
+		otRespository.save(entity);
 		return null;
 	}
-
+	
+	@Override
+	public OtNoListDto getOtbyNo(Long no) {
+		OtHistoryEntity entity = new OtHistoryEntity();
+		try {
+			entity = otRespository.getOtById(no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getOtByNo >>> " + e.getMessage());
+		}
+		return mapListEntityToDto(entity);
+	}
+	
+	private OtNoListDto mapListEntityToDto(OtHistoryEntity entities) {
+		OtNoListDto dtoList = new OtNoListDto();
+		if (entities != null) {
+				dtoList = mapEntityToDto(entities);
+		}
+		return dtoList;
+	}
+	
+	private OtNoListDto mapEntityToDto(OtHistoryEntity entity) {
+		OtNoListDto dto = new OtNoListDto();
+		DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		dateTimeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+		
+		if(entity != null) {
+			dto.setId(entity.getOtHistoryId());
+			dto.setEmployeehasId(entity.getEmployeeHasSideworkId());
+			dto.setStartTime(dateTimeFormat.format(entity.getStartTime()));
+			dto.setEndTime(dateTimeFormat.format(entity.getEndTime()));
+			dto.setRemark(entity.getRemark());
+			dto.setLastUpdate(entity.getLastUpDate());
+			dto.setIdProject(entity.getProjectId());
+		}
+		return dto;
+	}
+	
+	@Override
+	public boolean deleteOtTime(Long OtId) {
+		try {
+			otRespository.deleteOtById(OtId);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getOt >>> " + e.getMessage());
+			return false;
+		}
+	}
+	
+	
+	
 }
