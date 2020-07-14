@@ -127,6 +127,7 @@ export class SideWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          this.sideWorkService.deleteStatus = false;
           // reload calendar
           this.sideWorkService.loadEventCalendar();
           this.sideWorkService.loadSideworkCalendar();
@@ -156,6 +157,7 @@ export class SideWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          this.sideWorkService.deleteStatus = true;
           // reload calendar
           this.sideWorkService.loadEventCalendar();
           this.sideWorkService.loadSideworkCalendar();

@@ -91,11 +91,12 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       locales: [thLocale],
+      locale: 'th',
+      firstDay: 0, // sunday
       // height: 'parent',
       aspectRatio: 2.2,
       defaultView: 'dayGridMonth',
       updateEvents: this.events,
-      locale: 'th',
       displayEventTime: false,
       header: {
         left: 'dayGridMonth,today',
@@ -118,15 +119,15 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         this.openDialogEdit(this.item);
       },
       eventMouseEnter: (el) => {
-        this.togglePanel$.next({ // เปิด layoutPanel
+        this.togglePanel$.next({
           event: el,
-          display: true,
+          display: true, // เปิด layoutPanel
         });
       },
       eventMouseLeave: (el) => {
         this.togglePanel$.next({
           event: el,
-          display: false,  // ปิด layoutPanel
+          display: false, // ปิด layoutPanel
         });
       },
     };
@@ -187,13 +188,27 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.status === 'Success') {
+      if (
+        result.status === 'Success' &&
+        this.sideworkService.deleteStatus === false
+      ) {
         this.messageService.clear();
         this.messageService.add({
           key: 'SuccessMessage',
           severity: 'success',
           summary: 'แจ้งเตือน',
           detail: 'แก้ไขการลงเวลาเรียบร้อยแล้ว',
+        });
+      } else if (
+        result.status === 'Success' &&
+        this.sideworkService.deleteStatus === true
+      ) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 'SuccessMessage',
+          severity: 'success',
+          summary: 'แจ้งเตือน',
+          detail: 'ลบรายการลงเวลาเรียบร้อยแล้ว',
         });
       } else if (result.error) {
         this.messageService.add({

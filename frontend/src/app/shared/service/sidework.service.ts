@@ -14,6 +14,7 @@ import { CalendarService } from './calendar.service';
 })
 export class SideWorkService {
   sideWorkItem = new Subject<SideWork[]>();
+  public deleteStatus = false;
 
   private changeEventCalendar = new Subject<void>();
   onLoadEventCalendar$ = this.changeEventCalendar.pipe(
