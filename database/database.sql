@@ -115,7 +115,7 @@ CREATE TABLE `sidework_history` (
   `employee_has_sidework_history_id` int(11) NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time DEFAULT NULL,
-  `work_comment` varchar(45) DEFAULT NULL,
+  `work_comment` varchar(250) DEFAULT NULL,
   `last_update_time` datetime NOT NULL,
   `work_anywhere` tinyint(4) DEFAULT NULL,
   `day` date DEFAULT NULL,
