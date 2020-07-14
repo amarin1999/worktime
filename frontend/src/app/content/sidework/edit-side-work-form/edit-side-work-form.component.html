@@ -43,12 +43,12 @@
         <mat-error
           *ngIf="formGroupSideWork.get('endTime').hasError('wrongDate')"
         >
-          * เวลาเลิกงานต้องมากกว่าเวลาเข้างาน
+          * เวลาออกงานต้องมากกว่าเวลาเข้างาน
         </mat-error>
         <mat-error
           *ngIf="formGroupSideWork.get('endTime').hasError('required')"
         >
-          * กรุณากรอกเวลาเลิกงาน
+          * กรุณากรอกเวลาออกงาน
         </mat-error>
         <ngx-material-timepicker-toggle matSuffix [for]="pickerEndTime">
           <mat-icon style="-webkit-text-fill-color:blue">schedule</mat-icon>
