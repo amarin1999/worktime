@@ -24,6 +24,7 @@ import { SideWorkService } from 'src/app/shared/service/sidework.service';
   templateUrl: './edit-side-work-form.component.html',
   styleUrls: ['./edit-side-work-form.component.scss'],
 })
+
 export class EditSideWorkFormComponent implements OnInit {
   @Input() dataForm: SideWork;
   @Output() editEmit: EventEmitter<SideWork> = new EventEmitter();
@@ -69,9 +70,11 @@ export class EditSideWorkFormComponent implements OnInit {
   compareTime(group: FormGroup): void {
     const startTime = group.get('startTime').value;
     const endTime = group.get('endTime').value;
-    if (startTime > endTime && endTime !== null) {
+    if (startTime >= endTime && endTime !== null && endTime !== '00:00') {
       group.get('endTime').setValue(undefined);
       group.get('endTime').setErrors({ wrongDate: true });
+    } else if (startTime >= endTime && endTime === '00:00') {
+      return null;
     } else {
       return null;
     }
@@ -83,7 +86,6 @@ export class EditSideWorkFormComponent implements OnInit {
     if (this.formGroupSideWork.valid) {
       this.editEmit.emit(this.formGroupSideWork.getRawValue());
     }
-
   }
 
   deleteSidework(): void {
