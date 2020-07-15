@@ -94,6 +94,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       locale: 'th',
       firstDay: 0, // sunday
       // height: 'parent',
+      showNonCurrentDates: false,
       aspectRatio: 2.2,
       defaultView: 'dayGridMonth',
       updateEvents: this.events,
