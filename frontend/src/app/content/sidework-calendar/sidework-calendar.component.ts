@@ -94,6 +94,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       locale: 'th',
       firstDay: 0, // sunday
       // height: 'parent',
+      showNonCurrentDates: false,
       aspectRatio: 2.2,
       defaultView: 'dayGridMonth',
       updateEvents: this.events,
@@ -139,7 +140,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
   openDialogInsert(type: string): void {
     const configDialog: MatDialogConfig<any> = {
-      disableClose: true,
+      disableClose: false,
       autoFocus: false,
       data: { type, dateClickValue: this.dateCilckValue },
     };
@@ -181,7 +182,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
   openDialogEdit(itemSideWork: SideWork): void {
     const configDialog: MatDialogConfig<object> = {
-      disableClose: true,
+      disableClose: false,
       autoFocus: false,
       data: { ...itemSideWork, type: 'edit', sideworkId: this.searchId },
     };
