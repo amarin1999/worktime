@@ -163,9 +163,19 @@ export class SideWorkComponent implements OnInit {
           this.sideWorkService.loadSideworkCalendar();
         })
       )
-      .subscribe((error) => {
-        this.dialogRef.close(error);
-      });
+      .subscribe(
+        (response: Response) => {
+          // patch subject sideWork
+          this.sideWorkService
+            .setSideWork(localStorage.getItem('employeeNo'))
+            .pipe(first())
+            .subscribe();
+          this.dialogRef.close(response);
+        },
+        (error) => {
+          this.dialogRef.close(error);
+        }
+      );
   }
 
 }

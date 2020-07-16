@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { NgxSpinnerService } from "ngx-spinner";
-import { finalize, first } from "rxjs/operators";
-import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
-import { OvertimeWork } from "src/app/shared/interfaces/overtime";
-import { Response } from "src/app/shared/interfaces/response";
-import { OvertimeWorkService } from "src/app/shared/service/overtime.service";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize, first } from 'rxjs/operators';
+import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
+import { OvertimeWork } from 'src/app/shared/interfaces/overtime';
+import { Response } from 'src/app/shared/interfaces/response';
+import { OvertimeWorkService } from 'src/app/shared/service/overtime.service';
 
 @Component({
   selector: 'app-overtime-work',
@@ -69,6 +69,7 @@ export class OvertimeWorkComponent implements OnInit {
       )
       .subscribe(
         (response: Response) => {
+          // patch subject overtime
           this.overtimeWorkService
             .setOvertimeWork(localStorage.getItem('employeeNo'))
             .pipe(first())
@@ -83,7 +84,6 @@ export class OvertimeWorkComponent implements OnInit {
 
   // ลบข้อมูล
   deleteOvertime(otId: number): void {
-    this.spinner.show();
     this.overtimeWorkService
       .deleteOvertime(otId)
       .pipe(
@@ -92,8 +92,18 @@ export class OvertimeWorkComponent implements OnInit {
           this.spinner.hide();
         })
       )
-      .subscribe((error) => {
-        this.dialogRef.close(error);
-      });
+      .subscribe(
+        (response: Response) => {
+          // patch subject overtime
+          this.overtimeWorkService
+            .setOvertimeWork(localStorage.getItem('employeeNo'))
+            .pipe(first())
+            .subscribe();
+          this.dialogRef.close(response);
+        },
+        (error) => {
+          this.dialogRef.close(error);
+        }
+      );
   }
 }

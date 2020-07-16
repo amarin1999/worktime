@@ -114,7 +114,7 @@ export class EditSideWorkFormComponent implements OnInit {
       .pipe(first())
       .subscribe((confirmStatus: boolean) => {
         if (confirmStatus) {
-          this.deleteEmit.emit(this.data.sideworkId);
+          this.deleteEmit.emit(this.data.id);
         }
       });
   }
