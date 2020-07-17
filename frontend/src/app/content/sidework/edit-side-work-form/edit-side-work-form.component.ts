@@ -18,13 +18,13 @@ import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
 import { SideWorkService } from 'src/app/shared/service/sidework.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-side-work-form',
   templateUrl: './edit-side-work-form.component.html',
   styleUrls: ['./edit-side-work-form.component.scss'],
 })
-
 export class EditSideWorkFormComponent implements OnInit {
   @Input() dataForm: SideWork;
   @Output() editEmit: EventEmitter<SideWork> = new EventEmitter();
@@ -52,7 +52,7 @@ export class EditSideWorkFormComponent implements OnInit {
     this.formGroupSideWork = this.buildForm.group(
       {
         date: [
-          { value: this.dataForm.date, disabled: true },
+          { value: this.transformDate(this.dataForm.date), disabled: true },
           [Validators.required],
         ],
         startTime: [this.dataForm.startTime, [Validators.required]],
@@ -64,6 +64,11 @@ export class EditSideWorkFormComponent implements OnInit {
         validators: [this.compareTime],
       }
     );
+  }
+
+  transformDate(date: Date): string { // แปลงเป็น พศ.แล้วเอาเข้า formGroup
+    const dateFormat = moment(date, 'DD/MM/YYYY').add(543, 'year').format('DD/MM/YYYY');
+    return dateFormat;
   }
 
   // validate เวลา

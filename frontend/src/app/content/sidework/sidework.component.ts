@@ -67,8 +67,8 @@ export class SideWorkComponent implements OnInit {
     this.spinner.show();
     switch (this.dataForm.type) {
       case 'edit': {
-        // set วันที่ format
-        const dateFormat = moment(formItem.date, 'DD/MM/YYYY').format(
+        // set วันที่ format 
+        const dateFormat = moment(formItem.date, 'DD/MM/YYYY').subtract(543, 'year').format(
           'YYYY-MM-DD'
         );
         delete formItem.date;
