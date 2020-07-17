@@ -100,25 +100,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       updateEvents: this.events,
       displayEventTime: false,
       header: {
-        left: 'focusToday,today',
+        left: 'today',
         center: 'title',
         right: 'prev,next ',
-      },
-      buttonText: {
-        today: 'เดือนนี้',
-      },
-      customButtons: {
-        focusToday: {
-          text: 'วันนี้',
-          click: () => {
-            (document.querySelector(
-              '.fc-day-top.fc-today'
-            ) as HTMLElement).style.backgroundColor = '#fd8a8a';
-            (document.querySelector(
-              '.fc-day-top.fc-today'
-            ) as HTMLElement).style.fontWeight = 'bolder';
-          },
-        },
       },
       editable: true,
       selectable: true,
