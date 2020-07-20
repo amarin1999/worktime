@@ -100,7 +100,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       updateEvents: this.events,
       displayEventTime: false,
       header: {
-        left: 'dayGridMonth,today',
+        left: 'today',
         center: 'title',
         right: 'prev,next ',
       },

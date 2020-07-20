@@ -121,16 +121,19 @@ textarea:disabled {
   background-color: #758ffd6e !important;
 }
 
-// .fc-day.fc-widget-content.fc-other-month.fc-past {
-//   background-color: #758ffd6e !important;
-// }
-
-.fc-day.fc-widget-content.fc-disabled-day{
+.fc-day.fc-widget-content.fc-disabled-day {
   background-color: #ffffff !important;
 }
+
 .fc-title {
   white-space: normal !important;
 }
+
+.fc-today {
+  background-color: #f6f7c0 !important;
+  font-weight: bolder !important;
+}
+
 
 @keyframes fadeFromTop {
   0% {
