@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
+
 @Pipe({
   name: "workAnywhere"
 })
@@ -11,4 +12,5 @@ export class WorkAnywherePipe implements PipeTransform {
       return "";
     }
   }
+
 }

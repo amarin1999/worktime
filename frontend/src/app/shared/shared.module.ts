@@ -31,9 +31,11 @@ import { ScrollPanelModule } from "primeng/scrollpanel";
 import { EmployeeService } from "./service/employee.service";
 //pipe
 import { WorkAnywherePipe } from "./pipe/work-anywhere.pipe";
+import { FormatYearPipe } from './pipe/format-year.pipe';
+import { FormatYearOtPipe } from './pipe/format-year-ot.pipe';
 
 @NgModule({
-  declarations: [WorkAnywherePipe],
+  declarations: [WorkAnywherePipe, FormatYearPipe, FormatYearOtPipe],
   imports: [],
 
   exports: [
@@ -50,7 +52,9 @@ import { WorkAnywherePipe } from "./pipe/work-anywhere.pipe";
     HttpClientModule,
     NgxSpinnerModule,
     WorkAnywherePipe,
-    ScrollPanelModule
+    ScrollPanelModule,
+    FormatYearPipe,
+    FormatYearOtPipe
   ],
   providers: [EmployeeService, AuthService]
 })
