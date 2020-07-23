@@ -1,18 +1,47 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ApiConstants } from '../constants/ApiConstants';
 import { OvertimeWork } from '../interfaces/overtime';
 import { Observable, Subject } from 'rxjs';
 import { Response } from '../interfaces/response';
+import { CalendarService } from './calendar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OvertimeWorkService {
   overtimeWorkItem = new Subject<OvertimeWork[]>();
+  public deleteStatus = false;
+  
+  private changeEventCalendar = new Subject<void>();
+  onLoadEventCalendar$ = this.changeEventCalendar.pipe(
+    switchMap((_) =>
+      this.calendarService.getOtEventForCalendar(
+        localStorage.getItem('employeeNo')
+      )
+    )
+  );
 
-  constructor(private http: HttpClient) {}
+  private changeOvertimeCalendar = new Subject<void>();
+  onLoadOvertimeCalendar$ = this.changeOvertimeCalendar.pipe(
+    switchMap((__) =>
+      this.getOvertimeWorkCalendar(localStorage.getItem('employeeNo'))
+    )
+  );
+
+  constructor(
+    private http: HttpClient, 
+    private calendarService: CalendarService
+    ) {}
+
+    loadEventCalendar() {
+      this.changeEventCalendar.next();
+    }
+
+    loadOvertimeCalendar() {
+      this.changeOvertimeCalendar.next();
+    }
 
   addOvertimeWork(body: OvertimeWork): Observable<Response> {
     try {
@@ -59,6 +88,14 @@ export class OvertimeWorkService {
     } catch (error) {
       console.table(error);
     }
+  }
+
+  getOvertimeWorkCalendar(id: string) {
+    return this.http
+      .get<{ data: OvertimeWork[] }>(
+        `${ApiConstants.baseURl}/datatable/getot/${id}`
+      )
+      .pipe(map((res) => res.data));
   }
 
   getOvertimeWork(): Subject<OvertimeWork[]> {

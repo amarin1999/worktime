@@ -207,7 +207,9 @@ public class DataTableServiceImpl implements DataTableService {
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 			dto.setId(entity.getOtHistoryId());
-			dto.setTitle("OT: "+timeFormat.format(entity.getStartTime())+" ถึง  "+timeFormat.format(entity.getEndTime()));
+			//dto.setTitle("OT: "+timeFormat.format(entity.getStartTime())+" ถึง  "+timeFormat.format(entity.getEndTime()));
+			dto.setTitle("รหัสโครงการ : "+entity.getProjectId()+"\nเวลา : "+timeFormat.format(entity.getStartTime())+" ถึง  "
+					+timeFormat.format(entity.getEndTime()));
 			dto.setStart(entity.getStartTime());
 //			dto.setStartTime(entity.getStartTime());
 //			dto.setEndTime(entity.getEndTime());

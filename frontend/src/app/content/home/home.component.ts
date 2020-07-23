@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     {
       title: "ทำงานล่วงเวลา",
       img: LayoutConstants.overtimeImagePath,
-      link: OvertimeWorkComponent,
+      link: "main/overtime-calendar",
       type: "add",
     },
     {

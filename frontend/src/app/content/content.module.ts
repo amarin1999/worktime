@@ -58,6 +58,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { CalendarModule } from 'primeng/calendar';
 import { SideworkCalendarComponent } from './sidework-calendar/sidework-calendar.component';
 import { CalendarService } from '../shared/service/calendar.service';
+import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime-work-calendar.component';
 @NgModule({
   declarations: [
     ContentComponent,
@@ -74,6 +75,7 @@ import { CalendarService } from '../shared/service/calendar.service';
     InsertOvertimeWorkFormComponent,
     InsertSideWorkFormComponent,
     SideworkCalendarComponent,
+    OvertimeWorkCalendarComponent,
   ],
 
   imports: [

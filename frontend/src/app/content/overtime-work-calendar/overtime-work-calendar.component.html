@@ -1,0 +1,19 @@
+<!-- <app-banner [text]="'ปฏิทินการทำงานนอกสถานที่'"></app-banner> -->
+<div style="color: #333377; font-size: 2.2em; text-align: center;">ปฏิทินการทำงานนอกสถานที่</div>
+<div class="p-grid p-justify-center animation-page">
+    <div class="p-col-10" > 
+        <p-fullCalendar #calendar [options]="options" [events]="events" > 
+        </p-fullCalendar>
+    </div>
+</div>
+<p-toast key="errorMessage" position="bottom-center"></p-toast>
+<p-toast key="SuccessMessage" position="bottom-center"></p-toast>
+
+<p-overlayPanel #op >
+    <div *ngIf="message == null; else messegeNotNull">
+        หมายเหตุ: ไม่มี
+    </div>
+    <ng-template #messegeNotNull>
+        หมายเหตุ: {{message}}
+    </ng-template>
+</p-overlayPanel>

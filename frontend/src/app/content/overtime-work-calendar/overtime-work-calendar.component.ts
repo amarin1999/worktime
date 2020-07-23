@@ -13,13 +13,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarService } from 'src/app/shared/service/calendar.service';
 import thLocale from '@fullcalendar/core/locales/th';
-import { SideWorkComponent } from '../sidework/sidework.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'primeng/api';
 import { first, finalize, map, debounceTime, observeOn } from 'rxjs/operators';
-import { Calendar } from 'src/app/shared/interfaces/calendar';
-import { SideWork } from 'src/app/shared/interfaces/sidework';
-import { SideWorkService } from 'src/app/shared/service/sidework.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {
   Subject,
@@ -30,20 +26,25 @@ import {
 } from 'rxjs';
 import { FullCalendar } from 'primeng/fullcalendar';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { OvertimeWork } from 'src/app/shared/interfaces/overtime';
+import { OvertimeWorkService } from 'src/app/shared/service/overtime.service';
+import { OvertimeWorkComponent } from '../overtime-work/overtime-work.component';
+import { OvertimeCalendar } from 'src/app/shared/interfaces/overtime-calendar';
+
 
 @Component({
-  selector: 'app-sidework-calendar',
-  templateUrl: './sidework-calendar.component.html',
-  styleUrls: ['./sidework-calendar.component.scss'],
+  selector: 'app-overtime-work-calendar',
+  templateUrl: './overtime-work-calendar.component.html',
+  styleUrls: ['./overtime-work-calendar.component.scss']
 })
-export class SideworkCalendarComponent implements OnInit, OnDestroy {
+export class OvertimeWorkCalendarComponent implements OnInit, OnDestroy {
   @ViewChild('op') op: OverlayPanel;
-  sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
-  events: Calendar[];
+  overtimeHistory: Subject<OvertimeWork[]> = this.getHistoryOvertime();
+  events: OvertimeCalendar[];
   options: any;
   searchId: number;
-  data: SideWork[];
-  item: SideWork;
+  data: OvertimeWork[];
+  item: OvertimeWork;
   dateCilckValue: Date;
   subscription = new Subscription();
   message: string;
@@ -53,8 +54,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private messageService: MessageService,
     private calendarService: CalendarService,
-    private sideworkService: SideWorkService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private overtimeWorkService: OvertimeWorkService
   ) {}
 
   ngOnDestroy(): void {
@@ -64,18 +65,18 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // โหลด sidework event ขึ้นบน calendar
     this.subscription.add(
-      this.sideworkService.onLoadEventCalendar$.subscribe(
+      this.overtimeWorkService.onLoadEventCalendar$.subscribe(
         (event) => (this.events = event)
       )
     );
-    this.sideworkService.loadEventCalendar();
+    this.overtimeWorkService.loadEventCalendar();
     // โหลด data sidework มาดึงขึ้น editdialog form
     this.subscription.add(
-      this.sideworkService.onLoadSideworkCalendar$.subscribe(
+      this.overtimeWorkService.onLoadOvertimeCalendar$.subscribe(
         (data) => (this.data = data)
       )
     );
-    this.sideworkService.loadSideworkCalendar();
+    this.overtimeWorkService.loadOvertimeCalendar();
     // debounceTime ของ layoutPanel
     this.subscription.add(
       this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
@@ -134,8 +135,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     };
   }
 
-  getHistorySideWork(): Subject<SideWork[]> {
-    return this.sideworkService.getSideWork();
+  getHistoryOvertime(): Subject<OvertimeWork[]> {
+    return this.overtimeWorkService.getOvertimeWork();
   }
 
   openDialogInsert(type: string): void {
@@ -144,7 +145,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       autoFocus: false,
       data: { type, dateClickValue: this.dateCilckValue },
     };
-    const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
+    const dialogRef = this.dialog.open(OvertimeWorkComponent, configDialog);
     dialogRef
       .afterClosed()
       .pipe(first())
@@ -180,18 +181,18 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       );
   }
 
-  openDialogEdit(itemSideWork: SideWork): void {
+  openDialogEdit(itemOvertimeWork: OvertimeWork): void {
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
       autoFocus: false,
-      data: { ...itemSideWork, type: 'edit', sideworkId: this.searchId },
+      data: { ...itemOvertimeWork, type: 'edit', OvertimeWorkId: this.searchId },
     };
 
-    const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
+    const dialogRef = this.dialog.open(OvertimeWorkComponent, configDialog);
     dialogRef.afterClosed().subscribe((result) => {
       if (
         result.status === 'Success' &&
-        this.sideworkService.deleteStatus === false
+        this.overtimeWorkService.deleteStatus === false
       ) {
         this.messageService.clear();
         this.messageService.add({
@@ -202,7 +203,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         });
       } else if (
         result.status === 'Success' &&
-        this.sideworkService.deleteStatus === true
+        this.overtimeWorkService.deleteStatus === true
       ) {
         this.messageService.clear();
         this.messageService.add({
