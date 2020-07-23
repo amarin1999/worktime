@@ -1,19 +1,15 @@
-<br/>
+<br />
 <div class="p-grid" id="input-search">
-    <mat-form-field appearance="outline">
-      <mat-label><mat-icon>search</mat-icon> ค้นหา...</mat-label>
-      <input (keyup)="applyFilter($event)" matInput />
-    </mat-form-field>
- 
+  <mat-form-field appearance="outline">
+    <mat-label>
+      <mat-icon>search</mat-icon> ค้นหา...
+    </mat-label>
+    <input (keyup)="applyFilter($event)" matInput />
+  </mat-form-field>
+
 </div>
 
-<table
-  class="mat-elevation-z8"
-  matSort
-  mat-table
-  [dataSource]="dataSource"
-  style="width: 100%;"
->
+<table class="mat-elevation-z8" matSort mat-table [dataSource]="dataSource" style="width: 100%;">
   <!-- day Column -->
   <ng-container matColumnDef="date">
     <th id="date" mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -21,7 +17,7 @@
       <span id="sortItem">&nbsp;วันที่</span>
     </th>
     <td mat-cell class="td-time" *matCellDef="let element">
-      {{ element.date }}
+      {{ element.date | formatYear }}
     </td>
   </ng-container>
 
@@ -65,19 +61,10 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr
-    (click)="openDialogEdit(row)"
-    matTooltip="คลิกเพื่อแก้ไข"
-    matTooltipClass="tooltip-primary"
-    class="row-item"
-    mat-row
-    *matRowDef="let row; columns: displayedColumns"
-  ></tr>
+  <tr (click)="openDialogEdit(row)" matTooltip="คลิกเพื่อแก้ไข" matTooltipClass="tooltip-primary" class="row-item"
+    mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
-<mat-paginator
-  [pageSizeOptions]="[5, 10, 15, 20]"
-  showFirstLastButtons
-></mat-paginator>
+<mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
 <p-toast key="errorMessage" position="bottom-center"></p-toast>
 <p-toast key="SuccessMessage" position="bottom-center"></p-toast>
