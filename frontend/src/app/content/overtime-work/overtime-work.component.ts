@@ -23,9 +23,9 @@ export class OvertimeWorkComponent implements OnInit {
     private overtimeWorkService: OvertimeWorkService,
     private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public dataForm: OvertimeWork
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // เพิ่มข้อมูล ot
   insertOvertimeWork(overtimeWorkItem: OvertimeWork) {
@@ -40,6 +40,9 @@ export class OvertimeWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          // reload calendar
+          this.overtimeWorkService.loadEventCalendar();
+          this.overtimeWorkService.loadOvertimeCalendar();
         })
       )
       .subscribe(
@@ -65,6 +68,10 @@ export class OvertimeWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          this.overtimeWorkService.deleteStatus = false;
+          // reload calendar
+          this.overtimeWorkService.loadEventCalendar();
+          this.overtimeWorkService.loadOvertimeCalendar();
         })
       )
       .subscribe(
@@ -90,6 +97,10 @@ export class OvertimeWorkComponent implements OnInit {
         first(),
         finalize(() => {
           this.spinner.hide();
+          this.overtimeWorkService.deleteStatus = true;
+          // reload calendar
+          this.overtimeWorkService.loadEventCalendar();
+          this.overtimeWorkService.loadOvertimeCalendar();
         })
       )
       .subscribe(
