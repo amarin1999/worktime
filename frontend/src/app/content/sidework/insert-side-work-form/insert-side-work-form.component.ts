@@ -47,7 +47,7 @@ export class InsertSideWorkFormComponent implements OnInit {
     private route: Router,
     private sideworkService: SideWorkService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createFormSideWork();

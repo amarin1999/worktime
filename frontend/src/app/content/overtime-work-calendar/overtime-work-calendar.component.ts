@@ -56,7 +56,7 @@ export class OvertimeWorkCalendarComponent implements OnInit, OnDestroy {
     private calendarService: CalendarService,
     private spinner: NgxSpinnerService,
     private overtimeWorkService: OvertimeWorkService
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
