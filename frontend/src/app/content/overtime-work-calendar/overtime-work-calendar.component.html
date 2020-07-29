@@ -10,7 +10,7 @@
 <p-toast key="SuccessMessage" position="bottom-center"></p-toast>
 
 <p-overlayPanel #op>
-    <div *ngIf="message == null; else messegeNotNull">
+    <div *ngIf="message == null || message == ''; else messegeNotNull">
         หมายเหตุ: ไม่มี
     </div>
     <ng-template #messegeNotNull>
