@@ -52,10 +52,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private messageService: MessageService,
-    private calendarService: CalendarService,
-    private sideworkService: SideWorkService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private sideworkService: SideWorkService  
+    ) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

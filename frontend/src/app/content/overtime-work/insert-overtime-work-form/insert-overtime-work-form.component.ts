@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, Inject } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { first } from "rxjs/operators";
 import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { ConfirmDialogComponent } from "../../confirm-dialog/confirm-dialog.component";
@@ -21,7 +21,8 @@ export class InsertOvertimeWorkFormComponent implements OnInit {
 
   constructor(
     private buildForm: FormBuilder,
-    private dialogConfirm: MatDialog
+    private dialogConfirm: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +32,8 @@ export class InsertOvertimeWorkFormComponent implements OnInit {
 
   // สร้างฟอร์ม
   buildFormOvertime(): void {
-    this.formGroupOvertimeWork = this.buildForm.group({
+    this.formGroupOvertimeWork = this.buildForm.group(
+      {
       timeRange: new FormArray([]),
       projectNo: [null, [Validators.required, Validators.maxLength(45)]],
       remark: [null, [Validators.maxLength(250)]]

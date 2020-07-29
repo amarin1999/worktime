@@ -53,8 +53,6 @@ export class OvertimeWorkCalendarComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private messageService: MessageService,
-    private calendarService: CalendarService,
-    private spinner: NgxSpinnerService,
     private overtimeWorkService: OvertimeWorkService
   ) {}
 
@@ -63,14 +61,14 @@ export class OvertimeWorkCalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // โหลด sidework event ขึ้นบน calendar
+    // โหลด overtime event ขึ้นบน calendar
     this.subscription.add(
       this.overtimeWorkService.onLoadEventCalendar$.subscribe(
         (event) => (this.events = event)
       )
     );
     this.overtimeWorkService.loadEventCalendar();
-    // โหลด data sidework มาดึงขึ้น editdialog form
+    // โหลด data overtime มาดึงขึ้น editdialog form
     this.subscription.add(
       this.overtimeWorkService.onLoadOvertimeCalendar$.subscribe(
         (data) => (this.data = data)
@@ -80,6 +78,8 @@ export class OvertimeWorkCalendarComponent implements OnInit, OnDestroy {
     // debounceTime ของ layoutPanel
     this.subscription.add(
       this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
+        console.log(result.event)
+        console.log(this.message)
         if (result.display) {
           this.message = result.event.event.extendedProps.remark;
           this.op.toggle(result.event.jsEvent);

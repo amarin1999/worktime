@@ -1,5 +1,4 @@
-<!-- <app-banner [text]="'ปฏิทินการทำงานนอกสถานที่'"></app-banner> -->
-<div style="color: #333377; font-size: 2.2em; text-align: center;">ปฏิทินการทำงานนอกสถานที่</div>
+<div style="color: #333377; font-size: 2.2em; text-align: center;">ปฏิทินการลงเวลาทำงานล่วงเวลา</div>
 <div class="p-grid p-justify-center animation-page">
     <div class="p-col-10" > 
         <p-fullCalendar #calendar [options]="options" [events]="events" > 
@@ -10,7 +9,7 @@
 <p-toast key="SuccessMessage" position="bottom-center"></p-toast>
 
 <p-overlayPanel #op >
-    <div *ngIf="message == null; else messegeNotNull">
+    <div *ngIf="message == null || message == ''; else messegeNotNull">
         หมายเหตุ: ไม่มี
     </div>
     <ng-template #messegeNotNull>

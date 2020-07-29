@@ -38,6 +38,7 @@ import { WorkAnywherePipe } from '../shared/pipe/work-anywhere.pipe';
 import { OvertimeWorkService } from '../shared/service/overtime.service';
 import { SideWorkService } from '../shared/service/sidework.service';
 import { SharedModule } from '../shared/shared.module';
+import { CalendarService } from '../shared/service/calendar.service';
 // component
 
 // route
@@ -57,7 +58,6 @@ import { InsertSideWorkFormComponent } from './sidework/insert-side-work-form/in
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { CalendarModule } from 'primeng/calendar';
 import { SideworkCalendarComponent } from './sidework-calendar/sidework-calendar.component';
-import { CalendarService } from '../shared/service/calendar.service';
 import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime-work-calendar.component';
 @NgModule({
   declarations: [

@@ -3,13 +3,13 @@ export interface OvertimeCalendar {
     title?: string;
     timeRange?: [
         {
-          startTime: Date;
-          endTime: Date;
+          start: Date;
+          end: Date;
         }
       ];
     startTime?: Date;
     endTime?: Date;
-    projectNo?: boolean;
+    projectNo?: string;
     remark?: string;
     employeeNo?: string;
 }
