@@ -211,6 +211,8 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setTitle("รหัสโครงการ : "+entity.getProjectId()+"\nเวลา : "+timeFormat.format(entity.getStartTime())+" ถึง  "
 					+timeFormat.format(entity.getEndTime()));
 			dto.setStart(entity.getStartTime());
+			dto.setEnd(entity.getEndTime());
+			dto.setRemark(entity.getRemark());
 //			dto.setStartTime(entity.getStartTime());
 //			dto.setEndTime(entity.getEndTime());
 		return dto;
