@@ -54,7 +54,7 @@ export class OvertimeWorkCalendarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private messageService: MessageService,
     private overtimeWorkService: OvertimeWorkService
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

@@ -25,7 +25,9 @@ export class OvertimeWorkComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dataForm: OvertimeWork
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.overtimeWorkService.loadEventCalendar();
+  }
 
   // เพิ่มข้อมูล ot
   insertOvertimeWork(overtimeWorkItem: OvertimeWork) {
@@ -91,6 +93,7 @@ export class OvertimeWorkComponent implements OnInit {
 
   // ลบข้อมูล
   deleteOvertime(otId: number): void {
+    this.spinner.show();
     this.overtimeWorkService
       .deleteOvertime(otId)
       .pipe(
