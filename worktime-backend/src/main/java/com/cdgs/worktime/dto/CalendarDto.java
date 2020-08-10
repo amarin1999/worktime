@@ -24,5 +24,5 @@ public class CalendarDto implements Serializable {
 	private Date startTime;
 	private Date endTime;
 	private String remark;
-	private Boolean workAnyWhere;
+	private Integer workAnyWhere;
 }

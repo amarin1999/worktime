@@ -20,7 +20,7 @@ public class SideWorkPutTimeDto implements Serializable {
 	private Long id;
 	private String startTime;
 	private String endTime;
-	private Boolean workAnyWhere;
+	private Integer workAnyWhere;
 	private String remark;
 	
 }

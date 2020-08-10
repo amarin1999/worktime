@@ -10,44 +10,28 @@
     <div class="{{ formGrid }}"></div>
     <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label><mat-icon>call_missed</mat-icon> เวลาเข้างาน</mat-label>
-        <input
-          matInput
-          formControlName="startTime"
-          [ngxTimepicker]="pickerStartTime"
-          [format]="24"
-          readonly
-        />
+        <mat-label>
+          <mat-icon>call_missed</mat-icon> เวลาเข้างาน
+        </mat-label>
+        <input matInput formControlName="startTime" [ngxTimepicker]="pickerStartTime" [format]="24" readonly />
         <ngx-material-timepicker-toggle matSuffix [for]="pickerStartTime">
         </ngx-material-timepicker-toggle>
         <ngx-material-timepicker #pickerStartTime></ngx-material-timepicker>
-        <mat-error
-          *ngIf="formGroupSideWork.get('startTime').hasError('required')"
-        >
+        <mat-error *ngIf="formGroupSideWork.get('startTime').hasError('required')">
           * กรุณากรอกเวลาเข้างาน
         </mat-error>
       </mat-form-field>
     </div>
     <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label
-          ><mat-icon>call_missed_outgoing</mat-icon> เวลาออกงาน</mat-label
-        >
-        <input
-          matInput
-          formControlName="endTime"
-          [ngxTimepicker]="pickerEndTime"
-          [format]="24"
-          readonly
-        />
-        <mat-error
-          *ngIf="formGroupSideWork.get('endTime').hasError('wrongDate')"
-        >
+        <mat-label>
+          <mat-icon>call_missed_outgoing</mat-icon> เวลาออกงาน
+        </mat-label>
+        <input matInput formControlName="endTime" [ngxTimepicker]="pickerEndTime" [format]="24" readonly />
+        <mat-error *ngIf="formGroupSideWork.get('endTime').hasError('wrongDate')">
           * เวลาออกงานต้องมากกว่าเวลาเข้างาน
         </mat-error>
-        <mat-error
-          *ngIf="formGroupSideWork.get('endTime').hasError('required')"
-        >
+        <mat-error *ngIf="formGroupSideWork.get('endTime').hasError('required')">
           * กรุณากรอกเวลาออกงาน
         </mat-error>
         <ngx-material-timepicker-toggle matSuffix [for]="pickerEndTime">
@@ -59,36 +43,51 @@
 
     <div class="p-col-12">
       <div class="{{ formGrid }}">
-        <mat-checkbox
-          formControlName="workAnyWhere"
-          [color]="'primary'"
-          class="example-margin"
-        >
+        <mat-checkbox formControlName="workAnyWhere" [color]="'primary'" class="example-margin">
           Work Anywhere
         </mat-checkbox>
+        <div *ngIf="formGroupSideWork.get('workAnyWhere').value == 1 || formGroupSideWork.get('workAnyWhere').value == 2 ||
+        formGroupSideWork.get('workAnyWhere').value == 3">
+          <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH">
+          </p-radioButton>
+          &nbsp;&nbsp;&nbsp;
+          <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Side">
+          </p-radioButton>
+          &nbsp;&nbsp;&nbsp;
+          <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other">
+          </p-radioButton>
+        </div>
       </div>
     </div>
+
+    <div>
+      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;"
+        *ngIf="formGroupSideWork.get('workAnyWhere').value == 2 || 
+        formGroupSideWork.get('workAnyWhere').value == 3 ">
+        &nbsp;&nbsp;&nbsp; * กรุณากรอกหมายเหตุ
+      </mat-error>
+    </div>
+
     <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width:100%">
-        <mat-label> <mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
+        <mat-label>
+          <mat-icon>subject</mat-icon> หมายเหตุ
+        </mat-label>
         <textarea formControlName="remark" matInput> </textarea>
       </mat-form-field>
-      <mat-error
-        class="animation-page"
-        style="font-size: 10.5px;margin-top: -17px;"
-        *ngIf="formGroupSideWork.get('remark').hasError('maxlength')"
-      >
+      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;"
+        *ngIf="formGroupSideWork.get('remark').hasError('maxlength')">
         * หมายเหตุใส่ข้อมูลได้ไม่เกิน 250 ตัวอักษร
       </mat-error>
     </div>
   </div>
-  <p-messages ></p-messages>
+  <p-messages></p-messages>
 
   <mat-dialog-actions class="wrap-btn">
-    <button mat-button [color]="'warn'" mat-raised-button type="button" (click)="deleteSidework()"> 
+    <button mat-button [color]="'warn'" mat-raised-button type="button" (click)="deleteSidework()">
       <mat-icon>delete</mat-icon> ลบรายการ
     </button>
-    <button mat-button mat-raised-button mat-dialog-close >
+    <button mat-button mat-raised-button mat-dialog-close>
       <mat-icon>clear</mat-icon> ยกเลิก
     </button>
     &nbsp;

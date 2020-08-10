@@ -22,6 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatRadioModule } from '@angular/material/radio';
 // primgng
 import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
@@ -30,6 +31,7 @@ import { ToastModule } from 'primeng/toast';
 import { CoreModule } from '../core/core.module';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import {RadioButtonModule} from 'primeng/radiobutton';
 // guard
 import { AuthGuard } from '../shared/guard/auth.guard';
 // pipe
@@ -99,6 +101,8 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatRadioModule,
+    RadioButtonModule,
     // DateTime
     MatDatepickerModule,
     NgxMaterialTimepickerModule,
@@ -117,7 +121,8 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
     OvertimeWorkService,
     WorkAnywherePipe,
     CalendarService,
+    
   ],
   exports: [ContentComponent],
 })
-export class ContentModule {}
+export class ContentModule { }

@@ -55,7 +55,7 @@ public class SideworkHistoryEntity implements Serializable {
 	private String remark;
 
 	@Column(name = "work_anywhere")
-	private Boolean workAnyWhere;
+	private Integer workAnyWhere;
 
 	@Column(name = "last_update_time")
 	@Temporal(TemporalType.TIMESTAMP)

@@ -23,6 +23,6 @@ public class SideworkHistoryDto implements Serializable {
 	private Date endTime;
 	private String remark;
 	private Date lastUpdate;
-	private Boolean workAnyWhere;
+	private Integer workAnyWhere;
 	
 }

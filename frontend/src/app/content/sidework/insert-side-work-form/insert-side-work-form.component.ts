@@ -28,6 +28,7 @@ import { SideWorkService } from 'src/app/shared/service/sidework.service';
   styleUrls: ['./insert-side-work-form.component.scss'],
 })
 export class InsertSideWorkFormComponent implements OnInit {
+
   @Input('dateValid') dateValid: { status: boolean };
   @Output() insertEmit: EventEmitter<SideWork> = new EventEmitter();
   @Output() checkDateEmit: EventEmitter<any> = new EventEmitter();
@@ -46,27 +47,61 @@ export class InsertSideWorkFormComponent implements OnInit {
     private dialogConfirm: MatDialog,
     private route: Router,
     private sideworkService: SideWorkService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    this.createFormSideWork();
+    //this.createFormSideWork();
+    this.bulidForm();
+    this.setWorkAnyWhereSelectedValidators();
   }
 
   // สร้าง form
-  createFormSideWork(): void {
-    this.formGroupSideWork = this.buildForm.group(
-      {
-        date: [this.data.dateClickValue, [Validators.required]],
+  // createFormSideWork(): void {
+  //   this.formGroupSideWork = this.buildForm.group(
+  //     {
+  //       date: [this.data.dateClickValue, [Validators.required]],
+  //       startTime: ['08:00', [Validators.required]],
+  //       endTime: ['17:00', [Validators.required]],
+  //       workAnyWhere: [true],
+  //       remark: [null, [Validators.maxLength(250)]],
+  //       workAnyWhereSelected: [null],
+  //     },
+  //     {
+  //       validators: [this.compareTime],
+  //     }
+  //   );
+  // }
+
+  bulidForm(){
+    this.formGroupSideWork = this.formBuilder.group({
+      date: [this.data.dateClickValue, [Validators.required]],
         startTime: ['08:00', [Validators.required]],
         endTime: ['17:00', [Validators.required]],
-        workAnyWhere: [true],
+        workAnyWhere: [1],
         remark: [null, [Validators.maxLength(250)]],
-      },
-      {
-        validators: [this.compareTime],
+    },
+    {
+      validators: [this.compareTime],
+     });
+  }
+
+  setWorkAnyWhereSelectedValidators(){
+    const remarkControl = this.formGroupSideWork.get('remark');
+
+    this.formGroupSideWork.get('workAnyWhere').valueChanges.subscribe(workAnyWhere => {
+      if(workAnyWhere == 1){
+        remarkControl.setValidators([Validators.maxLength(250)]);
       }
-    );
+      if(workAnyWhere == 2){
+        remarkControl.setValidators([Validators.maxLength(250), Validators.required]);
+      }
+      if(workAnyWhere == 3){
+        remarkControl.setValidators([Validators.maxLength(250), Validators.required]);
+      }
+      remarkControl.updateValueAndValidity();
+    })
   }
 
   checkShowClickDate() {

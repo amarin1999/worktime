@@ -45,6 +45,7 @@ export class EditSideWorkFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.createFormSideWork();
+    this.setWorkAnyWhereSelectedValidators();
   }
 
   // สร้าง form
@@ -64,6 +65,23 @@ export class EditSideWorkFormComponent implements OnInit {
         validators: [this.compareTime],
       }
     );
+  }
+  
+  setWorkAnyWhereSelectedValidators(){
+    const remarkControl = this.formGroupSideWork.get('remark');
+
+    this.formGroupSideWork.get('workAnyWhere').valueChanges.subscribe(workAnyWhere => {
+      if(workAnyWhere == 1){
+        remarkControl.setValidators([Validators.maxLength(250)]);
+      }
+      if(workAnyWhere == 2){
+        remarkControl.setValidators([Validators.maxLength(250), Validators.required]);
+      }
+      if(workAnyWhere == 3){
+        remarkControl.setValidators([Validators.maxLength(250), Validators.required]);
+      }
+      remarkControl.updateValueAndValidity();
+    })
   }
 
   transformDate(date: Date): string { // แปลงเป็น พศ.แล้วเอาเข้า formGroup

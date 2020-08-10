@@ -105,7 +105,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         right: 'today, prev,next ',
       },
       editable: false,
-      selectable: true,
+      selectable: false,
       dateClick: (el) => {
         this.dateCilckValue = el.date;
         this.openDialogInsert('add');
@@ -122,7 +122,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       eventMouseEnter: (el) => {
         this.togglePanel$.next({
           event: el,
-          display: true, // เปิด layoutPanel
+          display: true, // เปิด layoutPane0l
         });
       },
       eventMouseLeave: (el) => {
@@ -155,7 +155,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
             this.messageService.add({
               key: 'SuccessMessage',
               severity: 'success',
-              summary: 'แจ้งเตือน',
+              summary: 'บันทึก',
               detail: 'ลงเวลาเรียบร้อยแล้ว',
             });
           } else if (result.error) {
@@ -197,7 +197,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         this.messageService.add({
           key: 'SuccessMessage',
           severity: 'success',
-          summary: 'แจ้งเตือน',
+          summary: 'บันทึก',
           detail: 'แก้ไขการลงเวลาเรียบร้อยแล้ว',
         });
       } else if (
