@@ -55,7 +55,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     private calendarService: CalendarService,
     private sideworkService: SideWorkService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -107,8 +107,10 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       editable: false,
       selectable: false,
       dateClick: (el) => {
-        this.dateCilckValue = el.date;
-        this.openDialogInsert('add');
+        let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(el.date).getDay()]
+        if (weekday != 'Sun' && weekday != 'Sat') {
+          this.openDialogInsert('add');
+        }
       },
       eventClick: (el) => {
         this.searchId = parseInt(el.event.id, 0);
