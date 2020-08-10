@@ -107,7 +107,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       editable: false,
       selectable: false,
       dateClick: (el) => {
-        let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(el.date).getDay()]
+        this.dateCilckValue = el.date;
+        let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
         if (weekday != 'Sun' && weekday != 'Sat') {
           this.openDialogInsert('add');
         }
