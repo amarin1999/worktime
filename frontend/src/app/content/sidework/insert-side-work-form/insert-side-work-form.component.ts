@@ -41,6 +41,7 @@ export class InsertSideWorkFormComponent implements OnInit {
   currentDate = new Date();
   minDate = new Date(this.currentDate.setDate(this.currentDate.getDate() - 1));
   maxDate = new Date();
+  workAnywhereCheck = false;
 
   constructor(
     private buildForm: FormBuilder,
@@ -52,34 +53,19 @@ export class InsertSideWorkFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //this.createFormSideWork();
     this.bulidForm();
     this.setWorkAnyWhereSelectedValidators();
   }
 
   // สร้าง form
-  // createFormSideWork(): void {
-  //   this.formGroupSideWork = this.buildForm.group(
-  //     {
-  //       date: [this.data.dateClickValue, [Validators.required]],
-  //       startTime: ['08:00', [Validators.required]],
-  //       endTime: ['17:00', [Validators.required]],
-  //       workAnyWhere: [true],
-  //       remark: [null, [Validators.maxLength(250)]],
-  //       workAnyWhereSelected: [null],
-  //     },
-  //     {
-  //       validators: [this.compareTime],
-  //     }
-  //   );
-  // }
-
   bulidForm(){
     this.formGroupSideWork = this.formBuilder.group({
       date: [this.data.dateClickValue, [Validators.required]],
         startTime: ['08:00', [Validators.required]],
         endTime: ['17:00', [Validators.required]],
-        workAnyWhere: [1],
+        workAnyWhere: [0],
+        checkWorkAnyWhere: [true],
+        workAnyWhere2: [false],
         remark: [null, [Validators.maxLength(250)]],
     },
     {
@@ -102,6 +88,16 @@ export class InsertSideWorkFormComponent implements OnInit {
       }
       remarkControl.updateValueAndValidity();
     })
+  }
+
+  forgotCardCheck() {
+    this.workAnywhereCheck = false;
+    this.formGroupSideWork.get('workAnyWhere2').setValue(false);
+  }
+
+  workAnyWhereCheck() {
+    this.workAnywhereCheck = true;
+    this.formGroupSideWork.get('checkWorkAnyWhere').setValue(false);
   }
 
   checkShowClickDate() {
@@ -148,6 +144,9 @@ export class InsertSideWorkFormComponent implements OnInit {
 
   // กดปุ่ม
   onSubmit(): void {
+    if(this.formGroupSideWork.get('checkWorkAnyWhere').value == true){
+      this.formGroupSideWork.get('workAnyWhere').setValue(0);
+    }
     // ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
       this.insertEmit.emit(this.formGroupSideWork.getRawValue());

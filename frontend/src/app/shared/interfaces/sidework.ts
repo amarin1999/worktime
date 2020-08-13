@@ -4,6 +4,7 @@ export interface SideWork {
   startTime: Date;
   endTime: Date;
   workAnyWhere?: number;
+  workAnyWhere2?: boolean;
   remark?: string;
   employeeNo?: string;
   type?: string;

@@ -47,28 +47,30 @@
     </div>
 
     <div class="p-col-12">
-      <div class="{{ formGrid }}">
-        <mat-checkbox formControlName="workAnyWhere" [color]="'primary'" class="example-margin">
-          Work Anywhere
-        </mat-checkbox>
-        <div *ngIf="formGroupSideWork.get('workAnyWhere').value == 1 || formGroupSideWork.get('workAnyWhere').value == 2 ||
-        formGroupSideWork.get('workAnyWhere').value == 3">
-          <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH">
-          </p-radioButton>
-          &nbsp;&nbsp;&nbsp;
-          <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Side">
-          </p-radioButton>
-          &nbsp;&nbsp;&nbsp;
-          <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other">
-          </p-radioButton>
-        </div>
+
+      <p-checkbox (click)="forgotCardCheck()" formControlName="checkWorkAnyWhere" value="0" label="ลืมบัตรพนักงาน" [binary]="this.formGroupSideWork.get('checkWorkAnyWhere').value == 1"></p-checkbox>
+      &nbsp;&nbsp;
+      <p-checkbox (click)="workAnyWhereCheck()" formControlName="workAnyWhere2" label="Work Anywhere" [binary]="this.formGroupSideWork.get('workAnyWhere').value == 1 || this.formGroupSideWork.get('workAnyWhere').value == 2 || this.formGroupSideWork.get('workAnyWhere').value == 3"></p-checkbox>
+
+      <!-- <div *ngIf="formGroupSideWork.get('workAnyWhere').value == 1 || formGroupSideWork.get('workAnyWhere').value == 2 ||
+        formGroupSideWork.get('workAnyWhere').value == 3"> -->
+      <div *ngIf="workAnywhereCheck == true">
+        <br>
+        <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH">
+        </p-radioButton>
+        &nbsp;&nbsp;&nbsp;
+        <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Side">
+        </p-radioButton>
+        &nbsp;&nbsp;&nbsp;
+        <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other">
+        </p-radioButton>
       </div>
     </div>
 
     <div>
-      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;"
-        *ngIf="formGroupSideWork.get('workAnyWhere').value == 2 || 
-        formGroupSideWork.get('workAnyWhere').value == 3 ">
+      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;" *ngIf="formGroupSideWork.get('workAnyWhere').value == 2 && formGroupSideWork.get('remark').hasError('required') || 
+        formGroupSideWork.get('workAnyWhere').value == 3 && formGroupSideWork.get('remark').hasError('required')">
+        <br>
         &nbsp;&nbsp;&nbsp; * กรุณากรอกหมายเหตุ
       </mat-error>
     </div>
