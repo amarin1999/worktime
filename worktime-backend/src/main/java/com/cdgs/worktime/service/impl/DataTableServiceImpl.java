@@ -31,6 +31,7 @@ public class DataTableServiceImpl implements DataTableService {
 	
 	SideWorkRepository sideWorkRepository;
 	OtRespository otRespository;
+	static ISServiceSoapImpl ispo;
 
 	public DataTableServiceImpl(SideWorkRepository sideWorkRepository, OtRespository otRespository) {
 		super();
@@ -218,6 +219,7 @@ public class DataTableServiceImpl implements DataTableService {
 //			dto.setStartTime(entity.getStartTime());
 //			dto.setEndTime(entity.getEndTime());
 		return dto;
-		
 	}
+	
+	
 }
