@@ -34,9 +34,8 @@ export class EditSideWorkFormComponent implements OnInit {
   // constants
   formGrid: string = LayoutConstants.gridFormPrimeNg;
   // form
-  formGroupSideWork2: FormGroup;
-  workAnywhereCheck = false;
-  testCheck = false;
+  formGroupSideWorkEdit: FormGroup;
+  workAnyWhereType = false;
 
   constructor(
     private buildForm: FormBuilder,
@@ -46,13 +45,13 @@ export class EditSideWorkFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.createFormSideWork();
-     this.workAnyWhere2();
+    this.workAnyWhereSet();
     this.WorkAnyWhereChange();
   }
 
   // สร้าง form
   createFormSideWork(): void {
-    this.formGroupSideWork2 = this.buildForm.group(
+    this.formGroupSideWorkEdit = this.buildForm.group(
       {
         date: [
           { value: this.transformDate(this.dataForm.date), disabled: true },
@@ -61,8 +60,8 @@ export class EditSideWorkFormComponent implements OnInit {
         startTime: [this.dataForm.startTime, [Validators.required]],
         endTime: [this.dataForm.endTime, [Validators.required]],
         workAnyWhere: [this.dataForm.workAnyWhere],
-        checkWorkAnyWhere: [false],
-        workAnyWhere2: [false],
+        ForgotCardCheck: [false],
+        workAnyWhereCheck: [false],
         remark: [this.dataForm.remark, [Validators.maxLength(250)]],
       },
       {
@@ -71,30 +70,28 @@ export class EditSideWorkFormComponent implements OnInit {
     );
   }
 
-  workAnyWhere2() {
-    const workAnyWhereValue = this.formGroupSideWork2.get('workAnyWhere').value;
+  workAnyWhereSet() {
+    const workAnyWhereValue = this.formGroupSideWorkEdit.get('workAnyWhere').value;
 
     if (workAnyWhereValue == 0) {
-      this.testCheck = true;
-      this.workAnywhereCheck = false;
-       this.formGroupSideWork2.get('workAnyWhere2').setValue(false);
-       this.formGroupSideWork2.get('checkWorkAnyWhere').setValue(true);
+      this.workAnyWhereType = false;
+      this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(false);
+      this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(true);
     }
     if (workAnyWhereValue == 1 || workAnyWhereValue == 2 || workAnyWhereValue == 3) {
-      this.workAnywhereCheck = true;
-       this.formGroupSideWork2.get('workAnyWhere2').setValue(true);
-        this.formGroupSideWork2.get('checkWorkAnyWhere').setValue(false);
-      console.log(this.formGroupSideWork2.get('workAnyWhere2').value)
+      this.workAnyWhereType = true;
+      this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(true);
+      this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(false);
     }
 
-    this.formGroupSideWork2.get('workAnyWhere2').updateValueAndValidity;
+    this.formGroupSideWorkEdit.get('workAnyWhereCheck').updateValueAndValidity;
   }
 
   WorkAnyWhereChange() {
-    const remarkControl = this.formGroupSideWork2.get('remark');
-    const remarkValue = this.formGroupSideWork2.get('remark').value;
+    const remarkControl = this.formGroupSideWorkEdit.get('remark');
+    const remarkValue = this.formGroupSideWorkEdit.get('remark').value;
 
-    this.formGroupSideWork2.get('workAnyWhere').valueChanges.subscribe(workAnyWhere => {
+    this.formGroupSideWorkEdit.get('workAnyWhere').valueChanges.subscribe(workAnyWhere => {
       if (workAnyWhere == 1) {
         remarkControl.setValidators([Validators.maxLength(250)]);
       }
@@ -109,35 +106,35 @@ export class EditSideWorkFormComponent implements OnInit {
   }
 
   remarkChange() {
-    const remarkControl = this.formGroupSideWork2.get('remark');
-    const remarkValue = this.formGroupSideWork2.get('remark').value;
-    let realRemark :string;
-    if(remarkValue != null){
-       realRemark = remarkValue.replace(/\s/g, "")
+    const remarkControl = this.formGroupSideWorkEdit.get('remark');
+    const remarkValue = this.formGroupSideWorkEdit.get('remark').value;
+    let realRemark: string;
+    if (remarkValue != null) {
+      realRemark = remarkValue.replace(/\s/g, "")
     }
 
-    const workAnyWhereValue = this.formGroupSideWork2.get('workAnyWhere').value;
+    const workAnyWhereValue = this.formGroupSideWorkEdit.get('workAnyWhere').value;
 
     if (workAnyWhereValue == 1) {
       remarkControl.setValidators([Validators.maxLength(250)]);
     }
     if ((realRemark == null || realRemark == '') && (workAnyWhereValue == 2 || workAnyWhereValue == 3)) {
-      this.formGroupSideWork2.get('remark').reset(null);
+      this.formGroupSideWorkEdit.get('remark').reset(null);
       remarkControl.setValidators([Validators.maxLength(250), Validators.required]);
     }
     remarkControl.updateValueAndValidity();
   }
 
-  forgotCardCheck() {
-    this.workAnywhereCheck = false;
-    this.formGroupSideWork2.get('workAnyWhere2').setValue(false);
+  forgotCardClick() {
+    this.workAnyWhereType = false;
+    this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(false);   
+    this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(1);
   }
 
-  workAnyWhereCheck() {
- 
-      this.workAnywhereCheck = true;
-      this.formGroupSideWork2.get('checkWorkAnyWhere').setValue(false);
-    
+  workAnyWhereClick() {
+    this.workAnyWhereType = true;
+    this.formGroupSideWorkEdit.get('workAnyWhere').setValue(1);
+    this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(false);
   }
 
   transformDate(date: Date): string { // แปลงเป็น พศ.แล้วเอาเข้า formGroup
@@ -161,12 +158,12 @@ export class EditSideWorkFormComponent implements OnInit {
 
   // กดปุ่ม
   onSubmit(): void {
-    if(this.formGroupSideWork2.get('checkWorkAnyWhere').value == true){
-      this.formGroupSideWork2.get('workAnyWhere').setValue(0);
+    if (this.formGroupSideWorkEdit.get('ForgotCardCheck').value == true) {
+      this.formGroupSideWorkEdit.get('workAnyWhere').setValue(0);
     }
     // ถ้า validate ผ่าน
-    if (this.formGroupSideWork2.valid) {
-      this.editEmit.emit(this.formGroupSideWork2.getRawValue());
+    if (this.formGroupSideWorkEdit.valid) {
+      this.editEmit.emit(this.formGroupSideWorkEdit.getRawValue());
     }
   }
 

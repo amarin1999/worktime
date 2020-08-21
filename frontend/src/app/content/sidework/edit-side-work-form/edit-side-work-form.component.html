@@ -1,4 +1,4 @@
-<form [formGroup]="formGroupSideWork2" (submit)="onSubmit()">
+<form [formGroup]="formGroupSideWorkEdit" (submit)="onSubmit()">
   <div class="p-grid">
     <div class="{{ formGrid }}">
       <mat-form-field appearance="outline" style="width: 100%;">
@@ -17,7 +17,7 @@
         <ngx-material-timepicker-toggle matSuffix [for]="pickerStartTime">
         </ngx-material-timepicker-toggle>
         <ngx-material-timepicker #pickerStartTime></ngx-material-timepicker>
-        <mat-error *ngIf="formGroupSideWork2.get('startTime').hasError('required')">
+        <mat-error *ngIf="formGroupSideWorkEdit.get('startTime').hasError('required')">
           * กรุณากรอกเวลาเข้างาน
         </mat-error>
       </mat-form-field>
@@ -28,10 +28,10 @@
           <mat-icon>call_missed_outgoing</mat-icon> เวลาออกงาน
         </mat-label>
         <input matInput formControlName="endTime" [ngxTimepicker]="pickerEndTime" [format]="24" readonly />
-        <mat-error *ngIf="formGroupSideWork2.get('endTime').hasError('wrongDate')">
+        <mat-error *ngIf="formGroupSideWorkEdit.get('endTime').hasError('wrongDate')">
           * เวลาออกงานต้องมากกว่าเวลาเข้างาน
         </mat-error>
-        <mat-error *ngIf="formGroupSideWork2.get('endTime').hasError('required')">
+        <mat-error *ngIf="formGroupSideWorkEdit.get('endTime').hasError('required')">
           * กรุณากรอกเวลาออกงาน
         </mat-error>
         <ngx-material-timepicker-toggle matSuffix [for]="pickerEndTime">
@@ -42,30 +42,34 @@
     </div>
 
     <div class="p-col-12">
-      <div>
-        <p-checkbox (click)="forgotCardCheck()" formControlName="checkWorkAnyWhere" value="0" label="ลืมบัตรพนักงาน" [binary]="this.formGroupSideWork2.get('checkWorkAnyWhere').value == 1">
-        </p-checkbox>
-        &nbsp;&nbsp;
-        <p-checkbox (click)="workAnyWhereCheck()" formControlName="workAnyWhere2" label="Work Anywhere" [binary]="this.formGroupSideWork2.get('workAnyWhere').value == 1 || this.formGroupSideWork2.get('workAnyWhere').value == 2 || this.formGroupSideWork2.get('workAnyWhere').value == 3">
-        </p-checkbox>
-      </div>
 
-      <div *ngIf="workAnywhereCheck == true" >
+      <p-checkbox (click)="workAnyWhereClick()" formControlName="workAnyWhereCheck" label="Work Anywhere"
+        [binary]="this.formGroupSideWorkEdit.get('workAnyWhere').value == 1 || this.formGroupSideWorkEdit.get('workAnyWhere').value == 2 || this.formGroupSideWorkEdit.get('workAnyWhere').value == 3">
+      </p-checkbox>
+      &nbsp;&nbsp;
+      <p-checkbox (click)="forgotCardClick()" formControlName="ForgotCardCheck" value="0" label="ลืมบัตรพนักงาน"
+        [binary]="this.formGroupSideWorkEdit.get('ForgotCardCheck').value == 1">
+      </p-checkbox>
+
+      <div *ngIf="workAnyWhereType == true">
         <br>
-        <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH" (click)="remarkChange()">
+        <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH"
+          (click)="remarkChange()">
         </p-radioButton>
         &nbsp;&nbsp;&nbsp;
-        <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Side" (click)="remarkChange()">
+        <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Site"
+          (click)="remarkChange()">
         </p-radioButton>
         &nbsp;&nbsp;&nbsp;
-        <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other" (click)="remarkChange()">
+        <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other"
+          (click)="remarkChange()">
         </p-radioButton>
       </div>
     </div>
 
     <div>
-      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;" *ngIf="formGroupSideWork2.get('workAnyWhere').value == 2 && formGroupSideWork2.get('remark').hasError('required') || 
-      formGroupSideWork2.get('workAnyWhere').value == 3 && formGroupSideWork2.get('remark').hasError('required')">
+      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;" *ngIf="formGroupSideWorkEdit.get('workAnyWhere').value == 2 && formGroupSideWorkEdit.get('remark').hasError('required') || 
+      formGroupSideWorkEdit.get('workAnyWhere').value == 3 && formGroupSideWorkEdit.get('remark').hasError('required')">
         <br>
         &nbsp;&nbsp;&nbsp; * กรุณากรอกหมายเหตุ
       </mat-error>
@@ -78,7 +82,7 @@
       <textarea formControlName="remark" (change)="remarkChange()" matInput> </textarea>
     </mat-form-field>
     <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;"
-      *ngIf="formGroupSideWork2.get('remark').hasError('maxlength')">
+      *ngIf="formGroupSideWorkEdit.get('remark').hasError('maxlength')">
       * หมายเหตุใส่ข้อมูลได้ไม่เกิน 250 ตัวอักษร
     </mat-error>
   </div>

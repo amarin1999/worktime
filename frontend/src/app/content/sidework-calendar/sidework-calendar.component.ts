@@ -104,8 +104,10 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         center: 'title',
         right: 'today, prev,next ',
       },
+      
       editable: false,
       selectable: false,
+      
       dateClick: (el) => {
         this.dateCilckValue = el.date;
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]

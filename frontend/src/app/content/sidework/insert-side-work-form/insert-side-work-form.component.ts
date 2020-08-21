@@ -14,7 +14,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { Message } from 'primeng/api';
-import { first } from 'rxjs/operators';
+import { first, endWith } from 'rxjs/operators';
 import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
 import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
@@ -41,7 +41,7 @@ export class InsertSideWorkFormComponent implements OnInit {
   currentDate = new Date();
   minDate = new Date(this.currentDate.setDate(this.currentDate.getDate() - 1));
   maxDate = new Date();
-  workAnywhereCheck = false;
+  workAnywhereType = true;
 
   constructor(
     private buildForm: FormBuilder,
@@ -54,51 +54,68 @@ export class InsertSideWorkFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.bulidForm();
-    this.setWorkAnyWhereSelectedValidators();
+    this.WorkAnyWhereChange();
   }
 
   // สร้าง form
-  bulidForm(){
+  bulidForm() {
     this.formGroupSideWork = this.formBuilder.group({
       date: [this.data.dateClickValue, [Validators.required]],
-        startTime: ['08:00', [Validators.required]],
-        endTime: ['17:00', [Validators.required]],
-        workAnyWhere: [0],
-        checkWorkAnyWhere: [true],
-        workAnyWhere2: [false],
-        remark: [null, [Validators.maxLength(250)]],
+      startTime: ['08:00', [Validators.required]],
+      endTime: ['17:00', [Validators.required]],
+      workAnyWhere: [1],
+      ForgotCardCheck: [false],
+      workAnyWhereCheck: [true],
+      remark: [null, [Validators.maxLength(250)]],
     },
-    {
-      validators: [this.compareTime],
-     });
+      {
+        validators: [this.compareTime],
+      });
   }
 
-  setWorkAnyWhereSelectedValidators(){
+  WorkAnyWhereChange() {
     const remarkControl = this.formGroupSideWork.get('remark');
 
     this.formGroupSideWork.get('workAnyWhere').valueChanges.subscribe(workAnyWhere => {
-      if(workAnyWhere == 1){
+      if (workAnyWhere == 1) {
         remarkControl.setValidators([Validators.maxLength(250)]);
       }
-      if(workAnyWhere == 2){
+      if (workAnyWhere == 2) {
         remarkControl.setValidators([Validators.maxLength(250), Validators.required]);
       }
-      if(workAnyWhere == 3){
+      if (workAnyWhere == 3) {
         remarkControl.setValidators([Validators.maxLength(250), Validators.required]);
       }
       remarkControl.updateValueAndValidity();
     })
   }
 
-  forgotCardCheck() {
-    this.workAnywhereCheck = false;
-    this.formGroupSideWork.get('workAnyWhere2').setValue(false);
+  forgotCardClick() {
+    console.log(this.formGroupSideWork.get('ForgotCardCheck').value);
+
+    if (this.formGroupSideWork.get('ForgotCardCheck').value == true) {
+      this.workAnywhereType = false;
+      this.formGroupSideWork.get('workAnyWhereCheck').setValue(false);
+
+      const remarkControl = this.formGroupSideWork.get('remark');
+      remarkControl.setValidators([Validators.maxLength(250)]);
+
+      remarkControl.updateValueAndValidity();
+    }
+    if (this.formGroupSideWork.get('ForgotCardCheck').value == false) {
+      this.formGroupSideWork.get('workAnyWhereCheck').setValue(true);
+      this.formGroupSideWork.get('workAnyWhere').setValue(1);
+      this.workAnywhereType = true;
+    }
   }
 
-  workAnyWhereCheck() {
-    this.workAnywhereCheck = true;
-    this.formGroupSideWork.get('checkWorkAnyWhere').setValue(false);
+  workAnyWhereClick() {
+    this.workAnywhereType = true;
+    this.formGroupSideWork.get('workAnyWhere').setValue(1);
+    this.formGroupSideWork.get('ForgotCardCheck').setValue(false);
+
   }
+
 
   checkShowClickDate() {
     // set default date formgroup
@@ -144,7 +161,7 @@ export class InsertSideWorkFormComponent implements OnInit {
 
   // กดปุ่ม
   onSubmit(): void {
-    if(this.formGroupSideWork.get('checkWorkAnyWhere').value == true){
+    if (this.formGroupSideWork.get('ForgotCardCheck').value == true) {
       this.formGroupSideWork.get('workAnyWhere').setValue(0);
     }
     // ถ้า validate ผ่าน
