@@ -19,6 +19,4 @@ public interface DataTableService {
 	
 	List<CalendarDto> getOtCalendar(Long employeeId);
 	
-//	public com.cdgs.worktime.service.Holiday[] getHoliday(java.lang.String userID, java.lang.String startDate, java.lang.String endDate) throws java.rmi.RemoteException;
-
 }

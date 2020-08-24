@@ -31,7 +31,6 @@ public class DataTableServiceImpl implements DataTableService {
 	
 	SideWorkRepository sideWorkRepository;
 	OtRespository otRespository;
-	static ISServiceSoapImpl ispo;
 
 	public DataTableServiceImpl(SideWorkRepository sideWorkRepository, OtRespository otRespository) {
 		super();

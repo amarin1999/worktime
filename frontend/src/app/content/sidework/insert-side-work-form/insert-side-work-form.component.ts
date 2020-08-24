@@ -42,6 +42,9 @@ export class InsertSideWorkFormComponent implements OnInit {
   minDate = new Date(this.currentDate.setDate(this.currentDate.getDate() - 1));
   maxDate = new Date();
   workAnywhereType = true;
+  
+  checkedForgot: boolean = false;
+  checkedWork: boolean = false;
 
   constructor(
     private buildForm: FormBuilder,
@@ -53,6 +56,7 @@ export class InsertSideWorkFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.checkedWork = true;
     this.bulidForm();
     this.WorkAnyWhereChange();
   }
@@ -64,7 +68,7 @@ export class InsertSideWorkFormComponent implements OnInit {
       startTime: ['08:00', [Validators.required]],
       endTime: ['17:00', [Validators.required]],
       workAnyWhere: [1],
-      ForgotCardCheck: [false],
+      ForgotCardCheck: [Boolean],
       workAnyWhereCheck: [true],
       remark: [null, [Validators.maxLength(250)]],
     },
@@ -94,25 +98,36 @@ export class InsertSideWorkFormComponent implements OnInit {
     console.log(this.formGroupSideWork.get('ForgotCardCheck').value);
 
     if (this.formGroupSideWork.get('ForgotCardCheck').value == true) {
+      this.formGroupSideWork.get('workAnyWhereCheck').setValue(true);
+      this.formGroupSideWork.get('workAnyWhere').setValue(1);
       this.workAnywhereType = false;
+      this.checkedWork = false;
+    }else{
+      this.workAnywhereType = true;
       this.formGroupSideWork.get('workAnyWhereCheck').setValue(false);
+      this.checkedWork = true;
 
       const remarkControl = this.formGroupSideWork.get('remark');
       remarkControl.setValidators([Validators.maxLength(250)]);
 
       remarkControl.updateValueAndValidity();
+     
     }
-    if (this.formGroupSideWork.get('ForgotCardCheck').value == false) {
-      this.formGroupSideWork.get('workAnyWhereCheck').setValue(true);
-      this.formGroupSideWork.get('workAnyWhere').setValue(1);
-      this.workAnywhereType = true;
-    }
+  
   }
 
   workAnyWhereClick() {
-    this.workAnywhereType = true;
-    this.formGroupSideWork.get('workAnyWhere').setValue(1);
-    this.formGroupSideWork.get('ForgotCardCheck').setValue(false);
+    if(this.formGroupSideWork.get('workAnyWhereCheck').value == true){
+      this.workAnywhereType = true;
+      this.formGroupSideWork.get('workAnyWhere').setValue(1);
+      this.formGroupSideWork.get('ForgotCardCheck').setValue(false);
+      this.checkedForgot = false;
+    }else{
+      this.workAnywhereType = false;
+      this.formGroupSideWork.get('workAnyWhere').setValue(0);
+      this.formGroupSideWork.get('ForgotCardCheck').setValue(["true"]);
+      this.checkedForgot = true;
+    }
 
   }
 
@@ -161,7 +176,7 @@ export class InsertSideWorkFormComponent implements OnInit {
 
   // กดปุ่ม
   onSubmit(): void {
-    if (this.formGroupSideWork.get('ForgotCardCheck').value == true) {
+    if (this.formGroupSideWork.get('ForgotCardCheck').value == "true") {
       this.formGroupSideWork.get('workAnyWhere').setValue(0);
     }
     // ถ้า validate ผ่าน

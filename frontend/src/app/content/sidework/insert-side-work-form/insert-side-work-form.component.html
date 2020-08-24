@@ -48,12 +48,12 @@
 
     <div class="p-col-12">
 
-      <p-checkbox (click)="workAnyWhereClick()"  formControlName="workAnyWhereCheck" label="Work Anywhere"
-        [binary]="this.formGroupSideWork.get('workAnyWhere').value == 1 || this.formGroupSideWork.get('workAnyWhere').value == 2 || this.formGroupSideWork.get('workAnyWhere').value == 3">
+      <p-checkbox (click)="workAnyWhereClick()"  formControlName="workAnyWhereCheck" label="Work Anywhere" value="true" [(ngModel)]="this.checkedWork"
+        binary="true">
       </p-checkbox>
       &nbsp;&nbsp;
-      <p-checkbox (click)="forgotCardClick()" formControlName="ForgotCardCheck" value="0" label="ลืมบัตรพนักงาน"
-        [binary]="this.formGroupSideWork.get('ForgotCardCheck').value == 0"></p-checkbox>
+      <p-checkbox (click)="forgotCardClick()" formControlName="ForgotCardCheck" value="true" label="ลืมบัตรพนักงาน" [(ngModel)]="this.checkedForgot" binary="true"
+        ></p-checkbox>
         
       <div *ngIf="workAnywhereType == true">
         <br>
