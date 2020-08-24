@@ -37,9 +37,9 @@ export class EditSideWorkFormComponent implements OnInit {
   formGroupSideWorkEdit: FormGroup;
   workAnyWhereType = false;
 
-  checkedForgot: boolean = false;
-  checkedWork: boolean = false;
-
+  ForgotCardChecked: boolean = false;
+  workAnyWhereChecked: boolean = false;
+  
   constructor(
     private buildForm: FormBuilder,
     private dialogConfirm: MatDialog,
@@ -78,15 +78,15 @@ export class EditSideWorkFormComponent implements OnInit {
 
     if (workAnyWhereValue == 0) {
       this.workAnyWhereType = false;
-      this.checkedWork = false;
-      this.checkedForgot = true;
+      this.workAnyWhereChecked = false;
+      this.ForgotCardChecked = true;
       this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(false);
       this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(true);
     }
     if (workAnyWhereValue == 1 || workAnyWhereValue == 2 || workAnyWhereValue == 3) {
       this.workAnyWhereType = true;
-      this.checkedWork = true;
-      this.checkedForgot = false;
+      this.workAnyWhereChecked = true;
+      this.ForgotCardChecked = false;
       this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(true);
       this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(false);
     }
@@ -137,11 +137,11 @@ export class EditSideWorkFormComponent implements OnInit {
       this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(true);
       this.formGroupSideWorkEdit.get('workAnyWhere').setValue(1);
       this.workAnyWhereType = false;
-      this.checkedWork = false;
+      this.workAnyWhereChecked = false;
     } else {
       this.workAnyWhereType = true;
       this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(false);
-      this.checkedWork = true;
+      this.workAnyWhereChecked = true;
 
       const remarkControl = this.formGroupSideWorkEdit.get('remark');
       remarkControl.setValidators([Validators.maxLength(250)]);
@@ -156,12 +156,12 @@ export class EditSideWorkFormComponent implements OnInit {
       this.workAnyWhereType = true;
       this.formGroupSideWorkEdit.get('workAnyWhere').setValue(1);
       this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(false);
-      this.checkedForgot = false;
+      this.ForgotCardChecked = false;
     } else {
       this.workAnyWhereType = false;
       this.formGroupSideWorkEdit.get('workAnyWhere').setValue(0);
       this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(["true"]);
-      this.checkedForgot = true;
+      this.ForgotCardChecked = true;
     }
 
   }

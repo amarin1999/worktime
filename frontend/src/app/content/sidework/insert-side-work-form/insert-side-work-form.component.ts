@@ -43,8 +43,8 @@ export class InsertSideWorkFormComponent implements OnInit {
   maxDate = new Date();
   workAnywhereType = true;
 
-  checkedForgot: boolean = false;
-  checkedWork: boolean = false;
+  ForgotCardChecked: boolean = false;
+  workAnyWhereChecked: boolean = false;
 
   constructor(
     private buildForm: FormBuilder,
@@ -56,7 +56,7 @@ export class InsertSideWorkFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.checkedWork = true;
+    this.workAnyWhereChecked = true;
     this.bulidForm();
     this.WorkAnyWhereChange();
   }
@@ -101,11 +101,11 @@ export class InsertSideWorkFormComponent implements OnInit {
       this.formGroupSideWork.get('workAnyWhereCheck').setValue(true);
       this.formGroupSideWork.get('workAnyWhere').setValue(1);
       this.workAnywhereType = false;
-      this.checkedWork = false;
+      this.workAnyWhereChecked = false;
     } else {
       this.workAnywhereType = true;
       this.formGroupSideWork.get('workAnyWhereCheck').setValue(false);
-      this.checkedWork = true;
+      this.workAnyWhereChecked = true;
 
       const remarkControl = this.formGroupSideWork.get('remark');
       remarkControl.setValidators([Validators.maxLength(250)]);
@@ -121,12 +121,12 @@ export class InsertSideWorkFormComponent implements OnInit {
       this.workAnywhereType = true;
       this.formGroupSideWork.get('workAnyWhere').setValue(1);
       this.formGroupSideWork.get('ForgotCardCheck').setValue(false);
-      this.checkedForgot = false;
+      this.ForgotCardChecked = false;
     } else {
       this.workAnywhereType = false;
       this.formGroupSideWork.get('workAnyWhere').setValue(0);
       this.formGroupSideWork.get('ForgotCardCheck').setValue(["true"]);
-      this.checkedForgot = true;
+      this.ForgotCardChecked = true;
     }
 
   }
