@@ -104,10 +104,10 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         center: 'title',
         right: 'today, prev,next ',
       },
-      
+
       editable: false,
       selectable: false,
-      
+
       dateClick: (el) => {
         this.dateCilckValue = el.date;
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
@@ -160,7 +160,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
             this.messageService.add({
               key: 'SuccessMessage',
               severity: 'success',
-              summary: 'บันทึก',
+              summary: 'ข้อความ',
               detail: 'ลงเวลาเรียบร้อยแล้ว',
             });
           } else if (result.error) {
@@ -168,7 +168,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
             this.messageService.add({
               key: 'errorMessage',
               severity: 'error',
-              summary: 'ผิดพลาด',
+              summary: 'ข้อความ',
               detail: result.error.errorMessage,
             });
           }
@@ -178,7 +178,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
           this.messageService.add({
             key: 'errorMessage',
             severity: 'error',
-            summary: 'ผิดพลาด',
+            summary: 'ข้อความ',
             detail: 'เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล',
           });
         }
@@ -202,7 +202,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         this.messageService.add({
           key: 'SuccessMessage',
           severity: 'success',
-          summary: 'บันทึก',
+          summary: 'ข้อความ',
           detail: 'แก้ไขการลงเวลาเรียบร้อยแล้ว',
         });
       } else if (
@@ -213,14 +213,14 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         this.messageService.add({
           key: 'SuccessMessage',
           severity: 'success',
-          summary: 'แจ้งเตือน',
+          summary: 'ข้อความ',
           detail: 'ลบรายการลงเวลาเรียบร้อยแล้ว',
         });
       } else if (result.error) {
         this.messageService.add({
           key: 'errorMessage',
           severity: 'error',
-          summary: 'ผิดพลาด',
+          summary: 'ข้อความ',
           detail: result.error.errorMessage,
         });
       }

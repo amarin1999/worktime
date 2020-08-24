@@ -138,27 +138,26 @@ export class EditSideWorkFormComponent implements OnInit {
       this.formGroupSideWorkEdit.get('workAnyWhere').setValue(1);
       this.workAnyWhereType = false;
       this.checkedWork = false;
-    }else{
+    } else {
       this.workAnyWhereType = true;
       this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(false);
       this.checkedWork = true;
 
       const remarkControl = this.formGroupSideWorkEdit.get('remark');
       remarkControl.setValidators([Validators.maxLength(250)]);
-
       remarkControl.updateValueAndValidity();
-     
+
     }
 
   }
 
   workAnyWhereClick() {
-    if(this.formGroupSideWorkEdit.get('workAnyWhereCheck').value == true){
+    if (this.formGroupSideWorkEdit.get('workAnyWhereCheck').value == true) {
       this.workAnyWhereType = true;
       this.formGroupSideWorkEdit.get('workAnyWhere').setValue(1);
       this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(false);
       this.checkedForgot = false;
-    }else{
+    } else {
       this.workAnyWhereType = false;
       this.formGroupSideWorkEdit.get('workAnyWhere').setValue(0);
       this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(["true"]);

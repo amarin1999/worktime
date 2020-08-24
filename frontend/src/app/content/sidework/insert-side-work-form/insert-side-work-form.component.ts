@@ -42,7 +42,7 @@ export class InsertSideWorkFormComponent implements OnInit {
   minDate = new Date(this.currentDate.setDate(this.currentDate.getDate() - 1));
   maxDate = new Date();
   workAnywhereType = true;
-  
+
   checkedForgot: boolean = false;
   checkedWork: boolean = false;
 
@@ -102,7 +102,7 @@ export class InsertSideWorkFormComponent implements OnInit {
       this.formGroupSideWork.get('workAnyWhere').setValue(1);
       this.workAnywhereType = false;
       this.checkedWork = false;
-    }else{
+    } else {
       this.workAnywhereType = true;
       this.formGroupSideWork.get('workAnyWhereCheck').setValue(false);
       this.checkedWork = true;
@@ -111,18 +111,18 @@ export class InsertSideWorkFormComponent implements OnInit {
       remarkControl.setValidators([Validators.maxLength(250)]);
 
       remarkControl.updateValueAndValidity();
-     
+
     }
-  
+
   }
 
   workAnyWhereClick() {
-    if(this.formGroupSideWork.get('workAnyWhereCheck').value == true){
+    if (this.formGroupSideWork.get('workAnyWhereCheck').value == true) {
       this.workAnywhereType = true;
       this.formGroupSideWork.get('workAnyWhere').setValue(1);
       this.formGroupSideWork.get('ForgotCardCheck').setValue(false);
       this.checkedForgot = false;
-    }else{
+    } else {
       this.workAnywhereType = false;
       this.formGroupSideWork.get('workAnyWhere').setValue(0);
       this.formGroupSideWork.get('ForgotCardCheck').setValue(["true"]);
@@ -163,7 +163,7 @@ export class InsertSideWorkFormComponent implements OnInit {
     if (this.dateValid.status) {
       this.msgs.push({
         severity: 'warn',
-        summary: 'แจ้งเตือน',
+        summary: 'ข้อความ',
         detail:
           'คุณได้ลงเวลาสำหรับวันนี้ไปแล้ว หากต้องการแก้ไขไปที่ประวัติการลงเวลา',
       });
