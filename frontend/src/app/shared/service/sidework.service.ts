@@ -35,7 +35,7 @@ export class SideWorkService {
   constructor(
     private http: HttpClient,
     private calendarService: CalendarService
-  ) {}
+  ) { }
 
   loadEventCalendar() {
     this.changeEventCalendar.next();
@@ -52,7 +52,7 @@ export class SideWorkService {
       )
       .pipe(map((res) => res.data));
   }
-
+  
   addSidework(body: SideWork): Observable<Response> {
     try {
       return this.http

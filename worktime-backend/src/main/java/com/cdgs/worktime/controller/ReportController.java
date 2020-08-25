@@ -1,5 +1,7 @@
-package com.cdgs.worktime.poi;
+package com.cdgs.worktime.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,8 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.Date;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -18,18 +19,32 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-public class worktimeExcel {
-	public static void main(String[] args) throws Exception {
+import lombok.extern.slf4j.Slf4j;
 
-//		 Connection connect = DriverManager.getConnection( 
-//	         "jdbc:mysql://localhost:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC" , 
-//	         "root" , 
-//	         "p@ssw0rd"
-//	      );
+@RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RequestMapping("/reports")
+@Slf4j
+public class ReportController {
+
+	@GetMapping(path = "/worktime")
+	public ResponseEntity<Resource> worktimeExcel() throws Exception {
 
 		Connection connect = DriverManager.getConnection(
 				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
@@ -62,7 +77,7 @@ public class worktimeExcel {
 		Calendar dayOfCalendar = Calendar.getInstance();
 
 		// Creating an instance of HSSFWorkbook.
-		HSSFWorkbook workbook = new HSSFWorkbook();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		// Font style on header
 		Font headerFont = workbook.createFont();
@@ -151,7 +166,7 @@ public class worktimeExcel {
 		for (int indexOfMonth = 0; indexOfMonth < month.length; indexOfMonth++) {
 
 			// Create one sheets in the excel document
-			HSSFSheet sidework = workbook.createSheet(month[indexOfMonth]);
+			Sheet sidework = workbook.createSheet(month[indexOfMonth]);
 
 			ResultSet getName = nameStatement.executeQuery(Employee);
 
@@ -486,14 +501,21 @@ public class worktimeExcel {
 			} // End Footer
 
 		}
-
-		// To write out the workbook into a file we need to create an output
-		// stream where the workbook content will be written to.
-		try (FileOutputStream fos = new FileOutputStream(new File("worktimeExcel" + year + ".xlsx"))) {
-			workbook.write(fos);
-			System.out.println("OK!!");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		ByteArrayOutputStream result = new ByteArrayOutputStream();
+		workbook.write(result);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=worktimeExcel" + year + ".xlsx");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0"); 
+        ByteArrayResource resource = new ByteArrayResource(result.toByteArray());
+        
+		return ResponseEntity.ok()
+	            .headers(headers)
+	            .contentLength(result.toByteArray().length)
+	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	            .body(resource);
 	}
 }

@@ -23,6 +23,7 @@ public class ISServiceLocator extends org.apache.axis.client.Service implements 
 
     // Use to get a proxy class for ISServiceSoap
     private java.lang.String ISServiceSoap_address = "http://cdgisweb.cdg.co.th/iswebservice/isservice.asmx";
+//    private java.lang.String ISServiceSoap_address = "http://localhost:8080/iswebservice/isservice.asmx";
 
     public java.lang.String getISServiceSoapAddress() {
         return ISServiceSoap_address;

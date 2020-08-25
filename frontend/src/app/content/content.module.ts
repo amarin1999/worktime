@@ -31,8 +31,8 @@ import { ToastModule } from 'primeng/toast';
 import { CoreModule } from '../core/core.module';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {CheckboxModule} from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
 // guard
 import { AuthGuard } from '../shared/guard/auth.guard';
 // pipe
@@ -123,7 +123,7 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
     OvertimeWorkService,
     WorkAnywherePipe,
     CalendarService,
-    
+
   ],
   exports: [ContentComponent],
 })

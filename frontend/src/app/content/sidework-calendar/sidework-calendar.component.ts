@@ -11,7 +11,6 @@ import {
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { CalendarService } from 'src/app/shared/service/calendar.service';
 import thLocale from '@fullcalendar/core/locales/th';
 import { SideWorkComponent } from '../sidework/sidework.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
@@ -24,12 +23,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import {
   Subject,
   Subscription,
-  BehaviorSubject,
-  animationFrameScheduler,
-  asyncScheduler,
 } from 'rxjs';
-import { FullCalendar } from 'primeng/fullcalendar';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { ExcelService } from 'src/app/shared/service/excel.service';
 
 @Component({
   selector: 'app-sidework-calendar',
@@ -37,6 +33,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
   styleUrls: ['./sidework-calendar.component.scss'],
 })
 export class SideworkCalendarComponent implements OnInit, OnDestroy {
+
   @ViewChild('op') op: OverlayPanel;
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   events: Calendar[];
@@ -52,7 +49,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private messageService: MessageService,
-    private calendarService: CalendarService,
+    private excelService: ExcelService,
     private sideworkService: SideWorkService,
     private spinner: NgxSpinnerService
   ) { }
@@ -102,7 +99,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       header: {
         left: 'dayGridMonth,dayGridWeek,dayGridDay',
         center: 'title',
-        right: 'today, prev,next ',
+        right: 'today, prev, next',
       },
 
       editable: false,
@@ -144,6 +141,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   }
 
   openDialogInsert(type: string): void {
+
     const configDialog: MatDialogConfig<any> = {
       disableClose: false,
       autoFocus: false,
@@ -226,4 +224,13 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  exportExcelClick() {
+    this.excelService.getExcel().subscribe
+      (blob => this.excelService.download(blob, 'worktime.xlsx'),
+        err => console.error(err)
+      )
+  }
+
+
 }

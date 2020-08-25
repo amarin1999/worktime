@@ -34,6 +34,7 @@ import { WorkAnywherePipe } from "./pipe/work-anywhere.pipe";
 import { FormatYearPipe } from './pipe/format-year.pipe';
 import { FormatYearOtPipe } from './pipe/format-year-ot.pipe';
 
+
 @NgModule({
   declarations: [WorkAnywherePipe, FormatYearPipe, FormatYearOtPipe],
   imports: [],
