@@ -1,12 +1,8 @@
 import {
   Component,
   OnInit,
-  Input,
   OnDestroy,
   ViewChild,
-  AfterContentChecked,
-  ChangeDetectorRef,
-  AfterViewInit,
 } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -26,6 +22,8 @@ import {
 } from 'rxjs';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { ExcelService } from 'src/app/shared/service/excel.service';
+import { EmployeeService } from 'src/app/shared/service/employee.service';
+import { Employee } from 'src/app/shared/interfaces/employee';
 
 @Component({
   selector: 'app-sidework-calendar',
@@ -45,13 +43,15 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
   message: string;
   togglePanel$ = new Subject<any>();
+  showExcelExport = false;
 
   constructor(
     private dialog: MatDialog,
     private messageService: MessageService,
     private excelService: ExcelService,
     private sideworkService: SideWorkService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private employeeService: EmployeeService
   ) { }
 
   ngOnDestroy(): void {
@@ -59,6 +59,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.checkEmployee();
     // โหลด sidework event ขึ้นบน calendar
     this.subscription.add(
       this.sideworkService.onLoadEventCalendar$.subscribe(
@@ -232,5 +233,16 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       )
   }
 
+  checkEmployee(): any {
+    const requestData = {
+      ...Subject,
+      employeeNo: localStorage.getItem('employeeNo'),
+    }
+    console.log(requestData.employeeNo)
+    if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242' 
+    || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
+      this.showExcelExport = true; 
+    }
+  }
 
 }

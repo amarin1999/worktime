@@ -33,6 +33,7 @@ import { FullCalendarModule } from 'primeng/fullcalendar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import {ButtonModule} from 'primeng/button';
 // guard
 import { AuthGuard } from '../shared/guard/auth.guard';
 // pipe
@@ -105,6 +106,7 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
     MatRadioModule,
     RadioButtonModule,
     CheckboxModule,
+    ButtonModule,
     // DateTime
     MatDatepickerModule,
     NgxMaterialTimepickerModule,
