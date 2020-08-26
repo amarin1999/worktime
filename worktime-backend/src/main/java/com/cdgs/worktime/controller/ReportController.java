@@ -1,14 +1,17 @@
 package com.cdgs.worktime.controller;
 
-import java.io.ByteArrayInputStream;
+import java.beans.Statement;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -25,13 +28,13 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,6 +45,92 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/reports")
 @Slf4j
 public class ReportController {
+	
+	@GetMapping(path = "/timeAttecdance/{month}/{year}")
+	public static void timeAttendance(@PathVariable(value = "month") Integer month,
+			@PathVariable(value = "year") Integer year) throws Exception {			
+			ArrayList<String> data = new ArrayList<String>();
+			try {
+	            Connection con = null;
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	            con = DriverManager.getConnection("jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC" , 
+	   		         "root" , 
+	   		         "root");
+
+
+	            java.sql.Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	            ResultSet rs = ((java.sql.Statement) st).executeQuery("select employee_no, `day`, start_time, end_time\r\n" + 
+	            		"from worktime.employee as e\r\n" + 
+	            		"inner join worktime.employee_has_sidework_history as esh\r\n" + 
+	            		"on e.id_employee = esh.employee_id\r\n" + 
+	            		"inner join worktime.sidework_history as sh\r\n" + 
+	            		"on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n" + 
+	            		"WHERE MONTH(`day`) = "+month+" and YEAR(`day`) = "+year+"\r\n");
+	            
+
+//	            ArrayList<TimeattendanceEmp> attendanceTime = new ArrayList<TimeattendanceEmp>();	
+
+	            while (rs.next()) {
+	            		
+	            		String checkId = rs.getString("employee_no");
+	            		if(checkId.contains("T") || checkId.contains("t")) {
+	            			
+	            		}else {
+		            		String id = rs.getString("employee_no");
+		            		String day = rs.getString("day");                   
+		            		String startTime = rs.getString("start_time");
+		            		String replaceStringId=id.replace('C','9'); 
+		            		
+//		            		attendanceTime.add(new TimeattendanceEmp(replaceStringId, day, startTime)); 
+		            		data.add("	" + replaceStringId + "	" + day + " " + startTime);
+	            		}
+	            }
+	            rs.beforeFirst();
+	            while (rs.next()) {
+	            	String checkId = rs.getString("employee_no");
+	        		if(checkId.contains("T") || checkId.contains("t")) {
+	        			
+	        		}else {
+		        		String id = rs.getString("employee_no");
+		        		String day = rs.getString("day");                   
+		        		String endTime = rs.getString("end_time");
+		        		String replaceStringId=id.replace('C','9');
+		        		System.out.println(replaceStringId);
+		        		
+//		        		attendanceTime2.add(new TimeattendanceEmp(replaceStringId, day, endTime)); 
+		        		data.add("	" + replaceStringId + "	" + day + " " + endTime);
+	        		}
+	            }
+	            
+//	            Collections.sort(attendanceTime);	           
+//	            for(TimeattendanceEmp str: attendanceTime){
+//	    			System.out.println(str);
+//	    	    }
+	            
+
+	            writeToFile(data, "add-workanywhere-"+year+month+".dat");
+	            rs.close();
+	            st.close();
+	            System.out.println(" === ");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+		}
+		private static void writeToFile(java.util.List<String> list, String path) {
+	        BufferedWriter out = null;
+	        try {
+	                File file = new File("C:\\Users\\user\\Desktop\\",path);
+	                out = new BufferedWriter(new FileWriter(file, false));
+	                for (String s : list) {
+	                        out.write(s);
+	                        out.newLine();
+	                }
+	                out.close();
+	        } catch (IOException e) {
+	        }
+		}
+	
 
 	@GetMapping(path = "/worktime")
 	public ResponseEntity<Resource> worktimeExcel() throws Exception {
