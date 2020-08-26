@@ -46,104 +46,100 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/reports")
 @Slf4j
 public class ReportController {
-	
+
 	@GetMapping(path = "/timeAttecdance/{month}/{year}")
-	public static void timeAttendance(@PathVariable(value = "month") Integer month,
-			@PathVariable(value = "year") Integer year) throws Exception {			
-			ArrayList<String> data = new ArrayList<String>();
-			try {
-	            Connection con = null;
-	            Class.forName("com.mysql.cj.jdbc.Driver");
-	            con = DriverManager.getConnection("jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC" , 
-	   		         "root" , 
-	   		         "root");
+	public  ResponseEntity<Resource> timeAttendance(@PathVariable(value = "month") Integer month,
+			@PathVariable(value = "year") Integer year) throws Exception {
+		ArrayList<String> data = new ArrayList<String>();
+		
+		Connection con = null;
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		con = DriverManager.getConnection(
+				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
+				"root", "root");
 
+		java.sql.Statement stStartTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		java.sql.Statement stEndTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		ResultSet rsStrrtTime = ((java.sql.Statement) stStartTime)
+				.executeQuery("select employee_no, `day`, start_time, work_type\r\n" + "from worktime.employee as e\r\n"
+						+ "inner join worktime.employee_has_sidework_history as esh\r\n"
+						+ "on e.id_employee = esh.employee_id\r\n" + "inner join worktime.sidework_history as sh\r\n"
+						+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n"
+						+ "WHERE MONTH(`day`) = " + month + " and YEAR(`day`) = " + year + " and work_type = 1\r\n"
+						+ "ORDER BY `day`, start_time ASC");
+		ResultSet rsEndTime = ((java.sql.Statement) stEndTime)
+				.executeQuery("select employee_no, `day`, end_time, work_type\r\n" + "from worktime.employee as e\r\n"
+						+ "inner join worktime.employee_has_sidework_history as esh\r\n"
+						+ "on e.id_employee = esh.employee_id\r\n" + "inner join worktime.sidework_history as sh\r\n"
+						+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n"
+						+ "WHERE MONTH(`day`) = " + month + " and YEAR(`day`) = " + year + " and work_type = 1\r\n"
+						+ "ORDER BY `day`, end_time ASC");
 
-	            java.sql.Statement stStartTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-	            java.sql.Statement stEndTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-	            ResultSet rsStrrtTime = ((java.sql.Statement) stStartTime).executeQuery("select employee_no, `day`, start_time, work_type\r\n" + 
-	            		"from worktime.employee as e\r\n" + 
-	            		"inner join worktime.employee_has_sidework_history as esh\r\n" + 
-	            		"on e.id_employee = esh.employee_id\r\n" + 
-	            		"inner join worktime.sidework_history as sh\r\n" + 
-	            		"on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n" + 
-	            		"WHERE MONTH(`day`) = "+month+" and YEAR(`day`) = "+year+" and work_type = 1\r\n" + 
-	            		"ORDER BY `day`, start_time ASC");
-	            ResultSet rsEndTime = ((java.sql.Statement) stEndTime).executeQuery("select employee_no, `day`, end_time, work_type\r\n" + 
-	            		"from worktime.employee as e\r\n" + 
-	            		"inner join worktime.employee_has_sidework_history as esh\r\n" + 
-	            		"on e.id_employee = esh.employee_id\r\n" + 
-	            		"inner join worktime.sidework_history as sh\r\n" + 
-	            		"on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n" + 
-	            		"WHERE MONTH(`day`) = "+month+" and YEAR(`day`) = "+year+" and work_type = 1\r\n" + 
-	            		"ORDER BY `day`, end_time ASC");
-	            
+		ArrayList<TimeattendanceEmp> attendanceTime = new ArrayList<TimeattendanceEmp>();
+		while (rsStrrtTime.next()) {
 
-	            ArrayList<TimeattendanceEmp> attendanceTime = new ArrayList<TimeattendanceEmp>();	        
-	            while (rsStrrtTime.next()) {
-	            		
-	            		String checkId = rsStrrtTime.getString("employee_no");
-	            		if(checkId.contains("T") || checkId.contains("t")) {
-	            			
-	            		}else {
-		            		String id = rsStrrtTime.getString("employee_no");
-		            		String day = rsStrrtTime.getString("day");                   
-		            		String startTime = rsStrrtTime.getString("start_time");
-		            		String replaceStringId=id.replace('C','9'); 	
-		            		attendanceTime.add(new TimeattendanceEmp(replaceStringId, day, startTime)); 
-	            		}
-	            }
-	            rsStrrtTime.beforeFirst();
-	            rsEndTime.beforeFirst();
-	            while (rsEndTime.next()) {
-	            	String checkId = rsEndTime.getString("employee_no");
-	        		if(checkId.contains("T") || checkId.contains("t")) {
-	        			
-	        		}else {
-		        		String id = rsEndTime.getString("employee_no");
-		        		String day = rsEndTime.getString("day");                   
-		        		String endTime = rsEndTime.getString("end_time");
-		        		String replaceStringId=id.replace('C','9');;		        		
-						attendanceTime.add(new TimeattendanceEmp(replaceStringId, day, endTime)); 
-	        		}
-	            }
-	            Collections.sort(attendanceTime, new Comparator<TimeattendanceEmp>() {
-	            	  public int compare(TimeattendanceEmp o1, TimeattendanceEmp o2) {
-	            	      return o1.getDay().compareTo(o2.getDay());
-	            	  }
-	            });
-	            for(TimeattendanceEmp str: attendanceTime){
-	    			data.add("	" + str.getId() + "	" + str.getDay() + " " + str.getTime());
-	    	    }
-	            	            
-	            String monthFormatted = String.format("%02d", month);
-	            writeToFile(data, "add-workanywhere-"+year+monthFormatted+".dat");
-	            rsStrrtTime.close();
-	            rsEndTime.close();
-	            stStartTime.close();
-	            stEndTime.close();
-	            
-	            System.out.println(" OK! ");
-			} catch (Exception e) {
-				System.out.println(e);
+			String checkId = rsStrrtTime.getString("employee_no");
+			if (checkId.contains("T") || checkId.contains("t")) {
+
+			} else {
+				String id = rsStrrtTime.getString("employee_no");
+				String day = rsStrrtTime.getString("day");
+				String startTime = rsStrrtTime.getString("start_time");
+				String replaceStringId = id.replace('C', '9');
+				attendanceTime.add(new TimeattendanceEmp(replaceStringId, day, startTime));
 			}
-			
 		}
-		private static void writeToFile(java.util.List<String> list, String path) {
-	        BufferedWriter out = null;
-	        try {
-	        		HttpHeaders headers = new HttpHeaders();
-	                File file = new File("C:\\Users\\user\\Desktop\\",path);
-	                out = new BufferedWriter(new FileWriter(file, false));
-	                for (String s : list) {
-	                        out.write(s);
-	                        out.newLine();
-	                }
-	                out.close();
-	        } catch (IOException e) {
-	        }
+		rsStrrtTime.beforeFirst();
+		rsEndTime.beforeFirst();
+		while (rsEndTime.next()) {
+			String checkId = rsEndTime.getString("employee_no");
+			if (checkId.contains("T") || checkId.contains("t")) {
+
+			} else {
+				String id = rsEndTime.getString("employee_no");
+				String day = rsEndTime.getString("day");
+				String endTime = rsEndTime.getString("end_time");
+				String replaceStringId = id.replace('C', '9');
+				;
+				attendanceTime.add(new TimeattendanceEmp(replaceStringId, day, endTime));
+			}
 		}
-	
+		Collections.sort(attendanceTime, new Comparator<TimeattendanceEmp>() {
+			public int compare(TimeattendanceEmp o1, TimeattendanceEmp o2) {
+				return o1.getDay().compareTo(o2.getDay());
+			}
+		});
+		for (TimeattendanceEmp str : attendanceTime) {
+			data.add(str.getId() + "	" + str.getDay() + " " + str.getTime());
+		}
+
+		String monthFormatted = String.format("%02d", month);
+		StringBuilder responseData = new StringBuilder();
+		for (String text : data) {
+			responseData.append(text).append("\n");
+		}
+		String responseFileName = "add-workanywhere-" + year + monthFormatted + ".dat";
+
+		rsStrrtTime.close();
+		rsEndTime.close();
+		stStartTime.close();
+		stEndTime.close();
+
+		byte[] result = responseData.toString().getBytes("UTF-8");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + responseFileName);
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+		ByteArrayResource resource = new ByteArrayResource(result);
+
+		return ResponseEntity.ok().headers(headers).contentLength(result.length)
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+
+	}
 
 	@GetMapping(path = "/worktime")
 	public ResponseEntity<Resource> worktimeExcel() throws Exception {
@@ -603,21 +599,18 @@ public class ReportController {
 			} // End Footer
 
 		}
-		
+
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
 		workbook.write(result);
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=worktimeExcel" + year + ".xlsx");
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Pragma", "no-cache");
-        headers.add("Expires", "0"); 
-        ByteArrayResource resource = new ByteArrayResource(result.toByteArray());
-        
-		return ResponseEntity.ok()
-	            .headers(headers)
-	            .contentLength(result.toByteArray().length)
-	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-	            .body(resource);
+		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+		headers.add("Pragma", "no-cache");
+		headers.add("Expires", "0");
+		ByteArrayResource resource = new ByteArrayResource(result.toByteArray());
+
+		return ResponseEntity.ok().headers(headers).contentLength(result.toByteArray().length)
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
 }
