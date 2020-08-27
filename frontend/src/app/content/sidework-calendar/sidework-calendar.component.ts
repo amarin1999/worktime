@@ -38,12 +38,15 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   options: any;
   searchId: number;
   data: SideWork[];
+  consoleLog = console.log;
   item: SideWork;
   dateCilckValue: Date;
   subscription = new Subscription();
   message: string;
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
+
+  calendarDate: Date;
 
   constructor(
     private dialog: MatDialog,
@@ -56,6 +59,15 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  calendarChangeDate(date: Date) {
+    this.calendarDate = date;
+  }
+
+  exportText() {
+    const month = this.calendarDate.getMonth() + 1;
+    const year = this.calendarDate.getFullYear();
   }
 
   ngOnInit(): void {
@@ -105,7 +117,10 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
       editable: false,
       selectable: false,
+      // datesRender: (info) => {
+      //   console.log('info', info);
 
+      // },
       dateClick: (el) => {
         this.dateCilckValue = el.date;
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
@@ -134,6 +149,11 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
           display: false, // ปิด layoutPanel
         });
       },
+      events: (info, success, fail) => {
+        console.log('info', info);
+        console.log('success', success);
+        console.log('fail', fail);
+      }
     };
   }
 
@@ -239,9 +259,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       employeeNo: localStorage.getItem('employeeNo'),
     }
     console.log(requestData.employeeNo)
-    if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242' 
-    || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
-      this.showExcelExport = true; 
+    if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
+      || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
+      this.showExcelExport = true;
     }
   }
 

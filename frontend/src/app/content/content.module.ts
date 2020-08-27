@@ -63,6 +63,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { SideworkCalendarComponent } from './sidework-calendar/sidework-calendar.component';
 import { CalendarService } from '../shared/service/calendar.service';
 import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime-work-calendar.component';
+import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calendar.directive';
 @NgModule({
   declarations: [
     ContentComponent,
@@ -80,6 +81,7 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
     InsertSideWorkFormComponent,
     SideworkCalendarComponent,
     OvertimeWorkCalendarComponent,
+    CdgsFullCalendarDirective,
   ],
 
   imports: [
