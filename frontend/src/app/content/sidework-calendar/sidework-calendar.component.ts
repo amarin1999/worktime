@@ -65,10 +65,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     this.calendarDate = date;
   }
 
-  exportText() {
-    const month = this.calendarDate.getMonth() + 1;
-    const year = this.calendarDate.getFullYear();
-  }
+
 
   ngOnInit(): void {
     this.checkEmployee();
@@ -244,6 +241,17 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  exportText() {
+    const month = this.calendarDate.getMonth() + 1;
+    const year = this.calendarDate.getFullYear();
+    this.excelService.getText(month, year).subscribe
+      (blob => this.excelService.download(blob, 'add-workanywhere-' + year + String("0" + month).slice(-2) + '.dat'),
+        err => console.error(err)
+      )
+
+
   }
 
   exportExcelClick() {

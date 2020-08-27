@@ -42,5 +42,16 @@ export class ExcelService {
           return result.body
         }))
   }
+  getText(month: any, year: any) {
+    this.spinner.show();
+    return this.http.get<any>(`${ApiConstants.baseURl}/reports/timeAttecdance/${month}/${year}`, { responseType: 'blob' as 'json', observe: 'response' })
+      .pipe(tap(
+        _ => this.spinner.hide(),
+        err => this.spinner.hide()
+      ),
+        map((result: HttpResponse<Blob>) => {
+          return result.body
+        }))
+  }
 
 }
