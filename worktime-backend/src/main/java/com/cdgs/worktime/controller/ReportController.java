@@ -54,9 +54,13 @@ public class ReportController {
 		
 		Connection con = null;
 		Class.forName("com.mysql.cj.jdbc.Driver");
+//		con = DriverManager.getConnection(
+//				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
+//				"root", "root");
+		
 		con = DriverManager.getConnection(
-				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
-				"root", "root");
+				"jdbc:mysql://localhost:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
+				"root", "p@ssw0rd");
 
 		java.sql.Statement stStartTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
@@ -144,9 +148,13 @@ public class ReportController {
 	@GetMapping(path = "/worktime")
 	public ResponseEntity<Resource> worktimeExcel() throws Exception {
 
+//		Connection connect = DriverManager.getConnection(
+//				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
+//				"root", "root");
+		
 		Connection connect = DriverManager.getConnection(
-				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
-				"root", "root");
+				"jdbc:mysql://localhost:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
+				"root", "p@ssw0rd");
 
 		String workTime = "select id_employee,firstname, day(day) date, MONTH(day) month, MONTH(CURRENT_DATE()) current_month, YEAR(day) year, work_anywhere \r\n"
 				+ "from employee as e\r\n" + "inner join employee_has_sidework_history as esh\r\n"

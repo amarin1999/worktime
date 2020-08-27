@@ -28,7 +28,6 @@ import com.cdgs.worktime.service.SideWorkService;
 @Service
 public class DataTableServiceImpl implements DataTableService {
 
-	
 	SideWorkRepository sideWorkRepository;
 	OtRespository otRespository;
 
@@ -41,11 +40,11 @@ public class DataTableServiceImpl implements DataTableService {
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	@Override
-	public List<SideworkDateToSting> getSideWorkAll(Long employeeId) {	
-		List<SideworkHistoryEntity> entity =new ArrayList<SideworkHistoryEntity>();
+	public List<SideworkDateToSting> getSideWorkAll(Long employeeId) {
+		List<SideworkHistoryEntity> entity = new ArrayList<SideworkHistoryEntity>();
 		try {
-			entity = sideWorkRepository.getSideworkAll(employeeId);	
-		}catch (Exception e) { 
+			entity = sideWorkRepository.getSideworkAll(employeeId);
+		} catch (Exception e) {
 			log.error("getEmployeeByNo >>> " + e.getMessage());
 		}
 		return mapSideworkListEntityToDto(entity);
@@ -63,15 +62,15 @@ public class DataTableServiceImpl implements DataTableService {
 	}
 
 	private SideworkDateToSting mapSideworkEntityToDtoString(SideworkHistoryEntity entity) {
-		SideworkDateToSting dto =new SideworkDateToSting();
+		SideworkDateToSting dto = new SideworkDateToSting();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-		if(entity != null) {
+		if (entity != null) {
 			dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
-			if(entity.getEndTime() != null) {
-			dto.setEndTime(timeFormat.format(entity.getEndTime()));
+			if (entity.getEndTime() != null) {
+				dto.setEndTime(timeFormat.format(entity.getEndTime()));
 			}
 			dto.setId(entity.getSideworkId());
 			dto.setRemark(entity.getRemark());
@@ -80,21 +79,21 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setDate(dateFormat.format(entity.getDate()));
 		}
 		return dto;
-		
+
 	}
 
 	@Override
 	public List<OtNoListDto> getOtAll(Long employeeId) {
-		List<OtHistoryEntity> entity =new ArrayList<OtHistoryEntity>();
-	
+		List<OtHistoryEntity> entity = new ArrayList<OtHistoryEntity>();
+
 		try {
 			entity = otRespository.getOtAll(employeeId);
-		}catch (Exception e) { 
+		} catch (Exception e) {
 			log.error("getOtAll >>> " + e.getMessage());
 		}
 		return mapOtListEntityToDto(entity);
 	}
-	
+
 	private List<OtNoListDto> mapOtListEntityToDto(List<OtHistoryEntity> entities) {
 		List<OtNoListDto> listDto = new ArrayList<>();
 		if (!entities.isEmpty()) {
@@ -107,10 +106,10 @@ public class DataTableServiceImpl implements DataTableService {
 	}
 
 	private OtNoListDto mapOtEntityToDto(OtHistoryEntity entity) {
-		OtNoListDto dto =new OtNoListDto();
+		OtNoListDto dto = new OtNoListDto();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-		if(entity != null) {
+		if (entity != null) {
 			dto.setEmployeehasId(entity.getEmployeeHasSideworkId());
 			dto.setId(entity.getOtHistoryId());
 			dto.setRemark(entity.getRemark());
@@ -119,17 +118,17 @@ public class DataTableServiceImpl implements DataTableService {
 			dto.setEndTime(dateFormat.format(entity.getEndTime()));
 		}
 		return dto;
-		
+
 	}
 
 	@Override
 	public SideworkHistoryDto getSideWork(Long sideWorkId) {
-		Optional<SideworkHistoryEntity> data = sideWorkRepository.findById(sideWorkId);		
+		Optional<SideworkHistoryEntity> data = sideWorkRepository.findById(sideWorkId);
 		return mapSideworkEntityToDto(data.get());
 	}
-	
+
 	private SideworkHistoryDto mapSideworkEntityToDto(SideworkHistoryEntity entity) {
-		SideworkHistoryDto dto= new SideworkHistoryDto();
+		SideworkHistoryDto dto = new SideworkHistoryDto();
 		dto.setEmployeehasId(entity.getIdEmployeeHasSideWorkHistory());
 		dto.setEndTime(entity.getEndTime());
 		dto.setId(entity.getSideworkId());
@@ -138,14 +137,14 @@ public class DataTableServiceImpl implements DataTableService {
 		dto.setStartTime(entity.getStartTime());
 		dto.setWorkAnyWhere(entity.getWorkAnyWhere());
 		return dto;
-		
+
 	}
 
-	public List<CalendarDto> getSideWorkCalendar(Long employeeId) {	
+	public List<CalendarDto> getSideWorkCalendar(Long employeeId) {
 		List<SideworkHistoryEntity> entity = new ArrayList<SideworkHistoryEntity>();
 		try {
-			entity = sideWorkRepository.getSideworkAll(employeeId);	
-		}catch (Exception e) { 
+			entity = sideWorkRepository.getSideworkAll(employeeId);
+		} catch (Exception e) {
 			log.error("getEmployeeByNo >>> " + e.getMessage());
 		}
 		return mapSideworkCalendarListEntityToDto(entity);
@@ -161,7 +160,7 @@ public class DataTableServiceImpl implements DataTableService {
 		return listDto;
 
 	}
-	
+
 	private CalendarDto mapSideworkCalendarEntityToDto(SideworkHistoryEntity entity) {
 		CalendarDto dto = new CalendarDto();
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -169,25 +168,32 @@ public class DataTableServiceImpl implements DataTableService {
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 		Integer workAnywhere = entity.getWorkAnyWhere();
-			dto.setId(entity.getSideworkId());
+		dto.setId(entity.getSideworkId());
 //			dto.setTitle(timeFormat.format(entity.getStartTime())+" ถึง  "
 //			+timeFormat.format(entity.getEndTime())+((workAnywhere == true)? " (Work Anywhere) " : " ")
 //			+"หมายเหตุ : "+((entity.getRemark() == null)? " ไม่มี " : entity.getRemark()));
-			dto.setTitle(timeFormat.format(entity.getStartTime())+" ถึง  "
-			+timeFormat.format(entity.getEndTime())+((workAnywhere == 1 || workAnywhere == 2 || workAnywhere == 3)? "\n(Work Anywhere) " : " "));
-			dto.setStart(entity.getDate());
-			dto.setStartTime(entity.getStartTime());
-			dto.setEndTime(entity.getEndTime());
-			dto.setRemark(entity.getRemark());
-			dto.setWorkAnyWhere(entity.getWorkAnyWhere());
+		dto.setTitle(timeFormat.format(entity.getStartTime()) + " ถึง  " + timeFormat.format(entity.getEndTime())
+				+ ((workAnywhere == 1) ? "\nWork Anywhere (WFH)"
+						: (workAnywhere == 2) ? "\nWork Anywhere (Site)"
+						: (workAnywhere == 3) ? "\nWork Anywhere (Other)" 
+						: "\n ลืมบัตรพนักงาน")
+				+ ((entity.getRemark() == null) ? "\n\n"
+						: (entity.getRemark() == "") ? "\n\n " 
+						: "\nหมายเหตุ : " + entity.getRemark())
+				);
+		dto.setStart(entity.getDate());
+		dto.setStartTime(entity.getStartTime());
+		dto.setEndTime(entity.getEndTime());
+		dto.setRemark(entity.getRemark());
+		dto.setWorkAnyWhere(entity.getWorkAnyWhere());
 		return dto;
 	}
-	
-	public List<CalendarDto> getOtCalendar(Long employeeId) {	
+
+	public List<CalendarDto> getOtCalendar(Long employeeId) {
 		List<OtHistoryEntity> entity = new ArrayList<OtHistoryEntity>();
 		try {
 			entity = otRespository.getOtAll(employeeId);
-		}catch (Exception e) { 
+		} catch (Exception e) {
 			log.error("getEmployeeByNo >>> " + e.getMessage());
 		}
 		return mapOtCalendarListEntityToDto(entity);
@@ -203,22 +209,22 @@ public class DataTableServiceImpl implements DataTableService {
 		return listDto;
 
 	}
-	
+
 	private CalendarDto mapOtCalendarEntityToDto(OtHistoryEntity entity) {
 		CalendarDto dto = new CalendarDto();
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		timeFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-			dto.setId(entity.getOtHistoryId());
-			//dto.setTitle("OT: "+timeFormat.format(entity.getStartTime())+" ถึง  "+timeFormat.format(entity.getEndTime()));
-			dto.setTitle("รหัสโครงการ : "+entity.getProjectId()+"\nเวลา : "+timeFormat.format(entity.getStartTime())+" ถึง  "
-					+timeFormat.format(entity.getEndTime()));
-			dto.setStart(entity.getStartTime());
-			dto.setEnd(entity.getEndTime());
-			dto.setRemark(entity.getRemark());
+		dto.setId(entity.getOtHistoryId());
+		// dto.setTitle("OT: "+timeFormat.format(entity.getStartTime())+" ถึง
+		// "+timeFormat.format(entity.getEndTime()));
+		dto.setTitle("รหัสโครงการ : " + entity.getProjectId() + "\nเวลา : " + timeFormat.format(entity.getStartTime())
+				+ " ถึง  " + timeFormat.format(entity.getEndTime()));
+		dto.setStart(entity.getStartTime());
+		dto.setEnd(entity.getEndTime());
+		dto.setRemark(entity.getRemark());
 //			dto.setStartTime(entity.getStartTime());
 //			dto.setEndTime(entity.getEndTime());
 		return dto;
 	}
-	
-	
+
 }

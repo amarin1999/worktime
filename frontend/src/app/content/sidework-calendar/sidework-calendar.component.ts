@@ -107,9 +107,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       updateEvents: this.events,
       displayEventTime: false,
       header: {
-        left: 'dayGridMonth,dayGridWeek,dayGridDay',
+        left: 'today',
         center: 'title',
-        right: 'today, prev, next',
+        right: 'prev, next',
       },
 
       editable: false,
@@ -146,11 +146,11 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
           display: false, // ปิด layoutPanel
         });
       },
-      events: (info, success, fail) => {
-        console.log('info', info);
-        console.log('success', success);
-        console.log('fail', fail);
-      }
+      // events: (info, success, fail) => {
+      //   console.log('info', info);
+      //   console.log('success', success);
+      //   console.log('fail', fail);
+      // }
     };
   }
 
@@ -266,7 +266,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       ...Subject,
       employeeNo: localStorage.getItem('employeeNo'),
     }
-    console.log(requestData.employeeNo)
     if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
       || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
       this.showExcelExport = true;

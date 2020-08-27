@@ -190,6 +190,9 @@ export class EditSideWorkFormComponent implements OnInit {
     if (this.formGroupSideWorkEdit.get('ForgotCardCheck').value == true) {
       this.formGroupSideWorkEdit.get('workAnyWhere').setValue(0);
     }
+    if(this.formGroupSideWorkEdit.get('remark').value == ''){
+      this.formGroupSideWorkEdit.get('remark').setValue(null);
+    }
     // ถ้า validate ผ่าน
     if (this.formGroupSideWorkEdit.valid) {
       this.editEmit.emit(this.formGroupSideWorkEdit.getRawValue());

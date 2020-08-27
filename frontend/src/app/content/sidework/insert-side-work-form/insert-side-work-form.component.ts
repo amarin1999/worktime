@@ -179,6 +179,9 @@ export class InsertSideWorkFormComponent implements OnInit {
     if (this.formGroupSideWork.get('ForgotCardCheck').value == "true") {
       this.formGroupSideWork.get('workAnyWhere').setValue(0);
     }
+    if(this.formGroupSideWork.get('remark').value == ''){
+      this.formGroupSideWork.get('remark').setValue(null);
+    }
     // ถ้า validate ผ่าน
     if (this.formGroupSideWork.valid) {
       this.insertEmit.emit(this.formGroupSideWork.getRawValue());
