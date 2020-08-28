@@ -38,9 +38,13 @@ public class worktimeExcel {
 		String workTime = "select id_employee,firstname, day(day) date, MONTH(day) month, MONTH(CURRENT_DATE()) current_month, YEAR(day) year, work_anywhere \r\n"
 				+ "from employee as e\r\n" + "inner join employee_has_sidework_history as esh\r\n"
 				+ "on e.id_employee = esh.employee_id\r\n" + "inner join sidework_history as sh\r\n"
-				+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id";
+				+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id"
+				+ "order by firstname ASC";
 
-		String Employee = "select id_employee, firstname, lastname from employee";
+
+		String Employee = "select id_employee, firstname, lastname from employee"
+						+ "order by firstname ASC";
+						
 
 		java.sql.Statement calendarStatement = connect.createStatement();
 		java.sql.Statement nameStatement = connect.createStatement();

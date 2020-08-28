@@ -57,7 +57,7 @@ public class ReportController {
 //		con = DriverManager.getConnection(
 //				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
 //				"root", "root");
-		
+//		
 		con = DriverManager.getConnection(
 				"jdbc:mysql://localhost:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
 				"root", "p@ssw0rd");
@@ -72,14 +72,14 @@ public class ReportController {
 						+ "on e.id_employee = esh.employee_id\r\n" + "inner join worktime.sidework_history as sh\r\n"
 						+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n"
 						+ "WHERE MONTH(`day`) = " + month + " and YEAR(`day`) = " + year + " and work_type = 1\r\n"
-						+ "ORDER BY `day`, start_time, employee_no ASC");
+						+ "ORDER BY `day`, start_time ASC");
 		ResultSet rsEndTime = ((java.sql.Statement) stEndTime)
 				.executeQuery("select employee_no, `day`, end_time, work_type\r\n" + "from worktime.employee as e\r\n"
 						+ "inner join worktime.employee_has_sidework_history as esh\r\n"
 						+ "on e.id_employee = esh.employee_id\r\n" + "inner join worktime.sidework_history as sh\r\n"
 						+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n"
 						+ "WHERE MONTH(`day`) = " + month + " and YEAR(`day`) = " + year + " and work_type = 1\r\n"
-						+ "ORDER BY `day`, end_time, employee_no ASC");
+						+ "ORDER BY `day`, end_time ASC");
 
 		ArrayList<TimeattendanceEmp> attendanceTime = new ArrayList<TimeattendanceEmp>();
 		while (rsStrrtTime.next()) {
@@ -160,6 +160,7 @@ public class ReportController {
 				+ "from employee as e\r\n" + "inner join employee_has_sidework_history as esh\r\n"
 				+ "on e.id_employee = esh.employee_id\r\n" + "inner join sidework_history as sh\r\n"
 				+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id";
+				
 
 		String Employee = "select id_employee, firstname, lastname from employee";
 
