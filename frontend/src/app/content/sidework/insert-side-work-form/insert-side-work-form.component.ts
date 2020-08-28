@@ -59,6 +59,8 @@ export class InsertSideWorkFormComponent implements OnInit {
     this.workAnyWhereChecked = true;
     this.bulidForm();
     this.WorkAnyWhereChange();
+
+    this.formGroupSideWork.get('ForgotCardCheck').value
   }
 
   // สร้าง form
@@ -176,10 +178,10 @@ export class InsertSideWorkFormComponent implements OnInit {
 
   // กดปุ่ม
   onSubmit(): void {
-    if (this.formGroupSideWork.get('ForgotCardCheck').value == "true") {
+    if (this.formGroupSideWork.get('ForgotCardCheck').value == "true" || this.formGroupSideWork.get('ForgotCardCheck').value == true) {
       this.formGroupSideWork.get('workAnyWhere').setValue(0);
     }
-    if(this.formGroupSideWork.get('remark').value == ''){
+    if (this.formGroupSideWork.get('remark').value == '') {
       this.formGroupSideWork.get('remark').setValue(null);
     }
     // ถ้า validate ผ่าน
