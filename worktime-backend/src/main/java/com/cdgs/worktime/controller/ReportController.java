@@ -54,13 +54,6 @@ public class ReportController {
 		
 		Connection con = null;
 		Class.forName("com.mysql.cj.jdbc.Driver");
-<<<<<<< HEAD
-//		con = DriverManager.getConnection(
-//				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
-//				"root", "root");
-//		
-=======
->>>>>>> 2efe1415e7b310880f82f52bdb91bd25ba423d98
 		con = DriverManager.getConnection(
 				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
 				"root", "root");
