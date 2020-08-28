@@ -5,6 +5,8 @@ import { SharedModule } from "../shared/shared.module";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { BannerComponent } from "./banner/banner.component";
 
+import { ButtonModule } from 'primeng/button';
+
 @NgModule({
   declarations: [
     FooterComponent,
@@ -12,7 +14,10 @@ import { BannerComponent } from "./banner/banner.component";
     PageNotFoundComponent,
     BannerComponent
   ],
-  imports: [SharedModule],
+  imports: [
+    SharedModule,
+    ButtonModule
+  ],
   exports: [NavbarComponent, FooterComponent, BannerComponent]
 })
-export class CoreModule {}
+export class CoreModule { }
