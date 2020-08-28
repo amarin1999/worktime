@@ -63,9 +63,10 @@ public class ReportController {
 //				"jdbc:mysql://localhost:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
 //				"root", "p@ssw0rd");
 
-		java.sql.Statement stStartTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
+		
 		java.sql.Statement stEndTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		java.sql.Statement stStartTime = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		ResultSet rsStrrtTime = ((java.sql.Statement) stStartTime)
 				.executeQuery("select employee_no, `day`, start_time, work_type\r\n" + "from worktime.employee as e\r\n"
@@ -157,14 +158,22 @@ public class ReportController {
 //		Connection connect = DriverManager.getConnection(
 //				"jdbc:mysql://localhost:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
 //				"root", "p@ssw0rd");
+		
+		
 
-		String workTime = "select id_employee,firstname, day(day) date, MONTH(day) month, MONTH(CURRENT_DATE()) current_month, YEAR(day) year, work_anywhere \r\n"
-				+ "from employee as e\r\n" + "inner join employee_has_sidework_history as esh\r\n"
-				+ "on e.id_employee = esh.employee_id\r\n" + "inner join sidework_history as sh\r\n"
-				+ "on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id";
+		String workTime = "select id_employee,firstname, day(day) date, MONTH(day) month, MONTH(CURRENT_DATE()) current_month, YEAR(day) year, work_anywhere \r\n" + 
+				"	from employee as e\r\n" + 
+				"	inner join employee_has_sidework_history as esh\r\n" + 
+				"	on e.id_employee = esh.employee_id\r\n" + 
+				"	inner join sidework_history as sh\r\n" + 
+				"	on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n";
+				
 				
 
-		String Employee = "select id_employee, firstname, lastname from employee";
+		String Employee = "SELECT employee_no, firstname, lastname, id_employee \r\n" + 
+				"FROM employee\r\n" + 
+				"WHERE employee_no NOT LIKE 't%'\r\n" + 
+				"ORDER BY employee_no ASC";
 
 		java.sql.Statement calendarStatement = connect.createStatement();
 		java.sql.Statement nameStatement = connect.createStatement();
@@ -291,7 +300,10 @@ public class ReportController {
 				sumDay29[i] = 0;
 			}
 
-			// Header
+			// Header contains
+			
+			
+			
 			if (getCalendar.next()) {
 				Row dateRow = sidework.createRow(1);
 				Row dayNameRow = sidework.createRow(0);
@@ -423,7 +435,7 @@ public class ReportController {
 			// Body
 			// Name column
 			while (getName.next()) {
-
+				
 				String fname = getName.getString("firstname");
 				String lname = getName.getString("lastname");
 				Row dataRow = sidework.createRow(row + 2);

@@ -256,7 +256,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
   exportExcelClick() {
     this.excelService.getExcel().subscribe
-      (blob => this.excelService.download(blob, 'worktime.xlsx'),
+      (blob => this.excelService.download(blob, 'worktime2020.xlsx'),
         err => console.error(err)
       )
   }
