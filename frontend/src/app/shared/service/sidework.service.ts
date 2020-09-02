@@ -52,7 +52,7 @@ export class SideWorkService {
       )
       .pipe(map((res) => res.data));
   }
-  
+
   addSidework(body: SideWork): Observable<Response> {
     try {
       return this.http

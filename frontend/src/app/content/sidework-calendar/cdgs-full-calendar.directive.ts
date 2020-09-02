@@ -2,30 +2,22 @@ import { Directive, ElementRef, EventEmitter, Output, OnDestroy, AfterViewInit }
 import { fromEvent, merge, Subscription, Subject, defer, Observable } from 'rxjs';
 import { FullCalendar } from 'primeng/fullcalendar';
 import { filter, tap, share } from 'rxjs/operators';
+import { SideworkCalendarComponent } from './sidework-calendar.component';
 
 @Directive({
   selector: '[cdgsFullCalendar]'
 })
 export class CdgsFullCalendarDirective implements OnDestroy, AfterViewInit {
   subscription = new Subscription();
-  // monthChange = new Subject<Date>();
-  // @Output() onChangeMonth = this.monthChange.pipe(this.distinctOnDateChange(), share())
 
   @Output() dateChange = new EventEmitter<Date>();
-  constructor(private el: ElementRef<HTMLElement>, private fullCalendar: FullCalendar) {
-
-    // this.subscription.add(
-    //   merge(prevClick$, nextClick$).subscribe(_ => this.onChangeMonth.emit(this.fullCalendar.calendar.getDate()))
-    // )
-  }
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private fullCalendar: FullCalendar
+  ) { }
   ngAfterViewInit(): void {
     this.fullCalendar.calendar.setOption('datesRender', () => this.dateChange.emit(this.fullCalendar.calendar.getDate()))
     this.dateChange.emit(this.fullCalendar.calendar.getDate());
-
-    //second plan
-    // const mutationObserver = new MutationObserver(_ => this.monthChange.next(this.fullCalendar.calendar.getDate()));
-    // mutationObserver.observe(this.el.nativeElement, { childList: true, attributes: true, subtree: true });
-    // this.subscription.add(() => mutationObserver.disconnect());
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -42,7 +34,7 @@ export class CdgsFullCalendarDirective implements OnDestroy, AfterViewInit {
         }
         return false;
       }), tap(date => prevDate = date))
-    })
+    });
   }
 
 }

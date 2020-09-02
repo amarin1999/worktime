@@ -3,6 +3,7 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -24,17 +25,21 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { ExcelService } from 'src/app/shared/service/excel.service';
 import { EmployeeService } from 'src/app/shared/service/employee.service';
 import { Employee } from 'src/app/shared/interfaces/employee';
+import { CalendarService } from 'src/app/shared/service/calendar.service';
+import { Response } from "src/app/shared/interfaces/response";
+import { Holidays } from 'src/app/shared/interfaces/holidays';
 
 @Component({
   selector: 'app-sidework-calendar',
   templateUrl: './sidework-calendar.component.html',
   styleUrls: ['./sidework-calendar.component.scss'],
 })
-export class SideworkCalendarComponent implements OnInit, OnDestroy {
+export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('op') op: OverlayPanel;
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   events: Calendar[];
+  eventsHolidays : Holidays[];
   options: any;
   searchId: number;
   data: SideWork[];
@@ -54,7 +59,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     private excelService: ExcelService,
     private sideworkService: SideWorkService,
     private spinner: NgxSpinnerService,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private calendarService: CalendarService
   ) { }
 
   ngOnDestroy(): void {
@@ -63,9 +69,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
   calendarChangeDate(date: Date) {
     this.calendarDate = date;
+    this.holidaysEvent();
   }
-
-
 
   ngOnInit(): void {
     this.checkEmployee();
@@ -94,7 +99,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         }
       })
     );
-
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       locales: [thLocale],
@@ -146,12 +150,17 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
           display: false, // ปิด layoutPanel
         });
       },
-      // events: (info, success, fail) => {
-      //   console.log('info', info);
-      //   console.log('success', success);
-      //   console.log('fail', fail);
-      // }
     };
+
+  }
+  ngAfterViewInit(): void {
+    this.holidaysEvent();
+    this.subscription.add(
+      this.calendarService.onLoadHolidays$.subscribe(
+        (event) => (this.eventsHolidays = event)
+      )
+    );
+    this.calendarService.loadHolidays();
   }
 
   getHistorySideWork(): Subject<SideWork[]> {
@@ -243,6 +252,20 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     });
   }
 
+  holidaysEvent() {
+    const holidayMonth = this.calendarDate.getMonth() + 1;
+    const holidayYear = this.calendarDate.getFullYear();
+    const requestData = {
+      ...Subject,
+      employeeNo: localStorage.getItem('employeeNo'),
+    }
+    this.calendarService.getHolidays(holidayMonth, holidayYear, requestData.employeeNo)
+      .subscribe(() => {
+        localStorage.setItem("month", holidayMonth.toString());
+        localStorage.setItem("year", holidayYear.toString());
+      })
+  }
+
   exportText() {
     const month = this.calendarDate.getMonth() + 1;
     const year = this.calendarDate.getFullYear();
@@ -250,8 +273,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       (blob => this.excelService.download(blob, 'add-workanywhere-' + year + String("0" + month).slice(-2) + '.dat'),
         err => console.error(err)
       )
-
-
   }
 
   exportExcelClick() {
