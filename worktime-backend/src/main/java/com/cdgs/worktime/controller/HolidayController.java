@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tempuri.ISWebService.ISService.Holiday;
 import org.tempuri.ISWebService.ISService.ISServiceSoapProxy;
 
-import com.cdgs.worktime.dto.holodayDto;
+import com.cdgs.worktime.dto.holidayDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HolidayController {
 
 	@GetMapping(path = "/{month}/{year}/{empNo}")
-	private ResponseEntity<ArrayList<holodayDto>> getHoliday(@PathVariable(value = "month") Integer month,
+	private ResponseEntity<ArrayList<holidayDto>> getHoliday(@PathVariable(value = "month") Integer month,
 			@PathVariable(value = "year") Integer year, @PathVariable(value = "empNo") String empNo) {
 		try {
 			Locale LOCALE_TH = new Locale("th", "TH");
@@ -58,14 +58,15 @@ public class HolidayController {
 
 			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
 			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,convertTextDateEnd);							
-			ArrayList<holodayDto> holidays = new ArrayList<holodayDto>();
+			
+			ArrayList<holidayDto> holidays = new ArrayList<holidayDto>();
 			for (Holiday holidayResult : holidayResults) {
-				holidays.add(new holodayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
+				holidays.add(new holidayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
 			}
-			return new ResponseEntity<ArrayList<holodayDto>>(holidays, HttpStatus.OK);
+			return new ResponseEntity<ArrayList<holidayDto>>(holidays, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return new ResponseEntity<ArrayList<holodayDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ArrayList<holidayDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
