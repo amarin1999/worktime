@@ -6,6 +6,7 @@ import com.cdgs.worktime.dto.CalendarDto;
 import com.cdgs.worktime.dto.OtNoListDto;
 import com.cdgs.worktime.dto.SideworkDateToSting;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
+import com.cdgs.worktime.dto.holodayDto;
 
 public interface DataTableService {
 	
@@ -18,5 +19,6 @@ public interface DataTableService {
 	List<CalendarDto> getSideWorkCalendar(Long employeeId);
 	
 	List<CalendarDto> getOtCalendar(Long employeeId);
+	
 	
 }

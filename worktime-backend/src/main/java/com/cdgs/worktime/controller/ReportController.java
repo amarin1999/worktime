@@ -147,8 +147,8 @@ public class ReportController {
 
 	}
 
-	@GetMapping(path = "/worktime")
-	public ResponseEntity<Resource> worktimeExcel() throws Exception {
+	@GetMapping(path = "/worktime/{month}")
+	public ResponseEntity<Resource> worktimeExcel(@PathVariable(value = "month") Integer getMonth) throws Exception {
 
 		Connection connect = DriverManager.getConnection(
 				"jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
@@ -157,7 +157,7 @@ public class ReportController {
 //		database ในเครื่อง
 //		Connection connect = DriverManager.getConnection(
 //				"jdbc:mysql://localhost:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
-//				"root", "p@ssw0rd");
+//				"root", "root");
 		
 		
 
@@ -280,8 +280,11 @@ public class ReportController {
 		ColorLEMON.cloneStyleFrom(cellHeaderStyle);
 		ColorLEMON.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.getIndex());
 		ColorLEMON.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-		for (int indexOfMonth = 0; indexOfMonth < month.length; indexOfMonth++) {
+		
+		int indexOfMonth = getMonth - 1;
+		
+			
+//		for (int indexOfMonth = 0; indexOfMonth < month.length; indexOfMonth++) {
 
 			// Create one sheets in the excel document
 			Sheet sidework = workbook.createSheet(month[indexOfMonth]);
@@ -621,7 +624,7 @@ public class ReportController {
 				sumAllCell.setCellStyle(cellHeaderStyle);
 			} // End Footer
 
-		}
+//		}
 
 		ByteArrayOutputStream result = new ByteArrayOutputStream();
 		workbook.write(result);
