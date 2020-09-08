@@ -63,10 +63,7 @@ public class HolidayController {
 			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,convertTextDateEnd);							
 			
 			List<HolidayDto> holidays = new ArrayList<HolidayDto>();
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 21af192bd7b6a3f9e39b4dfff0df964dd027d093
+
 			try {
 				for (Holiday holidayResult : holidayResults) {
 					holidays.add(new HolidayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
@@ -82,18 +79,7 @@ public class HolidayController {
 				res.setCode(400);
 				return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.BAD_REQUEST);
 			}
-<<<<<<< HEAD
-=======
-=======
-			for (Holiday holidayResult : holidayResults) {
-				holidays.add(new HolidayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
-			}
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(holidays);
-			res.setCode(201);
-			return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.OK);
->>>>>>> 6a23370cab67fd5f874b242ffa71ed1a54fba93a
->>>>>>> 21af192bd7b6a3f9e39b4dfff0df964dd027d093
+
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return new ResponseEntity<ResponseDto<HolidayDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
