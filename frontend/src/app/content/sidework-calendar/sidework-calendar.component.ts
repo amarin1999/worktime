@@ -39,7 +39,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
   @ViewChild('op') op: OverlayPanel;
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   events: Calendar[];
-  eventsHolidays : Holidays[];
+  eventsHolidays: Holidays[];
   options: any;
   searchId: number;
   data: SideWork[];
@@ -276,8 +276,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   exportExcelClick() {
-    this.excelService.getExcel().subscribe
-      (blob => this.excelService.download(blob, 'worktime2020.xlsx'),
+    const month = this.calendarDate.getMonth() + 1;
+    this.excelService.getExcel(month).subscribe
+      (blob => this.excelService.download(blob, 'worktime' + String("0" + month).slice(-2) + '2020.xlsx'),
         err => console.error(err)
       )
   }

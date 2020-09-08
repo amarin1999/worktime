@@ -31,9 +31,9 @@ export class ExcelService {
 
   }
 
-  getExcel() {
+  getExcel(month: any) {
     this.spinner.show();
-    return this.http.get<any>(`${ApiConstants.baseURl}/reports/worktime`, { responseType: 'blob' as 'json', observe: 'response' })
+    return this.http.get<any>(`${ApiConstants.baseURl}/reports/worktime/${month}`, { responseType: 'blob' as 'json', observe: 'response' })
       .pipe(tap(
         _ => this.spinner.hide(),
         err => this.spinner.hide()

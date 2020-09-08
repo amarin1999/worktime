@@ -18,6 +18,8 @@ import org.tempuri.ISWebService.ISService.Holiday;
 import org.tempuri.ISWebService.ISService.ISServiceSoapProxy;
 
 import com.cdgs.worktime.dto.HolidayDto;
+import com.cdgs.worktime.dto.SideworkDateToSting;
+import com.cdgs.worktime.util.ResponseDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 public class HolidayController {
 
 	@GetMapping(path = "/{month}/{year}/{empNo}")
-	private ResponseEntity<ArrayList<HolidayDto>> getHoliday(@PathVariable(value = "month") Integer month,
+	private ResponseEntity<ResponseDto<HolidayDto>> getHoliday(@PathVariable(value = "month") Integer month,
 			@PathVariable(value = "year") Integer year, @PathVariable(value = "empNo") String empNo) {
+		ResponseDto<HolidayDto> res = new ResponseDto<HolidayDto>();
 		try {
 			Locale LOCALE_TH = new Locale("th", "TH");
 //			SimpleDateFormat convertDateTH = new SimpleDateFormat("dd/MM/yyyy", LOCALE_TH);
@@ -59,14 +62,25 @@ public class HolidayController {
 			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
 			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,convertTextDateEnd);							
 			
-			ArrayList<HolidayDto> holidays = new ArrayList<HolidayDto>();
-			for (Holiday holidayResult : holidayResults) {
-				holidays.add(new HolidayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
+			List<HolidayDto> holidays = new ArrayList<HolidayDto>();
+			try {
+				for (Holiday holidayResult : holidayResults) {
+					holidays.add(new HolidayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
+				}
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setData(holidays);
+				res.setCode(201);
+				return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.OK);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				res.setErrorMessage(e.getMessage());
+				res.setCode(400);
+				return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.BAD_REQUEST);
 			}
-			return new ResponseEntity<ArrayList<HolidayDto>>(holidays, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return new ResponseEntity<ArrayList<HolidayDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ResponseDto<HolidayDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
