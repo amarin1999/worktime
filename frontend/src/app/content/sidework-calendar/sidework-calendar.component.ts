@@ -40,8 +40,12 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   sideWorkCalendar: Subject<SideWork[]> = this.calendarLoad();
   events: Calendar[];
+<<<<<<< HEAD
   holidayEvents: Calendar[];
   sideworkEvents: Calendar[];
+=======
+  eventsHolidays: Holidays[];
+>>>>>>> 864280f4362b3739eb08d6900d7a30c2d33c61cd
   options: any;
   searchId: number;
   data: SideWork[];
@@ -53,6 +57,11 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   holidayMessage: string;
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
+<<<<<<< HEAD
+=======
+  empDate: Date;
+
+>>>>>>> 864280f4362b3739eb08d6900d7a30c2d33c61cd
   calendarDate: Date;
 
   constructor(
@@ -107,10 +116,33 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       editable: true,
       selectable: false,
       dateClick: (el) => {
+        const requestData = {
+          ...Subject,
+          employeeNo: localStorage.getItem('employeeNo'),
+        }
+
         this.dateCilckValue = el.date;
+<<<<<<< HEAD
         const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
         if (weekday != 'Sun' && weekday != 'Sat') {
           this.openDialogInsert('add');
+=======
+        let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
+        if ((requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
+          || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
+          && (weekday != 'Sun' && weekday != 'Sat')) {
+          this.empDate = el.date;
+
+          // const year = this.empDate.getUTCFullYear();
+          // const month = this.empDate.getUTCMonth() + 1;
+          // const day = this.empDate.getUTCDate() + 1;
+          // console.log('empdate   = ' + day + '/' + month + '/' + year);
+
+          this.opendialogShowEmp('form', this.empDate);
+
+        } else {
+          // case sun or sat
+>>>>>>> 864280f4362b3739eb08d6900d7a30c2d33c61cd
         }
 
         // if(this.disable != this.dateCilckValue){
@@ -238,6 +270,16 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       );
   }
 
+  opendialogShowEmp(type: string, empDate: Date) {
+    const configDialog: MatDialogConfig<object> = {
+      disableClose: false,
+      autoFocus: false,
+      data: { type, date: this.empDate, workAnyWhere: 1 },
+    };
+    const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
+    dialogRef.afterClosed().subscribe();
+  }
+
   openDialogEdit(itemSideWork: SideWork): void {
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
@@ -300,8 +342,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   }
 
   exportExcelClick() {
-    this.excelService.getExcel().subscribe
-      (blob => this.excelService.download(blob, 'worktime2020.xlsx'),
+    const month = this.calendarDate.getMonth() + 1;
+    this.excelService.getExcel(month).subscribe
+      (blob => this.excelService.download(blob, 'worktime' + String("0" + month).slice(-2) + '2020.xlsx'),
         err => console.error(err)
       )
   }

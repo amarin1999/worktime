@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cdgs.worktime.dto.EmployeeByDayDto;
+import com.cdgs.worktime.dto.EmployeeDayDto;
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.service.EmployeeService;
 import com.cdgs.worktime.util.ResponseDto;
@@ -44,7 +46,6 @@ public class EmployeeController {
 				res.setData(dto);
 				res.setCode(404);
 				return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.NOT_FOUND);
-
 			}
 			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
@@ -53,6 +54,39 @@ public class EmployeeController {
 			res.setErrorMessage(e.getMessage());
 			res.setCode(404);
 			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(path = "/{year}/{month}/{day}/{work}")
+	public ResponseEntity<ResponseDto<EmployeeByDayDto>> getEmp(@PathVariable(value = "year") String year,
+			@PathVariable(value = "month") String month,
+			@PathVariable(value = "day") String day,
+			@PathVariable(value = "work") Long work) {
+		ResponseDto<EmployeeByDayDto> res = new ResponseDto<>();
+//		List<EmployeeDayDto> dto = new ArrayList<EmployeeDayDto>();
+		List<EmployeeByDayDto> dto = new ArrayList<EmployeeByDayDto>();
+
+		try {
+			dto = employeeService.getEmployeeByDay(year, month, day, work);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			if (dto.size() == 0) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				res.setErrorMessage("ไม่พบข้อมูลผู้ใช้");
+				res.setData(dto);
+				res.setCode(404);
+				return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.OK);
+//			return dto;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(404);
+			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.BAD_REQUEST);
+//			return dto;
 		}
 	}
 

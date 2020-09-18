@@ -7,6 +7,7 @@ import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
 import { Response } from 'src/app/shared/interfaces/response';
 import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { SideWorkService } from 'src/app/shared/service/sidework.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-sidework',
@@ -23,15 +24,29 @@ export class SideWorkComponent implements OnInit {
   // datevalid
   isDateValid = { status: false };
 
+  showExcelExport = false;
+
   constructor(
     private dialogRef: MatDialogRef<SideWorkComponent>,
     private sideWorkService: SideWorkService,
     private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public dataForm: SideWork
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.checkEmployee();
     this.sideWorkService.loadEventCalendar();
+  }
+
+  checkEmployee(): any {
+    const requestData = {
+      ...Subject,
+      employeeNo: localStorage.getItem('employeeNo'),
+    }
+    if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
+      || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
+      this.showExcelExport = true;
+    }
   }
 
   // เช็ควันว่าลงเวลาแล้วหรือยัง
