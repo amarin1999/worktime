@@ -5,7 +5,7 @@ import {
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
@@ -33,11 +33,12 @@ import { FullCalendarModule } from 'primeng/fullcalendar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 // guard
 import { AuthGuard } from '../shared/guard/auth.guard';
 // pipe
 import { WorkAnywherePipe } from '../shared/pipe/work-anywhere.pipe';
+
 // service
 import { OvertimeWorkService } from '../shared/service/overtime.service';
 import { SideWorkService } from '../shared/service/sidework.service';
@@ -64,6 +65,10 @@ import { SideworkCalendarComponent } from './sidework-calendar/sidework-calendar
 import { CalendarService } from '../shared/service/calendar.service';
 import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime-work-calendar.component';
 import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calendar.directive';
+import { ShowEmpByDayComponent } from './sidework/show-emp-by-day/show-emp-by-day.component';
+import { WorkTypePipe } from '../shared/pipe/work-type.pipe';
+
+
 @NgModule({
   declarations: [
     ContentComponent,
@@ -82,6 +87,8 @@ import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calenda
     SideworkCalendarComponent,
     OvertimeWorkCalendarComponent,
     CdgsFullCalendarDirective,
+    ShowEmpByDayComponent,
+
   ],
 
   imports: [
@@ -93,6 +100,7 @@ import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calenda
     MatInputModule,
     MatMenuModule,
     ReactiveFormsModule,
+    FormsModule,
     MessagesModule,
     MessageModule,
     ToastModule,
@@ -127,6 +135,7 @@ import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calenda
     OvertimeWorkService,
     WorkAnywherePipe,
     CalendarService,
+    WorkTypePipe,
 
   ],
   exports: [ContentComponent],

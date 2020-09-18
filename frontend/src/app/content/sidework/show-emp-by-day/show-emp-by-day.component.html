@@ -1,0 +1,52 @@
+<!-- <mat-radio-group aria-label="Select an option" class="tp-radio-group" [(ngModel)]="selectWork">
+    <mat-radio-button (click)="qureyEmployeeByDay()" [value]="1">Option 1</mat-radio-button>
+    <mat-radio-button (click)="qureyEmployeeByDay()" [value]="2">Option 2</mat-radio-button>
+</mat-radio-group> -->
+
+<mat-radio-group class="tp-radio-group" [(ngModel)]="selectWork">
+    <mat-radio-button class="tp-radio-button" *ngFor="let work of works" [value]="work" (click)="qureyEmployeeByDay() ">
+        {{work | workTypePipe}}
+    </mat-radio-button>
+</mat-radio-group>
+
+
+
+
+
+<div class="tp-selected-value">
+    Selected work: {{ selectWork }}
+</div>
+
+
+
+<br><br>
+
+<div class=" mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource._data._value.data">
+
+        <ng-container matColumnDef="employeeNo">
+            <th mat-header-cell *matHeaderCellDef> รหัสพนักงาน </th>
+            <td mat-cell *matCellDef="let element"> {{element.employeeNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="firstname">
+            <th mat-header-cell *matHeaderCellDef> ชื่อ </th>
+            <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastname">
+            <th mat-header-cell *matHeaderCellDef> นามสกุล </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="workAnywhere">
+            <th mat-header-cell *matHeaderCellDef> ประเภท </th>
+            <td mat-cell *matCellDef="let element"> {{element.workAnywhere | workTypePipe}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 5]" showFirstLastButtons></mat-paginator>
+</div>

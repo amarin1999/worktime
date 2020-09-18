@@ -11,7 +11,7 @@ import { ContentModule } from "./content/content.module";
 // sub module
 import { CoreModule } from "./core/core.module";
 import { SharedModule } from "./shared/shared.module";
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -23,9 +23,10 @@ import { SharedModule } from "./shared/shared.module";
     }),
     CoreModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: "th-TH" }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

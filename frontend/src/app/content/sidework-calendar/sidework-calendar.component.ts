@@ -50,6 +50,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
   message: string;
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
+  empDate: Date;
 
   calendarDate: Date;
 
@@ -123,10 +124,27 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
 
       // },
       dateClick: (el) => {
+        const requestData = {
+          ...Subject,
+          employeeNo: localStorage.getItem('employeeNo'),
+        }
+
         this.dateCilckValue = el.date;
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
-        if (weekday != 'Sun' && weekday != 'Sat') {
-          this.openDialogInsert('add');
+        if ((requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
+          || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
+          && (weekday != 'Sun' && weekday != 'Sat')) {
+          this.empDate = el.date;
+
+          // const year = this.empDate.getUTCFullYear();
+          // const month = this.empDate.getUTCMonth() + 1;
+          // const day = this.empDate.getUTCDate() + 1;
+          // console.log('empdate   = ' + day + '/' + month + '/' + year);
+
+          this.opendialogShowEmp('form', this.empDate);
+
+        } else {
+          // case sun or sat
         }
       },
       eventClick: (el) => {
@@ -208,6 +226,16 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           });
         }
       );
+  }
+
+  opendialogShowEmp(type: string, empDate: Date) {
+    const configDialog: MatDialogConfig<object> = {
+      disableClose: false,
+      autoFocus: false,
+      data: { type, date: this.empDate, workAnyWhere: 1 },
+    };
+    const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
+    dialogRef.afterClosed().subscribe();
   }
 
   openDialogEdit(itemSideWork: SideWork): void {

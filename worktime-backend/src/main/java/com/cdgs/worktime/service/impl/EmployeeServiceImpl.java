@@ -9,8 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdgs.worktime.dto.EmployeeByDayDto;
+import com.cdgs.worktime.dto.EmployeeDayDto;
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.entity.EmployeeEntity;
+import com.cdgs.worktime.repository.EmployeeHasSideworkHistoryRespository;
 import com.cdgs.worktime.repository.EmployeeRespository;
 import com.cdgs.worktime.service.EmployeeService;
 
@@ -20,6 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	EmployeeRespository employeeRespository;
+	@Autowired
+	EmployeeHasSideworkHistoryRespository employeeHasSideworkHistoryRespository;
 	
 	@Autowired
 	public EmployeeServiceImpl(EmployeeRespository employeeRespository) {
@@ -38,6 +43,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return mapListEntityToDto(entity);
 
+	}
+	@Override
+	public List<EmployeeByDayDto> getEmployeeByDay(String year, String month, String day, Long work) {
+		List<EmployeeByDayDto> entity = new ArrayList<EmployeeByDayDto>();
+		try {
+			entity = employeeHasSideworkHistoryRespository.findByDay(year, month, day, work);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getEmployeeByDay >>> " + e.getMessage());
+		}
+		return entity;
 	}
 	
 	private List<EmployeeDto> mapListEntityToDto( List<EmployeeEntity> entities) {
@@ -91,5 +107,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }
