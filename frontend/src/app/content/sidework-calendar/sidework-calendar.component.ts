@@ -4,6 +4,10 @@ import {
   OnDestroy,
   ViewChild,
   AfterViewInit,
+  AfterContentInit,
+  DoCheck,
+  AfterViewChecked,
+  AfterContentChecked
 } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -12,45 +16,43 @@ import thLocale from '@fullcalendar/core/locales/th';
 import { SideWorkComponent } from '../sidework/sidework.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'primeng/api';
-import { first, finalize, map, debounceTime, observeOn } from 'rxjs/operators';
+import { first, finalize, map, debounceTime, observeOn, switchMap, mergeMap } from 'rxjs/operators';
 import { Calendar } from 'src/app/shared/interfaces/calendar';
 import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { SideWorkService } from 'src/app/shared/service/sidework.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import {
   Subject,
   Subscription,
+  Observable
 } from 'rxjs';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { ExcelService } from 'src/app/shared/service/excel.service';
-import { EmployeeService } from 'src/app/shared/service/employee.service';
-import { Employee } from 'src/app/shared/interfaces/employee';
 import { CalendarService } from 'src/app/shared/service/calendar.service';
-import { Response } from "src/app/shared/interfaces/response";
-import { Holidays } from 'src/app/shared/interfaces/holidays';
 
 @Component({
   selector: 'app-sidework-calendar',
   templateUrl: './sidework-calendar.component.html',
   styleUrls: ['./sidework-calendar.component.scss'],
 })
-export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
   @ViewChild('op') op: OverlayPanel;
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
+  sideWorkCalendar: Subject<SideWork[]> = this.calendarLoad();
   events: Calendar[];
-  eventsHolidays : Holidays[];
+  holidayEvents: Calendar[];
+  sideworkEvents: Calendar[];
   options: any;
   searchId: number;
   data: SideWork[];
-  consoleLog = console.log;
   item: SideWork;
   dateCilckValue: Date;
   subscription = new Subscription();
   message: string;
+  idSideWork: string;
+  holidayMessage: string;
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
-
   calendarDate: Date;
 
   constructor(
@@ -58,47 +60,34 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     private messageService: MessageService,
     private excelService: ExcelService,
     private sideworkService: SideWorkService,
-    private spinner: NgxSpinnerService,
-    private employeeService: EmployeeService,
-    private calendarService: CalendarService
-  ) { }
+    private calendarService: CalendarService,
+
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.checkEmployee();
+  }
+
+  calendarChangeDate(date: Date) {
+    this.calendarDate = date;
+
+    const holidayMonth = this.calendarDate.getMonth() + 1;
+    const holidayYear = this.calendarDate.getFullYear();
+
+    localStorage.setItem("month", holidayMonth.toString());
+    localStorage.setItem("year", holidayYear.toString());
+
+    this.holidaysEventService();
+    this.LoadAllEventsOnCalendar();
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  calendarChangeDate(date: Date) {
-    this.calendarDate = date;
-    this.holidaysEvent();
-  }
-
-  ngOnInit(): void {
-    this.checkEmployee();
-    // โหลด sidework event ขึ้นบน calendar
-    this.subscription.add(
-      this.sideworkService.onLoadEventCalendar$.subscribe(
-        (event) => (this.events = event)
-      )
-    );
-    this.sideworkService.loadEventCalendar();
-    // โหลด data sidework มาดึงขึ้น editdialog form
-    this.subscription.add(
-      this.sideworkService.onLoadSideworkCalendar$.subscribe(
-        (data) => (this.data = data)
-      )
-    );
-    this.sideworkService.loadSideworkCalendar();
-    // debounceTime ของ layoutPanel
-    this.subscription.add(
-      this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
-        if (result.display) {
-          this.message = result.event.event.extendedProps.remark;
-          this.op.toggle(result.event.jsEvent);
-        } else {
-          this.op.hide();
-        }
-      })
-    );
+  calendarLoad(): Subject<SideWork[]> {
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       locales: [thLocale],
@@ -115,19 +104,18 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
         center: 'title',
         right: 'prev, next',
       },
-
-      editable: false,
+      editable: true,
       selectable: false,
-      // datesRender: (info) => {
-      //   console.log('info', info);
-
-      // },
       dateClick: (el) => {
         this.dateCilckValue = el.date;
-        let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
+        const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
         if (weekday != 'Sun' && weekday != 'Sat') {
           this.openDialogInsert('add');
         }
+
+        // if(this.disable != this.dateCilckValue){
+        //   this.openDialogInsert('add');
+        // }
       },
       eventClick: (el) => {
         this.searchId = parseInt(el.event.id, 0);
@@ -152,12 +140,52 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       },
     };
 
+    return this.options;
   }
-  ngAfterViewInit(): void {
-    this.holidaysEvent();
+
+
+  LoadAllEventsOnCalendar() {
+    // โหลด sidework event ขึ้นบน calendar
+    this.subscription.add(
+      this.sideworkService.onLoadEventCalendar$.subscribe(
+        // (event) => (this.events = event)
+        (event) => {
+          this.sideworkEvents = Object.assign(event);
+        }
+      )
+    );
+    this.sideworkService.loadEventCalendar();
+
+    // โหลด data sidework มาดึงขึ้น editdialog form
+    this.subscription.add(
+      this.sideworkService.onLoadSideworkCalendar$.subscribe(
+        (data) => (this.data = data)
+      )
+    );
+    this.sideworkService.loadSideworkCalendar();
+
+    // debounceTime ของ layoutPanel
+    this.subscription.add(
+      this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
+        if (result.display) {
+          this.idSideWork = result.event.event.id;
+          this.message = result.event.event.extendedProps.remark;
+          this.holidayMessage = result.event.event.title;
+          this.op.toggle(result.event.jsEvent);
+        } else {
+          this.op.hide();
+        }
+      })
+    );
+
+    // รวมค่าที่ได้จากการลงเวลา กับ holiday และโหลดขึ้น calendar
     this.subscription.add(
       this.calendarService.onLoadHolidays$.subscribe(
-        (event) => (this.eventsHolidays = event)
+        // (event) => (this.events = event)
+        (event) => {
+          this.holidayEvents = Object.assign(event);
+          this.events = [...this.sideworkEvents, ...this.holidayEvents];
+          }
       )
     );
     this.calendarService.loadHolidays();
@@ -252,18 +280,14 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
-  holidaysEvent() {
-    const holidayMonth = this.calendarDate.getMonth() + 1;
-    const holidayYear = this.calendarDate.getFullYear();
+  holidaysEventService() {
     const requestData = {
       ...Subject,
       employeeNo: localStorage.getItem('employeeNo'),
+      holidayYear: localStorage.getItem('year')
     }
-    this.calendarService.getHolidays(holidayMonth, holidayYear, requestData.employeeNo)
-      .subscribe(() => {
-        localStorage.setItem("month", holidayMonth.toString());
-        localStorage.setItem("year", holidayYear.toString());
-      })
+
+    this.calendarService.getHolidays(requestData.holidayYear, requestData.employeeNo)
   }
 
   exportText() {

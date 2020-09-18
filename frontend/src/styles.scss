@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 @include mat-core();
 
@@ -15,7 +15,7 @@ $cdgTimeAttendance-theme: mat-light-theme(
 
 @include angular-material-theme($cdgTimeAttendance-theme);
 
-@import url('https://fonts.googleapis.com/css?family=Kanit|Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Kanit|Roboto&display=swap");
 
 html,
 body {
@@ -23,18 +23,18 @@ body {
   height: 100%;
   background-size: cover;
   background-attachment: fixed;
-  background-image: url('https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-image: url("https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
 }
 * {
-  font-family: 'Kanit';
+  font-family: "Kanit";
 }
 
 h2 {
-  font-family: 'Kanit' !important;
+  font-family: "Kanit" !important;
 }
 
 h4 {
-  font-family: 'Kanit';
+  font-family: "Kanit";
 }
 
 table {
@@ -67,7 +67,7 @@ table {
   transition: 0.3s !important;
 }
 .mat-dialog-title {
-  font-family: 'Kanit' !important;
+  font-family: "Kanit" !important;
 }
 
 input:disabled,
@@ -79,7 +79,7 @@ textarea:disabled {
   background-color: indigo;
   padding: 10px;
   font-size: 1.3em;
-  font-family: 'Kanit';
+  font-family: "Kanit";
   border-radius: 5px !important;
 }
 .img-form {
@@ -94,7 +94,7 @@ textarea:disabled {
   font-size: 2.5em !important;
   font-weight: bold !important;
   color: #333377 !important;
-  font-family: 'Kanit' !important;
+  font-family: "Kanit" !important;
 }
 .wrap-btn {
   display: flex;
@@ -125,15 +125,22 @@ textarea:disabled {
   background-color: #ffffff !important;
 }
 
-.fc-title {
-  white-space: normal !important;
-}
+// .fc-title {
+//   white-space: normal !important;
+// }
 
 .fc-today {
   background-color: #f6f7c0 !important;
   font-weight: bolder !important;
 }
 
+// .fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end {
+//   background-color: #758ffd6e !important;
+// }
+
+// .ui-button-text .ui-clickable{
+//   display: flex;
+// }
 
 @keyframes fadeFromTop {
   0% {

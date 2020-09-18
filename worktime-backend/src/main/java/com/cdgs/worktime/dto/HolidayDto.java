@@ -1,25 +1,19 @@
 package com.cdgs.worktime.dto;
 
-public class HolidayDto {
+import java.io.Serializable;
+import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class HolidayDto implements Serializable {
 private static final long serialVersionUID = 7900738635522301915L;
 	
-	private String holidayName;
-	private String holidayDate;
-	public HolidayDto(String holidayDate, String holidayName) {
-    	this.holidayName = holidayName;
-        this.holidayDate = holidayDate;
-	}
+	private String title;
+	private Date start;
 	
-	public String getHolidayName() {
-		return holidayName;
-	}
-	public void setHolidayName(String holidayName) {
-		this.holidayName = holidayName;
-	}
-	public String getHolidayDate() {
-		return holidayDate;
-	}
-	public void setHolidayDate(String holidayDate) {
-		this.holidayDate = holidayDate;
-	}
 }

@@ -8,4 +8,8 @@ export interface Calendar {
     workAnyWhere?: boolean;
     remark?: string;
     employeeNo?: string;
+    
+    month?: string;
+    year?: string;
+    holidayName?: string;
 }

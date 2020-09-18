@@ -8,6 +8,8 @@ import { LayoutConstants } from "src/app/shared/constants/LayoutConstants";
 import { Employee } from "src/app/shared/interfaces/employee";
 import { EmployeeService } from "src/app/shared/service/employee.service";
 import { Response } from "src/app/shared/interfaces/response";
+import { SideworkCalendarComponent } from '../sidework-calendar/sidework-calendar.component';
+
 
 @Component({
   selector: "app-signin",
@@ -17,14 +19,15 @@ import { Response } from "src/app/shared/interfaces/response";
 export class SignInComponent implements OnInit {
   cdgImagePath: string = LayoutConstants.cdgImagePath;
   form: FormGroup;
+  sideworkCalendar: SideworkCalendarComponent;
 
   constructor(
     private builder: FormBuilder,
     private employeeService: EmployeeService,
     private route: Router,
     private messageService: MessageService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();

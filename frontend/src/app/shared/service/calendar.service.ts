@@ -3,15 +3,27 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConstants } from '../constants/ApiConstants';
 import { Calendar } from '../interfaces/calendar';
 import { map, switchMap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
-  constructor(private http: HttpClient) {}
 
-  
+  private changeHolidays = new Subject<void>();
+  onLoadHolidays$ = this.changeHolidays.pipe(
+    switchMap((__) =>
+      this.getHolidays(localStorage.getItem('year'), localStorage.getItem('employeeNo'))
+    )
+  );
+
+  loadHolidays() {
+    this.changeHolidays.next();
+  }
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   // Sidework Event API (from PrimeNg)
   getSideWorkEventForCalendar(id: string) {
@@ -31,21 +43,12 @@ export class CalendarService {
       .pipe(map((res) => res.data));
   }
 
-  private changeHolidays = new Subject<void>();
-  onLoadHolidays$ = this.changeHolidays.pipe(
-    switchMap((__) =>
-      this.getHolidays(localStorage.getItem('month'), localStorage.getItem('year'), localStorage.getItem('employeeNo'))
-    )
-  );
-
-  loadHolidays() {
-    this.changeHolidays.next();
-  }
 
   // Holidays API
-  getHolidays(month: any, year: any, id: string) {
-        return this.http.get<any>(
-        `${ApiConstants.baseURl}/holiday/${month}/${year}/${id}`
+  getHolidays(year: string, id: string) {
+    return this.http
+      .get<{ data: Calendar[] }>(
+        `${ApiConstants.baseURl}/holiday/${year}/${id}`
       )
       .pipe(map((res) => res.data));
   }

@@ -29,30 +29,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HolidayController {
 
-	@GetMapping(path = "/{month}/{year}/{empNo}")
-	private ResponseEntity<ResponseDto<HolidayDto>> getHoliday(@PathVariable(value = "month") Integer month,
-			@PathVariable(value = "year") Integer year, @PathVariable(value = "empNo") String empNo) {
+	@GetMapping(path = "/{year}/{empNo}")
+	private ResponseEntity<ResponseDto<HolidayDto>> getHoliday(@PathVariable(value = "year") Integer year,
+			@PathVariable(value = "empNo") String empNo) {
 		ResponseDto<HolidayDto> res = new ResponseDto<HolidayDto>();
 		try {
 			Locale LOCALE_TH = new Locale("th", "TH");
-//			SimpleDateFormat convertDateTH = new SimpleDateFormat("dd/MM/yyyy", LOCALE_TH);
-//			SimpleDateFormat convertTimePrint = new SimpleDateFormat("HH:mm");
-//			SimpleDateFormat convertShowSatSun = new SimpleDateFormat("E", Locale.US);
-//			SimpleDateFormat convertDateNameFolder = new SimpleDateFormat("yyyyMMdd-HHmm", LOCALE_TH);
 			SimpleDateFormat convertDateToCallService = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
 			Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-			calendar.set(Calendar.DATE, 1); 
-			calendar.set(Calendar.MONTH, month - 1);
+			ArrayList<HolidayDto> holidaysList = new ArrayList<HolidayDto>();
+
+			calendar.set(Calendar.DATE, 1);
+			calendar.set(Calendar.MONTH, 0);
 			calendar.set(Calendar.YEAR, year);
 
-			calendar.set(Calendar.SECOND, 0); 
-			calendar.set(Calendar.HOUR, 0); 
-			calendar.set(Calendar.MINUTE, 0); 
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.HOUR, 0);
+			calendar.set(Calendar.MINUTE, 0);
 			calendar.set(Calendar.MILLISECOND, 0);
 
 			Date startDate = calendar.getTime();
-			calendar.add(Calendar.MONTH, +1);
+
+			calendar.add(Calendar.MONTH, 12);
 			calendar.add(Calendar.DATE, -1);
 
 			Date endDate = calendar.getTime();
@@ -60,14 +59,18 @@ public class HolidayController {
 			String convertTextDateEnd = convertDateToCallService.format(endDate);
 
 			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
-			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,convertTextDateEnd);							
-			
-			List<HolidayDto> holidays = new ArrayList<HolidayDto>();
+			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,
+					convertTextDateEnd);
+
+			SimpleDateFormat holidayDate = new SimpleDateFormat("yyyy-MM-dd");
+
 			for (Holiday holidayResult : holidayResults) {
-				holidays.add(new HolidayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
+				holidaysList.add(new HolidayDto(holidayResult.getHolidayEngName(),
+						holidayDate.parse(holidayResult.getHolidayDate())));
 			}
+
 			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(holidays);
+			res.setData(holidaysList);
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {

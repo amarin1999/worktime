@@ -2,7 +2,6 @@ import { Directive, ElementRef, EventEmitter, Output, OnDestroy, AfterViewInit }
 import { fromEvent, merge, Subscription, Subject, defer, Observable } from 'rxjs';
 import { FullCalendar } from 'primeng/fullcalendar';
 import { filter, tap, share } from 'rxjs/operators';
-import { SideworkCalendarComponent } from './sidework-calendar.component';
 
 @Directive({
   selector: '[cdgsFullCalendar]'
