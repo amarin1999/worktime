@@ -72,21 +72,18 @@ public class EmployeeController {
 			res.setData(dto);
 			res.setCode(200);
 			if (dto.size() == 0) {
-				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
-				res.setErrorMessage("ไม่พบข้อมูลผู้ใช้");
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 				res.setData(dto);
-				res.setCode(404);
-				return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.NOT_FOUND);
+				res.setCode(200);
+				return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.OK);
 			}
 			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.OK);
-//			return dto;
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(404);
 			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.BAD_REQUEST);
-//			return dto;
 		}
 	}
 

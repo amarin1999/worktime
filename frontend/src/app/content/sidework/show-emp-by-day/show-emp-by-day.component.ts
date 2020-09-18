@@ -46,10 +46,8 @@ export class ShowEmpByDayComponent implements OnInit {
 
     if (this.formGroupEmp.get('workAnyWhere').value == 1) {
       this.workAnyWhereSelect = 1;
-      console.log('11111')
     } else if (this.formGroupEmp.get('workAnyWhere').value == 2) {
       this.workAnyWhereSelect = 2;
-      console.log('22222')
     } else if (this.formGroupEmp.get('workAnyWhere').value == 3) {
       this.workAnyWhereSelect = 3;
     } else if (this.formGroupEmp.get('workAnyWhere').value == 4) {
@@ -59,8 +57,7 @@ export class ShowEmpByDayComponent implements OnInit {
     this.empService.getEmployeeByDay(year, month, day, this.workAnyWhereSelect).subscribe((list) => {
       this.employeeList = list;
       this.dataSource = new MatTableDataSource<EmployeeByDay>(this.employeeList);
-    }), error => {
-    }
+    })
   }
 
 
