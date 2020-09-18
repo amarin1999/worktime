@@ -70,9 +70,7 @@ export class ShowEmpByDayComponent implements OnInit {
       this.employeeList = list;
       this.dataSource = new MatTableDataSource<EmployeeByDay>(this.employeeList);
       // this.dataSource.paginator = this.paginator;
-    }), error => {
-
-    }
+    })
   }
 }
 

@@ -12,12 +12,3 @@ export interface DataEntity {
     employeeNo: string;
     workAnywhere: number;
 }
-
-export interface PeriodicElement {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-}
-
-
