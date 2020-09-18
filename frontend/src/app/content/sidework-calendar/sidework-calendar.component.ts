@@ -40,12 +40,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   sideWorkCalendar: Subject<SideWork[]> = this.calendarLoad();
   events: Calendar[];
-<<<<<<< HEAD
   holidayEvents: Calendar[];
   sideworkEvents: Calendar[];
-=======
-  eventsHolidays: Holidays[];
->>>>>>> 864280f4362b3739eb08d6900d7a30c2d33c61cd
   options: any;
   searchId: number;
   data: SideWork[];
@@ -57,11 +53,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   holidayMessage: string;
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
-<<<<<<< HEAD
-=======
   empDate: Date;
 
->>>>>>> 864280f4362b3739eb08d6900d7a30c2d33c61cd
   calendarDate: Date;
 
   constructor(
@@ -122,11 +115,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         }
 
         this.dateCilckValue = el.date;
-<<<<<<< HEAD
-        const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
-        if (weekday != 'Sun' && weekday != 'Sat') {
-          this.openDialogInsert('add');
-=======
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
         if ((requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
           || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
@@ -142,7 +130,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
         } else {
           // case sun or sat
->>>>>>> 864280f4362b3739eb08d6900d7a30c2d33c61cd
         }
 
         // if(this.disable != this.dateCilckValue){

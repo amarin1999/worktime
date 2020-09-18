@@ -59,7 +59,6 @@ public class HolidayController {
 			String convertTextDateEnd = convertDateToCallService.format(endDate);
 
 			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
-<<<<<<< HEAD
 			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,
 					convertTextDateEnd);
 
@@ -69,22 +68,8 @@ public class HolidayController {
 				holidaysList.add(new HolidayDto(holidayResult.getHolidayEngName(),
 						holidayDate.parse(holidayResult.getHolidayDate())));
 			}
-
-			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-			res.setData(holidaysList);
-			res.setCode(201);
-			return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.OK);
-=======
-			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,convertTextDateEnd);							
-			
-			List<HolidayDto> holidays = new ArrayList<HolidayDto>();
-
-			try {
-				for (Holiday holidayResult : holidayResults) {
-					holidays.add(new HolidayDto(holidayResult.getHolidayDate(), holidayResult.getHolidayEngName()));		
-				}
 				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
-				res.setData(holidays);
+				res.setData(holidaysList);
 				res.setCode(201);
 				return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.OK);
 			} catch (Exception e) {
@@ -94,11 +79,5 @@ public class HolidayController {
 				res.setCode(400);
 				return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.BAD_REQUEST);
 			}
-
->>>>>>> 864280f4362b3739eb08d6900d7a30c2d33c61cd
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			return new ResponseEntity<ResponseDto<HolidayDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 	}
 }
