@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { EmployeeByDay } from 'src/app/shared/interfaces/employee-by-day';
@@ -13,7 +13,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './show-emp-by-day.component.html',
   styleUrls: ['./show-emp-by-day.component.scss']
 })
-export class ShowEmpByDayComponent implements AfterViewInit {
+export class ShowEmpByDayComponent implements OnInit {
+  displayedColumns: string[] = ['employeeNo', 'firstname', 'lastname', 'workAnywhere'];
+  employeeList: EmployeeByDay[];
+  selectWork: string = '1';
+  works: string[] = ['1', '2', '4', '3'];
+
+  dataSource = new MatTableDataSource<EmployeeByDay>();
 
 
   constructor(
@@ -21,32 +27,10 @@ export class ShowEmpByDayComponent implements AfterViewInit {
     private dialogRef: MatDialogRef<SideWorkComponent>,
   ) { }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.qureyEmployeeByDay();
   }
-  // ngOnDestroy(): void {
-  //   this.subs.unsubscribe();
-  // }
 
-  // subs: Subscription;
-  displayedColumns: string[] = ['employeeNo', 'firstname', 'lastname', 'workAnywhere'];
-  employeeList: EmployeeByDay[];
-  dataSource = new MatTableDataSource<EmployeeByDay>(this.employeeList);
-
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  // @Input() count = 0;
-  // @Output() countChange = new EventEmitter<number>();
-  // increment() {
-  //   this.countChange.emit(this.count);
-  // }
-
-  selectWork: string = '1';
-  works: string[] = ['1', '2', '4', '3'];
-
-  // ngAfterViewInit(): void {
-  //   this.qureyEmployeeByDay();
-  // }
 
   qureyEmployeeByDay() {
     const year = this.dialogRef.componentInstance.dataForm.date.getUTCFullYear();
