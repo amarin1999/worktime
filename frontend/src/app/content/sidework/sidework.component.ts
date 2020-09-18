@@ -8,6 +8,8 @@ import { Response } from 'src/app/shared/interfaces/response';
 import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { SideWorkService } from 'src/app/shared/service/sidework.service';
 import { Subject } from 'rxjs';
+import { CalendarService } from 'src/app/shared/service/calendar.service';
+import { SideworkCalendarComponent } from '../sidework-calendar/sidework-calendar.component';
 
 @Component({
   selector: 'app-sidework',
@@ -29,6 +31,7 @@ export class SideWorkComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<SideWorkComponent>,
     private sideWorkService: SideWorkService,
+    private calendarService: CalendarService,
     private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public dataForm: SideWork
   ) { }
@@ -111,16 +114,17 @@ export class SideWorkComponent implements OnInit {
     this.sideWorkService
       .addSidework(requestData)
       .pipe(
-        first(),
-        finalize(() => {
-          this.spinner.hide();
-          // reload calendar
-          this.sideWorkService.loadEventCalendar();
-          this.sideWorkService.loadSideworkCalendar();
-        })
+        first()
       )
       .subscribe(
         (response: Response) => {
+          // reload calendar
+          this.sideWorkService.loadEventCalendar();
+          this.sideWorkService.loadSideworkCalendar();
+          this.calendarService.loadHolidays();
+
+          this.spinner.hide();
+          
           this.dialogRef.close(response);
         },
         (error) => {
@@ -132,6 +136,7 @@ export class SideWorkComponent implements OnInit {
   // แก้ไขข้อมูล
   editSideWork(sideWorkItem: SideWork): void {
     this.spinner.show();
+
     const requestData = {
       id: this.dataForm.id,
       ...sideWorkItem,
@@ -139,21 +144,23 @@ export class SideWorkComponent implements OnInit {
     this.sideWorkService
       .editSideWork(requestData)
       .pipe(
-        first(),
-        finalize(() => {
-          this.spinner.hide();
-          this.sideWorkService.deleteStatus = false;
-          // reload calendar
-          this.sideWorkService.loadEventCalendar();
-          this.sideWorkService.loadSideworkCalendar();
-        })
-      )
+        first())
       .subscribe(
         (response: Response) => {
           // patch subject sideWork
           this.sideWorkService
             .setSideWork(localStorage.getItem('employeeNo'))
-            .pipe(first())
+            .pipe(first(),
+              finalize(() => {
+                this.sideWorkService.deleteStatus = false;
+                // reload calendar
+                this.sideWorkService.loadEventCalendar();
+                this.sideWorkService.loadSideworkCalendar();
+                this.calendarService.loadHolidays();
+
+                this.spinner.hide();
+              })
+            )
             .subscribe();
           this.dialogRef.close(response);
         },
@@ -169,21 +176,22 @@ export class SideWorkComponent implements OnInit {
     this.sideWorkService
       .deleteSideWork(sideworkId)
       .pipe(
-        first(),
-        finalize(() => {
-          this.spinner.hide();
-          this.sideWorkService.deleteStatus = true;
-          // reload calendar
-          this.sideWorkService.loadEventCalendar();
-          this.sideWorkService.loadSideworkCalendar();
-        })
+        first()
       )
       .subscribe(
         (response: Response) => {
           // patch subject sideWork
           this.sideWorkService
             .setSideWork(localStorage.getItem('employeeNo'))
-            .pipe(first())
+            .pipe(first(),
+              finalize(() => {
+                this.spinner.hide();
+                this.sideWorkService.deleteStatus = true;
+                // reload calendar
+                this.sideWorkService.loadEventCalendar();
+                this.sideWorkService.loadSideworkCalendar();
+                this.calendarService.loadHolidays();
+              }))
             .subscribe();
           this.dialogRef.close(response);
         },

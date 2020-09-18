@@ -129,7 +129,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
           this.opendialogShowEmp('form', this.empDate);
 
         } else {
-          // case sun or sat
+          if (weekday != 'Sun' && weekday != 'Sat') {
+            this.openDialogInsert('add');
+          }
         }
 
         // if(this.disable != this.dateCilckValue){
@@ -204,7 +206,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         (event) => {
           this.holidayEvents = Object.assign(event);
           this.events = [...this.sideworkEvents, ...this.holidayEvents];
-          }
+        }
       )
     );
     this.calendarService.loadHolidays();
