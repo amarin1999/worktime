@@ -97,8 +97,6 @@ export class InsertSideWorkFormComponent implements OnInit {
   }
 
   forgotCardClick() {
-    console.log(this.formGroupSideWork.get('ForgotCardCheck').value);
-
     if (this.formGroupSideWork.get('ForgotCardCheck').value == true) {
       this.formGroupSideWork.get('workAnyWhereCheck').setValue(true);
       this.formGroupSideWork.get('workAnyWhere').setValue(1);

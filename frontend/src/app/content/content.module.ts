@@ -34,6 +34,14 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
+import {TableModule} from 'primeng/table';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
+import {ProgressBarModule} from 'primeng/progressbar';
+import {InputTextModule} from 'primeng/inputtext';
+import {PaginatorModule} from 'primeng/paginator';
 // guard
 import { AuthGuard } from '../shared/guard/auth.guard';
 // pipe
@@ -117,6 +125,15 @@ import { WorkTypePipe } from '../shared/pipe/work-type.pipe';
     RadioButtonModule,
     CheckboxModule,
     ButtonModule,
+    TableModule,
+    MultiSelectModule,
+		ContextMenuModule,
+		DropdownModule,
+		ToastModule,
+    InputTextModule,
+    ProgressBarModule,
+    DialogModule,
+    PaginatorModule,
     // DateTime
     MatDatepickerModule,
     NgxMaterialTimepickerModule,

@@ -63,7 +63,6 @@ public class EmployeeController {
 			@PathVariable(value = "day") String day,
 			@PathVariable(value = "work") Long work) {
 		ResponseDto<EmployeeByDayDto> res = new ResponseDto<>();
-//		List<EmployeeDayDto> dto = new ArrayList<EmployeeDayDto>();
 		List<EmployeeByDayDto> dto = new ArrayList<EmployeeByDayDto>();
 
 		try {

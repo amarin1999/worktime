@@ -5,7 +5,7 @@ export interface Calendar {
     end?: Date;
     startTime?: Date;
     endTime?: Date;
-    workAnyWhere?: boolean;
+    workAnyWhere?: number;
     remark?: string;
     employeeNo?: string;
     

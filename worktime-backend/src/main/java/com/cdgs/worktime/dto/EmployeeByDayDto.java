@@ -5,4 +5,5 @@ public interface EmployeeByDayDto {
 	String getFirstname();
 	String getLastname();
 	Long getWorkAnywhere();
+	String getRemark();
 }

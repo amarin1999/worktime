@@ -31,7 +31,7 @@ export class HistorySideWorkComponent implements OnInit {
   ];
 
   // source
-  dataSource = new MatTableDataSource<SideWork>(this.dataSideWork);
+  dataSource = new MatTableDataSource<SideWork>();
   constructor(
     private dialog: MatDialog,
     private messageService: MessageService

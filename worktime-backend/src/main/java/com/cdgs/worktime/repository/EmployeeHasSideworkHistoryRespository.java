@@ -15,7 +15,7 @@ import com.cdgs.worktime.entity.EmployeeHasSideworkHistoryEntity;
 
 public interface EmployeeHasSideworkHistoryRespository extends CrudRepository<EmployeeHasSideworkHistoryEntity, Long>  {
 
-	@Query(value = "select employee_no as employeeNo, firstname, lastname, work_anywhere as workAnywhere" + 
+	@Query(value = "select employee_no as employeeNo, firstname, lastname, work_anywhere as workAnywhere, work_comment as remark" + 
 			" from worktime.employee as e " + 
 			" inner join worktime.employee_has_sidework_history as esh " + 
 			" on e.id_employee = esh.employee_id " + 

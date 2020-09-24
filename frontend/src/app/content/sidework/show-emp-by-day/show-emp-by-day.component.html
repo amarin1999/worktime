@@ -1,62 +1,56 @@
-<!-- <mat-radio-group aria-label="Select an option" class="tp-radio-group" [(ngModel)]="selectWork">
-    <mat-radio-button (click)="qureyEmployeeByDay()" [value]="1">Option 1</mat-radio-button>
-    <mat-radio-button (click)="qureyEmployeeByDay()" [value]="2">Option 2</mat-radio-button>
-</mat-radio-group> -->
-
-<!-- <mat-radio-group class="tp-radio-group" [(ngModel)]="selectWork">
-    <mat-radio-button class="tp-radio-button" *ngFor="let work of works" [value]="work" (click)="qureyEmployeeByDay() ">
-        {{work | workTypePipe}}
-    </mat-radio-button>
-</mat-radio-group> -->
-<form [formGroup]="formGroupEmp">
-    <div>
-        <br>
-        <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH"
-        (click)="workAnyWhereClick()">
-        </p-radioButton>
-        &nbsp;&nbsp;&nbsp;
-        <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Site"
-        (click)="workAnyWhereClick()">
-        </p-radioButton>
-        &nbsp;&nbsp;&nbsp;
-        <p-radioButton formControlName="workAnyWhere" value="4" name="workAnyWhere" label="ลืมบัตรพนักงาน"
-        (click)="workAnyWhereClick()">
-        </p-radioButton>
-        &nbsp;&nbsp;&nbsp;
-        <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other"
-        (click)="workAnyWhereClick()">
-        </p-radioButton>
-      </div>
-      
-    <br><br>
-    
-    <div class=" mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource._data._value.data">
-    
-            <ng-container matColumnDef="employeeNo">
-                <th mat-header-cell *matHeaderCellDef> รหัสพนักงาน </th>
-                <td mat-cell *matCellDef="let element"> {{element.employeeNo}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="firstname">
-                <th mat-header-cell *matHeaderCellDef> ชื่อ </th>
-                <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="lastname">
-                <th mat-header-cell *matHeaderCellDef> นามสกุล </th>
-                <td mat-cell *matCellDef="let element"> {{element.lastname}} </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="workAnywhere">
-                <th mat-header-cell *matHeaderCellDef> ประเภท </th>
-                <td mat-cell *matCellDef="let element"> {{element.workAnywhere | workTypePipe}} </td>
-            </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    
-        <mat-paginator [pageSizeOptions]="[10, 5]" showFirstLastButtons></mat-paginator>
+<div class="p-grid p-justify-center animation-page">
+    <div class="p-col-12 p-md-1"></div>
+    <div class="p-col-12 p-md-10">
+        <form [formGroup]="formGroupEmp">
+            <br>
+            <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH"
+                (click)="workAnyWhereClick()">
+            </p-radioButton>
+            &nbsp;&nbsp;&nbsp;
+            <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Site"
+                (click)="workAnyWhereClick()">
+            </p-radioButton>
+            &nbsp;&nbsp;&nbsp;
+            <p-radioButton formControlName="workAnyWhere" value="4" name="workAnyWhere" label="ลืมบัตรพนักงาน"
+                (click)="workAnyWhereClick()">
+            </p-radioButton>
+            &nbsp;&nbsp;&nbsp;
+            <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other"
+                (click)="workAnyWhereClick()">
+            </p-radioButton>
+        </form>
     </div>
-</form>
+    <div class="p-col-12 p-md-1"></div>
+
+    <div class="p-col-12 p-md-1"></div>
+    <div class="p-col-12 p-md-10">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-search"></i></span>
+            <input pInputText style="width: 410px;" type="text"
+                (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="ค้นหา..." />
+        </div>
+    </div>
+    <div class="p-col-12 p-md-1"></div>
+
+    <div class="p-col-12 p-md-1"></div>
+    <div class="p-col-12 p-md-10">
+        <p-table #dt [columns]="cols" [value]="dataSource" [paginator]="true" [rows]="10"
+            [rowsPerPageOptions]="[5,10]" pageLinks="3" paginatorPosition="top">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" style="text-align: center;">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="p-col-12 p-md-1"></div>
+</div>

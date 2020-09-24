@@ -34,14 +34,14 @@ import { CalendarService } from 'src/app/shared/service/calendar.service';
   templateUrl: './sidework-calendar.component.html',
   styleUrls: ['./sidework-calendar.component.scss'],
 })
-export class SideworkCalendarComponent implements OnInit, OnDestroy {
+export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('op') op: OverlayPanel;
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
-  sideWorkCalendar: Subject<SideWork[]> = this.calendarLoad();
   events: Calendar[];
   holidayEvents: Calendar[];
   sideworkEvents: Calendar[];
+  calendarEvents: Calendar[];
   options: any;
   searchId: number;
   data: SideWork[];
@@ -54,7 +54,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
   empDate: Date;
-
   calendarDate: Date;
 
   constructor(
@@ -70,6 +69,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.checkEmployee();
+    this.calendarLoad();
   }
 
   calendarChangeDate(date: Date) {
@@ -85,11 +85,31 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     this.LoadAllEventsOnCalendar();
   }
 
+  ngAfterViewInit() {
+    this.holidaysEventService();
+    this.LoadAllEventsOnCalendar();
+
+    // debounceTime ของ layoutPanel
+    this.subscription.add(
+      this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
+        if (result.display) {
+          this.idSideWork = result.event.event.id;
+          this.message = result.event.event.extendedProps.remark;
+          this.holidayMessage = result.event.event.title;
+          this.op.toggle(result.event.jsEvent);
+        } else {
+          this.op.hide();
+        }
+      })
+    );
+
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  calendarLoad(): Subject<SideWork[]> {
+  calendarLoad() {
     this.options = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       locales: [thLocale],
@@ -99,7 +119,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       showNonCurrentDates: false,
       aspectRatio: 2.2,
       defaultView: 'dayGridMonth',
-      updateEvents: this.events,
       displayEventTime: false,
       header: {
         left: 'today',
@@ -116,15 +135,11 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
 
         this.dateCilckValue = el.date;
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
+
         if ((requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
           || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
           && (weekday != 'Sun' && weekday != 'Sat')) {
           this.empDate = el.date;
-
-          // const year = this.empDate.getUTCFullYear();
-          // const month = this.empDate.getUTCMonth() + 1;
-          // const day = this.empDate.getUTCDate() + 1;
-          // console.log('empdate   = ' + day + '/' + month + '/' + year);
 
           this.opendialogShowEmp('form', this.empDate);
 
@@ -133,10 +148,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
             this.openDialogInsert('add');
           }
         }
-
-        // if(this.disable != this.dateCilckValue){
-        //   this.openDialogInsert('add');
-        // }
       },
       eventClick: (el) => {
         this.searchId = parseInt(el.event.id, 0);
@@ -145,7 +156,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
           event: el,
           display: false,
         });
-        this.openDialogEdit(this.item);
+        if (this.item != null || this.item != undefined) {
+          this.openDialogEdit(this.item);
+        }
       },
       eventMouseEnter: (el) => {
         this.togglePanel$.next({
@@ -160,8 +173,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         });
       },
     };
-
-    return this.options;
   }
 
 
@@ -185,20 +196,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
     );
     this.sideworkService.loadSideworkCalendar();
 
-    // debounceTime ของ layoutPanel
-    this.subscription.add(
-      this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
-        if (result.display) {
-          this.idSideWork = result.event.event.id;
-          this.message = result.event.event.extendedProps.remark;
-          this.holidayMessage = result.event.event.title;
-          this.op.toggle(result.event.jsEvent);
-        } else {
-          this.op.hide();
-        }
-      })
-    );
-
     // รวมค่าที่ได้จากการลงเวลา กับ holiday และโหลดขึ้น calendar
     this.subscription.add(
       this.calendarService.onLoadHolidays$.subscribe(
@@ -206,10 +203,20 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
         (event) => {
           this.holidayEvents = Object.assign(event);
           this.events = [...this.sideworkEvents, ...this.holidayEvents];
+
+          this.events = this.events.map((event) => {
+            return {
+              ...event,
+              color: event.workAnyWhere === 1 ? 'SteelBlue' : event.workAnyWhere === 2 ? 'MediumSeaGreen' : 
+              event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'DarkOliveGreen' : 'DimGrey'
+            };
+          });
+          
         }
       )
     );
     this.calendarService.loadHolidays();
+    
   }
 
   getHistorySideWork(): Subject<SideWork[]> {
@@ -348,5 +355,4 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy {
       this.showExcelExport = true;
     }
   }
-
 }

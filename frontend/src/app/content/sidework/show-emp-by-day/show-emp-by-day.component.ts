@@ -1,12 +1,16 @@
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from "@angular/material/sort";
 import { EmployeeByDay } from 'src/app/shared/interfaces/employee-by-day';
 import { EmployeeByDayService } from 'src/app/shared/service/employee-by-day.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SideWorkComponent } from '../sidework.component';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
+import { Injectable } from '@angular/core';
+import { Table } from 'primeng/table';
 
 
 @Component({
@@ -14,13 +18,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './show-emp-by-day.component.html',
   styleUrls: ['./show-emp-by-day.component.scss']
 })
-export class ShowEmpByDayComponent implements OnInit {
-  displayedColumns: string[] = ['employeeNo', 'firstname', 'lastname', 'workAnywhere'];
+export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
+  @ViewChild('dt') table: Table;
   employeeList: EmployeeByDay[];
   formGroupEmp: FormGroup;
   workAnyWhereSelect: any;
-  dataSource = new MatTableDataSource<EmployeeByDay>();
+  dataList: any;
+  dataSource: any;
 
+  formGrid: string = LayoutConstants.gridFormPrimeNg;
+
+  cols: any[];
 
   constructor(
     private empService: EmployeeByDayService,
@@ -31,12 +39,28 @@ export class ShowEmpByDayComponent implements OnInit {
   ngOnInit(): void {
     this.createFormEmp();
     this.qureyEmployeeByDay();
+
+    this.cols = [
+      { field: 'employeeNo', header: 'รหัสพนักงาน' },
+      { field: 'firstname', header: 'ชื่อ' },
+      { field: 'lastname', header: 'นามสกุล' },
+      { field: 'remark' , header: 'หมายเหตุ' } 
+    ];
+  }
+
+  ngAfterViewInit() {
+    // this.dataSource.paginator = this.paginator;
   }
 
   createFormEmp(): void {
     this.formGroupEmp = this.buildForm.group({
       workAnyWhere: [1],
     })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   workAnyWhereClick() {
@@ -56,7 +80,8 @@ export class ShowEmpByDayComponent implements OnInit {
 
     this.empService.getEmployeeByDay(year, month, day, this.workAnyWhereSelect).subscribe((list) => {
       this.employeeList = list;
-      this.dataSource = new MatTableDataSource<EmployeeByDay>(this.employeeList);
+      this.dataList = new MatTableDataSource<EmployeeByDay>(this.employeeList);
+      this.dataSource = this.dataList._data._value.data;
     })
   }
 
@@ -68,8 +93,8 @@ export class ShowEmpByDayComponent implements OnInit {
 
     this.empService.getEmployeeByDay(year, month, day, 1).subscribe((list) => {
       this.employeeList = list;
-      this.dataSource = new MatTableDataSource<EmployeeByDay>(this.employeeList);
-      // this.dataSource.paginator = this.paginator;
+      this.dataList = new MatTableDataSource<EmployeeByDay>(this.employeeList);
+      this.dataSource = this.dataList._data._value.data;
     })
   }
 }

@@ -11,4 +11,5 @@ export interface DataEntity {
     firstname: string;
     employeeNo: string;
     workAnywhere: number;
+    remark: string;
 }
