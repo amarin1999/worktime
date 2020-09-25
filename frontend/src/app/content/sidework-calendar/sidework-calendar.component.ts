@@ -7,7 +7,7 @@ import {
   AfterContentInit,
   DoCheck,
   AfterViewChecked,
-  AfterContentChecked
+  AfterContentChecked, HostListener
 } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -54,6 +54,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
   empDate: Date;
+  eventDateClick: Date;
   calendarDate: Date;
 
   constructor(
@@ -125,8 +126,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
         center: 'title',
         right: 'prev, next',
       },
-      editable: true,
+      editable: false,
       selectable: false,
+
       dateClick: (el) => {
         const requestData = {
           ...Subject,
@@ -141,7 +143,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           && (weekday != 'Sun' && weekday != 'Sat')) {
           this.empDate = el.date;
 
-          this.opendialogShowEmp('form', this.empDate);
+          this.opendialogShowEmp('form');
 
         } else {
           if (weekday != 'Sun' && weekday != 'Sat') {
@@ -151,13 +153,14 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       },
       eventClick: (el) => {
         this.searchId = parseInt(el.event.id, 0);
+        this.eventDateClick = el.event.start;
         this.item = this.data.find((i) => i.id === this.searchId);
         this.togglePanel$.next({
           event: el,
           display: false,
         });
         if (this.item != null || this.item != undefined) {
-          this.openDialogEdit(this.item);
+          this.openDialogEdit('edit', this.item);
         }
       },
       eventMouseEnter: (el) => {
@@ -172,6 +175,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           display: false, // ปิด layoutPanel
         });
       },
+
     };
   }
 
@@ -207,18 +211,19 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           this.events = this.events.map((event) => {
             return {
               ...event,
-              color: event.workAnyWhere === 1 ? 'SteelBlue' : event.workAnyWhere === 2 ? 'MediumSeaGreen' : 
-              event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'DarkOliveGreen' : 'DimGrey'
+              color: event.workAnyWhere === 1 ? 'SteelBlue' : event.workAnyWhere === 2 ? 'SeaGreen' :
+                event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'Maroon' : 'Khaki',
+              textColor: event.workAnyWhere === 1 ? 'Azure' : event.workAnyWhere === 2 ? 'Azure' :
+                event.workAnyWhere === 3 ? 'Azure' : event.workAnyWhere === 0 ? 'Azure' : 'Black',
             };
           });
-          
         }
       )
     );
     this.calendarService.loadHolidays();
-    
-  }
 
+  }
+  
   getHistorySideWork(): Subject<SideWork[]> {
     return this.sideworkService.getSideWork();
   }
@@ -266,7 +271,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       );
   }
 
-  opendialogShowEmp(type: string, empDate: Date) {
+  opendialogShowEmp(type: string) {
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
       autoFocus: false,
@@ -276,11 +281,11 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     dialogRef.afterClosed().subscribe();
   }
 
-  openDialogEdit(itemSideWork: SideWork): void {
+  openDialogEdit(type: string, itemSideWork: SideWork) {
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
       autoFocus: false,
-      data: { ...itemSideWork, type: 'edit', sideworkId: this.searchId },
+      data: { ...itemSideWork, type, sideworkId: this.searchId, Date: this.eventDateClick },
     };
 
     const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
@@ -332,15 +337,16 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     const month = this.calendarDate.getMonth() + 1;
     const year = this.calendarDate.getFullYear();
     this.excelService.getText(month, year).subscribe
-      (blob => this.excelService.download(blob, 'add-workanywhere-' + year + String("0" + month).slice(-2) + '.dat'),
+      (blob => this.excelService.download(blob, 'WorkTime ' + year + '-' + String("0" + month).slice(-2) + '.dat'),
         err => console.error(err)
       )
   }
 
   exportExcelClick() {
+    const year = this.calendarDate.getFullYear();
     const month = this.calendarDate.getMonth() + 1;
     this.excelService.getExcel(month).subscribe
-      (blob => this.excelService.download(blob, 'worktime' + String("0" + month).slice(-2) + '2020.xlsx'),
+      (blob => this.excelService.download(blob, 'WorkTime ' + year + '-' + String("0" + month).slice(-2) + '.xlsx'),
         err => console.error(err)
       )
   }
@@ -355,4 +361,5 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       this.showExcelExport = true;
     }
   }
+
 }

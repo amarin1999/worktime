@@ -65,7 +65,13 @@ public class HolidayController {
 			SimpleDateFormat holidayDate = new SimpleDateFormat("yyyy-MM-dd");
 
 			for (Holiday holidayResult : holidayResults) {
-				holidaysList.add(new HolidayDto(holidayResult.getHolidayEngName(),
+				String holidayName = "";
+				if(holidayResult.getHolidayEngName().length() > 30) {
+					holidayName = holidayResult.getHolidayEngName().substring(0, 30) + "\n" + holidayResult.getHolidayEngName().substring(30);
+				}else {
+					holidayName = "\n" + holidayResult.getHolidayEngName() + "\n\n";
+				}
+				holidaysList.add(new HolidayDto(holidayName ,
 						holidayDate.parse(holidayResult.getHolidayDate())));
 			}
 				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());

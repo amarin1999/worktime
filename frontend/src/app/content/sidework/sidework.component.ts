@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize, first } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { SideWorkService } from 'src/app/shared/service/sidework.service';
 import { Subject } from 'rxjs';
 import { CalendarService } from 'src/app/shared/service/calendar.service';
 import { SideworkCalendarComponent } from '../sidework-calendar/sidework-calendar.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sidework',
@@ -27,12 +28,15 @@ export class SideWorkComponent implements OnInit {
   isDateValid = { status: false };
 
   showExcelExport = false;
+  empEdit: boolean = false;
+  empDate: Date;
 
   constructor(
     private dialogRef: MatDialogRef<SideWorkComponent>,
     private sideWorkService: SideWorkService,
     private calendarService: CalendarService,
     private spinner: NgxSpinnerService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public dataForm: SideWork
   ) { }
 
@@ -49,7 +53,24 @@ export class SideWorkComponent implements OnInit {
     if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
       || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
       this.showExcelExport = true;
+      this.empEdit = true;
     }
+  }
+
+  empList(){
+    this.empDate = this.dialogRef.componentInstance.dataForm.Date;
+    this.opendialogShowEmp('form');
+    this.dialogRef.close()
+  }
+
+  opendialogShowEmp(type: string) {
+    const configDialog: MatDialogConfig<object> = {
+      disableClose: false,
+      autoFocus: false,
+      data: { type, date: this.empDate, workAnyWhere: 1 },
+    };
+    const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
+    dialogRef.afterClosed().subscribe();
   }
 
   // เช็ควันว่าลงเวลาแล้วหรือยัง

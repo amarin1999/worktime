@@ -1,4 +1,5 @@
 export interface SideWork {
+  Date: any;
   id?: number;
   date: Date;
   startTime: Date;

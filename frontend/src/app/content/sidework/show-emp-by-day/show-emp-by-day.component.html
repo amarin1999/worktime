@@ -1,8 +1,10 @@
 <div class="p-grid p-justify-center animation-page">
     <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-10">
+    <div class="p-col-12 p-md-9" >
         <form [formGroup]="formGroupEmp">
-            <br>
+            <div style="line-height: 35px;">
+                วันที่ : {{day}} / {{month}} / {{year}}
+            </div>
             <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH"
                 (click)="workAnyWhereClick()">
             </p-radioButton>
@@ -20,7 +22,10 @@
             </p-radioButton>
         </form>
     </div>
-    <div class="p-col-12 p-md-1"></div>
+    <div class="p-col-12 p-md-2">
+        <button pButton pRipple type="button" label="ลงเวลา" 
+        class="p-button-rounded p-button-info text" (click)="insertTime()"></button>
+    </div>
 
     <div class="p-col-12 p-md-1"></div>
     <div class="p-col-12 p-md-10">

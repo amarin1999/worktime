@@ -43,12 +43,12 @@
 
     <div class="p-col-12">
 
-      <p-checkbox (click)="workAnyWhereClick()" formControlName="workAnyWhereCheck" label="Work Anywhere" [(ngModel)]="this.workAnyWhereChecked"
-        binary="true">
+      <p-checkbox (click)="workAnyWhereClick()" formControlName="workAnyWhereCheck" label="Work Anywhere"
+        [(ngModel)]="this.workAnyWhereChecked" binary="true">
       </p-checkbox>
       &nbsp;&nbsp;
-      <p-checkbox (click)="forgotCardClick()" formControlName="ForgotCardCheck" value="0" label="ลืมบัตรพนักงาน" [(ngModel)]="this.ForgotCardChecked"
-        binary="true">
+      <p-checkbox (click)="forgotCardClick()" formControlName="ForgotCardCheck" value="0" label="ลืมบัตรพนักงาน"
+        [(ngModel)]="this.ForgotCardChecked" binary="true">
       </p-checkbox>
 
       <div *ngIf="workAnyWhereType == true">
@@ -68,7 +68,8 @@
     </div>
 
     <div>
-      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;" *ngIf="formGroupSideWorkEdit.get('workAnyWhere').value == 2 && formGroupSideWorkEdit.get('remark').hasError('required') || 
+      <mat-error class="animation-page" style="font-size: 10.5px;margin-top: -17px;"
+        *ngIf="formGroupSideWorkEdit.get('workAnyWhere').value == 2 && formGroupSideWorkEdit.get('remark').hasError('required') || 
       formGroupSideWorkEdit.get('workAnyWhere').value == 3 && formGroupSideWorkEdit.get('remark').hasError('required')">
         <br>
         &nbsp;&nbsp;&nbsp; * กรุณากรอกหมายเหตุ
