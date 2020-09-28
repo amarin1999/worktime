@@ -12,13 +12,38 @@
             [events]="events" >
         </p-fullCalendar>
     </div>
-    <div class="p-col-12 p-md-1">
+    <div class="p-col-12 p-md-1" >
         <div *ngIf="showExcelExport == true" style="line-height: 50px">
             <button pButton pRipple type="button" label="Text" icon="pi pi-file" (click)="exportText()"
                 class="p-button-rounded p-button-info text"></button>
             <button (click)="exportExcelClick()" pButton pRipple type="button" label="Excel" icon="pi pi-file-excel"
                 class="p-button-rounded p-button-info excel"></button>
         </div>
+        <div style="display: inline-flex;">
+            <div id="WFHSquare"></div>
+            &nbsp;
+            <div style="margin: auto;">WFH</div> 
+        </div>
+        <div style="display: inline-flex;">
+            <div id="SiteWorkSquare"></div>
+            &nbsp;
+            <div style="margin: auto;">Site Work</div> 
+        </div>
+        <div style="display: inline-flex;">
+            <div id="OtherSquare"></div>
+            &nbsp;
+            <div style="margin: auto;">Other</div> 
+        </div>
+        <div style="display: inline-flex;">
+            <div id="ForgotCardSquare"></div>
+            &nbsp;
+            <div style="margin: auto;">ลืมบัตรพนักงาน</div> 
+        </div>
+        <div style="display: inline-flex;">
+            <div id="HolidaySquare"></div>
+            &nbsp;
+            <div style="margin: auto;">วันหยุด</div> 
+        </div>  
     </div>
 </div>
 

@@ -11,6 +11,41 @@ html, body {
   background-color:whitesmoke;
 }
 
+#WFHSquare {
+  width:30px;
+  height: 30px;
+  border-radius: 15%;
+  background: SteelBlue;
+}
+
+#SiteWorkSquare {
+  width:30px;
+  height: 30px;
+  border-radius: 15%;
+  background: SeaGreen;
+}
+
+#OtherSquare {
+  width:30px;
+  height: 30px;
+  border-radius: 15%;
+  background: RebeccaPurple;
+}
+
+#ForgotCardSquare {
+  width:30px;
+  height: 30px;
+  border-radius: 15%;
+  background: Maroon;
+}
+
+#HolidaySquare {
+  width:30px;
+  height: 30px;
+  border-radius: 15%;
+  background: Khaki;
+}
+
 .text{
   background-color: #008CBA; /* blue */
   border: none;
