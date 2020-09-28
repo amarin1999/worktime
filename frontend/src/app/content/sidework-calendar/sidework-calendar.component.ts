@@ -118,7 +118,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       firstDay: 0, // sunday
       // height: 'parent',
       showNonCurrentDates: false,
-      aspectRatio: 2.2,
+      aspectRatio: 2.3,
       defaultView: 'dayGridMonth',
       displayEventTime: false,
       header: {
@@ -128,7 +128,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       },
       editable: false,
       selectable: false,
-
       dateClick: (el) => {
         const requestData = {
           ...Subject,
@@ -223,6 +222,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     this.calendarService.loadHolidays();
 
   }
+
   
   getHistorySideWork(): Subject<SideWork[]> {
     return this.sideworkService.getSideWork();
