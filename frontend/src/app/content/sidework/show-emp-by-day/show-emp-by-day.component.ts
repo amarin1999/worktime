@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit, SimpleChanges, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from "@angular/material/sort";
@@ -34,13 +34,12 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
   dateCilckValue: Date;
   searchId: number;
   formGrid: string = LayoutConstants.gridFormPrimeNg;
-
+  empListClickCheck:number;
   cols: any[];
 
   year: any;
   month: any;
   day: any;
-
   constructor(
     private empService: EmployeeByDayService,
     private dialogRef: MatDialogRef<SideWorkComponent>,
@@ -50,6 +49,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.empListClickCheck = this.dialogRef.componentInstance.dataForm["empListClickCheck"];
     this.createFormEmp();
     this.qureyEmployeeByDay();
 
@@ -111,9 +111,8 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
     })
   }
 
-
   insertTime() {
-    const date = this.dialogRef.componentInstance.dataForm.date
+    const date = this.dialogRef.componentInstance.dataForm.date;
     
     this.dateCilckValue = date;
     this.openDialogInsert('add');

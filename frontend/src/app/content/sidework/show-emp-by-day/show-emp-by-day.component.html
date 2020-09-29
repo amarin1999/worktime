@@ -1,6 +1,6 @@
 <div class="p-grid p-justify-center animation-page">
     <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-9" >
+    <div class="p-col-12 p-md-9">
         <form [formGroup]="formGroupEmp">
             <div style="line-height: 35px;">
                 วันที่ : {{day}} / {{month}} / {{year}}
@@ -23,8 +23,10 @@
         </form>
     </div>
     <div class="p-col-12 p-md-2">
-        <button pButton pRipple type="button" label="ลงเวลา" 
-        class="p-button-rounded p-button-info text" (click)="insertTime()"></button>
+        <div *ngIf="this.empListClickCheck == 1">
+            <button pButton pRipple type="button" label="ลงเวลา" class="p-button-rounded p-button-info text"
+                (click)="insertTime()"></button>
+        </div>
     </div>
 
     <div class="p-col-12 p-md-1"></div>
@@ -39,8 +41,8 @@
 
     <div class="p-col-12 p-md-1"></div>
     <div class="p-col-12 p-md-10">
-        <p-table #dt [columns]="cols" [value]="dataSource" [paginator]="true" [rows]="10"
-            [rowsPerPageOptions]="[5,10]" pageLinks="3" paginatorPosition="top">
+        <p-table #dt [columns]="cols" [value]="dataSource" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10]"
+            pageLinks="3" paginatorPosition="top">
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th *ngFor="let col of columns" style="text-align: center;">

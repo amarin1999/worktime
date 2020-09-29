@@ -13,7 +13,7 @@ import { CalendarService } from './calendar.service';
   providedIn: 'root',
 })
 export class SideWorkService {
-  
+
   sideWorkItem = new Subject<SideWork[]>();
   public deleteStatus = false;
 
@@ -26,6 +26,10 @@ export class SideWorkService {
     )
   );
 
+  loadEventCalendar() {
+    this.changeEventCalendar.next();
+  }
+
   private changeSideworkCalendar = new Subject<void>();
   onLoadSideworkCalendar$ = this.changeSideworkCalendar.pipe(
     switchMap((__) =>
@@ -33,18 +37,14 @@ export class SideWorkService {
     )
   );
 
+  loadSideworkCalendar() {
+    this.changeSideworkCalendar.next();
+  }
+
   constructor(
     private http: HttpClient,
     private calendarService: CalendarService
   ) { }
-
-  loadEventCalendar() {
-    this.changeEventCalendar.next();
-  }
-
-  loadSideworkCalendar() {
-    this.changeSideworkCalendar.next();
-  }
 
   getSideworkCalendar(id: string) {
     return this.http

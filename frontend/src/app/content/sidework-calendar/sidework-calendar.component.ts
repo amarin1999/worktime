@@ -7,7 +7,7 @@ import {
   AfterContentInit,
   DoCheck,
   AfterViewChecked,
-  AfterContentChecked, HostListener
+  AfterContentChecked, HostListener, Input
 } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -40,7 +40,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
   events: Calendar[];
   holidayEvents: Calendar[];
-  sideworkEvents: Calendar[];
+  sideworkEvents: any;
   calendarEvents: Calendar[];
   options: any;
   searchId: number;
@@ -83,13 +83,15 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     localStorage.setItem("year", holidayYear.toString());
 
     this.holidaysEventService();
-    this.LoadAllEventsOnCalendar();
+    this.sideworkEvents = {
+      [Symbol.iterator]() {
+        return [][Symbol.iterator]()
+      }
+    }
   }
 
   ngAfterViewInit() {
-    this.holidaysEventService();
     this.LoadAllEventsOnCalendar();
-
     // debounceTime ของ layoutPanel
     this.subscription.add(
       this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
@@ -180,12 +182,12 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   LoadAllEventsOnCalendar() {
+
     // โหลด sidework event ขึ้นบน calendar
     this.subscription.add(
       this.sideworkService.onLoadEventCalendar$.subscribe(
-        // (event) => (this.events = event)
-        (event) => {
-          this.sideworkEvents = Object.assign(event);
+        (sideworkEvent) => {
+          this.sideworkEvents = sideworkEvent;
         }
       )
     );
@@ -201,10 +203,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
 
     // รวมค่าที่ได้จากการลงเวลา กับ holiday และโหลดขึ้น calendar
     this.subscription.add(
-      this.calendarService.onLoadHolidays$.subscribe(
-        // (event) => (this.events = event)
-        (event) => {
-          this.holidayEvents = Object.assign(event);
+      this.calendarService.onLoadHolidays$.pipe(debounceTime(500)).subscribe(
+        (holidayEvent) => {
+          this.holidayEvents = holidayEvent;
           this.events = [...this.sideworkEvents, ...this.holidayEvents];
 
           this.events = this.events.map((event) => {
@@ -220,10 +221,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       )
     );
     this.calendarService.loadHolidays();
-
   }
 
-  
+
   getHistorySideWork(): Subject<SideWork[]> {
     return this.sideworkService.getSideWork();
   }
@@ -248,7 +248,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
               severity: 'success',
               summary: 'ข้อความ',
               detail: 'ลงเวลาเรียบร้อยแล้ว',
-              life:1000,
+              life: 1000,
             });
           } else if (result.error) {
             this.messageService.clear();
@@ -257,7 +257,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
               severity: 'error',
               summary: 'ข้อความ',
               detail: result.error.errorMessage,
-              life:1000,
+              life: 1000,
             });
           }
         },
@@ -268,7 +268,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
             severity: 'error',
             summary: 'ข้อความ',
             detail: 'เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล',
-            life:1000,
+            life: 1000,
           });
         }
       );
@@ -278,7 +278,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
       autoFocus: false,
-      data: { type, date: this.empDate, workAnyWhere: 1 },
+      data: { type, date: this.empDate, workAnyWhere: 1, empListClickCheck:1 },
     };
     const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
     dialogRef.afterClosed().subscribe();
@@ -303,7 +303,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           severity: 'success',
           summary: 'ข้อความ',
           detail: 'แก้ไขการลงเวลาเรียบร้อยแล้ว',
-          life:1000,
+          life: 1000,
         });
       } else if (
         result.status === 'Success' &&
@@ -315,7 +315,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           severity: 'success',
           summary: 'ข้อความ',
           detail: 'ลบรายการลงเวลาเรียบร้อยแล้ว',
-          life:3000,
+          life: 3000,
         });
       } else if (result.error) {
         this.messageService.add({
@@ -323,7 +323,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           severity: 'error',
           summary: 'ข้อความ',
           detail: result.error.errorMessage,
-          life:3000,
+          life: 3000,
         });
       }
     });
