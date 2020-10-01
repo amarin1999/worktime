@@ -1,8 +1,25 @@
 table {
-    width: 100%;
-  }
+  width: 100%;
+}
 
-  .mat-radio-button ~ .mat-radio-button {
-    margin-left: 16px;
-  }
-  
+.empNo{
+  width: 100px;
+  text-align: center;
+}
+
+.empFirstName{
+  width: 90px;
+}
+
+.empLastName{
+  width: 120px;
+}
+
+.empType{
+  width: 70px;
+  text-align: center;
+}
+
+.empRemark{
+  width: 150px;
+}

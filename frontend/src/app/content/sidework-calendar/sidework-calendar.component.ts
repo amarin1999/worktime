@@ -278,7 +278,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
       autoFocus: false,
-      data: { type, date: this.empDate, workAnyWhere: 1, empListClickCheck:1 },
+      data: { type, date: this.empDate, workAnyWhere: 1, empListClickCheck: 1 },
     };
     const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
     dialogRef.afterClosed().subscribe();

@@ -12,4 +12,5 @@ export interface DataEntity {
     employeeNo: string;
     workAnywhere: number;
     remark: string;
+    lastUpdateTime: Date;
 }

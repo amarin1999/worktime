@@ -1,22 +1,26 @@
 <div class="p-grid p-justify-center animation-page">
-    <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-9">
+    <!-- <div class="p-col-12 p-md-1"></div> -->
+    <div class="p-col-12 p-md-10">
         <form [formGroup]="formGroupEmp">
             <div style="line-height: 35px;">
-                วันที่ : {{day}} / {{month}} / {{year}}
+                วันที่ : {{day}}/{{month}}/{{year543}}
             </div>
+            <p-radioButton formControlName="workAnyWhere" value="0" name="workAnyWhere" label="ทั้งหมด"
+                (click)="employeeListClick()">
+            </p-radioButton>
+            &nbsp;&nbsp;
             <p-radioButton formControlName="workAnyWhere" value="1" name="workAnyWhere" label="WFH"
                 (click)="workAnyWhereClick()">
             </p-radioButton>
-            &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;
             <p-radioButton formControlName="workAnyWhere" value="2" name="workAnyWhere" label="Site"
                 (click)="workAnyWhereClick()">
             </p-radioButton>
-            &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;
             <p-radioButton formControlName="workAnyWhere" value="4" name="workAnyWhere" label="ลืมบัตรพนักงาน"
                 (click)="workAnyWhereClick()">
             </p-radioButton>
-            &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;
             <p-radioButton formControlName="workAnyWhere" value="3" name="workAnyWhere" label="Other"
                 (click)="workAnyWhereClick()">
             </p-radioButton>
@@ -29,35 +33,36 @@
         </div>
     </div>
 
-    <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-10">
+    <!-- <div class="p-col-12 p-md-1"></div> -->
+    <div class="p-col-12 p-md-12">
         <div class="ui-inputgroup">
             <span class="ui-inputgroup-addon"><i class="pi pi-search"></i></span>
-            <input pInputText style="width: 410px;" type="text"
+            <input pInputText style="width: 500px;" type="text"
                 (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="ค้นหา..." />
         </div>
     </div>
-    <div class="p-col-12 p-md-1"></div>
+    <!-- <div class="p-col-12 p-md-1"></div> -->
 
-    <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-10">
+    <!-- <div class="p-col-12 p-md-1"></div> -->
+    <div class="p-col-12 p-md-12">
         <p-table #dt [columns]="cols" [value]="dataSource" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10]"
             pageLinks="3" paginatorPosition="top">
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns" style="text-align: center;">
+                    <th *ngFor="let col of columns" style="text-align: center;" [ngClass]="col.headerClass">
                         {{col.header}}
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
                 <tr>
-                    <td *ngFor="let col of columns">
-                        {{rowData[col.field]}}
+                    <td *ngFor="let col of columns" [ngClass]="col.class">
+                        <!-- {{rowData[col.field]}} -->
+                        {{col.type ? col.type.transform(rowData[col.field]) : rowData[col.field] }}
                     </td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
-    <div class="p-col-12 p-md-1"></div>
+    <!-- <div class="p-col-12 p-md-1"></div> -->
 </div>

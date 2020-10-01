@@ -22,4 +22,14 @@ export class EmployeeByDayService {
     const observable = this.http.get<EmployeeByDay[]>(`${ApiConstants.baseURl}/getEmployee/${year}/${month}/${day}/${work}`, { params: httpParams });
     return observable;
   }
+
+  getEmployeeAllByDay(
+    year: any,
+    month: any,
+    day: any,
+  ) {
+    let httpParams = new HttpParams();
+    const observable = this.http.get<EmployeeByDay[]>(`${ApiConstants.baseURl}/getEmployee/${year}/${month}/${day}`, { params: httpParams });
+    return observable;
+  }
 }

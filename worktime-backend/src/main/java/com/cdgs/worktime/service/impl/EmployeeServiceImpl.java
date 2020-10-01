@@ -56,6 +56,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return entity;
 	}
 	
+	@Override
+	public List<EmployeeByDayDto> getEmployeeAllByDay(String year, String month, String day) {
+		List<EmployeeByDayDto> entity = new ArrayList<EmployeeByDayDto>();
+		try {
+			entity = employeeHasSideworkHistoryRespository.findEmpAllByDay(year, month, day);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getEmployeeByDay >>> " + e.getMessage());
+		}
+		return entity;
+	}
+	
 	private List<EmployeeDto> mapListEntityToDto( List<EmployeeEntity> entities) {
 		List<EmployeeDto> dtoList = new ArrayList<EmployeeDto>();
 		if (entities != null) {

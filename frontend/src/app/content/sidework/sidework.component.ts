@@ -67,7 +67,7 @@ export class SideWorkComponent implements OnInit {
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
       autoFocus: false,
-      data: { type, date: this.empDate, workAnyWhere: 1, empListClickCheck:2 }, 
+      data: { type, date: this.empDate, workAnyWhere: 1, empListClickCheck: 2 }, 
     };
     const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
     dialogRef.afterClosed().subscribe();

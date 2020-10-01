@@ -85,5 +85,33 @@ public class EmployeeController {
 			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping(path = "/{year}/{month}/{day}")
+	public ResponseEntity<ResponseDto<EmployeeByDayDto>> getEmpAll(@PathVariable(value = "year") String year,
+			@PathVariable(value = "month") String month,
+			@PathVariable(value = "day") String day){
+		ResponseDto<EmployeeByDayDto> res = new ResponseDto<>();
+		List<EmployeeByDayDto> dto = new ArrayList<EmployeeByDayDto>();
+
+		try {
+			dto = employeeService.getEmployeeAllByDay(year, month, day);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			if (dto.size() == 0) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+				res.setData(dto);
+				res.setCode(200);
+				return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.OK);
+			}
+			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(404);
+			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }

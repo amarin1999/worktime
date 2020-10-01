@@ -9,12 +9,12 @@ export class WorkTypePipe implements PipeTransform {
     if (data == "1") {
       return "WFH";
     } else if (data == "2") {
-      return "Site work";
+      return "Site";
     }
     else if (data == "3") {
       return "Other";
     }
-    else return "ลืมบัตรพนักงาน";
+    else return "ลืมบัตร";
   }
 
 }

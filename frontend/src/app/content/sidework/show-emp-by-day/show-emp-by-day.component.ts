@@ -16,6 +16,7 @@ import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { SideWorkService } from 'src/app/shared/service/sidework.service';
 import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
+import { WorkTypePipe } from 'src/app/shared/pipe/work-type.pipe';
 
 
 @Component({
@@ -30,13 +31,14 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
   workAnyWhereSelect: any;
   dataList: any;
   dataSource: any;
-  
+
   dateCilckValue: Date;
   searchId: number;
   formGrid: string = LayoutConstants.gridFormPrimeNg;
-  empListClickCheck:number;
+  empListClickCheck: number;
   cols: any[];
 
+  year543: any;
   year: any;
   month: any;
   day: any;
@@ -46,6 +48,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
     private buildForm: FormBuilder,
     private dialog: MatDialog,
     private messageService: MessageService,
+    private workAnyWherePipe: WorkTypePipe,
   ) { }
 
   ngOnInit(): void {
@@ -54,10 +57,12 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
     this.qureyEmployeeByDay();
 
     this.cols = [
-      { field: 'employeeNo', header: 'รหัสพนักงาน' },
-      { field: 'firstname', header: 'ชื่อ' },
-      { field: 'lastname', header: 'นามสกุล' },
-      { field: 'remark', header: 'หมายเหตุ' }
+      { field: 'employeeNo', header: 'รหัสพนักงาน', headerClass: 'empNo', class: 'empNo' },
+      { field: 'firstname', header: 'ชื่อ', headerClass: 'empFirstName', class: 'empFirstName'},
+      { field: 'lastname', header: 'นามสกุล', headerClass: 'empLastName', class: 'empLastName'},
+      { field: 'workAnywhere', header: 'ประเภท', type: this.workAnyWherePipe, headerClass: 'empType', class: 'empType' },
+      { field: 'remark', header: 'หมายเหตุ', headerClass: 'empRemark', class: 'empRemark' },
+      // { field: 'lastUpdateTime', header: 'บันทึกล่าสุด' }
     ];
   }
 
@@ -67,7 +72,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
 
   createFormEmp(): void {
     this.formGroupEmp = this.buildForm.group({
-      workAnyWhere: [1],
+      workAnyWhere: [0],
     })
   }
 
@@ -79,7 +84,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
   workAnyWhereClick() {
     this.year = this.dialogRef.componentInstance.dataForm.date.getUTCFullYear();
     this.month = this.dialogRef.componentInstance.dataForm.date.getUTCMonth() + 1;
-    this.day = this.dialogRef.componentInstance.dataForm.date.getUTCDate() + 1;
+    this.day = this.dialogRef.componentInstance.dataForm.date.getDate();
 
     if (this.formGroupEmp.get('workAnyWhere').value == 1) {
       this.workAnyWhereSelect = 1;
@@ -98,13 +103,32 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
     })
   }
 
+  employeeListClick() {
+    this.year = this.dialogRef.componentInstance.dataForm.date.getUTCFullYear();
+    this.month = this.dialogRef.componentInstance.dataForm.date.getUTCMonth() + 1;
+    this.day = this.dialogRef.componentInstance.dataForm.date.getDate();
+
+    if (this.formGroupEmp.get('workAnyWhere').value == 0) {
+      this.workAnyWhereSelect = 0;
+    }
+
+    this.empService.getEmployeeAllByDay(this.year, this.month, this.day).subscribe((list) => {
+      this.employeeList = list;
+      this.dataList = new MatTableDataSource<EmployeeByDay>(this.employeeList);
+      this.dataSource = this.dataList._data._value.data;
+    })
+
+  }
+
 
   qureyEmployeeByDay() {
     this.year = this.dialogRef.componentInstance.dataForm.date.getUTCFullYear();
     this.month = this.dialogRef.componentInstance.dataForm.date.getUTCMonth() + 1;
-    this.day = this.dialogRef.componentInstance.dataForm.date.getUTCDate() + 1;
+    this.day = this.dialogRef.componentInstance.dataForm.date.getDate();
 
-    this.empService.getEmployeeByDay(this.year, this.month, this.day, 1).subscribe((list) => {
+    this.year543 = this.year + 543;
+
+    this.empService.getEmployeeAllByDay(this.year, this.month, this.day).subscribe((list) => {
       this.employeeList = list;
       this.dataList = new MatTableDataSource<EmployeeByDay>(this.employeeList);
       this.dataSource = this.dataList._data._value.data;
@@ -113,7 +137,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
 
   insertTime() {
     const date = this.dialogRef.componentInstance.dataForm.date;
-    
+
     this.dateCilckValue = date;
     this.openDialogInsert('add');
     this.dialogRef.close()
