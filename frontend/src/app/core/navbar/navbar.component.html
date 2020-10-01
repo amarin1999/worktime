@@ -1,10 +1,10 @@
 <mat-grid-list (scroll)="onWindowScroll($event)" cols="12" rowHeight="100px">
   <nav id="wrapNavbar" class="navbar navbar-default animation-page" role="navigation">
-    <a href="/main">
+    <!-- <a href="/main"> -->
       <div class="navbar-header">
         <img src="../../../assets/images/banner.png" class="img-logo" alt="imgNav" />
       </div>
-    </a>
+    <!-- </a> -->
     <div *ngIf="authService.isSignIn() | async">
       <div class="main_list">
         <ul class="navlinks">
