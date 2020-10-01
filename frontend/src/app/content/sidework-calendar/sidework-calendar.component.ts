@@ -203,7 +203,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
 
     // รวมค่าที่ได้จากการลงเวลา กับ holiday และโหลดขึ้น calendar
     this.subscription.add(
-      this.calendarService.onLoadHolidays$.pipe(debounceTime(500)).subscribe(
+      this.calendarService.onLoadHolidays$.pipe(debounceTime(100)).subscribe(
         (holidayEvent) => {
           this.holidayEvents = holidayEvent;
           this.events = [...this.sideworkEvents, ...this.holidayEvents];
@@ -248,7 +248,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
               severity: 'success',
               summary: 'ข้อความ',
               detail: 'ลงเวลาเรียบร้อยแล้ว',
-              life: 1000,
+              life: 500,
             });
           } else if (result.error) {
             this.messageService.clear();
@@ -257,7 +257,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
               severity: 'error',
               summary: 'ข้อความ',
               detail: result.error.errorMessage,
-              life: 1000,
+              life: 500,
             });
           }
         },
@@ -268,7 +268,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
             severity: 'error',
             summary: 'ข้อความ',
             detail: 'เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล',
-            life: 1000,
+            life: 500,
           });
         }
       );
@@ -303,7 +303,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           severity: 'success',
           summary: 'ข้อความ',
           detail: 'แก้ไขการลงเวลาเรียบร้อยแล้ว',
-          life: 1000,
+          life: 500,
         });
       } else if (
         result.status === 'Success' &&
@@ -315,7 +315,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           severity: 'success',
           summary: 'ข้อความ',
           detail: 'ลบรายการลงเวลาเรียบร้อยแล้ว',
-          life: 3000,
+          life: 500,
         });
       } else if (result.error) {
         this.messageService.add({
@@ -323,7 +323,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           severity: 'error',
           summary: 'ข้อความ',
           detail: result.error.errorMessage,
-          life: 3000,
+          life: 500,
         });
       }
     });
