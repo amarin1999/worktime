@@ -83,7 +83,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
 
   workAnyWhereClick() {
     this.year = this.dialogRef.componentInstance.dataForm.date.getUTCFullYear();
-    this.month = this.dialogRef.componentInstance.dataForm.date.getUTCMonth() + 1;
+    this.month = this.dialogRef.componentInstance.dataForm.date.getMonth() + 1;
     this.day = this.dialogRef.componentInstance.dataForm.date.getDate();
 
     if (this.formGroupEmp.get('workAnyWhere').value == 1) {
