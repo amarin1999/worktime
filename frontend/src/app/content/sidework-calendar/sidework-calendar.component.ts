@@ -4,10 +4,6 @@ import {
   OnDestroy,
   ViewChild,
   AfterViewInit,
-  AfterContentInit,
-  DoCheck,
-  AfterViewChecked,
-  AfterContentChecked, HostListener, Input
 } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -16,14 +12,13 @@ import thLocale from '@fullcalendar/core/locales/th';
 import { SideWorkComponent } from '../sidework/sidework.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MessageService } from 'primeng/api';
-import { first, finalize, map, debounceTime, observeOn, switchMap, mergeMap } from 'rxjs/operators';
+import { first, debounceTime, } from 'rxjs/operators';
 import { Calendar } from 'src/app/shared/interfaces/calendar';
 import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { SideWorkService } from 'src/app/shared/service/sidework.service';
 import {
   Subject,
   Subscription,
-  Observable
 } from 'rxjs';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { ExcelService } from 'src/app/shared/service/excel.service';
@@ -92,6 +87,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngAfterViewInit() {
     this.LoadAllEventsOnCalendar();
+    
     // debounceTime ของ layoutPanel
     this.subscription.add(
       this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
@@ -200,26 +196,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       )
     );
     this.sideworkService.loadSideworkCalendar();
-
-    // this.subscription.add(
-    //   this.calendarService.onLoadHolidays$.pipe(debounceTime(100)).subscribe(
-    //     (holidayEvent) => {
-    //       this.holidayEvents = holidayEvent;
-    //       this.events = [...this.sideworkEvents, ...this.holidayEvents];
-
-    //       this.events = this.events.map((event) => {
-    //         return {
-    //           ...event,
-    //           color: event.workAnyWhere === 1 ? 'SteelBlue' : event.workAnyWhere === 2 ? 'SeaGreen' :
-    //             event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'Maroon' : 'Khaki',
-    //           textColor: event.workAnyWhere === 1 ? 'Azure' : event.workAnyWhere === 2 ? 'Azure' :
-    //             event.workAnyWhere === 3 ? 'Azure' : event.workAnyWhere === 0 ? 'Azure' : 'Black',
-    //         };
-    //       });
-    //     }
-    //   )
-    // );
-
 
     // รวมค่าที่ได้จากการลงเวลา กับ holiday และโหลดขึ้น calendar
     this.subscription.add(
