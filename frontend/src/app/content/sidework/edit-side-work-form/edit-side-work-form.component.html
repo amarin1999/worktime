@@ -1,7 +1,7 @@
 <form [formGroup]="formGroupSideWorkEdit" (submit)="onSubmit()">
   <div class="p-grid">
     <div class="{{ formGrid }}">
-      <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-form-field appearance="outline" class="form">
         <mat-label>วัน/เดือน/ปี</mat-label>
         <input readonly matInput formControlName="date" />
         <mat-icon matSuffix>event</mat-icon>
@@ -9,7 +9,7 @@
     </div>
     <div class="{{ formGrid }}"></div>
     <div class="{{ formGrid }}">
-      <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-form-field appearance="outline" class="form">
         <mat-label>
           <mat-icon>call_missed</mat-icon> เวลาเข้างาน
         </mat-label>
@@ -23,7 +23,7 @@
       </mat-form-field>
     </div>
     <div class="{{ formGrid }}">
-      <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-form-field appearance="outline" class="form">
         <mat-label>
           <mat-icon>call_missed_outgoing</mat-icon> เวลาออกงาน
         </mat-label>
@@ -76,7 +76,7 @@
       </mat-error>
     </div>
 
-    <mat-form-field appearance="outline" style="width:100%">
+    <mat-form-field appearance="outline" class="form">
       <mat-label>
         <mat-icon>subject</mat-icon> หมายเหตุ
       </mat-label>

@@ -72,7 +72,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
 
   createFormEmp(): void {
     this.formGroupEmp = this.buildForm.group({
-      workAnyWhere: [0],
+      workAnyWhere: [4],
     })
   }
 
@@ -92,8 +92,8 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
       this.workAnyWhereSelect = 2;
     } else if (this.formGroupEmp.get('workAnyWhere').value == 3) {
       this.workAnyWhereSelect = 3;
-    } else if (this.formGroupEmp.get('workAnyWhere').value == 4) {
-      this.workAnyWhereSelect = 4;
+    } else if (this.formGroupEmp.get('workAnyWhere').value == 0) {
+      this.workAnyWhereSelect = 0;
     }
 
     this.empService.getEmployeeByDay(this.year, this.month, this.day, this.workAnyWhereSelect).subscribe((list) => {
@@ -108,8 +108,8 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
     this.month = this.dialogRef.componentInstance.dataForm.date.getMonth() + 1;
     this.day = this.dialogRef.componentInstance.dataForm.date.getDate();
 
-    if (this.formGroupEmp.get('workAnyWhere').value == 0) {
-      this.workAnyWhereSelect = 0;
+    if (this.formGroupEmp.get('workAnyWhere').value == 4) {
+      this.workAnyWhereSelect = 4;
     }
 
     this.empService.getEmployeeAllByDay(this.year, this.month, this.day).subscribe((list) => {

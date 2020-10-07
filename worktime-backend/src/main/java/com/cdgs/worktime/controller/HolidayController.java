@@ -66,10 +66,15 @@ public class HolidayController {
 
 			for (Holiday holidayResult : holidayResults) {
 				String holidayName = "";
-				if(holidayResult.getHolidayEngName().length() > 30) {
-					holidayName = holidayResult.getHolidayEngName().substring(0, 30) + "\n" + holidayResult.getHolidayEngName().substring(30);
+				if(holidayResult.getHolidayEngName().length() > 25) {
+					int str = holidayResult.getHolidayEngName().indexOf(" ", 25);
+					if(str > 0) {
+						holidayName = holidayResult.getHolidayEngName().substring(0, str) + "\n" + holidayResult.getHolidayEngName().substring(str);
+					}else {
+						holidayName = holidayResult.getHolidayEngName() + "\n\n";
+					}
 				}else {
-					holidayName = "\n" + holidayResult.getHolidayEngName() + "\n\n";
+					holidayName = holidayResult.getHolidayEngName() + "\n\n";
 				}
 				holidaysList.add(new HolidayDto(holidayName ,
 						holidayDate.parse(holidayResult.getHolidayDate())));

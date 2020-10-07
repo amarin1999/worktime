@@ -22,7 +22,7 @@ public interface EmployeeHasSideworkHistoryRespository extends CrudRepository<Em
 			" inner join worktime.sidework_history as sh " + 
 			" on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id " + 
 			" WHERE work_type = 1 and YEAR(`day`) =:year  and MONTH(`day`) =:month and day(`day`) =:day and work_anywhere =:work " + 
-			" ORDER BY `day`, start_time ASC ", nativeQuery = true)
+			" ORDER BY  e.employee_no ASC ", nativeQuery = true)
 	List<EmployeeByDayDto> findByDay(@Param(value = "year") String year,
 			@Param(value = "month") String month,
 			@Param(value = "day") String day,
@@ -36,7 +36,7 @@ public interface EmployeeHasSideworkHistoryRespository extends CrudRepository<Em
 			" inner join worktime.sidework_history as sh " + 
 			" on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id " + 
 			" WHERE work_type = 1 and YEAR(`day`) =:year  and MONTH(`day`) =:month and day(`day`) =:day " + 
-			" ORDER BY `day`, start_time ASC ", nativeQuery = true)
+			" ORDER BY e.employee_no ASC ", nativeQuery = true)
 	List<EmployeeByDayDto> findEmpAllByDay(@Param(value = "year") String year,
 			@Param(value = "month") String month,
 			@Param(value = "day") String day

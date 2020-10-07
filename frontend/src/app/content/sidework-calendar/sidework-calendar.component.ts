@@ -201,9 +201,29 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     );
     this.sideworkService.loadSideworkCalendar();
 
+    // this.subscription.add(
+    //   this.calendarService.onLoadHolidays$.pipe(debounceTime(100)).subscribe(
+    //     (holidayEvent) => {
+    //       this.holidayEvents = holidayEvent;
+    //       this.events = [...this.sideworkEvents, ...this.holidayEvents];
+
+    //       this.events = this.events.map((event) => {
+    //         return {
+    //           ...event,
+    //           color: event.workAnyWhere === 1 ? 'SteelBlue' : event.workAnyWhere === 2 ? 'SeaGreen' :
+    //             event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'Maroon' : 'Khaki',
+    //           textColor: event.workAnyWhere === 1 ? 'Azure' : event.workAnyWhere === 2 ? 'Azure' :
+    //             event.workAnyWhere === 3 ? 'Azure' : event.workAnyWhere === 0 ? 'Azure' : 'Black',
+    //         };
+    //       });
+    //     }
+    //   )
+    // );
+
+
     // รวมค่าที่ได้จากการลงเวลา กับ holiday และโหลดขึ้น calendar
     this.subscription.add(
-      this.calendarService.onLoadHolidays$.pipe(debounceTime(100)).subscribe(
+      this.calendarService.onLoadHolidays$.subscribe(
         (holidayEvent) => {
           this.holidayEvents = holidayEvent;
           this.events = [...this.sideworkEvents, ...this.holidayEvents];
