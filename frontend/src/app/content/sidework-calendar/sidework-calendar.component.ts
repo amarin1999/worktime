@@ -33,8 +33,8 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
 
   @ViewChild('op') op: OverlayPanel;
   sideWorkHistory: Subject<SideWork[]> = this.getHistorySideWork();
-  events: Calendar[];
-  holidayEvents: Calendar[];
+  events: any;
+  holidayEvents: any;
   sideworkEvents: any;
   calendarEvents: Calendar[];
   options: any;
@@ -78,7 +78,13 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     localStorage.setItem("year", holidayYear.toString());
 
     this.holidaysEventService();
+
     this.sideworkEvents = {
+      [Symbol.iterator]() {
+        return [][Symbol.iterator]()
+      }
+    }
+    this.holidayEvents = {
       [Symbol.iterator]() {
         return [][Symbol.iterator]()
       }
@@ -89,6 +95,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     this.LoadAllEventsOnCalendar();
     
     // debounceTime ของ layoutPanel
+    //จะทำกรณีเอาเมาส์ไปชี้ที่ event บนปฏิทิน
     this.subscription.add(
       this.togglePanel$.pipe(debounceTime(300)).subscribe((result) => {
         if (result.display) {
@@ -139,10 +146,9 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
           && (weekday != 'Sun' && weekday != 'Sat')) {
           this.empDate = el.date;
-
           this.opendialogShowEmp('form');
-
         } else {
+          // วันเสาร์-อาทิตย์กดลงเวลาไม่ได้
           if (weekday != 'Sun' && weekday != 'Sat') {
             this.openDialogInsert('add');
           }
@@ -178,12 +184,25 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
 
 
   LoadAllEventsOnCalendar() {
-
     // โหลด sidework event ขึ้นบน calendar
     this.subscription.add(
       this.sideworkService.onLoadEventCalendar$.subscribe(
         (sideworkEvent) => {
           this.sideworkEvents = sideworkEvent;
+
+          //this.events ใช้สำหรับนำ events ทั้งหมดที่มีขึ้นบนปฏิทิน
+          this.events = [...this.sideworkEvents, ...this.holidayEvents];
+
+          // ตั้งค่าสีให้กับ events
+          this.events = this.events.map((event) => {
+            return {
+              ...event,
+              color: event.workAnyWhere === 1 ? 'SteelBlue' : event.workAnyWhere === 2 ? 'SeaGreen' :
+                event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'Maroon' : 'Khaki',
+              textColor: event.workAnyWhere === 1 ? 'Azure' : event.workAnyWhere === 2 ? 'Azure' :
+                event.workAnyWhere === 3 ? 'Azure' : event.workAnyWhere === 0 ? 'Azure' : 'Black',
+            };
+          });
         }
       )
     );
@@ -196,14 +215,18 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       )
     );
     this.sideworkService.loadSideworkCalendar();
+    
 
-    // รวมค่าที่ได้จากการลงเวลา กับ holiday และโหลดขึ้น calendar
+    // โหลด holiday event
     this.subscription.add(
       this.calendarService.onLoadHolidays$.subscribe(
         (holidayEvent) => {
           this.holidayEvents = holidayEvent;
-          this.events = [...this.sideworkEvents, ...this.holidayEvents];
 
+          //this.events ใช้สำหรับนำ events ทั้งหมดที่มีขึ้นบนปฏิทิน
+          this.events = [...this.sideworkEvents , ...this.holidayEvents];
+
+          // ตั้งค่าสีให้กับ events
           this.events = this.events.map((event) => {
             return {
               ...event,
@@ -353,6 +376,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       )
   }
 
+  // ตรวจสอบ employee ที่ล็อกอินเข้ามา
   checkEmployee(): any {
     const requestData = {
       ...Subject,

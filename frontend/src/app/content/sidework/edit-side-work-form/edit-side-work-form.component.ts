@@ -16,10 +16,7 @@ import { first, finalize } from 'rxjs/operators';
 import { LayoutConstants } from 'src/app/shared/constants/LayoutConstants';
 import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
-import { Router } from '@angular/router';
-import { SideWorkService } from 'src/app/shared/service/sidework.service';
 import * as moment from 'moment';
-import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-edit-side-work-form',
@@ -76,6 +73,7 @@ export class EditSideWorkFormComponent implements OnInit {
   workAnyWhereSet() {
     const workAnyWhereValue = this.formGroupSideWorkEdit.get('workAnyWhere').value;
 
+    // ลืมบัตรพนักงาน
     if (workAnyWhereValue == 0) {
       this.workAnyWhereType = false;
       this.workAnyWhereChecked = false;
@@ -83,6 +81,8 @@ export class EditSideWorkFormComponent implements OnInit {
       this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(false);
       this.formGroupSideWorkEdit.get('ForgotCardCheck').setValue(true);
     }
+
+    // Work AnyWhere
     if (workAnyWhereValue == 1 || workAnyWhereValue == 2 || workAnyWhereValue == 3) {
       this.workAnyWhereType = true;
       this.workAnyWhereChecked = true;
@@ -94,6 +94,7 @@ export class EditSideWorkFormComponent implements OnInit {
     this.formGroupSideWorkEdit.get('workAnyWhereCheck').updateValueAndValidity;
   }
 
+  // กรณี Work Anywhere ถูกคลิ๊ก และ radio ตัวเลือกถูกเปลี่ยน
   WorkAnyWhereChange() {
     const remarkControl = this.formGroupSideWorkEdit.get('remark');
     const remarkValue = this.formGroupSideWorkEdit.get('remark').value;
@@ -112,6 +113,7 @@ export class EditSideWorkFormComponent implements OnInit {
     })
   }
 
+  // ตรวจสอบ valid กรณีหมายเหตุถูกแก้ไข
   remarkChange() {
     const remarkControl = this.formGroupSideWorkEdit.get('remark');
     const remarkValue = this.formGroupSideWorkEdit.get('remark').value;
@@ -132,6 +134,7 @@ export class EditSideWorkFormComponent implements OnInit {
     remarkControl.updateValueAndValidity();
   }
 
+  // ลืมบัตรพนักงานถูกติ้ก
   forgotCardClick() {
     if (this.formGroupSideWorkEdit.get('ForgotCardCheck').value == true) {
       this.formGroupSideWorkEdit.get('workAnyWhereCheck').setValue(true);
@@ -151,6 +154,7 @@ export class EditSideWorkFormComponent implements OnInit {
 
   }
 
+   // Work Anywhere ถูกติ้ก
   workAnyWhereClick() {
     if (this.formGroupSideWorkEdit.get('workAnyWhereCheck').value == true) {
       this.workAnyWhereType = true;

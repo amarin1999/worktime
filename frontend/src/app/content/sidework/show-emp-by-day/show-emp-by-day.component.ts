@@ -53,6 +53,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.empListClickCheck = this.dialogRef.componentInstance.dataForm["empListClickCheck"];
+
     this.createFormEmp();
     this.qureyEmployeeByDay();
 
@@ -67,7 +68,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
+
   }
 
   createFormEmp(): void {
@@ -76,6 +77,7 @@ export class ShowEmpByDayComponent implements OnInit, AfterViewInit {
     })
   }
 
+  // ค้นหา
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

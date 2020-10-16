@@ -9,8 +9,6 @@ import { SideWork } from 'src/app/shared/interfaces/sidework';
 import { SideWorkService } from 'src/app/shared/service/sidework.service';
 import { Subject } from 'rxjs';
 import { CalendarService } from 'src/app/shared/service/calendar.service';
-import { SideworkCalendarComponent } from '../sidework-calendar/sidework-calendar.component';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sidework',
@@ -143,7 +141,6 @@ export class SideWorkComponent implements OnInit {
           // reload calendar
           this.sideWorkService.loadEventCalendar();
           this.sideWorkService.loadSideworkCalendar();
-          this.calendarService.loadHolidays();
 
           this.spinner.hide();
           
@@ -178,7 +175,6 @@ export class SideWorkComponent implements OnInit {
                 // reload calendar
                 this.sideWorkService.loadEventCalendar();
                 this.sideWorkService.loadSideworkCalendar();
-                this.calendarService.loadHolidays();
 
                 this.spinner.hide();
               })
@@ -212,7 +208,6 @@ export class SideWorkComponent implements OnInit {
                 // reload calendar
                 this.sideWorkService.loadEventCalendar();
                 this.sideWorkService.loadSideworkCalendar();
-                this.calendarService.loadHolidays();
               }))
             .subscribe();
           this.dialogRef.close(response);

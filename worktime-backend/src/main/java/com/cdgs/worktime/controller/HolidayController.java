@@ -32,6 +32,7 @@ public class HolidayController {
 	@GetMapping(path = "/{year}/{empNo}")
 	private ResponseEntity<ResponseDto<HolidayDto>> getHoliday(@PathVariable(value = "year") Integer year,
 			@PathVariable(value = "empNo") String empNo) {
+		
 		ResponseDto<HolidayDto> res = new ResponseDto<HolidayDto>();
 		try {
 			Locale LOCALE_TH = new Locale("th", "TH");
@@ -57,11 +58,12 @@ public class HolidayController {
 			Date endDate = calendar.getTime();
 			String convertTextDateStart = convertDateToCallService.format(startDate);
 			String convertTextDateEnd = convertDateToCallService.format(endDate);
-
+//			long start = System.currentTimeMillis();
 			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
 			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,
 					convertTextDateEnd);
-
+//			long end = System.currentTimeMillis();
+//			System.out.println("time : "+ (end-start));
 			SimpleDateFormat holidayDate = new SimpleDateFormat("yyyy-MM-dd");
 
 			for (Holiday holidayResult : holidayResults) {

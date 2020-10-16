@@ -58,9 +58,9 @@ export class InsertSideWorkFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.workAnyWhereChecked = true;
+
     this.bulidForm();
     this.WorkAnyWhereChange();
-    this.formGroupSideWork.get('ForgotCardCheck').value
   }
 
   // สร้าง form
@@ -79,6 +79,7 @@ export class InsertSideWorkFormComponent implements OnInit {
       });
   }
 
+  // กรณี Work Anywhere ถูกติ้ก และ radio ตัวเลือกถูกเปลี่ยน
   WorkAnyWhereChange() {
     const remarkControl = this.formGroupSideWork.get('remark');
 
@@ -96,6 +97,7 @@ export class InsertSideWorkFormComponent implements OnInit {
     })
   }
 
+  // ลืมบัตรพนักงานถูกติ้ก
   forgotCardClick() {
     if (this.formGroupSideWork.get('ForgotCardCheck').value == true) {
       this.formGroupSideWork.get('workAnyWhereCheck').setValue(true);
@@ -116,6 +118,7 @@ export class InsertSideWorkFormComponent implements OnInit {
 
   }
 
+  // Work Anywhere ถูกติ้ก
   workAnyWhereClick() {
     if (this.formGroupSideWork.get('workAnyWhereCheck').value == true) {
       this.workAnywhereType = true;
@@ -130,7 +133,6 @@ export class InsertSideWorkFormComponent implements OnInit {
     }
 
   }
-
 
   checkShowClickDate() {
     // set default date formgroup
