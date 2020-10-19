@@ -142,6 +142,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
         this.dateCilckValue = el.date;
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
 
+        // เช็ครหัสพนักงาน
         if ((requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
           || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
           && (weekday != 'Sun' && weekday != 'Sat')) {
