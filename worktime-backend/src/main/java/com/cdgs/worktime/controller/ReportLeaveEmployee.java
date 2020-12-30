@@ -89,7 +89,8 @@ public class ReportLeaveEmployee {
 
 		try {
 			// 1. Get a connection to database
-			myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/worktime", "root" , "1234");
+			myConn = DriverManager.getConnection("jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
+					"root", "root");
 			
 			// 2. Create a statement
 			myStmt = myConn.createStatement();	
@@ -303,7 +304,8 @@ public class ReportLeaveEmployee {
 
 		try {
 			// 1 connect database ดึงข้อมูลพนักงาน ได้แก่ empNo firstname lastname
-			myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/worktime", "root", "1234");
+			myConn = DriverManager.getConnection("jdbc:mysql://10.254.40.203:3306/worktime?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC",
+					"root", "root");
 
 			// 2. Create a statement
 			myStmt = myConn.createStatement();
