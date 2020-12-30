@@ -51,9 +51,10 @@ export class SideWorkService {
       .get<{ data: SideWork[] }>(
         `${ApiConstants.baseURl}/datatable/getsidework/${id}`
       )
-      .pipe(map((res) => res.data));
+      .pipe(map((res) => res.data))
+     
   }
-
+  
   addSidework(body: SideWork): Observable<Response> {
     try {
       return this.http

@@ -21,6 +21,18 @@ export class CalendarService {
     this.changeHolidays.next();
   }
 
+  private changeLeaves = new Subject<void>();
+  onLoadLeaves$ = this.changeLeaves.pipe(
+    switchMap((__) =>
+      this.getLeaveEmployee(localStorage.getItem('year'), localStorage.getItem('employeeNo'))
+    )
+  );
+
+  loadLeaves() {
+    this.changeLeaves.next();
+  }
+
+
   constructor(
     private http: HttpClient
   ) { }
@@ -41,6 +53,7 @@ export class CalendarService {
         `${ApiConstants.baseURl}/datatable/getotcalendar/${id}`
       )
       .pipe(map((res) => res.data));
+      
   }
 
 
@@ -52,4 +65,12 @@ export class CalendarService {
       )
       .pipe(map((res) => res.data));
   }
+// get LeaveEmployee API
+  getLeaveEmployee(year: string, id: string) {
+    return this.http
+      .get<{data: Calendar[] }>( 
+        `${ApiConstants.baseURl}/getLeaveEmployee/${year}/${id}`
+      )
+      .pipe(map((res)=>res.data));
+  } 
 }

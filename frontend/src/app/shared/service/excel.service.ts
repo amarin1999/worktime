@@ -31,9 +31,20 @@ export class ExcelService {
 
   }
 
-  getExcel(month: any) {
+  getExcelWFH(month: any) {
     this.spinner.show();
     return this.http.get<any>(`${ApiConstants.baseURl}/reports/worktime/${month}`, { responseType: 'blob' as 'json', observe: 'response' })
+      .pipe(tap(
+        _ => this.spinner.hide(),
+        err => this.spinner.hide()
+      ),
+        map((result: HttpResponse<Blob>) => {
+          return result.body
+        }))
+  }
+  getExcelLeave(month: any,year:any) {
+    this.spinner.show();
+    return this.http.get<any>(`${ApiConstants.baseURl}/reports/leaveReport/${month}/${year}`, { responseType: 'blob' as 'json', observe: 'response' })
       .pipe(tap(
         _ => this.spinner.hide(),
         err => this.spinner.hide()

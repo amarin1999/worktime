@@ -75,6 +75,8 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
 import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calendar.directive';
 import { ShowEmpByDayComponent } from './sidework/show-emp-by-day/show-emp-by-day.component';
 import { WorkTypePipe } from '../shared/pipe/work-type.pipe';
+import { HolidayComponent } from './holiday/holiday.component'
+
 
 
 @NgModule({
@@ -96,6 +98,9 @@ import { WorkTypePipe } from '../shared/pipe/work-type.pipe';
     OvertimeWorkCalendarComponent,
     CdgsFullCalendarDirective,
     ShowEmpByDayComponent,
+    HolidayComponent
+
+  
 
   ],
 

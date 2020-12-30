@@ -43,7 +43,13 @@ html, body {
   width:30px;
   height: 30px;
   border-radius: 15%;
-  background: Khaki;
+  background: rgb(243, 127, 127);
+}
+#LeaveSquare {
+  width:30px;
+  height: 30px;
+  border-radius: 15%;
+  background: orange;
 }
 
 .text{
@@ -71,6 +77,7 @@ html, body {
 
 .typeTab{
   display: inline-flex;
+  padding:3px 3px 3px 3px;
 }
 
 .typeText{

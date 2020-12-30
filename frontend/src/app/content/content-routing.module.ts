@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
 import { SideworkCalendarComponent } from './sidework-calendar/sidework-calendar.component';
 import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime-work-calendar.component';
+import { HolidayComponent } from './holiday/holiday.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,8 @@ const routes: Routes = [
       { path: 'history', component: HistoryComponent },
       { path: 'sidework-calendar', component: SideworkCalendarComponent },
       { path: 'overtime-calendar', component: OvertimeWorkCalendarComponent },
+      {path: 'holiday', component: HolidayComponent}
+        
     ],
   },
 ];
