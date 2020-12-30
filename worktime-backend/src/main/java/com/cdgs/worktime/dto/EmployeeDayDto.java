@@ -25,5 +25,29 @@ public class EmployeeDayDto implements Serializable{
 	private String employeeNo;
 	private String firstname;
 	private String lastname;
+	public String getEmployeeNo() {
+		return employeeNo;
+	}
+	public void setEmployeeNo(String employeeNo) {
+		this.employeeNo = employeeNo;
+	}
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	public Long getWorkAnywhere() {
+		return workAnywhere;
+	}
+	public void setWorkAnywhere(Long workAnywhere) {
+		this.workAnywhere = workAnywhere;
+	}
 	private Long workAnywhere;
 }

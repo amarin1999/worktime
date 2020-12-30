@@ -45,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/reports")
 @Slf4j
+
 public class ReportController {
 
 	@GetMapping(path = "/timeAttecdance/{month}/{year}")
@@ -172,7 +173,7 @@ public class ReportController {
 
 		String Employee = "SELECT employee_no, firstname, lastname, id_employee \r\n" + 
 				"FROM employee\r\n" + 
-				"WHERE employee_no NOT LIKE 't%'\r\n" + 
+				"	\r\n" + 
 				"ORDER BY employee_no ASC";
 
 		java.sql.Statement calendarStatement = connect.createStatement();

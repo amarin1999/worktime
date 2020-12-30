@@ -102,7 +102,8 @@ public class SideWorkController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			log.error("postTime ", e);
+			e.printStackTrace();
+			//log.error("postTime ", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -124,7 +125,8 @@ public class SideWorkController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			log.error("sideworkputtime", e);
+			e.printStackTrace();
+			//log.error("sideworkputtime", e);
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);

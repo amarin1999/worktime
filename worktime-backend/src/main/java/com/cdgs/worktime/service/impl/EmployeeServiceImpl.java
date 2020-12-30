@@ -120,6 +120,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return null;
 	}
 
+	@Override
+	public List<EmployeeDto> getEmployeeAll() {
+		List<EmployeeEntity> entity = new ArrayList<EmployeeEntity>();
+		try {
+			entity = employeeRespository.selectEmployeeNo();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getEmployeeByNo >>> " + e.getMessage());
+		}
+		return mapListEntityToDto(entity);
+		
+	}
+
 	
 
 }

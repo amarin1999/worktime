@@ -10,6 +10,7 @@ import com.cdgs.worktime.entity.EmployeeEntity;
 public interface EmployeeService {
 
 	List<EmployeeDto> getEmployeeByNo(String no);
+	List<EmployeeDto> getEmployeeAll();
 	List<EmployeeByDayDto> getEmployeeByDay(String year, String month, String day, Long work);
 	List<EmployeeByDayDto> getEmployeeAllByDay(String year, String month, String day);
 	EmployeeDto updateEmployeeName(Long id, EmployeeDto body);

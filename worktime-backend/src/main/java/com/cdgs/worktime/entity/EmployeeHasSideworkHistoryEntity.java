@@ -39,6 +39,66 @@ public class EmployeeHasSideworkHistoryEntity implements Serializable {
 
 
 
+	public Long getEmployeeHasSideworkHistoryId() {
+		return employeeHasSideworkHistoryId;
+	}
+
+
+
+	public void setEmployeeHasSideworkHistoryId(Long employeeHasSideworkHistoryId) {
+		this.employeeHasSideworkHistoryId = employeeHasSideworkHistoryId;
+	}
+
+
+
+	public Long getIdEmployee() {
+		return idEmployee;
+	}
+
+
+
+	public void setIdEmployee(Long idEmployee) {
+		this.idEmployee = idEmployee;
+	}
+
+
+
+	public EmployeeEntity getEmployeeId() {
+		return employeeId;
+	}
+
+
+
+	public void setEmployeeId(EmployeeEntity employeeId) {
+		this.employeeId = employeeId;
+	}
+
+
+
+	public Long getWorkTypeId() {
+		return workTypeId;
+	}
+
+
+
+	public void setWorkTypeId(Long workTypeId) {
+		this.workTypeId = workTypeId;
+	}
+
+
+
+	public WorktypeEntity getIdWorktype() {
+		return idWorktype;
+	}
+
+
+
+	public void setIdWorktype(WorktypeEntity idWorktype) {
+		this.idWorktype = idWorktype;
+	}
+
+
+
 	@ManyToOne
 	@JoinColumn(name = "employee_id", insertable = false, updatable = false)
 	private EmployeeEntity employeeId;

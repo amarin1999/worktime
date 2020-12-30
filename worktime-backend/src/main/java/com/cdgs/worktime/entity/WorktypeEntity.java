@@ -30,6 +30,22 @@ public class WorktypeEntity implements Serializable {/**
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long worktypeId;
 	
+	public Long getWorktypeId() {
+		return worktypeId;
+	}
+
+	public void setWorktypeId(Long worktypeId) {
+		this.worktypeId = worktypeId;
+	}
+
+	public String getWorktypeName() {
+		return worktypeName;
+	}
+
+	public void setWorktypeName(String worktypeName) {
+		this.worktypeName = worktypeName;
+	}
+
 	@Column(name = "work_type_name")
 	private String worktypeName;
 

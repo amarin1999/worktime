@@ -30,6 +30,22 @@ public class WorkProjectEntity implements Serializable {/**
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long projectId;
 	
+	public Long getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getProjectNo() {
+		return projectNo;
+	}
+
+	public void setProjectNo(String projectNo) {
+		this.projectNo = projectNo;
+	}
+
 	@Column(name="project_no")
 	private String projectNo;
 

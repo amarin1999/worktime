@@ -54,6 +54,78 @@ public class SideworkHistoryEntity implements Serializable {
 	@Column(name = "work_comment")
 	private String remark;
 
+	public Long getSideworkId() {
+		return sideworkId;
+	}
+
+	public void setSideworkId(Long sideworkId) {
+		this.sideworkId = sideworkId;
+	}
+
+	public Long getIdEmployeeHasSideWorkHistory() {
+		return idEmployeeHasSideWorkHistory;
+	}
+
+	public void setIdEmployeeHasSideWorkHistory(Long idEmployeeHasSideWorkHistory) {
+		this.idEmployeeHasSideWorkHistory = idEmployeeHasSideWorkHistory;
+	}
+
+	public EmployeeHasSideworkHistoryEntity getEmployeeHasSideworkHistoryId() {
+		return employeeHasSideworkHistoryId;
+	}
+
+	public void setEmployeeHasSideworkHistoryId(EmployeeHasSideworkHistoryEntity employeeHasSideworkHistoryId) {
+		this.employeeHasSideworkHistoryId = employeeHasSideworkHistoryId;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Integer getWorkAnyWhere() {
+		return workAnyWhere;
+	}
+
+	public void setWorkAnyWhere(Integer workAnyWhere) {
+		this.workAnyWhere = workAnyWhere;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	@Column(name = "work_anywhere")
 	private Integer workAnyWhere;
 

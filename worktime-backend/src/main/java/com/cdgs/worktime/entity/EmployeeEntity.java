@@ -26,6 +26,38 @@ public class EmployeeEntity implements Serializable {
 	*/
 	private static final long serialVersionUID = 1003970960014801827L;
 
+	public Long getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Long employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public String getEmployeeno() {
+		return employeeno;
+	}
+
+	public void setEmployeeno(String employeeno) {
+		this.employeeno = employeeno;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
 	@Id
 	@Column(name = "id_employee")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

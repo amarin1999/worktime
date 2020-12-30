@@ -13,5 +13,9 @@ public interface EmployeeRespository extends CrudRepository<EmployeeEntity, Long
 
 	@Query(value = "SELECT * FROM employee where employee_no = :no", nativeQuery = true)
 	List<EmployeeEntity> findByNo(@Param("no") String no);
+
 	
+	
+	@Query(value = "select *  from employee", nativeQuery = true)
+	List<EmployeeEntity> selectEmployeeNo();
 }

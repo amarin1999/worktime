@@ -1,0 +1,32 @@
+{"properties": [
+  {
+    "name": "app.datasource.member.url",
+    "type": "java.lang.String",
+    "description": "A description for 'app.datasource.member.url'"
+  },
+  {
+    "name": "app.datasource.member.username",
+    "type": "java.lang.String",
+    "description": "A description for 'app.datasource.member.username'"
+  },
+  {
+    "name": "app.datasource.member.password",
+    "type": "java.lang.String",
+    "description": "A description for 'app.datasource.member.password'"
+  },
+  {
+    "name": "app.datasource.member.driverClassName",
+    "type": "java.lang.String",
+    "description": "A description for 'app.datasource.member.driverClassName'"
+  },
+  {
+    "name": "app.datasource.member.driverClassName",
+    "type": "java.lang.String",
+    "description": "A description for 'app.datasource.member.driverClassName'"
+  },
+  {
+    "name": "app.datasource.member.driverClassName",
+    "type": "java.lang.String",
+    "description": "A description for 'app.datasource.member.driverClassName'"
+  }
+]}

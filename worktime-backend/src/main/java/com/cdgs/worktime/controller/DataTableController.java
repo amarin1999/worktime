@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.tempuri.ISWebService.ISService.LeaveInformation;
 
 import com.cdgs.worktime.dto.CalendarDto;
 import com.cdgs.worktime.dto.EmployeeDto;
+import com.cdgs.worktime.dto.LeaveEmployeeDto;
 import com.cdgs.worktime.dto.OtNoListDto;
 import com.cdgs.worktime.dto.SideworkDateToSting;
 import com.cdgs.worktime.dto.SideworkHistoryDto;
@@ -32,7 +34,7 @@ public class DataTableController {
 
 	EmployeeService employeeService;
 	DataTableService dataTableService;
-
+	LeaveEmployeeDto leaveEmployeeDto;
 	public DataTableController(EmployeeService employeeService, DataTableService dataTableService) {
 		super();
 		this.employeeService = employeeService;
@@ -55,7 +57,7 @@ public class DataTableController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<SideworkDateToSting>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -75,7 +77,7 @@ public class DataTableController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<OtNoListDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -96,7 +98,7 @@ public class DataTableController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<SideworkHistoryDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -120,7 +122,7 @@ public class DataTableController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
@@ -144,13 +146,40 @@ public class DataTableController {
 			res.setCode(201);
 			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
+			
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(400);
 			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+//	@GetMapping(path = "/leave/{no}")
+//	private ResponseEntity<ResponseDto<CalendarDto>> getLeav(@PathVariable(value = "no") String empNo){
+//		ResponseDto<CalendarDto> res = new ResponseDto<CalendarDto>();
+//		List<CalendarDto> dto = new ArrayList<CalendarDto>();
+//		List<EmployeeDto> employee = employeeService.getEmployeeByNo(empNo);
+//		
+//		
+//		try {
+//			dto = dataTableService.getSideWorkCalendar(employee.get(0).getId());
+//			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+//			res.setData(dto);
+//			res.setCode(201);
+//			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.ACCEPTED);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			
+//			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+//			res.setErrorMessage(e.getMessage());
+//			res.setCode(400);
+//			return new ResponseEntity<ResponseDto<CalendarDto>>(res, HttpStatus.BAD_REQUEST);
+//		}
+//		
+//	}
+//	
+	
 	
 
 }

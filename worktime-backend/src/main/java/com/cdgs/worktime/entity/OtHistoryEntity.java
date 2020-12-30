@@ -35,6 +35,86 @@ public class OtHistoryEntity implements Serializable{/**
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long otHistoryId;
 	
+	public Long getOtHistoryId() {
+		return otHistoryId;
+	}
+
+
+	public void setOtHistoryId(Long otHistoryId) {
+		this.otHistoryId = otHistoryId;
+	}
+
+
+	public Long getEmployeeHasSideworkId() {
+		return employeeHasSideworkId;
+	}
+
+
+	public void setEmployeeHasSideworkId(Long employeeHasSideworkId) {
+		this.employeeHasSideworkId = employeeHasSideworkId;
+	}
+
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+
+	public String getRemark() {
+		return remark;
+	}
+
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+
+	public Date getLastUpDate() {
+		return lastUpDate;
+	}
+
+
+	public void setLastUpDate(Date lastUpDate) {
+		this.lastUpDate = lastUpDate;
+	}
+
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
+
+	public EmployeeHasSideworkHistoryEntity getIdEmployeeHasSideworkId() {
+		return idEmployeeHasSideworkId;
+	}
+
+
+	public void setIdEmployeeHasSideworkId(EmployeeHasSideworkHistoryEntity idEmployeeHasSideworkId) {
+		this.idEmployeeHasSideworkId = idEmployeeHasSideworkId;
+	}
+
+
 	@Column(name="employee_has_sidework_history_id")
 	private Long employeeHasSideworkId; 
 	

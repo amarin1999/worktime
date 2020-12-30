@@ -20,6 +20,46 @@ public class ResponseDto<T> {
 	private String errorMessage;
 	private int code;
 
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getStringData() {
+		return stringData;
+	}
+
+	public void setStringData(String stringData) {
+		this.stringData = stringData;
+	}
+
+	public List<T> getData() {
+		return data;
+	}
+
+	public void setData(List<T> data) {
+		this.data = data;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
 	public enum RESPONSE_RESULT {
 		Success("Success"), Fail("Fail");
 
@@ -33,5 +73,9 @@ public class ResponseDto<T> {
 			return this.res;
 		}
 	}
+
+
+
+
 
 }

@@ -36,7 +36,11 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeService employeeService;
-
+	
+	
+	
+	// Get Employee By empNo
+	
 	@GetMapping(path = "/{no}")
 	public ResponseEntity<ResponseDto<EmployeeDto>> getUsers(@PathVariable(value = "no") String employeeNo) {
 		ResponseDto<EmployeeDto> res = new ResponseDto<>();
@@ -56,7 +60,7 @@ public class EmployeeController {
 			}
 			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(404);
@@ -64,6 +68,7 @@ public class EmployeeController {
 		}
 	}
 	
+	 // getEmployee by type {WFH site } in Current DAY
 	@GetMapping(path = "/{year}/{month}/{day}/{work}")
 	public ResponseEntity<ResponseDto<EmployeeByDayDto>> getEmp(@PathVariable(value = "year") String year,
 			@PathVariable(value = "month") String month,
@@ -85,7 +90,7 @@ public class EmployeeController {
 			}
 			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(404);
@@ -93,6 +98,7 @@ public class EmployeeController {
 		}
 	}
 	
+	// getEmployeeAll in CurrentDay
 	@GetMapping(path = "/{year}/{month}/{day}")
 	public ResponseEntity<ResponseDto<EmployeeByDayDto>> getEmpAll(@PathVariable(value = "year") String year,
 			@PathVariable(value = "month") String month,
@@ -113,11 +119,38 @@ public class EmployeeController {
 			}
 			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.OK);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			e.printStackTrace();
 			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 			res.setErrorMessage(e.getMessage());
 			res.setCode(404);
 			return new ResponseEntity<ResponseDto<EmployeeByDayDto>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(path = "/")
+	public ResponseEntity<ResponseDto<EmployeeDto>> getAllUsers() {
+		ResponseDto<EmployeeDto> res = new ResponseDto<>();
+		List<EmployeeDto> dto = new ArrayList<EmployeeDto>();
+
+		try {
+			dto = employeeService.getEmployeeAll();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			res.setData(dto);
+			res.setCode(200);
+			if (dto.size() == 0) {
+				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+				res.setErrorMessage("ไม่พบข้อมูลผู้ใช้");
+				res.setData(dto);
+				res.setCode(404);
+				return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(404);
+			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
 }

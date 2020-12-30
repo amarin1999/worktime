@@ -58,12 +58,12 @@ public class HolidayController {
 			Date endDate = calendar.getTime();
 			String convertTextDateStart = convertDateToCallService.format(startDate);
 			String convertTextDateEnd = convertDateToCallService.format(endDate);
-//			long start = System.currentTimeMillis();
+			long start = System.currentTimeMillis();
 			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
 			Holiday[] holidayResults = ispo.getISServiceSoap().getHoliday(empNo, convertTextDateStart,
 					convertTextDateEnd);
-//			long end = System.currentTimeMillis();
-//			System.out.println("time : "+ (end-start));
+			long end = System.currentTimeMillis();
+			System.out.println("time : "+ (end-start));
 			SimpleDateFormat holidayDate = new SimpleDateFormat("yyyy-MM-dd");
 
 			for (Holiday holidayResult : holidayResults) {
@@ -81,12 +81,13 @@ public class HolidayController {
 				holidaysList.add(new HolidayDto(holidayName ,
 						holidayDate.parse(holidayResult.getHolidayDate())));
 			}
+			
 				res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
 				res.setData(holidaysList);
 				res.setCode(201);
 				return new ResponseEntity<ResponseDto<HolidayDto>>(res, HttpStatus.OK);
 			} catch (Exception e) {
-				log.error(e.getMessage());
+				e.printStackTrace();
 				res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
 				res.setErrorMessage(e.getMessage());
 				res.setCode(400);
