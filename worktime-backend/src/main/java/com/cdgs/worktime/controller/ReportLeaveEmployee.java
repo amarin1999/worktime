@@ -224,7 +224,7 @@ public class ReportLeaveEmployee {
 		int row = 0;
 
 		int[] sumDay29 = new int[dayOfMonth29[indexOfMonth] + 1];
-		int[] sumDay28 = new int[dayOfMonth29[indexOfMonth] + 1];
+		int[] sumDay28 = new int[dayOfMonth28[indexOfMonth] + 1];
 
 		// ลาป่วย
 		CellStyle colorYellow = workbook.createCellStyle();
@@ -361,7 +361,7 @@ public class ReportLeaveEmployee {
 						dayCell.setCellStyle(cellHeaderStyle);
 					}
 				} else {
-					for (int index = 0; index < dayOfMonth29[indexOfMonth]; index++) {
+					for (int index = 0; index < dayOfMonth28[indexOfMonth]; index++) {
 						calendarDate.set(Calendar.YEAR, year);
 						calendarDate.set(Calendar.MONTH, indexOfMonth);
 						calendarDate.set(Calendar.DAY_OF_MONTH, index);
