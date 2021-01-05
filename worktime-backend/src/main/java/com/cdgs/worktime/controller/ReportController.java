@@ -173,7 +173,7 @@ public class ReportController {
 
 		String Employee = "SELECT employee_no, firstname, lastname, id_employee \r\n" + 
 				"FROM employee\r\n" + 
-				"	\r\n" + 
+				"WHERE employee_no NOT LIKE 't%'\r\n" +
 				"ORDER BY employee_no ASC";
 
 		java.sql.Statement calendarStatement = connect.createStatement();
