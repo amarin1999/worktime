@@ -414,14 +414,21 @@ public class ReportLeaveEmployee {
 				} 
 				//System.out.println(leaveMaps);
 				String keyD;
+				String m;
+
 				String y = getYear.toString();
-				String m = getMonth.toString();
+				if(getMonth<10){
+					m ="0"+ getMonth.toString();
+				}else {
+					m =getMonth.toString();
+				}
+				
 				List<Integer> maxRow = new ArrayList<Integer>();
 				int maxRowDay=0;
 				
 				for (int columnIndex = 1; columnIndex <= 31; columnIndex++) {
 					if (columnIndex < 10) {
-						keyD = y + m + "0" + columnIndex;
+						keyD = y +   m +"0"+ columnIndex;
 					} else {
 						keyD = y + m + columnIndex;
 					} 
@@ -480,44 +487,72 @@ public class ReportLeaveEmployee {
 					
 	
 				} 
-			//set label
-					
+//			//set label
+//				
+//						XSSFRow rowLabel1 = sheet.createRow(2);
 						XSSFRow rowLabel1 = sheet.getRow(2);
+						if(rowLabel1==null) {
+							 rowLabel1=sheet.createRow(2);
+						}
 						Cell cellLabel1 = rowLabel1.createCell(0);
 						cellLabel1.setCellStyle(colorGreen);
 						cellLabel1.setCellValue("ลาพักผ่อน");
 						
+//						XSSFRow rowLabel2 = sheet.createRow(3);
 						XSSFRow rowLabel2 = sheet.getRow(3);
+						if(rowLabel2==null) {
+							 rowLabel2=sheet.createRow(3);
+						}
 						Cell cellLabel2 = rowLabel2.createCell(0);
 						cellLabel2.setCellStyle(colorLIGHT_BLUE);
 						cellLabel2.setCellValue("ลากิจ");
 						
+//						XSSFRow rowLabel3 = sheet.createRow(4);
 						XSSFRow rowLabel3 = sheet.getRow(4);
+						if(rowLabel3==null) {
+							 rowLabel3=sheet.createRow(4);
+						}
 						Cell cellLabel3 = rowLabel3.createCell(0);
 						cellLabel3.setCellStyle(colorYellow);
 						cellLabel3.setCellValue("ลาป่วย");
 						
+//						XSSFRow rowLabel4 = sheet.createRow(5);
 						XSSFRow rowLabel4 = sheet.getRow(5);
+						if(rowLabel4==null) {
+							rowLabel4=sheet.createRow(5);
+						}							
 						Cell cellLabel4 = rowLabel4.createCell(0);
 						cellLabel4.setCellStyle(colorPink);
 						cellLabel4.setCellValue("ลาสมรส");
+
+//						XSSFRow rowLabel5 = sheet.createRow(6);
+						XSSFRow rowLabel5 = sheet.getRow(6);
+						if(rowLabel5==null) {
+							 rowLabel5=sheet.createRow(6);
+						}
+						Cell cellLabel5 = rowLabel5.createCell(0);
+						cellLabel5.setCellStyle(colorOther);
+						cellLabel5.setCellValue("อื่นๆ");
 						
-						XSSFRow rowLabel6 = sheet.getRow(6);
-						Cell cellLabel6 = rowLabel6.createCell(0);
-						cellLabel6.setCellStyle(colorOther);
-						cellLabel6.setCellValue("อื่นๆ");
 						
 			for(int columnMax=0;columnMax<maxRow.size();columnMax++) {
-					if(maxRowDay>7) {
+					if(maxRowDay>8) {
 						XSSFRow rowMaxD = sheet.getRow(maxRowDay);
+						if(rowMaxD==null) {
+							rowMaxD = sheet.createRow(maxRowDay);
+						}
 						Cell cellDataMax = rowMaxD.createCell(columnMax);
 						if ((columnMax)==0) {
+							cellDataMax.setCellStyle(colorLIGHT_BLUE);
 							cellDataMax.setCellValue("รวมทั้งหมด");
 						}else {
 							cellDataMax.setCellValue(maxRow.get(columnMax-1));
 						}
 					}else {
 						XSSFRow rowMaxD = sheet.getRow(8);
+						if(rowMaxD==null) {
+							rowMaxD = sheet.createRow(8);
+						}
 						Cell cellDataMax = rowMaxD.createCell(columnMax);
 						if ((columnMax)==0) {
 							cellDataMax.setCellStyle(colorLIGHT_BLUE);
