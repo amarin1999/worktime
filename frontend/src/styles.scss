@@ -1,0 +1,161 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$cdgTimeAttendance-primary: mat-palette($mat-indigo);
+$cdgTimeAttendance-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$cdgTimeAttendance-warn: mat-palette($mat-red);
+
+$cdgTimeAttendance-theme: mat-light-theme(
+  $cdgTimeAttendance-primary,
+  $cdgTimeAttendance-accent,
+  $cdgTimeAttendance-warn
+);
+
+@include angular-material-theme($cdgTimeAttendance-theme);
+
+@import url("https://fonts.googleapis.com/css?family=Kanit|Roboto&display=swap");
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: url("https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+}
+
+* {
+  font-family: "Kanit";
+}
+
+h2 {
+  font-family: "Kanit" !important;
+}
+
+h4 {
+  font-family: "Kanit";
+}
+
+table {
+  background-color: ghostwhite ;
+}
+.wrap-form {
+  max-height: 500px;
+}
+.wrap-formSideWork {
+  width: 550px;
+}
+.mat-calendar-header,
+.timepicker__header {
+  background-color: indigo !important;
+  color: ghostwhite;
+}
+
+.mat-divider {
+  border-top-color: #d3d3d3;
+}
+// เงา input เผื่อใช้
+// .mat-form-field-flex {
+//   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// }
+.mat-button:hover {
+  transform: scale(1.05, 1.05);
+  transition: 0.3s;
+}
+.mat-button {
+  transition: 0.3s !important;
+}
+.mat-dialog-title {
+  font-family: "Kanit" !important;
+}
+
+input:disabled,
+textarea:disabled {
+  color: indigo !important;
+}
+
+.tooltip-primary {
+  background-color: indigo;
+  padding: 10px;
+  font-size: 1.3em;
+  font-family: "Kanit";
+  border-radius: 5px !important;
+}
+.img-form {
+  width: 50px;
+  height: auto;
+}
+
+.cdk-overlay-container {
+  z-index: 500 !important;
+}
+.header-text {
+  font-size: 2.5em !important;
+  font-weight: bold !important;
+  color: #333377 !important;
+  font-family: "Kanit" !important;
+}
+.wrap-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 !important;
+  margin-right: 10px !important;
+}
+.p-grid {
+  margin: 0;
+}
+.animation-page {
+  animation: fadeFromTop 0.5s;
+}
+
+.mat-grid-list {
+  height: calc(55px) !important;
+}
+
+.fc-day-header.fc-widget-header.fc-sat {
+  background-color: #758ffd6e !important;
+}
+
+.fc-day-header.fc-widget-header.fc-sun {
+  background-color: #758ffd6e !important;
+}
+
+.fc-day.fc-widget-content.fc-disabled-day {
+  background-color: #ffffff !important;
+}
+
+.fc-today {
+  background-color: #f6f7c0 !important;
+  font-weight: bolder !important;
+}
+
+
+td{
+  border-color: #D3D3D3 !important;
+}
+
+@keyframes fadeFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+//responsive
+
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  .header-text {
+    font-size: 1.5em !important;
+  }
+
+  .wrap-formSideWork {
+    width: 60vw;
+  }
+}

@@ -1,0 +1,57 @@
+.input-id-employee {
+  width: 60%;
+}
+.card-content {
+  text-align: center;
+}
+.title-card {
+  text-align: center;
+  padding: 10px;
+  color: #333377;
+  font-weight: bold;
+}
+.card {
+  margin-top: 30px;
+  border-radius: 10px;
+  padding-bottom: 30px;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.btn-signin {
+  background-color: #333377;
+  color: whitesmoke;
+  font-size: 1.5em;
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 50px/50px;
+  transition: 0.3s;
+}
+.btn-signin .confirm-text {
+  display: none;
+}
+
+.btn-signin:hover {
+  transform: scale(1.07, 1.07);
+  transition: 0.3s;
+  animation-name: none;
+}
+
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  .input-id-employee {
+    width: 100%;
+  }
+  .btn-signin .confirm-text {
+    display: block;
+  }
+  .btn-signin {
+    width: 80%;
+  }
+
+  .icon-btn {
+    display: none;
+  }
+}

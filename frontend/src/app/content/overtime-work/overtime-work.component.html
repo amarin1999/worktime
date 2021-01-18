@@ -1,0 +1,26 @@
+<div class="wrap-form animation-page">
+  <div *ngIf="dataForm.type == 'add'; else editForm">
+    <h2 mat-dialog-title>
+      <img src="{{ img.imgInsert }}" class="img-form" alt="" />
+      ลงเวลาทำงานล่วงเวลา
+    </h2>
+
+    <br />
+    <app-insert-overtime-work-form
+      (insertEmit)="insertOvertimeWork($event)"
+    ></app-insert-overtime-work-form>
+  </div>
+
+  <ng-template #editForm>
+    <h2 mat-dialog-title>
+      <img src="{{ img.imgEdit }}" class="img-form" alt="" />
+      แก้ไขการลงเวลาทำงานล่วงเวลา
+    </h2>
+
+    <app-edit-overtime-work-form
+      (editEmit)="editOvertimeWork($event)"
+      (deleteEmit)="deleteOvertime($event)"
+      [dataForm]="dataForm"
+    ></app-edit-overtime-work-form>
+  </ng-template>
+</div>

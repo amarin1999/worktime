@@ -1,0 +1,25 @@
+<app-banner
+  [text]="'ลงเวลาการทำงานนอกสถานที่ และการทำงานล่วงเวลา'"
+></app-banner>
+
+<p-scrollPanel class="scrolling-wrapper" [style]="{ width: '100%' }">
+  <div class="card" *ngFor="let item of menu" (click)="onClickItem(item)">
+    <br />
+    <h1>{{ item.title }}</h1>
+    <img src="{{ item.img }}" style="width:40%" alt="logo" />
+    <br />
+    <br />
+    <br />
+    <!-- <button mat-raised-button class="btn-menu" (click)="onClickItem(item)">
+      <div class="confirm-text">
+        ยืนยัน
+        <em class="pi pi-chevron-right" style="vertical-align: middle;"></em>
+      </div>
+    </button> 
+    <br />
+    <br /> -->
+  </div>
+</p-scrollPanel>
+
+<p-toast key="errorMessage" position="bottom-center"></p-toast>
+<p-toast key="SuccessMessage" position="bottom-center"></p-toast>

@@ -1,0 +1,77 @@
+.btn-menu {
+  background-color: #333377;
+  color: whitesmoke;
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 30px/30px;
+  transition: 0.3s;
+  width: 70%;
+}
+.btn-menu:hover {
+  transform: scale(1.05, 1.05);
+  background-color: #336699;
+}
+
+// เผื่อใช้ แนวนอน scrollbar https://codeburst.io/how-to-create-horizontal-scrolling-containers-d8069651e9c6
+.scrolling-wrapper {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  .card {
+    display: inline-block;
+  }
+  padding: 300px;
+}
+
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  .card {
+    flex: 0 0 auto;
+  }
+}
+
+.card {
+  background-color: whitesmoke;
+  text-align: center;
+  padding: 20px;
+  width: 25%;
+  color: indigo;
+  margin: 20px;
+  transition: 0.3s;
+  border-radius: 20px/20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card:hover {
+  transform: scale(1.05, 1.05);
+  background-color: gainsboro;
+}
+.margin-menu {
+  width: 20%;
+}
+.card > h1 {
+  font-size: 1.8em !important;
+  padding: 15px;
+  font-family: "Kanit";
+  text-align: center;
+}
+.confirm-text {
+  font-size: 1.1em;
+}
+
+//responsive
+@media screen and (max-width: 768px) {
+  .card {
+    width: 40%;
+  }
+}
+
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  .card {
+    width: 80%;
+  }
+}

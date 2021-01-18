@@ -1,0 +1,57 @@
+// table
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: #fff;
+}
+
+.mat-header-cell,
+.td-time {
+  text-align: center;
+}
+td,
+.mat-header-cell {
+  font-size: 1.3em;
+}
+.mat-header-cell {
+  color: white;
+}
+.mat-row {
+  cursor: pointer;
+  color: white;
+  transition: 0.2s;
+}
+
+.mat-row:hover td {
+  background-color: #4169e1 !important;
+  color: whitesmoke !important;
+  transition: 0.2s;
+}
+.mat-header-row {
+  background-color: indigo;
+}
+.mat-icon {
+  vertical-align: middle;
+}
+
+.ng-tns-c118-4 {
+  box-shadow: none !important;
+}
+.mat-sort-header-arrow {
+  display: block !important;
+}
+/* จอเล็ก */
+@media screen and (max-width: 640px) {
+  td {
+    font-size: 0.8em;
+  }
+  .mat-header-cell > span {
+    display: none;
+  }
+  #sortItem {
+    display: none;
+  }
+}

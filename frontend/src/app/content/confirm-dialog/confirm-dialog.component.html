@@ -1,0 +1,31 @@
+<div class="wrap-form">
+    <div mat-dialog-content style="height: 45px">
+      <div style="font-size: 1.2em;">
+        <mat-icon style="vertical-align: middle;">not_listed_location</mat-icon>
+        {{ confirmData.textConfirm }}
+      </div>
+    </div>
+    <br /><br />
+    <mat-dialog-actions align="end">
+      <button
+        mat-button
+        [color]="'warn'"
+        mat-dialog-close
+        mat-raised-button
+        mat-dialog-close
+        (click)="sendDialogStatus(false)"
+      >
+        <mat-icon>clear</mat-icon> ยกเลิก
+      </button>
+      <button
+        mat-raised-button
+        mat-button
+        [color]="'primary'"
+        [mat-dialog-close]="true"
+        (click)="sendDialogStatus(true)"
+      >
+        <mat-icon>check</mat-icon> ตกลง
+      </button>
+    </mat-dialog-actions>
+  </div>
+  
