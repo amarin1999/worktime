@@ -34,7 +34,7 @@
     "@fullcalendar/interaction": "^4.4.0",
     "@fullcalendar/timegrid": "^4.4.0",
     "@pluginjs/time-picker": "^0.8.8",
-    "bootstrap": "4.1.1",
+    "bootstrap": "4.3.1",
     "file-saver": "^2.0.2",
     "igniteui-angular": "^10.0.5",
     "moment": "^2.24.0",
