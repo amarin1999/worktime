@@ -1,3 +1,4 @@
+import { ShowLeaveEmpByDayComponent } from './sidework/show-leave-emp-by-day/show-leave-emp-by-day.component';
 // module
 import {
   NgxMatDatetimePickerModule,
@@ -34,14 +35,14 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
-import {TableModule} from 'primeng/table';
-import {MultiSelectModule} from 'primeng/multiselect';
-import {ContextMenuModule} from 'primeng/contextmenu';
-import {DialogModule} from 'primeng/dialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {ProgressBarModule} from 'primeng/progressbar';
-import {InputTextModule} from 'primeng/inputtext';
-import {PaginatorModule} from 'primeng/paginator';
+import { TableModule } from 'primeng/table';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
 // guard
 import { AuthGuard } from '../shared/guard/auth.guard';
 // pipe
@@ -75,10 +76,7 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
 import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calendar.directive';
 import { ShowEmpByDayComponent } from './sidework/show-emp-by-day/show-emp-by-day.component';
 import { WorkTypePipe } from '../shared/pipe/work-type.pipe';
-import { HolidayComponent } from './holiday/holiday.component'
-
-
-
+import { HolidayComponent } from './holiday/holiday.component';
 @NgModule({
   declarations: [
     ContentComponent,
@@ -98,10 +96,8 @@ import { HolidayComponent } from './holiday/holiday.component'
     OvertimeWorkCalendarComponent,
     CdgsFullCalendarDirective,
     ShowEmpByDayComponent,
-    HolidayComponent
-
-  
-
+    HolidayComponent,
+    ShowLeaveEmpByDayComponent,
   ],
 
   imports: [
@@ -132,9 +128,9 @@ import { HolidayComponent } from './holiday/holiday.component'
     ButtonModule,
     TableModule,
     MultiSelectModule,
-		ContextMenuModule,
-		DropdownModule,
-		ToastModule,
+    ContextMenuModule,
+    DropdownModule,
+    ToastModule,
     InputTextModule,
     ProgressBarModule,
     DialogModule,
@@ -158,8 +154,7 @@ import { HolidayComponent } from './holiday/holiday.component'
     WorkAnywherePipe,
     CalendarService,
     WorkTypePipe,
-
   ],
   exports: [ContentComponent],
 })
-export class ContentModule { }
+export class ContentModule {}

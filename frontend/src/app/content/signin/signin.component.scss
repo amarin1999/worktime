@@ -1,5 +1,8 @@
-.input-id-employee {
-  width: 60%;
+.input-id-userID {
+  width: 42%;
+}
+.input-id-password {
+  width: 42%;
 }
 .card-content {
   text-align: center;
@@ -41,7 +44,10 @@
 
 /* จอเล็ก */
 @media screen and (max-width: 640px) {
-  .input-id-employee {
+  .input-id-userID {
+    width: 100%;
+  }
+  .input-id-password {
     width: 100%;
   }
   .btn-signin .confirm-text {
