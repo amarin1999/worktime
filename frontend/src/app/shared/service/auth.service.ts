@@ -1,8 +1,6 @@
-import { ApiConstants } from './../constants/ApiConstants';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable, BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { Employee } from "../interfaces/employee";
 import { EmployeeService } from "./employee.service";
 
@@ -12,8 +10,7 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private employeeService: EmployeeService,
-    private http: HttpClient,
+    private employeeService: EmployeeService
   ) {}
 
   onSignin(employeeId: string): boolean {
@@ -41,10 +38,6 @@ export class AuthService {
     localStorage.clear();
     this.signin.next(false);
     this.router.navigate(["signin"]);
-
-  }
-
-  checkAuthen(body: any): Observable<any> {
-    return this.http.post(`${ApiConstants.baseURl}/getEmployee/checkAuthen`, body);
+    
   }
 }

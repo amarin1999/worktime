@@ -23,17 +23,3 @@ table {
 .empRemark{
   width: 150px;
 }
-
-
-:host::ng-deep .ui-button.ui-button-text-only .ui-button-text {
-  padding: 0.429em 0.9em;
-}
-
-.loadingLeave {
-  text-align: center;
-}
-
-:host::ng-deep .loadingLeave .ui-button {
-  width: 150% !important;
-}
-

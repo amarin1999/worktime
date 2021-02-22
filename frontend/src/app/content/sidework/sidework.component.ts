@@ -1,4 +1,3 @@
-import { EmployeeService } from './../../shared/service/employee.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -29,11 +28,9 @@ export class SideWorkComponent implements OnInit {
   showExcelExport = false;
   empEdit: boolean = false;
   empDate: Date;
-  showAccess: string;
 
   constructor(
     private dialogRef: MatDialogRef<SideWorkComponent>,
-    private employeeService: EmployeeService,
     private sideWorkService: SideWorkService,
     private calendarService: CalendarService,
     private spinner: NgxSpinnerService,
@@ -51,18 +48,11 @@ export class SideWorkComponent implements OnInit {
       ...Subject,
       employeeNo: localStorage.getItem('employeeNo'),
     }
-    this.employeeService.getEmployee(requestData.employeeNo).subscribe((res) => {
-      this.showAccess = res.data.accessReport;
-      if (this.showAccess === "Y" || this.showAccess === "A" || this.showAccess === "M") {
-        this.showExcelExport = true;
-        this.empEdit = true;
-      }
-    });
-    // if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
-    //   || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
-    //   this.showExcelExport = true;
-    //   this.empEdit = true;
-    // }
+    if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
+      || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
+      this.showExcelExport = true;
+      this.empEdit = true;
+    }
   }
 
   empList(){
@@ -75,11 +65,11 @@ export class SideWorkComponent implements OnInit {
     const configDialog: MatDialogConfig<object> = {
       disableClose: false,
       autoFocus: false,
-      data: { type, date: this.empDate, workAnyWhere: 1, empListClickCheck: 2 },
+      data: { type, date: this.empDate, workAnyWhere: 1, empListClickCheck: 2 }, 
     };
     const dialogRef = this.dialog.open(SideWorkComponent, configDialog);
     dialogRef.afterClosed().subscribe();
-
+ 
   }
 
   // เช็ควันว่าลงเวลาแล้วหรือยัง
@@ -115,7 +105,7 @@ export class SideWorkComponent implements OnInit {
     this.spinner.show();
     switch (this.dataForm.type) {
       case 'edit': {
-        // set วันที่ format
+        // set วันที่ format 
         const dateFormat = moment(formItem.date, 'DD/MM/YYYY').subtract(543, 'year').format(
           'YYYY-MM-DD'
         );
@@ -153,7 +143,7 @@ export class SideWorkComponent implements OnInit {
           this.sideWorkService.loadSideworkCalendar();
 
           this.spinner.hide();
-
+          
           this.dialogRef.close(response);
         },
         (error) => {

@@ -58,14 +58,6 @@ public class EmployeeEntity implements Serializable {
 		this.lastname = lastname;
 	}
 
-	public String getAccessReport() {
-		return accessReport;
-	}
-
-	public void setAccessReport(String accessReport) {
-		this.accessReport = accessReport;
-	}
-
 	@Id
 	@Column(name = "id_employee")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,8 +71,5 @@ public class EmployeeEntity implements Serializable {
 
 	@Column(name = "lastname", unique = true)
 	private String lastname;
-	
-	@Column(name = "access_report")
-	private String accessReport;
 
 }

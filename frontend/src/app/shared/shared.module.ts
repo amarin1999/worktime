@@ -34,11 +34,10 @@ import { WorkAnywherePipe } from "./pipe/work-anywhere.pipe";
 import { FormatYearPipe } from './pipe/format-year.pipe';
 import { FormatYearOtPipe } from './pipe/format-year-ot.pipe';
 import { WorkTypePipe } from './pipe/work-type.pipe';
-import { AccessReportPipe } from './pipe/access-report.pipe';
 
 
 @NgModule({
-  declarations: [WorkAnywherePipe, FormatYearPipe, FormatYearOtPipe, WorkTypePipe, AccessReportPipe],
+  declarations: [WorkAnywherePipe, FormatYearPipe, FormatYearOtPipe, WorkTypePipe],
   imports: [],
 
   exports: [
@@ -58,8 +57,7 @@ import { AccessReportPipe } from './pipe/access-report.pipe';
     ScrollPanelModule,
     FormatYearPipe,
     FormatYearOtPipe,
-    WorkTypePipe,
-    AccessReportPipe,
+    WorkTypePipe
   ],
   providers: [EmployeeService, AuthService]
 })

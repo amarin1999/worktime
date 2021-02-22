@@ -28,7 +28,6 @@ export class SideWorkService {
 
   loadEventCalendar() {
     this.changeEventCalendar.next();
-    // this.changeEventCalendar.observers.splice(0,1)
   }
 
   private changeSideworkCalendar = new Subject<void>();
@@ -40,7 +39,6 @@ export class SideWorkService {
 
   loadSideworkCalendar() {
     this.changeSideworkCalendar.next();
-    this.changeSideworkCalendar.observers.splice(0,1)
   }
 
   constructor(
@@ -54,9 +52,9 @@ export class SideWorkService {
         `${ApiConstants.baseURl}/datatable/getsidework/${id}`
       )
       .pipe(map((res) => res.data))
-
+     
   }
-
+  
   addSidework(body: SideWork): Observable<Response> {
     try {
       return this.http

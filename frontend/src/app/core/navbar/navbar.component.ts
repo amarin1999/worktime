@@ -22,9 +22,9 @@ export class NavbarComponent implements OnInit {
     this.employeeService
       .getEmployeeSignOn()
       .subscribe(res => (this.employee = { ...res }));
-
+  
   }
-
+  
   signOut(): void {
     this.authService.onSignout();
     this.showToggle = null;

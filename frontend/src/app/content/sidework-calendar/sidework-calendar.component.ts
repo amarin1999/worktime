@@ -1,6 +1,3 @@
-import { FormGroup } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
-import { EmployeeService } from './../../shared/service/employee.service';
 import {
   Component,
   OnInit,
@@ -14,7 +11,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import thLocale from '@fullcalendar/core/locales/th';
 import { SideWorkComponent } from '../sidework/sidework.component';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
-import { MessageService, SelectItem } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { first, debounceTime, } from 'rxjs/operators';
 import { Calendar } from 'src/app/shared/interfaces/calendar';
 import { SideWork } from 'src/app/shared/interfaces/sidework';
@@ -53,25 +50,17 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
   titleMessage: string;
   togglePanel$ = new Subject<any>();
   showExcelExport = false;
-  accessDialog = false;
-  EmpAccReportDialog: any;
   empDate: Date;
   eventDateClick: Date;
   calendarDate: Date;
-  showAccess: string;
-  selectedEmployee: SelectItem[];
-  edtFormAccess: FormGroup;
-  searchAccessForm: FormGroup;
-  empAccessReportList: any;
-
+  
   constructor(
     private dialog: MatDialog,
     private messageService: MessageService,
     private excelService: ExcelService,
     private sideworkService: SideWorkService,
     private calendarService: CalendarService,
-    private employeeService: EmployeeService,
-    private formBuilder: FormBuilder,
+
   ) {
 
   }
@@ -90,10 +79,6 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
         return [][Symbol.iterator]()
       }
     }
-
-    this.initFormAccess();
-    this.initSearchAccessReportForm();
-    this.selectQuery();
   }
 
   calendarChangeDate(date: Date) {
@@ -102,28 +87,21 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
     const holidayMonth = this.calendarDate.getMonth() + 1;
     const holidayYear = this.calendarDate.getUTCFullYear();
     const leaveYear = this.calendarDate.getFullYear();
-    const currentYear = localStorage.getItem("year");
-
+   
     localStorage.setItem("month", holidayMonth.toString());
     localStorage.setItem("year", holidayYear.toString());
     localStorage.setItem("year", leaveYear.toString());
 
-    if (currentYear != null) {
-      if (currentYear != leaveYear.toString()) {
-        this.calendarService.requestLeavEmpYear = null;
-        this.LoadAllEventsOnCalendar();
-        this.LoadLeaveYearEmployee();
-      }
-    }
-
+    localStorage.setItem("year", leaveYear.toString());
     // this.holidaysEventService();
     // this.leaveEmployeeEventService();
+    
   }
+  
 
   ngAfterViewInit() {
     this.LoadAllEventsOnCalendar();
-    this.LoadLeaveYearEmployee();
-
+    
     // debounceTime ของ layoutPanel
     //จะทำกรณีเอาเมาส์ไปชี้ที่ event บนปฏิทิน
     this.subscription.add(
@@ -132,7 +110,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
         if (result.display) {
           this.idSideWork = result.event.event.id;
           this.message = result.event.event.extendedProps.remark;
-          this.titleMessage = result.event.event.title;
+          this.titleMessage = result.event.event.title;  
           this.op.toggle(result.event.jsEvent);
         } else {
           this.op.hide();
@@ -165,7 +143,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       },
 
 
-
+    
       //dayGridMonth,timeGridWeek,timeGridDay
       editable: true,
       selectable: false,
@@ -179,22 +157,18 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(this.dateCilckValue).getDay()]
 
         // เช็ครหัสพนักงาน
-        this.employeeService.getEmployee(requestData.employeeNo).subscribe((res) => {
-
-          // if ((requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
-          // || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
-          // && (weekday != 'Sun' && weekday != 'Sat')) {
-          if ((this.showAccess === "Y" || this.showAccess === "A" || this.showAccess === "M") && (weekday != 'Sun' && weekday != 'Sat')) {
-            this.empDate = el.date;
-            this.opendialogShowEmp('form');
-          } else {
-            // วันเสาร์-อาทิตย์กดลงเวลาไม่ได้
-            if (weekday != 'Sun' && weekday != 'Sat') {
-              this.openDialogInsert('add');
-            }
-          }
-        })
-
+        if ((requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
+          || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912')
+          && (weekday != 'Sun' && weekday != 'Sat')) {
+          this.empDate = el.date;
+          this.opendialogShowEmp('form');     
+        } else {
+          // วันเสาร์-อาทิตย์กดลงเวลาไม่ได้
+          if (weekday != 'Sun' && weekday != 'Sat') {
+            this.openDialogInsert('add');          
+          }         
+        }
+        
       },
       eventClick: (el) => {
         this.searchId = parseInt(el.event.id, 0);
@@ -208,53 +182,46 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           this.openDialogEdit('edit', this.item);
         }
       },
-
+      
       eventMouseEnter: (el) => {
         this.togglePanel$.next({
           event: el,
           display: true, // เปิด layoutPane0l
         });
       },
-
+    
       eventMouseLeave: (el) => {
         this.togglePanel$.next({
           event: el,
           display: false, // ปิด layoutPanel
         });
-      },
+      }, 
     };
   }
 
   SetEventColor(){
-    // console.log(this.events)
     //console.log(this.events)
-    this.events = this.events.map((event) => {
+    //console.log(this.events) 
+    this.events = this.events.map((event) => {  
       return {
         ...event,
-
+        
         color: event.workAnyWhere === 1 ? 'SteelBlue' : event.workAnyWhere === 2 ? 'SeaGreen' :
-        event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'Maroon':
+        event.workAnyWhere === 3 ? 'RebeccaPurple' : event.workAnyWhere === 0 ? 'Maroon': 
         event.title.includes("ลา")?'Orange': ' rgb(243, 127, 127)',
         textColor: event.workAnyWhere === 1 ? 'Azure' : event.workAnyWhere === 2 ? 'Azure' :
         event.workAnyWhere === 3 ? 'Azure' : event.workAnyWhere === 0 ? 'Azure' : event.title.includes("ลา")?'Black':'Black',
-
+        
       }
-
+      
     });
   }
 
-  LoadLeaveYearEmployee() {
-    this.subscription.add(
-      this.calendarService.onLoadYearLeaves$.subscribe((leaveYearEvent) => {
-        this.calendarService.changeSourceLeaveEmployee(leaveYearEvent);
-      })
-    );
-    this.calendarService.loadYearLeaves();
-  }
-
+  
   LoadAllEventsOnCalendar() {
-
+    
     // โหลด sidework event ขึ้นบน calendar
+    
     this.subscription.add(
       this.sideworkService.onLoadEventCalendar$.subscribe(
         (sideworkEvent) => {
@@ -263,22 +230,22 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           //console.log(this.sideworkEvents)
           //this.events ใช้สำหรับนำ events ทั้งหมดที่มีขึ้นบนปฏิทิน
           //console.log(this.events)
-
+        
           if(!this.events){
             this.events = [...this.sideworkEvents];
           }else{
             this.events = [ ...this.sideworkEvents,...this.holidayEvents,...this.leaveEvents];
-
+            
           }
-
-          // console.log(this.events)
+            
+          //console.log(this.events)
           // ตั้งค่าสีให้กับ events
           this.SetEventColor()
         }
       )
     );
     this.sideworkService.loadEventCalendar();
-
+    
     //โหลด data sidework มาดึงขึ้น editdialog form
     this.subscription.add(
       this.sideworkService.onLoadSideworkCalendar$.subscribe(
@@ -287,10 +254,10 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           // console.log('data')
           // console.log(this.data)
         }
-      )
-    );
-    this.sideworkService.loadSideworkCalendar();
-
+      )  
+    );   
+    this.sideworkService.loadSideworkCalendar();  
+    
     // โหลด holiday event
     this.subscription.add(
       this.calendarService.onLoadHolidays$.subscribe(
@@ -304,7 +271,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       )
     );
     this.calendarService.loadHolidays();
-
+    
     // โหลด leave event
     this.subscription.add(
       this.calendarService.onLoadLeaves$.subscribe(
@@ -316,28 +283,26 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
           //this.events ใช้สำหรับนำ events ทั้งหมดที่มีขึ้นบนปฏิทิน
           if(this.holidayEvents){
             this.events = [ ...this.sideworkEvents,...this.holidayEvents,...this.leaveEvents];
-
+            
           }else{
             this.events = [ ...this.sideworkEvents,...this.leaveEvents];
           }
           // ตั้งค่าสีให้กับ events
-          // console.log(this.events)
-
+          //console.log(this.events)
+          
           this.SetEventColor()
         }
       )
-    );
+    );      
     this.calendarService.loadLeaves();
-    // console.log(this.events)
   }
-
 
   getHistorySideWork(): Subject<SideWork[]> {
     return this.sideworkService.getSideWork();
   }
 
   openDialogInsert(type: string): void {
-
+    
     const configDialog: MatDialogConfig<any> = {
       disableClose: false,
       autoFocus: false,
@@ -440,7 +405,7 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       }
     });
   }
-// get holiday จาก web Service
+// get holiday จาก web Service 
   holidaysEventService() {
     const requestData = {
       ...Subject,
@@ -461,13 +426,13 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
         leaveYear: localStorage.getItem('year')
       }
 
-
+     
      // console.log(requestData)
-
+  
   }
+ 
 
-
-
+  
 
   exportText() {
     const month = this.calendarDate.getMonth() + 1;
@@ -500,97 +465,10 @@ export class SideworkCalendarComponent implements OnInit, OnDestroy, AfterViewIn
       ...Subject,
       employeeNo: localStorage.getItem('employeeNo'),
     }
-    this.employeeService.getEmployee(requestData.employeeNo).subscribe((res) => {
-      this.showAccess = res.data.accessReport;
-      if (this.showAccess === "Y" || this.showAccess === "A" || this.showAccess === "M") {
-        this.showExcelExport = true;
-      }
-    });
-    // if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
-    //   || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
-    //   this.showExcelExport = true;
-    // }
-  }
-
-  //Dialog สำหรับหน้าต่าง Access
-  showDialogAccess() {
-    this.accessDialog = true;
-  }
-
-  initFormAccess() {
-    this.edtFormAccess = this.formBuilder.group({
-      id: null,
-      accessReport: null,
-    });
-  }
-
-  closeDialogAccess() {
-    this.accessDialog = false;
-  }
-
-  selectQuery() {
-    this.employeeService.getAllEmployee().subscribe((res) => {
-      this.selectedEmployee = [];
-      this.selectedEmployee.push({
-        label: 'กรุณาเลือกพนักงาน',
-        value: null
-      });
-      for (let i=0;i<res.data.length;i++) {
-        this.selectedEmployee.push({
-          label: res.data[i].no + ' ' + res.data[i].firstname + ' ' + res.data[i].lastname,
-          value: res.data[i].no
-        });
-      }
-    })
-  }
-
-  onChangeAccess(event: any) {
-    if (event.value === null) {
-      this.edtFormAccess.patchValue({access: null});
-    } else {
-      this.employeeService.getEmployeeByID(event.value).subscribe((res) => {
-        this.edtFormAccess.patchValue(res.data[0]);
-      })
+    if (requestData.employeeNo == '004061' || requestData.employeeNo == '001153' || requestData.employeeNo == '000242'
+      || requestData.employeeNo == '000168' || requestData.employeeNo == '000225' || requestData.employeeNo == '004912') {
+      this.showExcelExport = true;
     }
-  }
-
-  updateAccess(value: any) {
-    this.employeeService.editAccess(value.value).subscribe((res) => {
-      this.accessDialog = false;
-      this.messageService.add({
-        key: "SuccessMessage",
-        severity: "success",
-        summary: "แจ้งเตือน",
-        detail: "แก้ไขสิทธิ์การเข้าถึงเรียบร้อยแล้ว"
-      });
-    });
-  }
-
-  //Dialog Employee Access
-  showEmployeeAccessReport() {
-    this.employeeService.getEmployeeByAccessReport('N').subscribe((res) => {
-      this.empAccessReportList = res.data;
-      if (this.empAccessReportList != null) {
-        this.EmpAccReportDialog = true;
-        this.accessDialog = false;
-      } else { }
-    })
-  }
-
-  initSearchAccessReportForm() {
-    this.searchAccessForm = this.formBuilder.group({
-      value: "N"
-    });
-  }
-
-  clickWhereEmployeAccessReport() {
-    this.employeeService.getEmployeeByAccessReport(this.searchAccessForm.get('value').value).subscribe((res) => {
-      this.empAccessReportList = res.data;
-    });
-  }
-
-  closeEmployeeAccessReport() {
-    this.EmpAccReportDialog = false;
   }
 
 }
