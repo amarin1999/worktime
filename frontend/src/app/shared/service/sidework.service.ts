@@ -40,7 +40,7 @@ export class SideWorkService {
 
   loadSideworkCalendar() {
     this.changeSideworkCalendar.next();
-    this.changeSideworkCalendar.observers.splice(0,1)
+    // this.changeSideworkCalendar.observers.splice(0,1)
   }
 
   constructor(

@@ -377,7 +377,6 @@ export class SideworkCalendarComponent
               severity: 'success',
               summary: 'ข้อความ',
               detail: 'ลงเวลาเรียบร้อยแล้ว',
-              life: 500,
             });
           } else if (result.error) {
             this.messageService.clear();
@@ -386,7 +385,6 @@ export class SideworkCalendarComponent
               severity: 'error',
               summary: 'ข้อความ',
               detail: result.error.errorMessage,
-              life: 500,
             });
           }
         },
@@ -397,7 +395,6 @@ export class SideworkCalendarComponent
             severity: 'error',
             summary: 'ข้อความ',
             detail: 'เกิดข้อผิดพลาดระหว่างเพิ่มข้อมูล',
-            life: 500,
           });
         }
       );
@@ -437,7 +434,6 @@ export class SideworkCalendarComponent
           severity: 'success',
           summary: 'ข้อความ',
           detail: 'แก้ไขการลงเวลาเรียบร้อยแล้ว',
-          life: 500,
         });
       } else if (
         result.status === 'Success' &&
@@ -449,7 +445,6 @@ export class SideworkCalendarComponent
           severity: 'success',
           summary: 'ข้อความ',
           detail: 'ลบรายการลงเวลาเรียบร้อยแล้ว',
-          life: 500,
         });
       } else if (result.error) {
         this.messageService.add({
@@ -457,7 +452,6 @@ export class SideworkCalendarComponent
           severity: 'error',
           summary: 'ข้อความ',
           detail: result.error.errorMessage,
-          life: 500,
         });
       }
     });

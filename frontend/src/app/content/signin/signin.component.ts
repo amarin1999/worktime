@@ -49,8 +49,8 @@ export class SignInComponent implements OnInit {
       this.messageService.add({
         key: 'errorMessage',
         severity: 'error',
-        summary: 'ผิดพลาด',
-        detail: 'กรุณากรอกรหัสพนักงานและพาสเวิร์ด',
+        summary: 'คำเตือน',
+        detail: 'กรุณากรอกรหัสพนักงานและรหัสผ่าน',
       });
       return;
     }
@@ -59,7 +59,7 @@ export class SignInComponent implements OnInit {
       this.messageService.add({
         key: 'errorMessage',
         severity: 'error',
-        summary: 'ผิดพลาด',
+        summary: 'คำเตือน',
         detail: 'กรุณากรอกรหัสพนักงาน',
       });
       return;
@@ -69,8 +69,8 @@ export class SignInComponent implements OnInit {
       this.messageService.add({
         key: 'errorMessage',
         severity: 'error',
-        summary: 'ผิดพลาด',
-        detail: 'กรุณากรอกพาสเวิร์ด',
+        summary: 'คำเตือน',
+        detail: 'กรุณากรอกรหัสผ่าน',
       });
       return;
     }
@@ -83,7 +83,6 @@ export class SignInComponent implements OnInit {
             this.authenService
               .checkAuthen(this.form.value)
               .pipe(
-                first(),
                 finalize(() => {
                   this.spinner.hide();
                 })
@@ -96,13 +95,15 @@ export class SignInComponent implements OnInit {
                     this.route.navigate(['main/sidework-calendar']);
                   }
                 } else {
+                  // this.form.controls.password.setErrors({incorrent: true});
                   this.messageService.clear();
                   this.messageService.add({
                     key: 'errorMessage',
                     severity: 'error',
-                    summary: 'ผิดพลาด',
-                    detail: 'พาสเวิร์ดไม่ถูกต้อง',
+                    summary: 'คำเตือน',
+                    detail: 'รหัสผ่านไม่ถูกต้อง',
                   });
+                  return;
                 }
               });
           },
@@ -115,6 +116,7 @@ export class SignInComponent implements OnInit {
               summary: 'ผิดพลาด',
               detail: error.error.errorMessage,
             });
+            return;
           }
         );
     }

@@ -9,7 +9,7 @@
         เริ่มต้นใช้งาน
       </mat-card-title>
       <mat-card-content class="card-content">
-        <form [formGroup]="form" (submit)="onSubmit()">
+        <form [formGroup]="form">
           <mat-form-field appearance="outline" class="input-id-userID">
             <mat-label>รหัสพนักงาน</mat-label>
             <input matInput class="input-id-userID" formControlName="userID" maxlength="6" />
@@ -19,11 +19,11 @@
           </mat-form-field>
           &nbsp;
           <mat-form-field appearance="outline" class="input-id-password">
-            <mat-label>พาสเวิร์ด</mat-label>
+            <mat-label>รหัสผ่าน</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" (keydown.enter)="onSubmit()" class="input-id-password"
               formControlName="password" />
-            <mat-error *ngIf="form.controls.userID.hasError('required')">
-              * กรุณากรอกพาสเวิร์ด
+            <mat-error *ngIf="form.controls.password.hasError('required')">
+              * กรุณากรอกรหัสผ่าน
             </mat-error>
             <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </mat-form-field>
