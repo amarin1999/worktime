@@ -20,6 +20,7 @@ public class EmployeeDto implements Serializable {
 	private String no;
 	private String firstname;
 	private String lastname;
+	private String accessReport;
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +44,12 @@ public class EmployeeDto implements Serializable {
 	}
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+	public String getAccessReport() {
+		return accessReport;
+	}
+	public void setAccessReport(String accessReport) {
+		this.accessReport = accessReport;
 	}
 
 

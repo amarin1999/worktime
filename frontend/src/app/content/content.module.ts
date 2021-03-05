@@ -1,3 +1,4 @@
+import { AccessReportPipe } from './../shared/pipe/access-report.pipe';
 // module
 import {
   NgxMatDatetimePickerModule,
@@ -75,7 +76,8 @@ import { OvertimeWorkCalendarComponent } from './overtime-work-calendar/overtime
 import { CdgsFullCalendarDirective } from './sidework-calendar/cdgs-full-calendar.directive';
 import { ShowEmpByDayComponent } from './sidework/show-emp-by-day/show-emp-by-day.component';
 import { WorkTypePipe } from '../shared/pipe/work-type.pipe';
-import { HolidayComponent } from './holiday/holiday.component'
+import { HolidayComponent } from './holiday/holiday.component';
+import { ShowLeaveEmpByDayComponent } from './sidework/show-leave-emp-by-day/show-leave-emp-by-day.component'
 
 
 
@@ -98,9 +100,10 @@ import { HolidayComponent } from './holiday/holiday.component'
     OvertimeWorkCalendarComponent,
     CdgsFullCalendarDirective,
     ShowEmpByDayComponent,
-    HolidayComponent
+    HolidayComponent,
+    ShowLeaveEmpByDayComponent
 
-  
+
 
   ],
 
@@ -158,6 +161,7 @@ import { HolidayComponent } from './holiday/holiday.component'
     WorkAnywherePipe,
     CalendarService,
     WorkTypePipe,
+    AccessReportPipe
 
   ],
   exports: [ContentComponent],

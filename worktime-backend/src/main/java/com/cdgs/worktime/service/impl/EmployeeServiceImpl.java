@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tempuri.ISWebService.ISService.ISServiceSoapProxy;
 
+import com.cdgs.worktime.dto.CheckAuthenDto;
 import com.cdgs.worktime.dto.EmployeeByDayDto;
 import com.cdgs.worktime.dto.EmployeeDayDto;
 import com.cdgs.worktime.dto.EmployeeDto;
@@ -30,6 +32,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeServiceImpl(EmployeeRespository employeeRespository) {
 		super();
 		this.employeeRespository = employeeRespository;
+	}
+	
+	@Override
+	public boolean checkAuthenEmployee(CheckAuthenDto body) {
+		boolean res = false;
+		try { 
+			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
+			res = ispo.checkUserAuthentication(body.getUserID(), body.getPassword());
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("checkAuthen >>> " + e.getMessage());
+			return res;
+		}
 	}
 
 	@Override
@@ -86,6 +102,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			dto.setNo(entity.getEmployeeno());
 			dto.setFirstname(entity.getFirstname());
 			dto.setLastname(entity.getLastname());
+			dto.setAccessReport(entity.getAccessReport());
 //			if (entity.getCoursesEntity() != null) {
 //				dto.setCourseId(entity.getCoursesEntity().getCourseId());
 //			}
@@ -132,7 +149,42 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return mapListEntityToDto(entity);
 		
 	}
-
+	@Override
+	public EmployeeDto putEmployeeAccess(EmployeeDto body) {
+		EmployeeEntity employeeData = convDtotoEntity(body);
+		EmployeeEntity entityDto = employeeRespository.findById(body.getId()).orElse(null);
+		entityDto.setAccessReport(body.getAccessReport());
+		employeeData = employeeRespository.save(entityDto);
+		return mapEntityToDto(employeeData);
+	}
+	
+	@Override
+	public List<EmployeeDto> getEmployeeByAccessReport(String accessReport) {
+		List<EmployeeEntity> entity = new ArrayList<EmployeeEntity>();
+		try {
+			if (accessReport.equals("N")) {
+				entity = employeeRespository.findByAllAccessReport(accessReport);
+			} else {				
+				entity = employeeRespository.findByAccessReport(accessReport);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("getEmployeeByAccessReport >>> " + e.getMessage());
+		}
+		return mapListEntityToDto(entity);
+	}
+	
+	@Override
+	public EmployeeEntity postEmployee(EmployeeEntity body) {
+//		return employeeRespository.save(body);
+		 EmployeeEntity entity = new EmployeeEntity();
+		  try {
+		   entity = employeeRespository.save(body);
+		  } catch (Exception e) {
+		   log.error("postEmployee >>>" + e.getMessage());
+		  }
+		  return entity;
+	}
 	
 
 }

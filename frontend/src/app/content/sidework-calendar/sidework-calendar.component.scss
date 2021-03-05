@@ -49,7 +49,9 @@ html, body {
   width:30px;
   height: 30px;
   border-radius: 15%;
-  background: rgb(248, 209, 137);
+  background: rgb(255, 165, 0);
+  // background: rgb(248, 209, 137);
+  // background: rgb(243, 127, 127);
 }
 
 .text{
@@ -91,3 +93,26 @@ html, body {
     padding:1px 1px 1px 1px;
   }
 }
+
+//Dialog Access
+:host::ng-deep .ui-dialog-titlebar-close {
+  display:none;
+}
+.titleAccess {
+  font-size: 20px;
+}
+:host ::ng-deep .disable-scroll .ui-dialog-content {
+  overflow: hidden !important;
+}
+.textDialogAccess .col-4 {
+  text-align: right;
+  padding: 8px 0;
+}
+.textDialogAccess .col-8 {
+  padding: 8px 0 0 8px;
+}
+
+:host::ng-deep mat-form-field {
+  width: 100%;
+}
+

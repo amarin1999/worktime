@@ -8,21 +8,29 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.persistence.Entity;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tempuri.ISWebService.ISService.Holiday;
 import org.tempuri.ISWebService.ISService.ISServiceSoapProxy;
 
+import com.cdgs.worktime.dto.CheckAuthenDto;
 import com.cdgs.worktime.dto.EmployeeByDayDto;
 import com.cdgs.worktime.dto.EmployeeDayDto;
 import com.cdgs.worktime.dto.EmployeeDto;
 import com.cdgs.worktime.dto.HolidayDto;
+import com.cdgs.worktime.dto.OtHistoryDto;
+import com.cdgs.worktime.entity.EmployeeEntity;
 import com.cdgs.worktime.service.EmployeeService;
 import com.cdgs.worktime.util.ResponseDto;
 
@@ -98,6 +106,28 @@ public class EmployeeController {
 		}
 	}
 	
+	@PostMapping(path = "/postEmployee")
+	public ResponseEntity<ResponseDto<EmployeeEntity>> postEmployee(@RequestBody EmployeeEntity body) {
+		ResponseDto<EmployeeEntity> res = new ResponseDto<>();
+		List<EmployeeEntity> dto = new ArrayList<EmployeeEntity>();
+		EmployeeEntity entity = new EmployeeEntity();
+		
+		try {
+			entity = employeeService.postEmployee(body);
+			res.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			dto.add(entity);
+			res.setData(dto);
+			res.setCode(200);
+			return new ResponseEntity<ResponseDto<EmployeeEntity>>(res, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			res.setErrorMessage(e.getMessage());
+			res.setCode(404);
+			return new ResponseEntity<ResponseDto<EmployeeEntity>>(res, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	// getEmployeeAll in CurrentDay
 	@GetMapping(path = "/{year}/{month}/{day}")
 	public ResponseEntity<ResponseDto<EmployeeByDayDto>> getEmpAll(@PathVariable(value = "year") String year,
@@ -127,6 +157,27 @@ public class EmployeeController {
 		}
 	}
 	
+	@PostMapping(path = "/checkAuthen")
+	public boolean checkAuthen(@Valid @RequestBody CheckAuthenDto body) {
+		ResponseDto<CheckAuthenDto> resDto = new ResponseDto<>();
+		boolean dto = false;
+		try {
+//			ISServiceSoapProxy ispo = new ISServiceSoapProxy();
+//			dto = ispo.checkUserAuthentication(userID, password);
+//			return dto;
+			dto = employeeService.checkAuthenEmployee(body);
+			resDto.setResult(ResponseDto.RESPONSE_RESULT.Success.getRes());
+			resDto.setCode(200);
+			return dto;
+		} catch (Exception e) {
+			e.printStackTrace();
+			resDto.setResult(ResponseDto.RESPONSE_RESULT.Fail.getRes());
+			resDto.setErrorMessage(e.getMessage());
+			resDto.setCode(400);
+			return dto;
+		}
+	}
+	
 	@GetMapping(path = "/")
 	public ResponseEntity<ResponseDto<EmployeeDto>> getAllUsers() {
 		ResponseDto<EmployeeDto> res = new ResponseDto<>();
@@ -153,4 +204,5 @@ public class EmployeeController {
 			return new ResponseEntity<ResponseDto<EmployeeDto>>(res, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 }

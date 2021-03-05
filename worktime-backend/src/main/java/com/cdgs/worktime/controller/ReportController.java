@@ -162,12 +162,10 @@ public class ReportController {
 		
 		
 
-		String workTime = "select id_employee,firstname, day(day) date, MONTH(day) month, MONTH(CURRENT_DATE()) current_month, YEAR(day) year, work_anywhere \r\n" + 
-				"	from employee as e\r\n" + 
-				"	inner join employee_has_sidework_history as esh\r\n" + 
-				"	on e.id_employee = esh.employee_id\r\n" + 
-				"	inner join sidework_history as sh\r\n" + 
-				"	on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n";
+		String workTime = "select id_employee,firstname, day(day) date, MONTH(day) month, MONTH(CURRENT_DATE()) current_month, YEAR(day) year, work_anywhere \r\n"
+				+ "	from employee as e\r\n" + "	inner join employee_has_sidework_history as esh\r\n"
+				+ "	on e.id_employee = esh.employee_id\r\n" + "	inner join sidework_history as sh\r\n"
+				+ "	on esh.employee_has_sidework_history_id = sh.employee_has_sidework_history_id\r\n";
 				
 				
 
@@ -556,6 +554,9 @@ public class ReportController {
 			Cell sumCell = dataRowSum.createCell(1);
 			sumCell.setCellValue("Sum");
 			sumCell.setCellStyle(cellFooterStyle);
+			
+			sidework.setAutoFilter(new CellRangeAddress(0, 1, 0, 0));
+			sidework.createFreezePane(0, 2);
 
 			int rowIndex = 2;
 

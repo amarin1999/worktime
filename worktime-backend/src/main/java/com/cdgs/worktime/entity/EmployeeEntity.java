@@ -57,6 +57,22 @@ public class EmployeeEntity implements Serializable {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
+	public String getAccessReport() {
+		return accessReport;
+	}
+
+	public void setAccessReport(String accessReport) {
+		this.accessReport = accessReport;
+	}
 
 	@Id
 	@Column(name = "id_employee")
@@ -71,5 +87,11 @@ public class EmployeeEntity implements Serializable {
 
 	@Column(name = "lastname", unique = true)
 	private String lastname;
+	
+	@Column(name = "active")
+	private String active;
+	
+	@Column(name = "access_report")
+	private String accessReport;
 
 }

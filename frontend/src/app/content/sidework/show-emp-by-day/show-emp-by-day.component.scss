@@ -23,3 +23,28 @@ table {
 .empRemark{
   width: 150px;
 }
+
+
+:host::ng-deep .ui-button.ui-button-text-only .ui-button-text {
+  padding: 0.429em 0.9em;
+}
+
+.loadingLeave {
+  text-align: center;
+  height: 50px;
+}
+
+:host::ng-deep .loadingLeave .ui-button {
+  width: 100% !important;
+}
+
+.excel{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 95px;
+}
+

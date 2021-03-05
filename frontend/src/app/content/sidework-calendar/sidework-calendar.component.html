@@ -1,75 +1,245 @@
 <div class="p-grid p-justify-center animation-page">
-    <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-10" style="color: #333377; font-size: 2.3em; text-align:center;">
-        ปฏิทินการทำงานนอกสถานที่
+  <div class="p-col-12 p-md-1"></div>
+  <div class="p-col-12 p-md-10" style="color: #333377; font-size: 2.3em; text-align:center;">
+    ปฏิทินการทำงานนอกสถานที่
+  </div>
+  <div class="p-col-12 p-md-1"></div>
+  <div class="p-col-12 p-md-1 text-center">
+    <div class="p-col-12 p-md-1 text-center">
+      <button *ngIf="showAccess === 'A'" pButton pRipple type="button" label="Access" icon="pi pi-unlock"
+        (click)="showDialogAccess()" class="p-button-rounded p-button-info text"></button>
     </div>
-    <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-1"></div>
-    <div class="p-col-12 p-md-10 p-sm-12" >
-        <p-fullCalendar #calendar cdgsFullCalendar (dateChange)="calendarChangeDate($event)" [options]="options"
-            [events]="events" >
-        </p-fullCalendar>
+    <div class="p-col-12 p-md-1 text-center">
+      <button *ngIf="showAccess === 'A'" pButton pRipple type="button" label="Add" icon="pi pi-plus"
+        (click)="showDialogRegis()" class="p-button-rounded p-button-info excel"></button>
     </div>
-    <div class="p-col-12 p-md-1" >
-        <div *ngIf="showExcelExport == true" style="line-height: 50px">
-            <button pButton pRipple type="button" label="WFH" icon="pi pi-file" (click)="exportText()"
-                 class="p-button-rounded p-button-info text"></button><br>
-            <button (click)="exportExcelClickWFH()" pButton pRipple type="button" label="WFH" icon="pi pi-file-excel"
-                class="p-button-rounded p-button-info excel"></button><br>
-            <button (click)="exportExcelClickLeave()" pButton pRipple type="button" label="Leave" icon="pi pi-file-excel"
-                class="p-button-rounded p-button-info excel"></button><br>
-        </div>
-        <br>
+  </div>
+  <div class="p-col-12 p-md-10 p-sm-12">
+    <p-fullCalendar #calendar cdgsFullCalendar (dateChange)="calendarChangeDate($event)" [options]="options"
+      [events]="events">
+    </p-fullCalendar>
+  </div>
+  <div class="p-col-12 p-md-1">
+    <div *ngIf="showExcelExport == true" style="line-height: 50px">
+      <button pButton pRipple type="button" label="WFH" icon="pi pi-file" (click)="exportText()"
+        class="p-button-rounded p-button-info text"></button><br>
+      <button (click)="exportExcelClickWFH()" pButton pRipple type="button" label="WFH" icon="pi pi-file-excel"
+        class="p-button-rounded p-button-info excel"></button><br>
+      <button (click)="exportExcelClickLeave()" pButton pRipple type="button" label="Leave" icon="pi pi-file-excel"
+        class="p-button-rounded p-button-info excel"></button><br>
+    </div>
+    <br>
     <div class="typeTab">
-            <div id="WFHSquare"></div>
-            &nbsp;
-            <div class="typeText">WFH</div> 
-        </div>
-        <br>
-        <div class="typeTab">
-            <div id="SiteWorkSquare"></div>
-            &nbsp;
-            <div class="typeText">Site</div> 
-        </div>
-        <br>
-        <div class="typeTab">
-            <div id="OtherSquare"></div>
-            &nbsp;
-            <div class="typeText">Other</div> 
-        </div>
-        <br>
-        <div class="typeTab">
-            <div id="ForgotCardSquare"></div>
-            &nbsp;
-            <div class="typeText">ลืมบัตร</div> 
-        </div>
-        <br>
-        <div class="typeTab">
-            <div id="HolidaySquare"></div>
-            &nbsp;
-            <div class="typeText">วันหยุด</div> 
-        </div>
-        <br>
-        <div class="typeTab">
-            <div id="LeaveSquare"></div>
-            &nbsp;
-            <div class="typeText">วันลา</div> 
-        </div>   
-    
+      <div id="WFHSquare"></div>
+      &nbsp;
+      <div class="typeText">WFH</div>
     </div>
+    <br>
+    <div class="typeTab">
+      <div id="SiteWorkSquare"></div>
+      &nbsp;
+      <div class="typeText">Site</div>
+    </div>
+    <br>
+    <div class="typeTab">
+      <div id="OtherSquare"></div>
+      &nbsp;
+      <div class="typeText">Other</div>
+    </div>
+    <br>
+    <div class="typeTab">
+      <div id="ForgotCardSquare"></div>
+      &nbsp;
+      <div class="typeText">ลืมบัตร</div>
+    </div>
+    <br>
+    <div class="typeTab">
+      <div id="HolidaySquare"></div>
+      &nbsp;
+      <div class="typeText">วันหยุด</div>
+    </div>
+    <br>
+    <div class="typeTab">
+      <div id="LeaveSquare"></div>
+      &nbsp;
+      <div class="typeText">วันลา</div>
+    </div>
+
+  </div>
 </div>
 
 <p-toast key="errorMessage" position="bottom-center"></p-toast>
 <p-toast key="SuccessMessage" position="bottom-center"></p-toast>
 
 <p-overlayPanel #op>
-    <div *ngIf="message == null && idSideWork != ''">
-        หมายเหตุ: ไม่มี
-    </div>
-    <div *ngIf="idSideWork == ''">
-        {{titleMessage}}
-    </div>
-    <div *ngIf="message != null">
-        หมายเหตุ: {{message}}
-    </div>
+  <div *ngIf="message == null && idSideWork != ''">
+    หมายเหตุ: ไม่มี
+  </div>
+  <div *ngIf="idSideWork == ''">
+    {{titleMessage}}
+  </div>
+  <div *ngIf="message != null">
+    หมายเหตุ: {{message}}
+  </div>
 </p-overlayPanel>
+
+<!-- Dialog Acces via Primeng -->
+<p-dialog [(visible)]="accessDialog" [dismissableMask]="true" [modal]="true" [resizable]="false" [draggable]="false" [responsive]="true"
+  [blockScroll]="true" styleClass="disable-scroll primeDialog">
+  <p-header class="titleAccess">
+    แก้ไขสิทธิ์การเข้าถึงรานงาน
+  </p-header>
+  <div class="row textDialogAccess" [formGroup]="edtFormAccess">
+    <input pInputText type="hidden" formControlName="id">
+    <div class="col-4">พนักงาน : </div>
+    <div class="col-8">
+      <p-dropdown #dropEmp [options]="selectedEmployee" appendTo="body" [filter]="true" filterBy="value,label"
+      [resetFilterOnHide]="true" (onChange)="onChangeAccess($event)" formControlName="no">
+      </p-dropdown>
+    </div>
+    <div class="col-4">สถานะการเข้าถึงรายงาน : </div>
+    <div class="col-8">
+      <div style="margin-bottom: 10px;">
+        <p-radioButton name="accessReport" value="A" formControlName="accessReport"></p-radioButton> แอดมิน <br>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <p-radioButton name="accessReport" value="Y" formControlName="accessReport"></p-radioButton> อนุญาต <br>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <p-radioButton name="accessReport" value="N" formControlName="accessReport"></p-radioButton> ไม่อนุญาต <br>
+      </div>
+      <div>
+        <p-radioButton name="accessReport" value="M" formControlName="accessReport"></p-radioButton> ผู้จัดการโครงการ
+        <br>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button mat-button style="background-color: silver;" mat-raised-button (click)="showEmployeeAccessReport()">
+      <mat-icon>people</mat-icon> รายชื่อ
+    </button>
+    <button mat-button [color]="'warn'" mat-raised-button mat-dialog-close (click)="closeDialogAccess()">
+      <mat-icon>clear</mat-icon> ยกเลิก
+    </button>
+    <button mat-button [color]="'primary'" mat-raised-button type="submit" (click)="updateAccess(edtFormAccess)">
+      <mat-icon>check</mat-icon>ตกลง
+    </button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog [(visible)]="regisDialog" [dismissableMask]="true" [style]="{'width':'35%'}" [modal]="true" [resizable]="false" [draggable]="false"
+  [responsive]="true" [blockScroll]="true" styleClass="disable-scroll primeDialog">
+  <p-header class="titleAccess">
+    เพิ่มพนักงานเข้าสู่ระบบ
+  </p-header>
+  <div class="row textDialogAccess" [formGroup]="regisFormAccess">
+    <div class="col-12">
+
+      <mat-form-field appearance="outline" class="form">
+        <mat-label>
+          รหัสพนักงาน
+        </mat-label>
+        <input matInput formControlName="employeeno" maxlength="6" />
+        <mat-error *ngIf="regisFormAccess.get('employeeno').hasError('required')">
+          * กรุณากรอกรหัสพนักงาน
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <div class="col-6">
+
+      <mat-form-field appearance="outline" class="form">
+        <mat-label>
+          ชื่อ
+        </mat-label>
+        <input matInput formControlName="firstname" maxlength="45" />
+        <mat-error *ngIf="regisFormAccess.get('firstname').hasError('required')">
+          * กรุณากรอกชื่อ
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <div class="col-6">
+      <mat-form-field appearance="outline" class="form">
+        <mat-label>
+          นามสกุล
+        </mat-label>
+        <input matInput formControlName="lastname" maxlength="45" />
+        <mat-error *ngIf="regisFormAccess.get('lastname').hasError('required')">
+          * กรุณากรอกนามสกุล
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12">แผนก : </div>
+    <div class="col-12" style="margin: 8px;">
+      <div style="margin-bottom: 10px;">
+        <p-radioButton name="accessReport" value="N" formControlName="accessReport"></p-radioButton> Application
+        Development Department
+      </div>
+      <div>
+        <p-radioButton name="accessReport" value="M" formControlName="accessReport"></p-radioButton> Project Management
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button mat-button [color]="'warn'" mat-raised-button mat-dialog-close (click)="closeDialogRegis()">
+      <mat-icon>clear</mat-icon> ยกเลิก
+    </button>
+    <button mat-button [color]="'primary'" mat-raised-button type="submit" (click)="regisEmployee(regisFormAccess)">
+      <mat-icon>check</mat-icon>ตกลง
+    </button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog [(visible)]="EmpAccReportDialog" [dismissableMask]="true" [style]="{'width':'50vw','position':'absolute'}" [modal]="true"
+  [resizable]="false" [draggable]="false" [responsive]="true" [blockScroll]="true" styleClass="disable-scroll"
+  [contentStyle]="{minHeight: '520px'}">
+  <p-header class="titleAccess">
+    รายผู้มีสิทธิ์เข้าถึงรายงาน
+  </p-header>
+  <div class="col-12" [formGroup]="searchAccessForm" style="padding-bottom:8px">
+    <p-radioButton formControlName="value" name="accessReport" value="N" (onClick)="clickWhereEmployeAccessReport()">
+    </p-radioButton> ทั้งหมด
+    <p-radioButton formControlName="value" name="accessReport" value="A" (onClick)="clickWhereEmployeAccessReport()">
+    </p-radioButton> แอดมิน
+    <p-radioButton formControlName="value" name="accessReport" value="Y" (onClick)="clickWhereEmployeAccessReport()">
+    </p-radioButton> อนุญาต
+    <p-radioButton formControlName="value" name="accessReport" value="M" (onClick)="clickWhereEmployeAccessReport()">
+    </p-radioButton> ผู้จัดการโครงการ
+  </div>
+  <p-table #accReportTable [value]="empAccessReportList" [rows]="8" [paginator]="true"
+    [globalFilterFields]="['no','firstname','lastname']" paginatorDropdownAppendTo="body">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex">
+        <span class="p-input-icon-left p-ml-auto">
+          <input style="width: 100%" pInputText type="text" placeholder="ค้นหา..."
+            (input)="accReportTable.filterGlobal($event.target.value, 'contains')" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>รหัสพนักงาน</th>
+        <th>ชื่อ</th>
+        <th>นามสกุล</th>
+        <th>สิทธิ์</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-employee>
+      <tr>
+        <td>{{employee.no}}</td>
+        <td>{{employee.firstname}}</td>
+        <td>{{employee.lastname}}</td>
+        <td>{{employee.accessReport | EmployeeAccessReport}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-footer>
+
+  </p-footer>
+</p-dialog>
+
+<p-toast key="errorMessage" position="bottom-center"></p-toast>
+<p-toast key="SuccessMessage" position="bottom-center"></p-toast>
