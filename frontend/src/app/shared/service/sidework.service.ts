@@ -28,7 +28,7 @@ export class SideWorkService {
 
   loadEventCalendar() {
     this.changeEventCalendar.next();
-    // this.changeEventCalendar.observers.splice(0,1)
+    this.changeEventCalendar.observers.splice(1,1)
   }
 
   private changeSideworkCalendar = new Subject<void>();
@@ -40,7 +40,7 @@ export class SideWorkService {
 
   loadSideworkCalendar() {
     this.changeSideworkCalendar.next();
-    // this.changeSideworkCalendar.observers.splice(0,1)
+    this.changeSideworkCalendar.observers.splice(1,1)
   }
 
   constructor(

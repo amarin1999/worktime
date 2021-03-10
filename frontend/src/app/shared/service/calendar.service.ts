@@ -21,7 +21,7 @@ export class CalendarService {
 
   loadHolidays() {
     this.changeHolidays.next();
-    this.changeHolidays.observers.splice(0,1)
+    this.changeHolidays.observers.splice(1,1)
   }
 
   private changeLeaves = new Subject<void>();
@@ -34,7 +34,7 @@ export class CalendarService {
 
   loadLeaves() {
     this.changeLeaves.next();
-    // this.changeLeaves.observers.splice(0,1)
+    this.changeLeaves.observers.splice(1,1)
   }
 
   private changeYearLeaves = new Subject<void>();
@@ -47,7 +47,7 @@ export class CalendarService {
 
   loadYearLeaves() {
     this.changeYearLeaves.next();
-    // this.changeYearLeaves.observers.splice(0,1)
+    this.changeYearLeaves.observers.splice(0,1)
   }
 
   private leaveEmployee = new BehaviorSubject('');

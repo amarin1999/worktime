@@ -101,7 +101,7 @@ export class SignInComponent implements OnInit {
                     key: 'errorMessage',
                     severity: 'error',
                     summary: 'คำเตือน',
-                    detail: 'รหัสผ่านไม่ถูกต้อง',
+                    detail: 'รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง',
                   });
                   return;
                 }
@@ -114,7 +114,8 @@ export class SignInComponent implements OnInit {
               key: 'errorMessage',
               severity: 'error',
               summary: 'ผิดพลาด',
-              detail: error.error.errorMessage,
+              // detail: error.error.errorMessage,
+              detail: 'รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง',
             });
             return;
           }
