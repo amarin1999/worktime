@@ -5741,6 +5741,13 @@ ngx-material-timepicker@^5.5.3:
     luxon "1.24.0"
     tslib "^1.9.0"
 
+ngx-quicklink@^0.2.6:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/ngx-quicklink/-/ngx-quicklink-0.2.7.tgz#189cc5ffa74ed29674053fd8038e4787bc5bf962"
+  integrity sha512-5ZSUCu79dTqLNqDTsXDzofaSjB1ddOxfSMUVR4gmg0mDI2M/6G/ASgs9tVM2LoR8on3wp2ExLGHOHvzg7qWkRA==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-spinner@^9.0.0:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/ngx-spinner/-/ngx-spinner-9.0.2.tgz#18123741cec4f7a29fa63d8d9cb769e58f4b8b85"
@@ -7854,9 +7861,9 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 ssri@^6.0.0, ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 
