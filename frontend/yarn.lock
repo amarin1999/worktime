@@ -5259,9 +5259,9 @@ lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
-  version "4.17.19"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
-  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@^3.0.0:
   version "3.0.0"
@@ -5740,6 +5740,13 @@ ngx-material-timepicker@^5.5.3:
     "@types/luxon" "1.11.1"
     luxon "1.24.0"
     tslib "^1.9.0"
+
+ngx-quicklink@^0.2.6:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/ngx-quicklink/-/ngx-quicklink-0.2.7.tgz#189cc5ffa74ed29674053fd8038e4787bc5bf962"
+  integrity sha512-5ZSUCu79dTqLNqDTsXDzofaSjB1ddOxfSMUVR4gmg0mDI2M/6G/ASgs9tVM2LoR8on3wp2ExLGHOHvzg7qWkRA==
+  dependencies:
+    tslib "^2.0.0"
 
 ngx-spinner@^9.0.0:
   version "9.0.2"
