@@ -37,7 +37,7 @@
     "bootstrap": "4.1.1",
     "file-saver": "^2.0.2",
     "igniteui-angular": "^10.0.5",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ng-animate": "^0.3.4",
     "ngx-bootstrap": "^5.5.0",
     "ngx-filesaver": "^10.0.0",
