@@ -1,0 +1,49 @@
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.card {
+  display: block;
+  width: 25%;
+  margin: 20px;
+  padding: 20px 20px 40px;
+  text-align: center;
+  text-decoration: none;
+  color: indigo;
+  background-color: whitesmoke;
+  border-radius: 20px;
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: gainsboro;
+  }
+
+  h1 {
+    font-size: 1.8em;
+    padding: 15px;
+  }
+
+  img {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .card {
+    width: 80%;
+  }
+}

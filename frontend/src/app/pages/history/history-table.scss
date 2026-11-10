@@ -1,0 +1,53 @@
+.search {
+  margin-top: 15px;
+}
+
+.history-table {
+  width: 100%;
+}
+
+th.mat-mdc-header-cell,
+td.mat-mdc-cell {
+  text-align: center;
+  font-size: 1.1em;
+}
+
+tr.mat-mdc-header-row {
+  background-color: indigo;
+}
+
+th.mat-mdc-header-cell {
+  color: white;
+  background-color: indigo;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  justify-content: center;
+}
+
+:host ::ng-deep .mat-sort-header-arrow {
+  color: #fff;
+}
+
+.row-item {
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover td {
+    background-color: #4169e1;
+    color: whitesmoke;
+  }
+}
+
+.mat-icon {
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 640px) {
+  td.mat-mdc-cell {
+    font-size: 0.8em;
+  }
+  .head-text {
+    display: none;
+  }
+}

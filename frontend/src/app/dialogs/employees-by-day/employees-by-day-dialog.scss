@@ -1,0 +1,79 @@
+.wrap {
+  width: 800px;
+  max-width: 100%;
+  min-height: 500px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.date {
+  line-height: 35px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-info {
+  --mat-button-filled-container-color: #0288d1;
+  --mat-button-filled-label-text-color: #fff;
+  border-radius: 20px;
+}
+
+.search {
+  display: block;
+  margin-top: 12px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.emp-table {
+  width: 100%;
+}
+
+th.mat-mdc-header-cell {
+  font-weight: bold;
+}
+
+.emp-no,
+.emp-type {
+  text-align: center;
+}
+
+.emp-no {
+  width: 100px;
+}
+
+.emp-first {
+  width: 90px;
+}
+
+.emp-last {
+  width: 120px;
+}
+
+.emp-type {
+  width: 70px;
+}
+
+.no-data {
+  padding: 16px;
+  text-align: center;
+}
+
+mat-label .mat-icon {
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 640px) {
+  .wrap {
+    width: 85vw;
+  }
+}

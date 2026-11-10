@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>
+  @if (data.mode === 'add') {
+    <img src="assets/images/overtime.svg" class="img-form" alt="" />
+    ลงเวลาทำงานล่วงเวลา
+  } @else {
+    <img src="assets/images/edit.svg" class="img-form" alt="" />
+    แก้ไขการลงเวลาทำงานล่วงเวลา
+  }
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-dialog-content class="wrap-form-sidework">
+    <div class="grid">
+      <mat-form-field appearance="outline">
+        <mat-label><mat-icon>home_work</mat-icon> รหัสโครงการ</mat-label>
+        <input matInput formControlName="projectNo" maxlength="45" />
+        @if (form.controls.projectNo.hasError('required')) {
+          <mat-error>* กรุณากรอกรหัสโครงการ</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label><mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
+        <textarea matInput formControlName="remark" [maxlength]="remarkMax"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div formArrayName="ranges">
+      @for (range of ranges.controls; track range; let i = $index) {
+        <div class="time-range animation-page" [formGroupName]="i">
+          @if (ranges.length > 1) {
+            <div class="remove-range">
+              <button mat-icon-button color="warn" type="button" (click)="removeRange(i)" aria-label="ลบช่วงเวลา">
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+            </div>
+          }
+          <div class="grid">
+            <mat-form-field appearance="outline">
+              <mat-label><mat-icon>call_missed</mat-icon> วันที่เข้างาน</mat-label>
+              <input
+                readonly
+                matInput
+                formControlName="startDate"
+                [matDatepicker]="pickerStartDate"
+                [max]="today"
+                (focus)="pickerStartDate.open()"
+                (dateChange)="onStartDateChange(range)"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="pickerStartDate" />
+              <mat-datepicker touchUi #pickerStartDate />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>เวลาเข้างาน</mat-label>
+              <input matInput formControlName="startTime" [matTimepicker]="pickerStartTime" />
+              <mat-timepicker-toggle matIconSuffix [for]="pickerStartTime" />
+              <mat-timepicker #pickerStartTime interval="30m" />
+              @if (range.controls.startTime.invalid) {
+                <mat-error>* กรุณากรอกเวลาเข้างาน</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label><mat-icon>call_missed_outgoing</mat-icon> วันที่ออกงาน</mat-label>
+              <input
+                readonly
+                matInput
+                formControlName="endDate"
+                [matDatepicker]="pickerEndDate"
+                [max]="today"
+                (focus)="pickerEndDate.open()"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="pickerEndDate" />
+              <mat-datepicker touchUi #pickerEndDate />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>เวลาออกงาน</mat-label>
+              <input matInput formControlName="endTime" [matTimepicker]="pickerEndTime" />
+              <mat-timepicker-toggle matIconSuffix [for]="pickerEndTime" />
+              <mat-timepicker #pickerEndTime interval="30m" />
+              @if (range.controls.endTime.invalid) {
+                <mat-error>* กรุณากรอกข้อมูลเวลาออกงาน</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          @if (range.hasError('wrongTime')) {
+            <mat-error class="field-error">* เวลาออกงานต้องมากกว่าเวลาเข้างาน</mat-error>
+          }
+          @if (range.hasError('future')) {
+            <mat-error class="field-error">* ไม่สามารถลงเวลาล่วงหน้าได้</mat-error>
+          }
+        </div>
+      }
+    </div>
+
+    @if (data.mode === 'add' && ranges.length < 31) {
+      <div class="add-range">
+        <button mat-button type="button" (click)="addRange()"><mat-icon>loupe</mat-icon> เพิ่มเวลาทำงานนอกเวลา</button>
+      </div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    @if (data.mode === 'edit') {
+      <button mat-raised-button color="warn" type="button" (click)="remove()">
+        <mat-icon>delete</mat-icon> ลบรายการ
+      </button>
+      <button mat-raised-button type="button" mat-dialog-close><mat-icon>clear</mat-icon> ยกเลิก</button>
+    } @else {
+      <button mat-raised-button color="warn" type="button" mat-dialog-close>
+        <mat-icon>clear</mat-icon> ยกเลิก
+      </button>
+    }
+    <button mat-raised-button color="primary" type="submit"><mat-icon>check</mat-icon> ตกลง</button>
+  </mat-dialog-actions>
+</form>

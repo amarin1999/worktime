@@ -1,0 +1,39 @@
+<div class="page animation-page">
+  <h1 class="page-title">ปฏิทินการทำงานนอกสถานที่</h1>
+
+  <div class="layout">
+    <div class="calendar">
+      <full-calendar [options]="options" [events]="events()">
+        <ng-template #eventContent let-arg>
+          <div class="wt-event" [matTooltip]="arg.event.extendedProps.tooltip" matTooltipClass="tooltip-primary">
+            {{ arg.event.title }}
+          </div>
+        </ng-template>
+      </full-calendar>
+    </div>
+
+    <aside class="side">
+      @if (auth.isAdmin()) {
+        <div class="reports">
+          <button mat-flat-button type="button" class="btn-text" (click)="download('time-attendance')" matTooltip="ไฟล์ลงเวลา (.dat)">
+            <mat-icon>description</mat-icon> WFH
+          </button>
+          <button mat-flat-button type="button" class="btn-excel" (click)="download('worktime')" matTooltip="รายงาน WFH (Excel)">
+            <mat-icon>grid_on</mat-icon> WFH
+          </button>
+          <button mat-flat-button type="button" class="btn-excel" (click)="download('leave')" matTooltip="รายงานวันลา (Excel)">
+            <mat-icon>grid_on</mat-icon> Leave
+          </button>
+        </div>
+      }
+      <ul class="legend">
+        @for (item of legend; track item.label) {
+          <li>
+            <span class="square" [style.background]="item.color"></span>
+            {{ item.label }}
+          </li>
+        }
+      </ul>
+    </aside>
+  </div>
+</div>

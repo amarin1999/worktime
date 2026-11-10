@@ -1,1 +1,22 @@
+# IDE / OS
 /.metadata/
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+.DS_Store
+Thumbs.db
+
+# Logs and crash dumps
+*.log
+hs_err_pid*
+replay_pid*
+report.*.json
+
+# Local secrets
+.env
+.env.*
+application-local.properties
+application-local.yml

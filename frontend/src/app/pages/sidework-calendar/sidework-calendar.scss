@@ -1,0 +1,90 @@
+.page {
+  padding: 0 16px 40px;
+}
+
+.page-title {
+  color: #333377;
+  font-size: 2.3em;
+  text-align: center;
+  font-weight: normal;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 10fr) 1fr;
+  gap: 8px;
+}
+
+.calendar {
+  grid-column: 2;
+  background-color: whitesmoke;
+}
+
+.side {
+  grid-column: 3;
+}
+
+.reports {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btn-text,
+.btn-excel {
+  width: 105px;
+  border-radius: 20px;
+  --mat-button-filled-label-text-color: #fff;
+}
+
+.btn-text {
+  --mat-button-filled-container-color: #008cba;
+}
+
+.btn-excel {
+  --mat-button-filled-container-color: #4caf50;
+}
+
+.legend {
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #333377;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px;
+    margin-bottom: 12px;
+  }
+}
+
+.square {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 15%;
+}
+
+@media screen and (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .calendar,
+  .side {
+    grid-column: 1;
+  }
+  .reports {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

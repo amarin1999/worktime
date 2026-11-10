@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>คู่มือการติดตั้งระบบ worktime v2</title>
+<style>
+:root{--fg:#1f2933;--bg:#fff;--ac:#1f4e9c;--code:#f3f5f8;--bd:#c8d0da}
+@media (prefers-color-scheme:dark){:root{--fg:#e4e8ee;--bg:#14181e;--ac:#8fb4f0;--code:#1f252d;--bd:#3a4350}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"TH Sarabun New","TH SarabunPSK","Sarabun",Tahoma,sans-serif;font-size:19px;line-height:1.6}
+main{max-width:920px;margin:0 auto;padding:16px}
+a{color:var(--ac)}
+.cover{text-align:center;padding:64px 0 40px;border-bottom:2px solid var(--bd)}
+.cover h1{font-size:2rem;margin:.2em 0}.cover p{margin:.3em 0;font-size:1.2rem}
+h2{font-size:1.6rem;border-bottom:2px solid var(--bd);padding-bottom:.2em;margin-top:2em}
+h3{font-size:1.25rem;margin-top:1.4em}
+h2,h3{scroll-margin-top:12px}
+pre{background:var(--code);border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:4px;padding:10px 12px;overflow-x:auto;font-size:15px;line-height:1.45}
+code{font-family:Consolas,"Courier New",monospace}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;margin:.6em 0;font-size:.95em}
+th,td{border:1px solid var(--bd);padding:6px 10px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+th{background:var(--code)}
+.note{border-left:4px solid #c00000;padding:4px 12px;background:var(--code)}
+.toc,.toc ul{list-style:none;padding-left:1.2em}
+@media (max-width:600px){body{font-size:17px}.cover{padding:32px 0 24px}.cover h1{font-size:1.5rem}}
+@media print{
+ :root{--fg:#000;--bg:#fff;--ac:#000;--code:#f2f2f2;--bd:#888}
+ body{font-size:12pt}main{max-width:none;padding:0}
+ pre{white-space:pre-wrap;word-break:break-all;overflow:visible;break-inside:avoid;font-size:9.5pt}
+ .main-h{break-before:page}.cover{break-after:page}h2,h3{break-after:avoid}
+ table,tr{break-inside:avoid}.tw{overflow:visible}
+ a{text-decoration:none;color:#000}
+}
+</style></head><body><main>
+<header class="cover"><p>คู่มือการติดตั้งระบบ</p><h1>ระบบการลงเวลาทำงานนอกสถานที่และการทำงานล่วงเวลา</h1><p>Installation &amp; Deployment Guide</p><p>เวอร์ชัน 2.0</p><p>วันที่ 10 พฤศจิกายน 2569 (2026-11-10)</p></header>
+<h2 id="rev">ประวัติการแก้ไขเอกสาร</h2><div class="tw"><table><thead><tr><th>เวอร์ชัน</th><th>วันที่</th><th>ผู้จัดทำ</th><th>รายละเอียดการแก้ไข</th></tr></thead><tbody><tr><td>1.0</td><td>-</td><td>-</td><td>คู่มือการติดตั้งฉบับแรก (Java 8, MySQL 5.5, Angular 9)</td></tr><tr><td>2.0</td><td>2026-11-10</td><td>-</td><td>ปรับปรุงทั้งฉบับสำหรับ worktime v2: Spring Boot 4.1 / Java 21, Angular 22, เปลี่ยนฐานข้อมูลเป็น MariaDB 12.3 LTS, ตั้งค่าด้วย environment variable, reverse proxy HTTPS, security checklist, การอัปเกรดจาก v1</td></tr><tr><td>2.0</td><td>2026-11-10</td><td>-</td><td>เปลี่ยนฐานข้อมูลจาก MySQL เป็น MariaDB 12.3 LTS (JDBC mariadb, schema-mariadb.sql, V4/V5, mariadb CLI)</td></tr></tbody></table></div>
+<nav aria-label="สารบัญ"><h2 id="toc">สารบัญ</h2><ul class="toc"><li><a href="#s1">1. ภาพรวมสถาปัตยกรรมระบบ</a></li><li><a href="#s2">2. ความต้องการของระบบ (Requirements)</a></li><li><a href="#s3">3. การติดตั้งฐานข้อมูล</a><ul><li><a href="#s3_1">3.1 สร้างฐานข้อมูลและนำเข้าโครงสร้าง (ติดตั้งใหม่เท่านั้น)</a></li><li><a href="#s3_2">3.2 คอลัมน์ employee.active (V2) สำหรับฐานข้อมูลเดิม</a></li><li><a href="#s3_3">3.3 สร้างผู้ใช้สิทธิ์จำกัดสำหรับแอปพลิเคชัน (V3)</a></li></ul></li><li><a href="#s4">4. การติดตั้งและรัน Backend</a><ul><li><a href="#s4_1">4.1 Build เป็น executable jar</a></li><li><a href="#s4_2">4.2 กำหนดค่าผ่าน environment variable</a></li><li><a href="#s4_3">4.3 รัน Backend</a></li><li><a href="#s4_4">4.4 รันแบบพัฒนา (Development)</a></li></ul></li><li><a href="#s5">5. การ Build Frontend</a></li><li><a href="#s6">6. การติดตั้งบน Production</a><ul><li><a href="#s6_1">6.1 ตั้งค่า nginx (HTTPS + reverse proxy)</a></li><li><a href="#s6_2">6.2 รัน Backend เป็น service (Linux systemd)</a></li><li><a href="#s6_3">6.3 รัน Backend เป็น Windows service</a></li></ul></li><li><a href="#s7">7. รายการตรวจสอบด้านความปลอดภัย (Security Checklist)</a></li><li><a href="#s8">8. การตรวจสอบหลังการติดตั้ง</a></li><li><a href="#s9">9. การปรับปรุงจาก v1 เป็น v2</a><ul><li><a href="#s9_1">9.1 การตรวจและแปลงปี พ.ศ. เป็น ค.ศ.</a></li></ul></li><li><a href="#s10">10. การแก้ไขปัญหาเบื้องต้น (Troubleshooting)</a></li><li><a href="#s11">ภาคผนวก ก: ตัวแปร Environment (Environment Variables)</a></li><li><a href="#s12">ภาคผนวก ข: คำสั่งที่ใช้บ่อย</a></li></ul></nav>
+<h2 id="s1">1. ภาพรวมสถาปัตยกรรมระบบ</h2><p>ระบบ worktime เวอร์ชัน 2 ประกอบด้วย 3 ส่วนหลัก คือ Frontend (Angular), Backend (Spring Boot REST API) และฐานข้อมูล MariaDB โดยในการใช้งานจริงให้มี reverse proxy (nginx) ทำ HTTPS และเสิร์ฟทั้ง Frontend กับ API ภายใน origin เดียวกัน</p><pre><code>ผู้ใช้ (Browser)
+     |  HTTPS 443
+     v
++---------------------------------------------+
+| nginx (reverse proxy + HTTPS)               |
+|   /               -&gt; ไฟล์ Angular (static)  |
+|   /workTimeAPI/   -&gt; http://127.0.0.1:8080  |
++---------------------------------------------+
+     |
+     v
+Backend: worktime-backend-2.0.0.jar (Java 21, port 8080)
+     |                         |
+     v                         v
+MariaDB 12.3 (worktime)     CDG IS Web Service (HTTPS)
+user: worktime_app       ตรวจรหัสผ่าน / วันหยุด / วันลา</code></pre><div class="tw"><table><thead><tr><th>ส่วนประกอบ</th><th>เทคโนโลยี</th><th>หน้าที่</th></tr></thead><tbody><tr><td>Frontend</td><td>Angular 22 (standalone), Node.js 22/24 LTS</td><td>หน้าจอผู้ใช้ build เป็นไฟล์ static</td></tr><tr><td>Backend</td><td>Spring Boot 4.1.2, Java 21, Maven 3.9+</td><td>REST API ที่ /workTimeAPI/api/** ตรวจสอบสิทธิ์และเก็บข้อมูล</td></tr><tr><td>Database</td><td>MariaDB 12.3 LTS</td><td>เก็บข้อมูลพนักงาน การลงเวลา และ OT</td></tr><tr><td>Reverse proxy</td><td>nginx (หรือเทียบเท่า)</td><td>HTTPS, เสิร์ฟ Frontend, proxy ไป Backend, ใส่ security header</td></tr><tr><td>IS Web Service</td><td>CDG IS (isservice.asmx)</td><td>ตรวจรหัสผ่านพนักงาน วันหยุด และวันลา</td></tr></tbody></table></div><h2 id="s2">2. ความต้องการของระบบ (Requirements)</h2><div class="tw"><table><thead><tr><th>รายการ</th><th>เวอร์ชันที่ต้องการ</th><th>หมายเหตุ</th></tr></thead><tbody><tr><td>Java JDK</td><td>21 (LTS)</td><td>ใช้ build และรัน Backend (ไม่ต้องใช้ Eclipse หรือ Lombok)</td></tr><tr><td>Apache Maven</td><td>3.9 ขึ้นไป</td><td>ใช้ build Backend (mvn package)</td></tr><tr><td>Node.js / npm</td><td>Node.js 22 หรือ 24 LTS (npm 10+)</td><td>ใช้ build Frontend</td></tr><tr><td>MariaDB Server</td><td>12.3 LTS (รองรับถึง 2029-06)</td><td>ระบบเปลี่ยนจาก MySQL มาใช้ MariaDB; MySQL 5.5 (v1) หมดอายุแล้วและไม่รองรับ ใช้ JDBC driver mariadb-java-client</td></tr><tr><td>nginx</td><td>รุ่น Stable ล่าสุด</td><td>สำหรับ production</td></tr><tr><td>ใบรับรอง TLS</td><td>-</td><td>สำหรับ HTTPS ของโดเมนที่ให้บริการ</td></tr><tr><td>เครือข่าย</td><td>-</td><td>เครื่อง Backend ต้องเข้าถึง MariaDB และ IS Web Service (HTTPS) ได้</td></tr></tbody></table></div><p>ตรวจสอบเวอร์ชันที่ติดตั้ง:</p><pre><code>java -version
+mvn -version
+node -v
+npm -v
+mariadb --version</code></pre><p class="note"><strong>หมายเหตุ:</strong> ระบบไม่ต้องติดตั้ง Angular CLI แบบ global (v1 ต้องใช้) เพราะ npm ci จะติดตั้งให้ในโฟลเดอร์โครงการ</p><h2 id="s3">3. การติดตั้งฐานข้อมูล</h2><h3 id="s3_1">3.1 สร้างฐานข้อมูลและนำเข้าโครงสร้าง (ติดตั้งใหม่เท่านั้น)</h3><p>ใช้บัญชีผู้ดูแลฐานข้อมูลเฉพาะตอนติดตั้งเท่านั้น (ไม่ใช่บัญชีที่แอปพลิเคชันใช้งาน) ไฟล์ database/schema-mariadb.sql จะสร้างฐานข้อมูล worktime (utf8mb4) และคอลัมน์ employee.active ให้ครบ</p><pre><code>mariadb -u &lt;admin_user&gt; -p &lt; database/schema-mariadb.sql</code></pre><p class="note"><strong>หมายเหตุ:</strong> ห้ามใช้ database.sql สำหรับการติดตั้งใหม่อีกต่อไป (เป็น dump เก่าของ MySQL 5.5) และห้ามรัน schema ซ้ำบนฐานข้อมูลที่มีข้อมูลจริงอยู่แล้ว</p><p>ข้อมูลตัวอย่างเก่าที่มีปีแบบพุทธศักราช (เช่น 2563) ไม่ควรนำมาใช้งานจริง ข้อมูลที่ใช้งานจริงต้องเป็นปีคริสต์ศักราช โปรดดูหัวข้อ 9</p><h3 id="s3_2">3.2 คอลัมน์ employee.active (V2) สำหรับฐานข้อมูลเดิม</h3><p>การติดตั้งใหม่ด้วย schema-mariadb.sql มีคอลัมน์ employee.active อยู่แล้ว ไม่ต้องรัน V2 สำหรับฐานข้อมูลที่ย้ายมาจากระบบเก่า ให้ตรวจก่อน หากผลลัพธ์เป็น 0 จึงรัน V2 (สคริปต์ทำซ้ำได้อย่างปลอดภัย)</p><pre><code>SELECT COUNT(*) FROM information_schema.columns
+WHERE table_schema = 'worktime' AND table_name = 'employee' AND column_name = 'active';
+
+-- ถ้าได้ 0 ให้รัน
+mariadb -u &lt;admin_user&gt; -p worktime &lt; database/migrations/V2__employee_active.sql</code></pre><h3 id="s3_3">3.3 สร้างผู้ใช้สิทธิ์จำกัดสำหรับแอปพลิเคชัน (V3)</h3><p>แก้ไขไฟล์ database/migrations/V3__app_user.sql ก่อนรัน โดยเปลี่ยนรหัสผ่าน CHANGE_ME_STRONG_PASSWORD เป็นรหัสผ่านที่คาดเดายาก และเปลี่ยนโฮสต์ '%' เป็นที่อยู่ของเครื่อง Backend</p><pre><code>mariadb -u &lt;admin_user&gt; -p worktime &lt; database/migrations/V3__app_user.sql</code></pre><div class="tw"><table><thead><tr><th>ตาราง</th><th>สิทธิ์ที่ให้ worktime_app</th></tr></thead><tbody><tr><td>employee, worktype</td><td>SELECT</td></tr><tr><td>employee_has_sidework_history, sidework_history, ot_history</td><td>SELECT, INSERT, UPDATE, DELETE</td></tr></tbody></table></div><p class="note"><strong>หมายเหตุ:</strong> ห้ามใช้ root ให้แอปพลิเคชันเชื่อมต่อฐานข้อมูล และแอปไม่แก้โครงสร้างฐานข้อมูลเอง (ddl-auto=none)</p><h2 id="s4">4. การติดตั้งและรัน Backend</h2><h3 id="s4_1">4.1 Build เป็น executable jar</h3><pre><code>cd worktime-backend
+mvn test        # (ไม่บังคับ) ทดสอบด้วย H2 ไม่ต้องมีฐานข้อมูลจริง
+mvn package     # ได้ target/worktime-backend-2.0.0.jar</code></pre><h3 id="s4_2">4.2 กำหนดค่าผ่าน environment variable</h3><p>Backend อ่านค่าตั้งค่าจาก environment variable เท่านั้น ห้ามเก็บรหัสผ่านในซอร์สโค้ดหรือ git สร้างค่า JWT_SECRET ด้วย:</p><pre><code>openssl rand -base64 48</code></pre><p>ตัวอย่าง (Linux):</p><pre><code>export DB_URL='jdbc:mariadb://db-host:3306/worktime?sslMode=verify-full'
+export DB_USERNAME='worktime_app'
+export DB_PASSWORD='&lt;รหัสผ่านจาก V3&gt;'
+export JWT_SECRET='&lt;ผลลัพธ์จาก openssl rand -base64 48&gt;'
+export APP_ADMIN_EMPLOYEE_NOS='C0001,C0002'
+export IS_SERVICE_URL='https://cdgisweb.cdg.co.th/iswebservice/isservice.asmx'
+export COOKIE_SECURE=true
+export APP_ALLOWED_ORIGINS=
+export PORT=8080</code></pre><p>ตัวอย่าง (Windows PowerShell):</p><pre><code>$env:DB_URL = 'jdbc:mariadb://db-host:3306/worktime?sslMode=verify-full'
+$env:DB_USERNAME = 'worktime_app'
+$env:DB_PASSWORD = '&lt;รหัสผ่านจาก V3&gt;'
+$env:JWT_SECRET = '&lt;ค่าสุ่มอย่างน้อย 32 bytes&gt;'
+$env:APP_ADMIN_EMPLOYEE_NOS = 'C0001,C0002'
+$env:COOKIE_SECURE = 'true'</code></pre><p>JDBC URL สำหรับ production ใช้ jdbc:mariadb://&lt;host&gt;:3306/worktime?sslMode=verify-full (driver คือ mariadb-java-client ที่รวมอยู่ใน jar แล้ว) ส่วนการพัฒนาบนเครื่องตัวเองใช้ sslMode=disable เช่น jdbc:mariadb://localhost:3306/worktime?sslMode=disable รายละเอียดตัวแปรทั้งหมดอยู่ในภาคผนวก ก</p><h3 id="s4_3">4.3 รัน Backend</h3><pre><code>java -jar target/worktime-backend-2.0.0.jar</code></pre><p>Backend จะให้บริการที่ http://localhost:8080/workTimeAPI (context path /workTimeAPI) หากต้องการเปลี่ยนพอร์ตให้ตั้ง PORT</p><h3 id="s4_4">4.4 รันแบบพัฒนา (Development)</h3><pre><code>cd worktime-backend
+cp src/main/resources/application-local.properties.example src/main/resources/application-local.properties
+# แก้ค่าในไฟล์ (ไฟล์นี้ถูก git ignore)
+mvn spring-boot:run -Dspring-boot.run.profiles=local</code></pre><p class="note"><strong>หมายเหตุ:</strong> โปรไฟล์ local ตั้ง secure-cookie=false และใช้ http เพื่อการพัฒนาบนเครื่องตัวเองเท่านั้น ห้ามใช้ใน production</p><h2 id="s5">5. การ Build Frontend</h2><pre><code>cd frontend
+npm ci
+npm run build</code></pre><p>ผลลัพธ์อยู่ที่ frontend/dist/cdg-time-attendance/browser ให้นำทั้งโฟลเดอร์ไปวางที่ root ของเว็บเซิร์ฟเวอร์ (เช่น /var/www/worktime)</p><pre><code>sudo mkdir -p /var/www/worktime
+sudo cp -r dist/cdg-time-attendance/browser/* /var/www/worktime/</code></pre><p>การพัฒนา (Development): npm start จะเปิด http://localhost:4200 และ proxy /workTimeAPI ไปที่ http://localhost:8080 ตามไฟล์ proxy.conf.json จึงต้องรัน Backend ที่พอร์ต 8080 ก่อน</p><pre><code>npm start</code></pre><p>Frontend เรียก API ที่ path /workTimeAPI/api/... เสมอ จึงไม่ต้องแก้ localhost ในซอร์สโค้ด (ต่างจาก v1)</p><h2 id="s6">6. การติดตั้งบน Production</h2><h3 id="s6_1">6.1 ตั้งค่า nginx (HTTPS + reverse proxy)</h3><p>ตัวอย่างต่อไปนี้แสดงส่วน location ภายใน server block ที่ตั้งค่า HTTPS (listen 443 ssl, ssl_certificate ฯลฯ) แล้ว</p><pre><code>location /workTimeAPI/ {
+  proxy_pass http://127.0.0.1:8080;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  proxy_set_header X-Forwarded-For $remote_addr;
+}
+location / {
+  root /var/www/worktime;
+  try_files $uri $uri/ /index.html;
+  add_header Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; frame-ancestors 'none'" always;
+  add_header X-Content-Type-Options nosniff always;
+  add_header Referrer-Policy no-referrer always;
+}</code></pre><p class="note"><strong>หมายเหตุ:</strong> Backend ต้องไม่เปิดให้เข้าถึงโดยตรงจากภายนอก (bind/firewall ให้รับเฉพาะ 127.0.0.1 หรือจาก proxy) เพราะระบบเชื่อถือ X-Forwarded-* ควรมี server block พอร์ต 80 ที่ redirect ไป HTTPS</p><pre><code>sudo nginx -t
+sudo systemctl reload nginx</code></pre><h3 id="s6_2">6.2 รัน Backend เป็น service (Linux systemd)</h3><p>เก็บ environment variable ในไฟล์ที่จำกัดสิทธิ์ เช่น /etc/worktime/worktime.env:</p><pre><code>sudo mkdir -p /etc/worktime /opt/worktime
+sudo cp target/worktime-backend-2.0.0.jar /opt/worktime/
+sudo useradd --system --no-create-home --shell /usr/sbin/nologin worktime
+# สร้างไฟล์ /etc/worktime/worktime.env แล้วจำกัดสิทธิ์
+sudo chown root:worktime /etc/worktime/worktime.env
+sudo chmod 640 /etc/worktime/worktime.env</code></pre><p>ไฟล์ /etc/worktime/worktime.env (รูปแบบ KEY=VALUE ไม่ต้องมี export และไม่ต้องใส่เครื่องหมายคำพูด):</p><pre><code>DB_URL=jdbc:mariadb://db-host:3306/worktime?sslMode=verify-full
+DB_USERNAME=worktime_app
+DB_PASSWORD=...
+JWT_SECRET=...
+APP_ADMIN_EMPLOYEE_NOS=C0001,C0002
+IS_SERVICE_URL=https://cdgisweb.cdg.co.th/iswebservice/isservice.asmx
+COOKIE_SECURE=true
+APP_ALLOWED_ORIGINS=
+PORT=8080
+TZ=Asia/Bangkok</code></pre><p>ไฟล์ /etc/systemd/system/worktime.service:</p><pre><code>[Unit]
+Description=Worktime backend
+After=network.target mariadb.service
+
+[Service]
+User=worktime
+EnvironmentFile=/etc/worktime/worktime.env
+ExecStart=/usr/bin/java -jar /opt/worktime/worktime-backend-2.0.0.jar
+Restart=on-failure
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target</code></pre><pre><code>sudo systemctl daemon-reload
+sudo systemctl enable --now worktime
+sudo systemctl status worktime
+journalctl -u worktime -f</code></pre><h3 id="s6_3">6.3 รัน Backend เป็น Windows service</h3><p>ใช้เครื่องมือห่อหุ้มเป็น Windows service เช่น WinSW (หรือ NSSM) กำหนดคำสั่งเป็น java -jar worktime-backend-2.0.0.jar และกำหนด environment variable ในไฟล์ตั้งค่าของ service (ส่วน env) โดยจำกัดสิทธิ์อ่านไฟล์เฉพาะผู้ดูแลระบบและบัญชีที่รัน service ตั้งให้เริ่มอัตโนมัติและ restart เมื่อล้มเหลว</p><p>ตัวอย่าง WinSW (worktime.xml):</p><pre><code>&lt;service&gt;
+  &lt;id&gt;worktime&lt;/id&gt;
+  &lt;name&gt;Worktime Backend&lt;/name&gt;
+  &lt;executable&gt;java&lt;/executable&gt;
+  &lt;arguments&gt;-jar C:\worktime\worktime-backend-2.0.0.jar&lt;/arguments&gt;
+  &lt;env name="DB_URL" value="jdbc:mariadb://db-host:3306/worktime?sslMode=verify-full"/&gt;
+  &lt;env name="DB_USERNAME" value="worktime_app"/&gt;
+  &lt;env name="DB_PASSWORD" value="..."/&gt;
+  &lt;env name="JWT_SECRET" value="..."/&gt;
+  &lt;env name="COOKIE_SECURE" value="true"/&gt;
+  &lt;log mode="roll"/&gt;
+&lt;/service&gt;</code></pre><pre><code>worktime.exe install
+worktime.exe start</code></pre><p>nginx บน Windows ใช้การตั้งค่า location เดียวกับหัวข้อ 6.1</p><h2 id="s7">7. รายการตรวจสอบด้านความปลอดภัย (Security Checklist)</h2><ul><li>ใช้ HTTPS ทุกส่วน และตั้ง COOKIE_SECURE=true</li><li>JWT_SECRET ยาวอย่างน้อย 32 bytes สุ่มใหม่ ไม่ซ้ำกับระบบอื่น และเก็บเป็นความลับ (ถ้าเปลี่ยนค่า ผู้ใช้ทุกคนจะถูก logout)</li><li>ใช้ผู้ใช้ worktime_app (สิทธิ์จำกัด) ห้ามใช้ root และจำกัดโฮสต์ของผู้ใช้ให้เหลือเฉพาะเครื่อง Backend</li><li>IS_SERVICE_URL เป็น https เพราะมีรหัสผ่านพนักงานวิ่งผ่าน</li><li>ไฟล์ environment/รหัสผ่านถูกจำกัดสิทธิ์ ไม่อยู่ใน git</li><li>Backend ไม่เปิดตรงสู่ภายนอก เข้าถึงผ่าน nginx เท่านั้น (firewall ปิดพอร์ต 8080 จากภายนอก)</li><li>ตั้ง APP_ALLOWED_ORIGINS ว่างเมื่อ Frontend และ API อยู่ origin เดียวกัน</li><li>APP_ADMIN_EMPLOYEE_NOS ระบุเฉพาะผู้ที่มีสิทธิ์ออกรายงานทั้งองค์กร</li><li>ตั้ง security header (CSP, X-Content-Type-Options, Referrer-Policy) ตามตัวอย่าง nginx</li><li>การเชื่อมต่อฐานข้อมูลใช้ TLS (sslMode=verify-full) และรับการเชื่อมต่อเฉพาะจากเครื่อง Backend</li><li>เปลี่ยนรหัสผ่าน root เดิมของ v1 ที่เคยถูก commit ไว้ใน repository ทันที</li><li>ตั้งเขตเวลา (time zone) ของเครื่องที่รัน Backend เป็น Asia/Bangkok (เช่น TZ=Asia/Bangkok ในไฟล์ env ของ systemd หรือ -Duser.timezone=Asia/Bangkok) เพราะระบบบันทึก lastUpdate ด้วยนาฬิกาของเซิร์ฟเวอร์</li><li>ตั้งการสำรองข้อมูลฐานข้อมูลสม่ำเสมอ และเก็บ log ของ Backend/nginx</li></ul><p>กลไกในตัวระบบ: Session เป็น JWT ใน cookie HttpOnly; Secure; SameSite=Strict อายุ 8 ชั่วโมง, CSRF แบบ double-submit cookie (XSRF-TOKEN / X-XSRF-TOKEN), ล็อกการเข้าสู่ระบบ 15 นาทีเมื่อผิด 5 ครั้งต่อรหัสพนักงานหรือต่อ IP และข้อความ error ไม่เปิดเผยรายละเอียดภายใน</p><h2 id="s8">8. การตรวจสอบหลังการติดตั้ง</h2><ol><li>ตรวจว่า service ทำงาน: systemctl status worktime และ log ไม่มี error</li><li>ตรวจ API ผ่าน nginx ต้องได้ HTTP 204 (คำสั่งด้านล่าง)</li></ol><pre><code>curl -i https://&lt;โดเมน&gt;/workTimeAPI/api/auth/csrf
+# ผลที่ถูกต้อง: HTTP/1.1 204 และมี Set-Cookie: XSRF-TOKEN=...</code></pre><ul><li>เปิดเว็บ https://&lt;โดเมน&gt;/ แล้วเข้าสู่ระบบด้วยรหัสพนักงานและรหัสผ่านจริง</li><li>ทดสอบบันทึกการลงเวลาและ OT หนึ่งรายการ (ต้องไม่มี 403) แล้วตรวจข้อมูลในตาราง</li><li>ใช้บัญชีที่อยู่ใน APP_ADMIN_EMPLOYEE_NOS ทดสอบออกรายงาน</li><li>ตรวจ log ของ Backend (journalctl -u worktime) และ nginx (error.log) ว่าไม่มีข้อผิดพลาด</li><li>ตรวจว่าเข้าถึง http://&lt;เครื่อง Backend&gt;:8080 จากภายนอกไม่ได้</li></ul><p>รายละเอียด API ดูที่ docs/API.md</p><h2 id="s9">9. การปรับปรุงจาก v1 เป็น v2</h2><ul><li>Path ของ API เปลี่ยนเป็น /workTimeAPI/api/... ต้องเปลี่ยน Frontend และ Backend พร้อมกัน ห้ามใช้ Frontend เก่ากับ Backend ใหม่ (หรือกลับกัน)</li><li>Stack เปลี่ยน: Java 8 -&gt; 21, Maven 3.9+, Angular 9 -&gt; 22, Node.js 22/24, MySQL 5.5 -&gt; MariaDB 12.3 LTS ไม่ต้องใช้ Eclipse, Lombok หรือ Angular CLI แบบ global อีกต่อไป</li><li>ไม่รองรับการอัปเกรด MySQL 5.5 เป็น MariaDB 12.x แบบ in-place ต้องสำรองด้วย mysqldump ติดตั้ง MariaDB 12.3 ใหม่ แล้ว import ข้อมูล</li><li>ข้อมูลวันที่ต้องเป็นปีคริสต์ศักราช (ค.ศ.): ข้อมูลตัวอย่างใน dump เก่ามีปี พ.ศ. (เช่น 2563) ข้อมูลที่เป็น พ.ศ. ต้องแปลงก่อน go-live ด้วยคำสั่งแปลงของระบบ (ใช้ปฏิทินพุทธตาม ThaiBuddhistChronology) ห้ามแปลงด้วยการบวกหรือลบตัวเลขปีเอง และต้องสำรองข้อมูลก่อนเสมอ ดูหัวข้อ 9.1</li><li>เปลี่ยนรหัสผ่าน root ของ MySQL ที่เคยถูก commit ไว้ใน repository v1 และถือว่ารหัสเดิมรั่วไหลแล้ว</li><li>เปลี่ยนการเชื่อมต่อฐานข้อมูลจาก root เป็น worktime_app (V3)</li><li>ตั้งค่าแบบ environment variable แทนการแก้ไฟล์ properties</li></ul><p>ขั้นตอนแนะนำ:</p><ol><li>สำรองฐานข้อมูลเดิมบนเซิร์ฟเวอร์ MySQL 5.5 ด้วย mysqldump (คำสั่งด้านล่าง)</li><li>ติดตั้ง MariaDB 12.3 LTS (เครื่องใหม่หรือติดตั้งใหม่) แล้ว import ไฟล์สำรอง</li><li>รัน V2__employee_active.sql (ทำซ้ำได้อย่างปลอดภัย)</li><li>รัน V4__utf8mb4.sql เพื่อแปลง character set เป็น utf8mb4</li><li>ตรวจและแปลงปี พ.ศ. เป็น ค.ศ. ตามขั้นตอนในหัวข้อ 9.1 (สำรองข้อมูลก่อน)</li><li>รัน V3__app_user.sql สร้างผู้ใช้ worktime_app (เปลี่ยนรหัสผ่านและจำกัดโฮสต์ก่อน)</li><li>หยุดระบบเก่า ติดตั้ง Backend v2 และ Frontend v2 พร้อมกัน</li><li>ทำการตรวจสอบตามหัวข้อ 8</li></ol><pre><code>mysqldump -u &lt;admin_user&gt; -p --single-transaction --default-character-set=utf8 worktime &gt; worktime-backup.sql
+mariadb -u &lt;admin_user&gt; -p -e "CREATE DATABASE worktime CHARACTER SET utf8mb4"
+mariadb -u &lt;admin_user&gt; -p worktime &lt; worktime-backup.sql</code></pre><h3 id="s9_1">9.1 การตรวจและแปลงปี พ.ศ. เป็น ค.ศ.</h3><ol><li>สำรองฐานข้อมูลก่อนเสมอ</li><li>รัน database/migrations/V5__check_buddhist_years.sql เพื่อนับจำนวนแถวที่เป็นปี พ.ศ. (สคริปต์นี้ตรวจอย่างเดียว ไม่แก้ข้อมูล)</li><li>ตั้งค่า DB_* environment variable แล้วรันโหมด report เพื่อดูตัวอย่างค่าเดิม -&gt; ค่าใหม่</li><li>รันโหมด apply เพื่อแปลงทั้งหมดใน transaction เดียว โดยใช้ปฏิทินพุทธ (ThaiBuddhistChronology) คำสั่งนี้ไม่เริ่มเว็บเซิร์ฟเวอร์</li><li>รัน V5 ซ้ำ ผลต้องเป็น 0</li></ol><pre><code>java -jar worktime-backend-2.0.0.jar --app.maintenance.fix-buddhist-years=report
+java -jar worktime-backend-2.0.0.jar --app.maintenance.fix-buddhist-years=apply</code></pre><p class="note"><strong>หมายเหตุ:</strong> ห้ามแปลงปีด้วยการบวกหรือลบตัวเลขเอง ให้ใช้คำสั่งข้างต้นเท่านั้น รายละเอียดดู database/MIGRATION-MariaDB.md (ขั้นตอนที่ 6)</p><p class="note"><strong>หมายเหตุ:</strong> รายละเอียดครบถ้วนของการย้ายข้อมูล ดูที่ database/MIGRATION-MariaDB.md (ตรวจลำดับและคำสั่งที่นั่นก่อนลงมือจริง) หากขัดแย้งกับคู่มือนี้ให้ยึดเอกสารดังกล่าว</p><h2 id="s10">10. การแก้ไขปัญหาเบื้องต้น (Troubleshooting)</h2><div class="tw"><table><thead><tr><th>อาการ</th><th>สาเหตุที่พบบ่อย</th><th>วิธีแก้</th></tr></thead><tbody><tr><td>401 ทุกคำขอ / เข้าสู่ระบบแล้วถูกเด้งกลับ</td><td>cookie เป็น Secure แต่เข้าผ่าน http ทำให้เบราว์เซอร์ไม่ส่ง cookie</td><td>ใช้ HTTPS (แนะนำ) หรือเฉพาะตอนพัฒนาบน http://localhost ตั้ง COOKIE_SECURE=false</td></tr><tr><td>403 ตอนบันทึกข้อมูล</td><td>cookie XSRF-TOKEN ถูกบล็อก หรือ Frontend กับ API ต่าง origin</td><td>เสิร์ฟ Frontend และ API ใน origin เดียวกันผ่าน nginx; ตรวจ GET /workTimeAPI/api/auth/csrf; หากจำเป็นต้องต่าง origin ให้ตั้ง APP_ALLOWED_ORIGINS</td></tr><tr><td>502 ตอนเข้าสู่ระบบ</td><td>Backend ติดต่อ IS Web Service ไม่ได้</td><td>ตรวจ IS_SERVICE_URL, DNS, firewall/proxy ขาออก และใบรับรอง https ของปลายทาง</td></tr><tr><td>Backend ไม่เริ่ม: "JWT_SECRET must be set"</td><td>ไม่ได้ตั้ง JWT_SECRET (หรือสั้นกว่า 32 bytes)</td><td>ตั้ง JWT_SECRET ด้วย openssl rand -base64 48 และตรวจว่า service ได้รับ environment (EnvironmentFile)</td></tr><tr><td>Backend เชื่อมต่อฐานข้อมูลไม่ได้ (Access denied / Communications link failure)</td><td>DB_URL/DB_USERNAME/DB_PASSWORD ผิด, โฮสต์ของผู้ใช้ไม่ตรง, firewall, MariaDB ไม่ทำงาน</td><td>ตรวจค่าตัวแปร ทดสอบด้วย mariadb -h &lt;host&gt; -u worktime_app -p และตรวจโฮสต์ใน V3</td></tr><tr><td>Table/Column ไม่พบ (เช่น employee.active)</td><td>ยังไม่ได้รัน schema-mariadb.sql (หรือ V2 กรณีฐานข้อมูลเดิม)</td><td>ทำตามหัวข้อ 3.1-3.2 (แอปไม่แก้ schema เอง)</td></tr><tr><td>Port 8080 ถูกใช้งานอยู่ (Port already in use)</td><td>มีโปรแกรมอื่นหรือ Backend ตัวเก่ายังทำงาน</td><td>หยุดโปรแกรมเดิม หรือตั้ง PORT เป็นพอร์ตอื่นแล้วแก้ proxy_pass ให้ตรงกัน</td></tr><tr><td>เข้าสู่ระบบไม่ได้หลังผิดหลายครั้ง</td><td>ระบบล็อก 15 นาที เมื่อผิด 5 ครั้ง</td><td>รอ 15 นาที แล้วลองใหม่</td></tr><tr><td>ผู้ใช้ทุกคนถูก logout</td><td>เปลี่ยน JWT_SECRET หรือ session ครบ 8 ชั่วโมง</td><td>เป็นพฤติกรรมปกติ ให้เข้าสู่ระบบใหม่</td></tr><tr><td>หน้าเว็บ refresh แล้ว 404</td><td>nginx ไม่มี try_files ไป /index.html</td><td>ใช้ location / ตามหัวข้อ 6.1</td></tr></tbody></table></div><h2 id="s11">ภาคผนวก ก: ตัวแปร Environment (Environment Variables)</h2><div class="tw"><table><thead><tr><th>ตัวแปร</th><th>จำเป็น</th><th>ค่าเริ่มต้น</th><th>ตัวอย่าง / คำอธิบาย</th></tr></thead><tbody><tr><td>DB_URL</td><td>ควรตั้ง</td><td>jdbc:mariadb://localhost:3306/worktime?sslMode=verify-full</td><td>jdbc:mariadb://db-host:3306/worktime?sslMode=verify-full</td></tr><tr><td>DB_USERNAME</td><td>ต้องตั้ง</td><td>-</td><td>worktime_app (ห้ามใช้ root)</td></tr><tr><td>DB_PASSWORD</td><td>ต้องตั้ง</td><td>-</td><td>รหัสผ่านของ worktime_app</td></tr><tr><td>JWT_SECRET</td><td>ต้องตั้ง</td><td>-</td><td>อย่างน้อย 32 bytes เช่น openssl rand -base64 48 (เปลี่ยนแล้วทุกคนถูก logout)</td></tr><tr><td>APP_ADMIN_EMPLOYEE_NOS</td><td>ควรตั้ง</td><td>(ว่าง)</td><td>C0001,C0002 รหัสพนักงานที่ออกรายงานทั้งองค์กรได้</td></tr><tr><td>IS_SERVICE_URL</td><td>ควรตั้ง</td><td>https://cdgisweb.cdg.co.th/iswebservice/isservice.asmx</td><td>ควรเป็น https เพราะมีรหัสผ่านวิ่งผ่าน</td></tr><tr><td>COOKIE_SECURE</td><td>ไม่บังคับ</td><td>true</td><td>false เฉพาะพัฒนาบน http://localhost</td></tr><tr><td>APP_ALLOWED_ORIGINS</td><td>ไม่บังคับ</td><td>(ว่าง)</td><td>ว่างเมื่อ Frontend/API origin เดียวกัน ถ้ามีหลายค่าคั่นด้วย comma</td></tr><tr><td>PORT</td><td>ไม่บังคับ</td><td>8080</td><td>พอร์ตที่ Backend รับ (context path /workTimeAPI)</td></tr></tbody></table></div><p>ค่าคงที่ในไฟล์ application.properties: session-duration 8h, max-login-attempts 5, login-lockout 15m, is-service timeout 15s, ddl-auto=none</p><h2 id="s12">ภาคผนวก ข: คำสั่งที่ใช้บ่อย</h2><pre><code># Build Backend
+mvn -f worktime-backend/pom.xml package
+# Build Frontend
+(cd frontend &amp;&amp; npm ci &amp;&amp; npm run build)
+# ทดสอบ
+curl -i https://&lt;โดเมน&gt;/workTimeAPI/api/auth/csrf
+# ดู log
+journalctl -u worktime -f</code></pre>
+</main></body></html>

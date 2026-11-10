@@ -1,0 +1,9 @@
+# Copy to application-local.properties (git-ignored) and run with
+#   mvn spring-boot:run -Dspring-boot.run.profiles=local
+spring.datasource.url=jdbc:mariadb://localhost:3306/worktime?sslMode=disable
+spring.datasource.username=worktime_app
+spring.datasource.password=change-me
+app.security.jwt-secret=change-me-to-at-least-32-random-bytes-xxxxxxxx
+app.security.secure-cookie=false
+app.security.admin-employee-nos=C0001
+app.is-service.url=http://cdgisweb.cdg.co.th/iswebservice/isservice.asmx

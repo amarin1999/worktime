@@ -1,0 +1,64 @@
+.title {
+  text-align: center;
+}
+
+.logo {
+  height: 20vh;
+  width: auto;
+  margin-bottom: 16px;
+}
+
+.card {
+  width: 50%;
+  margin: 30px auto 0;
+  border-radius: 10px;
+  padding-bottom: 30px;
+  box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.title-card {
+  text-align: center;
+  padding: 10px;
+  color: #333377;
+  font-weight: bold;
+}
+
+.card-content {
+  text-align: center;
+}
+
+.field {
+  width: 60%;
+}
+
+.btn-signin {
+  background-color: #333377;
+  color: whitesmoke;
+  font-size: 1.3em;
+  padding: 5px 28px;
+  border-radius: 50px;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.07);
+  }
+
+}
+
+@media screen and (max-width: 640px) {
+  .card {
+    width: 90%;
+  }
+  .field {
+    width: 100%;
+  }
+  .btn-signin {
+    width: 80%;
+  }
+}

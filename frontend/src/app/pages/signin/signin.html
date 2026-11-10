@@ -1,0 +1,51 @@
+<div class="animation-page">
+  <div class="title">
+    <img src="assets/images/banner.png" alt="CDG" class="logo" />
+    <h1 class="header-text">ลงเวลาการทำงานนอกสถานที่ และการทำงานล่วงเวลา</h1>
+  </div>
+
+  <mat-card class="card">
+    <mat-card-title class="title-card">เริ่มต้นใช้งาน</mat-card-title>
+    <mat-card-content class="card-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>รหัสพนักงาน</mat-label>
+          <input matInput formControlName="employeeNo" autocomplete="username" />
+          @if (form.controls.employeeNo.hasError('required')) {
+            <mat-error>* กรุณากรอกรหัสพนักงาน</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="field">
+          <mat-label>รหัสผ่าน</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hidePassword() ? 'password' : 'text'"
+            autocomplete="current-password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword.set(!hidePassword())"
+            [attr.aria-label]="hidePassword() ? 'แสดงรหัสผ่าน' : 'ซ่อนรหัสผ่าน'"
+          >
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (form.controls.password.hasError('required')) {
+            <mat-error>* กรุณากรอกรหัสผ่าน</mat-error>
+          }
+        </mat-form-field>
+
+        <div>
+          <button mat-raised-button type="submit" class="btn-signin" [disabled]="submitting()">
+            ยืนยัน <mat-icon iconPositionEnd>chevron_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<app-footer />

@@ -1,0 +1,51 @@
+<mat-dialog-content class="wrap animation-page">
+  <div class="top">
+    <div>
+      <div class="date">วันที่ : {{ dateText }}</div>
+      <mat-radio-group [(ngModel)]="filter" (change)="load()" class="filters">
+        <mat-radio-button [value]="null">ทั้งหมด</mat-radio-button>
+        <mat-radio-button [value]="WA.WFH">WFH</mat-radio-button>
+        <mat-radio-button [value]="WA.SITE">Site</mat-radio-button>
+        <mat-radio-button [value]="WA.FORGOT_CARD">ลืมบัตรพนักงาน</mat-radio-button>
+        <mat-radio-button [value]="WA.OTHER">Other</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    @if (data.allowInsert) {
+      <button mat-flat-button type="button" class="btn-info" (click)="insert()">ลงเวลา</button>
+    }
+  </div>
+
+  <mat-form-field appearance="outline" class="search">
+    <mat-label><mat-icon>search</mat-icon> ค้นหา...</mat-label>
+    <input matInput #searchBox (input)="search(searchBox.value)" />
+  </mat-form-field>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10]" />
+  <table mat-table [dataSource]="source" class="emp-table">
+    <ng-container matColumnDef="employeeNo">
+      <th mat-header-cell *matHeaderCellDef class="emp-no">รหัสพนักงาน</th>
+      <td mat-cell *matCellDef="let row" class="emp-no">{{ row.employeeNo }}</td>
+    </ng-container>
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef class="emp-first">ชื่อ</th>
+      <td mat-cell *matCellDef="let row" class="emp-first">{{ row.firstname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef class="emp-last">นามสกุล</th>
+      <td mat-cell *matCellDef="let row" class="emp-last">{{ row.lastname }}</td>
+    </ng-container>
+    <ng-container matColumnDef="workAnywhere">
+      <th mat-header-cell *matHeaderCellDef class="emp-type">ประเภท</th>
+      <td mat-cell *matCellDef="let row" class="emp-type">{{ row.workAnywhere | workAnywhere }}</td>
+    </ng-container>
+    <ng-container matColumnDef="remark">
+      <th mat-header-cell *matHeaderCellDef class="emp-remark">หมายเหตุ</th>
+      <td mat-cell *matCellDef="let row" class="emp-remark">{{ row.remark }}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    <tr class="mat-mdc-row" *matNoDataRow>
+      <td class="mat-mdc-cell no-data" [attr.colspan]="columns.length">ไม่พบข้อมูล</td>
+    </tr>
+  </table>
+</mat-dialog-content>

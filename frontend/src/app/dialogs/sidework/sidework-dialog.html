@@ -1,0 +1,113 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>
+    @if (data.mode === 'add') {
+      <img src="assets/images/survey.svg" class="img-form" alt="" />
+      ลงเวลาทำงานนอกสถานที่
+    } @else {
+      <img src="assets/images/edit.svg" class="img-form" alt="" />
+      แก้ไขการลงเวลาทำงานนอกสถานที่
+    }
+  </h2>
+  @if (data.mode === 'edit' && data.showEmployeesButton) {
+    <button mat-flat-button type="button" class="btn-info" (click)="showEmployees()">รายชื่อ</button>
+  }
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-dialog-content class="wrap-form-sidework">
+    <div class="grid">
+      @if (data.mode === 'add') {
+        <mat-form-field appearance="outline">
+          <mat-label>วัน/เดือน/ปี</mat-label>
+          <input
+            readonly
+            matInput
+            formControlName="date"
+            [matDatepicker]="pickerDate"
+            (focus)="pickerDate.open()"
+            (dateChange)="onDateChange($event.value)"
+          />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerDate" />
+          <mat-datepicker touchUi #pickerDate />
+          @if (form.controls.date.hasError('required')) {
+            <mat-error>* กรุณากรอกวันที่</mat-error>
+          }
+        </mat-form-field>
+      } @else {
+        <mat-form-field appearance="outline">
+          <mat-label>วัน/เดือน/ปี</mat-label>
+          <input readonly matInput [value]="data.sidework.date | thaiDate" />
+          <mat-icon matSuffix>event</mat-icon>
+        </mat-form-field>
+      }
+      <div></div>
+
+      <mat-form-field appearance="outline">
+        <mat-label><mat-icon>call_missed</mat-icon> เวลาเข้างาน</mat-label>
+        <input matInput formControlName="startTime" [matTimepicker]="pickerStart" />
+        <mat-timepicker-toggle matIconSuffix [for]="pickerStart" />
+        <mat-timepicker #pickerStart interval="15m" />
+        @if (form.controls.startTime.invalid) {
+          <mat-error>* กรุณากรอกเวลาเข้างาน</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label><mat-icon>call_missed_outgoing</mat-icon> เวลาออกงาน</mat-label>
+        <input matInput formControlName="endTime" [matTimepicker]="pickerEnd" />
+        <mat-timepicker-toggle matIconSuffix [for]="pickerEnd" />
+        <mat-timepicker #pickerEnd interval="15m" />
+        @if (form.controls.endTime.invalid) {
+          <mat-error>* กรุณากรอกเวลาออกงาน</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    @if (form.hasError('wrongTime')) {
+      <mat-error class="field-error">* เวลาออกงานต้องมากกว่าเวลาเข้างาน</mat-error>
+    }
+
+    <div class="kind">
+      <mat-checkbox [checked]="!isForgotCard" (change)="toggleKind()">Work Anywhere</mat-checkbox>
+      <mat-checkbox [checked]="isForgotCard" (change)="toggleKind()">ลืมบัตรพนักงาน</mat-checkbox>
+    </div>
+    @if (!isForgotCard) {
+      <mat-radio-group formControlName="workAnywhere" class="kind">
+        <mat-radio-button [value]="WA.WFH">WFH</mat-radio-button>
+        <mat-radio-button [value]="WA.SITE">Site</mat-radio-button>
+        <mat-radio-button [value]="WA.OTHER">Other</mat-radio-button>
+      </mat-radio-group>
+    }
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label><mat-icon>subject</mat-icon> หมายเหตุ</mat-label>
+      <textarea matInput formControlName="remark" [maxlength]="remarkMax"></textarea>
+    </mat-form-field>
+    @if (form.hasError('remarkRequired') && (form.touched || form.controls.remark.dirty)) {
+      <mat-error class="field-error">* กรุณากรอกหมายเหตุ</mat-error>
+    }
+    @if (form.controls.remark.hasError('maxlength')) {
+      <mat-error class="field-error">* หมายเหตุใส่ข้อมูลได้ไม่เกิน {{ remarkMax }} ตัวอักษร</mat-error>
+    }
+
+    @if (alreadyRecorded()) {
+      <div class="warn-message" role="status">
+        <mat-icon>warning</mat-icon>
+        คุณได้ลงเวลาสำหรับวันนี้ไปแล้ว การบันทึกจะเป็นการแก้ไขข้อมูลเดิมของวันนี้
+      </div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    @if (data.mode === 'edit') {
+      <button mat-raised-button color="warn" type="button" (click)="remove()">
+        <mat-icon>delete</mat-icon> ลบรายการ
+      </button>
+      <button mat-raised-button type="button" mat-dialog-close><mat-icon>clear</mat-icon> ยกเลิก</button>
+    } @else {
+      <button mat-raised-button color="warn" type="button" mat-dialog-close>
+        <mat-icon>clear</mat-icon> ยกเลิก
+      </button>
+    }
+    <button mat-raised-button color="primary" type="submit"><mat-icon>check</mat-icon> ตกลง</button>
+  </mat-dialog-actions>
+</form>
